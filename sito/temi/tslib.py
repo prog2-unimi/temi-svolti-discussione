@@ -34,23 +34,22 @@ class Solution:
 
   def __init__(self, name):
     self.name = name
-    self._label2se, self._lines = {}, {}
+    self._ghse, self._lse, self._lines = {}, {}, {}
     for path in (DIRT_DIR / name).glob('*.java'):
       source = path.read_text()
-      _, clean = Solution.extract_markers(source)
+      self._ghse[path.stem], clean = Solution.extract_markers(source)
       if CLEAN_DIR.is_dir():
         (CLEAN_DIR / name / path.name).write_text('\n'.join(clean))
-      self._label2se[path.stem], self._lines[path.stem] = Solution.extract_markers(REMOVE_COMMENT_RE.sub('', source))
+      self._lse[path.stem], self._lines[path.stem] = Solution.extract_markers(REMOVE_COMMENT_RE.sub('', source))
 
   def show(self, cls, fragment = None, highlight = None, linenos = False):
-    label2se, lines = self._label2se[cls], self._lines[cls]
-    first, last = label2se[fragment] if fragment else (0, len(lines))
+    ghse, lse, lines = self._ghse[cls], self._lse[cls], self._lines[cls]
+    first, last = lse[fragment] if fragment else (0, len(lines))
     url = f'{CLEAN_URL}/{self.name}/{cls}.java'
-    if first > 0 or last < len(lines):
-        url += '#L{}-L{}'.format(first + 1, last)
+    if fragment: url += f'#L{ghse[fragment][0]+1}-L{ghse[fragment][1]}'
     code = '\n'.join(lines[first:last])
     if highlight:
-      highlight = [l - first + 1 for l in range(*label2se[highlight])]
+      highlight = [l - first + 1 for l in range(*lse[highlight])]
     lexer = get_lexer_for_filename(cls + '.java', stripall = False)
     formatter = HtmlFormatter(
         linenos = 'inline' if linenos else None,
