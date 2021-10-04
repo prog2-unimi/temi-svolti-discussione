@@ -34,6 +34,7 @@ class Solution:
     return label2se, lines
 
   def __init__(self, name):
+    self.name = name
     self._label2se, self._lines = {}, {}
     for path in (DIRT_DIR / name).glob('*.java'):
       source = path.read_text()
@@ -45,7 +46,7 @@ class Solution:
   def show(self, cls, fragment = None, highlight = None, linenos = False):
     label2se, lines = self._label2se[cls], self._lines[cls]
     first, last = label2se[fragment] if fragment else (0, len(lines))
-    url = f'{CLEAN_URL}/{cls}.java'
+    url = f'{CLEAN_URL}/{self.name}/{cls}.java'
     if first > 0 or last < len(lines):
         url += '#L{}-L{}'.format(first + 1, last)
     code = '\n'.join(lines[first:last])
