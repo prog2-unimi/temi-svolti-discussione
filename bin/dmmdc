@@ -1,0 +1,12 @@
+#!/bin/bash
+
+in=$2
+out=$4
+
+wd=$(realpath $(pwd))
+out=${out#$wd}
+outdir=$(dirname $out)
+infile=$(basename $in)
+
+cp $in .$outdir/$infile
+docker run --rm -v $wd:/wd -u $(id -u) minlag/mermaid-cli -i /wd$outdir/$infile -o /wd${out}
