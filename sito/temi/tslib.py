@@ -12,8 +12,7 @@ REMOVE_COMMENT_RE = re.compile(r'(^[ \t]*\/\*(.*?)\*\/(\n|\r)?)|([ \t]*\/\/(?! +
 
 DIRT_DIR = Path('../../java/temi')
 CLEAN_DIR = Path('../../../temi-svolti/temi')
-CLEAN_URL = 'https://github.com/prog2-unimi/temi-svolti/blob/master/java/temi'
-
+CLEAN_URL = 'https://github.com/prog2-unimi/temi-svolti/blob/master/temi'
 class Solution:
 
   @staticmethod
