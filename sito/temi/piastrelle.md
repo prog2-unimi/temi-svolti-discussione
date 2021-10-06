@@ -228,8 +228,8 @@ per cui, tra l'altro, non c'è bisogno di aggiungerlo come metodo astratto).
 Inoltre, poiché l'unico attributo della classe è il `costo` che è di tipo
 primitivo, è sufficiente indicare il modificatore `final` per garantire che il
 suo valore resti immutabile; sebbene potrebbe essere esposto come `public`, per
-soddisfare l'interfaccia è necessario l'uso di un *getter*. Unica accortezza,
-dal momento che il costo deve essere positivo (unico invariante di
+soddisfare l'interfaccia è necessario implementare un *getter*. Unica
+accortezza, dal momento che il costo è sempre positivo (unico invariante di
 rappresentazione della classe) è necessario controllarne il valore in
 costruzione (come mostra la linea evidenziata nel codice precedente).
 
@@ -388,3 +388,7 @@ componenti e la popola con un ciclo in cui vengono lette le quantità e gli
 indici dei rivestimenti da utilizzare per costruire la pavimentazione;
 l'invocazione `rivestimento.get(...)` è quella che permette di ottenere il
 rivestimento dato il suo indice.
+
+:::{note}
+Puoi trovare il [codice integrale](https://github.com/prog2-unimi/temi-svolti/tree/master/temi/piastrelle) della soluzione nell'apposito repository.
+:::
