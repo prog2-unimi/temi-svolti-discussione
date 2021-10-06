@@ -1,6 +1,34 @@
+/**
+ * Una <em>piastrella romboidale</em> immutabile, la cui rappresentazione è
+ * costituita dalla lunghezza (sempre positiva) delle sue diagonali
+ * <em>minore</em> e <em>maggiore</em> (memorizzate in due attributi intero, non
+ * modificabili e pubblici, fatto che rende non necessari i <em>getter</em>).
+ */
 public class PiastrellaRomboidale extends Piastrella {
-  public final int minore, maggiore;
 
+  /**
+   * La diagonale minore, è sempre positiva (e non maggiore della diagonale
+   * maggiore).
+   */
+  public final int minore;
+
+  /**
+   * La diagonale maggiore, è sempre positiva (e non minore della diagonale
+   * minore).
+   */
+  public final int maggiore;
+
+  /**
+   * Costruisce una piastrella dato il suo <em>costo</em> e la lunghezza delle
+   * due <em>diagonali</em>; non è necessario specificare le diagonali in ordine
+   * di grandezza.
+   *
+   * @param prima una delle diagonali.
+   * @param seconda l'altra diagonale.
+   * @param costoUnitario il costo.
+   * @throws IllegalArgumentException se il costo, o una delle diagonali, non
+   *         sono positivi.
+   */
   public PiastrellaRomboidale(final int prima, final int seconda, final int costoUnitario) {
     super(costoUnitario);
     if (prima <= 0)

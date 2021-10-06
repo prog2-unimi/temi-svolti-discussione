@@ -1,20 +1,30 @@
+/**
+ * Una <em>piastrella</em> astratta ed immutabile, che implementa parzialmente
+ * l'interfaccia {@link Rivestimento}, la sua rappresentazione è un singolo
+ * attributo intero, necessario ad implementare il metodo {@link #costo}.
+ */
 public abstract class Piastrella implements Rivestimento {
 
-  public final int costoUnitario;
+  /**
+   * Il costo della piastrella, è sempre positivo.
+   */
+  private final int costo;
 
-  public Piastrella(final int costoUnitario) {
+  /**
+   * Costruisce una piastrella dato il suo costo.
+   *
+   * @param costo il costo.
+   * @throws IllegalArgumentException se il costo non è positivo.
+   */
+  public Piastrella(final int costo) {
     // SOF: rappr
-    if (costoUnitario <= 0) throw new IllegalArgumentException();
+    if (costo <= 0) throw new IllegalArgumentException("Il costo dev'essere positivo.");
   	// EOF: rappr
-    this.costoUnitario = costoUnitario;
-  }
-
-  public int costo() {
-    return costoUnitario;
+    this.costo = costo;
   }
 
   @Override
-  public String toString() {
-    return this.getClass().getSimpleName();
+  public int costo() {
+    return costo;
   }
 }

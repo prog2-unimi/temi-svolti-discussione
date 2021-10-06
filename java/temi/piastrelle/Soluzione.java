@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * La classe di <em>test</em>.
+ */
 public class Soluzione {
 
   public static void main(String[] args) {
