@@ -7,6 +7,7 @@ public interface Vettore {
   Vettore più(final Vettore v);
   // EOF: signatures
 
+  // SOF: default
   default boolean conforme(final Vettore v) {
     return dim() == v.dim();
   }
@@ -14,5 +15,6 @@ public interface Vettore {
   default boolean conforme(final Matrice M) {
     return dim() == M.dim();
   }
+  // EOF: default
 
 }

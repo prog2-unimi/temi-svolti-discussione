@@ -185,3 +185,57 @@ operazioni sono possibili solo se le matrici, o la matrice e il vettore, hanno
 la stessa dimensione (ossia sono conformi).
 
 ## La soluzione
+
+### I vettori
+
+Iniziamo con una osservazione sull'interfaccia: prima di effettuare una
+operazione tra vettori o matrici è necessario sapere se due vettori sono
+*conformi*, o se un vettore è *conforme* ad una matrice; dato che tale
+informazione dipende solo dalla dimenzione (che è una competenza espressa dalle
+interfacce), può aver senso aggiugnere due metodi di *default*
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('Vettore', 'default')
+```
+
+Ora, la classe concreta da implementare è completamente specificata, non solo
+astrattamente, ma anche dal punto di vista della rappresentazione; resta solo da
+stabilire che (come è plausibile dato il tipo d'uso descritto dal progetto) il
+vettore sia *immutabile*. Date le scelte fatte è immediato concludere che gli
+invarianti sono che il vettore non sia un riferimento nullo e che contenga
+almeno un elemento e che tali invarianti possono essere controllati solo in
+costruzione
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('VettoreDenso', 'rapcostr')
+```
+
+Osservate l'uso del metodo `clone` che ha l'obiettivo di costruire una copia
+dell'array passato come argomento; questo accorgimento serve ad evitare che chi
+ha invocato li costruttore possa mantenere un riferimento all'array che
+costituisce la rappresentazione del vettore.
+
+L'implementazione dei metodi prescritti dall'interfaccia è ovvia, se ne rimanda
+la presentazione alla sezione sulle estensioni (dato cha l'aggiunta del vettore
+nullo rende in parte più sofisticati anche i metodi del vettore qui sviluppato).
+
+### Le matrici
+
+Per iniziare, è opportuno sviluppare una *interfaccia* `Matrice` che esprima le
+competenze richieste per tutte le matrici
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('Matrice', 'signatures')
+```
+
+Come nel caso dei vettori, può aver senso aggiungere dei metodi di *default* che
+consentano di valutare la conformità e (per comodità) se due coordinate siano
+valide.
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('Matrice', 'default')
+```

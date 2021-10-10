@@ -3,6 +3,7 @@ import java.util.Objects;
 
 public class VettoreDenso implements Vettore {
 
+  // SOF: rapcostr
   private final int[] val;
 
   public VettoreDenso(final int dim) {
@@ -15,6 +16,7 @@ public class VettoreDenso implements Vettore {
     if (val.length == 0) throw new IllegalArgumentException("Il vettore deve comprendere almeno un valore.");
     this.val = val.clone(); // per proteggere la rappresentazione
   }
+  // EOF: rapcostr
 
   @Override
   public int dim() {
@@ -23,7 +25,7 @@ public class VettoreDenso implements Vettore {
 
   @Override
   public int val(final int i) {
-    if (i < 0 || i >= val.length) throw new ArrayIndexOutOfBoundsException();
+    if (i < 0 || i >= val.length) throw new IndexOutOfBoundsException("L'indice eccede le dimensioni del vettore.");
     return val[i];
   }
 
