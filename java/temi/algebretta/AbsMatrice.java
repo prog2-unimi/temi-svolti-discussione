@@ -1,4 +1,5 @@
 public abstract class AbsMatrice implements Matrice {
+  // SOF: tostring
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder();
@@ -12,4 +13,5 @@ public abstract class AbsMatrice implements Matrice {
     sb.append("]");
     return sb.toString();
   }
+  // EOF: tostring
 }

@@ -203,9 +203,8 @@ Ora, la classe concreta da implementare è completamente specificata, non solo
 astrattamente, ma anche dal punto di vista della rappresentazione; resta solo da
 stabilire che (come è plausibile dato il tipo d'uso descritto dal progetto) il
 vettore sia *immutabile*. Date le scelte fatte è immediato concludere che gli
-invarianti sono che il vettore non sia un riferimento nullo e che contenga
-almeno un elemento e che tali invarianti possono essere controllati solo in
-costruzione
+invarianti sono che l'array non sia un riferimento nullo e che contenga almeno
+un elemento e che tali invarianti possono essere controllati solo in costruzione
 
 ```{code-cell}
 :tags:  [remove-input]
@@ -223,6 +222,8 @@ nullo rende in parte più sofisticati anche i metodi del vettore qui sviluppato)
 
 ### Le matrici
 
+#### L'interfaccia (e classe astratta)
+
 Per iniziare, è opportuno sviluppare una *interfaccia* `Matrice` che esprima le
 competenze richieste per tutte le matrici
 
@@ -239,3 +240,122 @@ valide.
 :tags:  [remove-input]
 sol.show('Matrice', 'default')
 ```
+
+Sarebbe utile sovrascrivere qui anche il metodo `toString` (che dipende solo
+dalle competenze nell'interfaccia), ma sfortunatamente non è possibile usare un
+metodo di default per farlo; a tale sopo può essere introdotta una *classe
+astratta* che implementi (parzialmente) l'intefacciae di fatto soltanto
+sovrascrivendo `toString`
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('AbsMatrice', 'tostring')
+```
+
+Ora non manca che sviluppare le classi per una matrice densa e per quelle
+speciali; ad alto livello ci stiamo apprestando a sviluppare questa gerarchia
+
+:::{mermaid}
+:align: center
+
+classDiagram
+class Matrice {
+  <<interface>>
+  dim()
+  val(int, int);
+  Matrice per(int);
+  Matrice per(Matrice);
+  Matrice più(Matrice);
+}
+class AbsMatrice {
+  <<abstract>>
+  toString()
+}
+class MatriceDensa
+class MatriceNulla
+class MatriceDiagonale
+class MatriceIdentità
+Matrice <|-- AbsMatrice
+AbsMatrice <|-- MatriceDensa
+AbsMatrice <|-- MatriceNulla
+AbsMatrice <|-- MatriceDiagonale
+AbsMatrice <|-- MatriceIdentità
+:::
+
+Si potrebbe essere tentati di ritenere la matrice identità come un sottotipo di
+matrice diagonale, questo ha senz'altro senso dal punto di vista algebrico, ma
+non da quello implementativo, come sarà più chiaro in seguito.
+
+#### La matrice densa
+
+Iniziamo dalla matrice densa, la cui rappresentazione sarà data da un array
+bidimensionale; anche in questo caso, essendo sensato che le matrici siano
+immutabili, gli invarianti sono che l'array non sia un riferimento a null, sia
+"quadrato" e di dimensione almeno 1 x 1 e possono essere controllati solo in
+costruzione.
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDensa', 'rapcostr')
+```
+
+Alcuni metodi sono banali da implementare:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDensa', 'dimval')
+```
+
+Nel caso delle operazioni, occorre prestare attenzione che in alcuni casi può
+essere vantaggioso restituire matrici speciali, come ad esempio nel caso di
+moltiplicazione per lo scalare zero (evidenziato nella seguente porzione di
+codice):
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDensa', 'peralpha', 'perzero')
+```
+
+o di somma con la matrice nulla, nel qual caso va restituita la matrice stessa
+(soluzione resa possibile dall'immutabilità):
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDensa', 'piumat', 'piuzero')
+```
+
+o di prodotto sia con la matrice nulla (che risulta nella matrice nulla), o con la matrice identità (che risulta la matrice stessa):
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDensa', 'permat', 'perspeciale')
+```
+
+#### La matrice nulla
+
+Caso del tutto banale è quello della matrice nulla. La sua rappresentazione coincide esclusivamente con la sua dimensione, quindi l'invariante e i costruttori sono cosa ovvia:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceNulla', 'rapcostr')
+```
+
+Alcuni metodi sono immediati da implementare:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceNulla', 'dimval')
+```
+Nel caso delle operazioni, le proprietà algebriche delle matrici si riflettono in modo ovvio nel codice:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceNulla', 'ops')
+```
+
+Unica accortezza è sollevare le necessari eccezioni in ottemperanza alle
+specifiche dell'interfaccia.
+
+#### La matrice diagonale
+
+Nel caso della matrice diagonale

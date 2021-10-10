@@ -4,8 +4,8 @@ public interface Matrice {
   int dim();
   int val(final int i, final int j);
   Matrice per(final int alpha);
-  Matrice per(final Matrice B);
   Matrice più(final Matrice B);
+  Matrice per(final Matrice B);
   // EOF: signatures
 
   Vettore per(final Vettore v);
