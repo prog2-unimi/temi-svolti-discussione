@@ -21,14 +21,16 @@ public class MatriceDensa extends AbsMatrice {
         this.mat[i][j] = mat[i][j];
     }
   }
-  // EOF: rapcostr
 
+  // SOF: copy
   public MatriceDensa(final Matrice A) {
     this(Objects.requireNonNull(A).dim());
     for (int i = 0; i < dim(); i++)
       for (int j = 0; j < dim(); j++)
         mat[i][j] = A.val(i, j);
   }
+  // EOF: copy
+  // EOF: rapcostr
 
   // SOF: dimval
   @Override

@@ -296,18 +296,22 @@ costruzione.
 
 ```{code-cell}
 :tags:  [remove-input]
-sol.show('MatriceDensa', 'rapcostr')
+sol.show('MatriceDensa', 'rapcostr', 'copy')
 ```
 
-Alcuni metodi sono banali da implementare:
+Si osservi il "costruttore copia" che potrà risultare comodo per costruire
+matrici densa a partire da altre matrici (in particolare, quelle speciali).
+
+Nel soddisfare l'interfaccia, osserviamo che alcuni metodi sono banali da
+implementare:
 
 ```{code-cell}
 :tags:  [remove-input]
 sol.show('MatriceDensa', 'dimval')
 ```
 
-Nel caso delle operazioni, occorre prestare attenzione che in alcuni casi può
-essere vantaggioso restituire matrici speciali, come ad esempio nel caso di
+Nel caso delle operazioni, occorre prestare attenzione che in alcune circostanze
+può essere vantaggioso restituire matrici speciali, come ad esempio nel caso di
 moltiplicazione per lo scalare zero (evidenziato nella seguente porzione di
 codice):
 
@@ -324,7 +328,8 @@ o di somma con la matrice nulla, nel qual caso va restituita la matrice stessa
 sol.show('MatriceDensa', 'piumat', 'piuzero')
 ```
 
-o di prodotto sia con la matrice nulla (che risulta nella matrice nulla), o con la matrice identità (che risulta la matrice stessa):
+o di prodotto sia con la matrice nulla (che risulta nella matrice nulla), o con
+la matrice identità (che risulta la matrice stessa):
 
 ```{code-cell}
 :tags:  [remove-input]
@@ -333,20 +338,24 @@ sol.show('MatriceDensa', 'permat', 'perspeciale')
 
 #### La matrice nulla
 
-Caso del tutto banale è quello della matrice nulla. La sua rappresentazione coincide esclusivamente con la sua dimensione, quindi l'invariante e i costruttori sono cosa ovvia:
+Caso del tutto banale è quello della matrice nulla. La sua rappresentazione
+coincide esclusivamente con la sua dimensione, quindi l'invariante e i
+costruttori sono cosa ovvia:
 
 ```{code-cell}
 :tags:  [remove-input]
 sol.show('MatriceNulla', 'rapcostr')
 ```
 
-Alcuni metodi sono immediati da implementare:
+Alcune competenze prescritte dall'interfaccia sono immediati da implementare:
 
 ```{code-cell}
 :tags:  [remove-input]
 sol.show('MatriceNulla', 'dimval')
 ```
-Nel caso delle operazioni, le proprietà algebriche delle matrici si riflettono in modo ovvio nel codice:
+
+Nel caso delle operazioni, le proprietà algebriche delle matrici si riflettono
+in modo ovvio nel codice:
 
 ```{code-cell}
 :tags:  [remove-input]
@@ -358,4 +367,82 @@ specifiche dell'interfaccia.
 
 #### La matrice diagonale
 
-Nel caso della matrice diagonale
+Nel caso della matrice diagonale, essendo sufficiente ricordare solo i valori
+lungo la diagonale, la rappresentazione è un array di interi (per cui valgono
+considerazioni analoghe alle precedenti per costruttori e invariante):
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDiagonale', 'rapcostr')
+```
+
+Alcuni metodi prescritti dall'interfaccia hanno al solito implementazioni ovvie:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDiagonale', 'dimval')
+```
+
+Come per la matrice densa, nel caso delle operazioni, in alcuni circostanze può
+essere vantaggioso restituire matrici speciali, come ad esempio nel caso di
+moltiplicazione per lo scalare zero (evidenziato nella seguente porzione di
+codice):
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDiagonale', 'peralpha', 'perzero')
+```
+
+o di somma con la matrice nulla, nel qual caso va ancora restituita la matrice
+stessa:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDiagonale', 'piumat', 'piuzero')
+```
+
+o di prodotto sia con la matrice nulla (che risulta nella matrice nulla), o con
+la matrice identità (che risulta la matrice stessa):
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDiagonale', 'permat', 'perspeciale')
+```
+
+#### La matrice identità
+
+Come nel caso della matrice nulla, anche per l'identità è sufficiente ricordare
+la sola dimensione, quindi rappresentazione, invariante e costruttori sono:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceIdentità', 'rapcostr')
+```
+
+Al solito, alcune competenze prescritte dall'interfaccia sono immediate da
+implementare:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceIdentità', 'dimval')
+```
+
+Il prodotto per scalare e la somma trattano al solito in modo speciale il caso
+dello zero:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceIdentità', 'peralpha', 'perzero')
+```
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceIdentità', 'piumat', 'piuzero')
+```
+
+mentre il caso del prodotto è elementare per via delle proprietà algebriche:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceIdentità', 'permat')
+```
