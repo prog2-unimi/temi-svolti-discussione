@@ -58,11 +58,13 @@ public class MatriceIdentità extends AbsMatrice {
   }
   // EOF: permat
 
+  // SOF: pervec
   @Override
   public Vettore per(final Vettore v) {
     Objects.requireNonNull(v);
     if (!conforme(v)) throw new IllegalArgumentException("Il vettore e la matrice non sono conformi.");
     return v;
   }
+  // EOF: pervec
 
 }

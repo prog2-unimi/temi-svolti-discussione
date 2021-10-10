@@ -45,11 +45,13 @@ public class MatriceNulla extends AbsMatrice {
   }
   // EOF: ops
 
+  // SOF: pervec
   @Override
   public VettoreNullo per(final Vettore v) {
     Objects.requireNonNull(v);
     if (!conforme(v)) throw new IllegalArgumentException("Il vettore e la matrice non sono conformi.");
     return new VettoreNullo(dim);
   }
+  // EOF: pervec
 
 }

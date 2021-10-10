@@ -93,15 +93,19 @@ public class MatriceDensa extends AbsMatrice {
   }
   // EOF: permat
 
+  // SOF: pervec
   @Override
   public Vettore per(final Vettore v) {
     Objects.requireNonNull(v);
     if (!conforme(v)) throw new IllegalArgumentException("Il vettore e la matrice non sono conformi.");
+    // SOF: pervzero
     if (v instanceof VettoreNullo) return v;
+    // EOF: pervzero
     final int[] temp = new int[mat.length];
     for (int i = 0; i < mat.length; i++)
       for (int j = 0; j < mat.length; j++)
         temp[i] += mat[i][j] * v.val(j);
     return new VettoreDenso(temp);
   }
+  // EOF: pervec
 }

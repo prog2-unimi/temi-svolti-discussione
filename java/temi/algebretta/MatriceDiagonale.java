@@ -64,14 +64,19 @@ public class MatriceDiagonale extends AbsMatrice {
   }
   // EOF: permat
 
+  // SOF: pervec
   @Override
   public Vettore per(final Vettore v) {
     Objects.requireNonNull(v);
     if (!conforme(v)) throw new IllegalArgumentException("Il vettore e la matrice non sono conformi.");
+    // SOF: pervzero
     if (v instanceof VettoreNullo) return v;
+    // EOF: pervzero
     final int[] temp = new int[diagonale.length];
     for (int i = 0; i < diagonale.length; i++) temp[i] = diagonale[i] * v.val(i);
     return new VettoreDenso(temp);
   }
+  // EOF: pervec
+
 
 }

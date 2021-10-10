@@ -446,3 +446,93 @@ mentre il caso del prodotto è elementare per via delle proprietà algebriche:
 :tags:  [remove-input]
 sol.show('MatriceIdentità', 'permat')
 ```
+
+### Le estensioni
+
+#### Il vettore nullo
+
+Nell'implementazione dei prodotti matrice vettore, avendo a che fare con la
+matrice nulla, può risultare utile avere una implementazione del vettore nullo. Questo completa la gerarchia relativa ai vettori che diventa:
+
+:::{mermaid}
+:align: center
+
+classDiagram
+class Vettore {
+  <<interface>>
+  dim()
+  val(int, int);
+  Vettore per(int);
+  Vettore più(Vettore);
+}
+class VettoreDenso
+class VettoreNullo
+Vettore <|-- VettoreDenso
+Vettore <|-- VettoreNullo
+:::
+
+
+
+Iniziamo con la rappresentazione che, come nel caso della matrice nulla, è data
+soltanto dalla dimensione:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('VettoreNullo', 'rapcostr')
+```
+
+Le competenze più immediate da implementare sono:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('VettoreNullo', 'dimval')
+```
+
+Le operazioni sono anch'esse semplici, date le proprietà algebriche:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('VettoreNullo', 'ops')
+```
+
+#### La moltiplicazione matrice vettore
+
+Per aggiungere la funzionalità della moltiplicazione tra matrice e vettore è
+sufficiente aggiungere una competenza all'interfaccia
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('Matrice', 'pervec')
+```
+
+che poi sarà implementata in modo semplice nei vari tipi di matrice, a partire
+dalla densa:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDensa', 'pervec', 'pervzero')
+```
+
+alla nulla:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceNulla', 'pervec')
+```
+
+per passare alla diagonale:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceDiagonale', 'pervec', 'pervzero')
+```
+
+e infine all'identità:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('MatriceIdentità', 'pervec')
+```
+
+Si osservi il codice evidenziato che tratta i casi speciali dovuti al vettore
+nullo (che sono rilevanti solo per la matrice densa e diagonale).

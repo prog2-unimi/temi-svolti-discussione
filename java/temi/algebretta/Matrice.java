@@ -8,7 +8,9 @@ public interface Matrice {
   Matrice per(final Matrice B);
   // EOF: signatures
 
+  // SOF: pervec
   Vettore per(final Vettore v);
+  // EOF: pervec
 
   // SOF: default
   default boolean conforme(final Vettore v) {
