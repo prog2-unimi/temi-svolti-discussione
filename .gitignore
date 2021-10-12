@@ -1,2 +1,7 @@
-build/
+.classpath
 .envrc
+.gradle/
+.project
+.settings
+bin/
+build/

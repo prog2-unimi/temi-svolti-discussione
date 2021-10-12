@@ -471,8 +471,6 @@ Vettore <|-- VettoreDenso
 Vettore <|-- VettoreNullo
 :::
 
-
-
 Iniziamo con la rappresentazione che, come nel caso della matrice nulla, è data
 soltanto dalla dimensione:
 

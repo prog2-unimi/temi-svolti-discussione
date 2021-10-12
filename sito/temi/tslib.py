@@ -10,7 +10,7 @@ from IPython.display import HTML
 
 REMOVE_COMMENT_RE = re.compile(r'(^[ \t]*\/\*(.*?)\*\/(\n|\r)?)|([ \t]*\/\/(?! +(S|E)OF:).*?(\n|\r))', re.DOTALL | re.MULTILINE)
 
-DIRT_DIR = Path('../../java/temi')
+DIRT_DIR = Path('../../src/main/java/it/unimi/di/prog2/temisvolti/')
 CLEAN_DIR = Path('../../../temi-svolti/temi')
 CLEAN_URL = 'https://github.com/prog2-unimi/temi-svolti/blob/master/temi'
 class Solution:
@@ -20,6 +20,8 @@ class Solution:
     lines = []
     label2se = {}
     for line in source.splitlines():
+      m = re.match(r'^package.*', line)
+      if m: continue
       m = re.match(r'[ \t]*\/\/ +(S|E)OF:(.*)', line)
       if m:
         what = m.group(1).strip()
