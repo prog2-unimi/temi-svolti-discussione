@@ -20,7 +20,6 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 package it.unimi.di.prog2.temisvolti.piastrelle;
-
 /**
  * Una <em>piastrella romboidale</em> immutabile, la cui rappresentazione è costituita dalla
  * lunghezza (sempre positiva) delle sue diagonali <em>minore</em> e <em>maggiore</em> (memorizzate
@@ -46,9 +45,9 @@ public class PiastrellaRomboidale extends Piastrella {
    */
   public PiastrellaRomboidale(final int prima, final int seconda, final int costoUnitario) {
     super(costoUnitario);
-    if (prima <= 0) throw new IllegalArgumentException("La prima diagonale dev'essere positiva");
+    if (prima <= 0) throw new IllegalArgumentException("La prima diagonale dev'essere positiva.");
     if (seconda <= 0)
-      throw new IllegalArgumentException("La seconda diagonale dev'essere positiva");
+      throw new IllegalArgumentException("La seconda diagonale dev'essere positiva.");
     // SOF: rappr
     if (prima < seconda) {
       minore = prima;

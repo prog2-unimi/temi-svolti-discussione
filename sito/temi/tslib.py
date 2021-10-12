@@ -8,7 +8,14 @@ from pygments.formatters import HtmlFormatter
 
 from IPython.display import HTML
 
+REMOVE_PACKAGE_RE = re.compile(r'(^package [^\n\r]*(\n|\r))', re.DOTALL | re.MULTILINE)
 REMOVE_COMMENT_RE = re.compile(r'(^[ \t]*\/\*(.*?)\*\/(\n|\r)?)|([ \t]*\/\/(?! +(S|E)OF:).*?(\n|\r))', re.DOTALL | re.MULTILINE)
+
+def remove_comment(src):
+  return REMOVE_COMMENT_RE.sub('', src).strip()
+
+def remove_package(src):
+  return REMOVE_PACKAGE_RE.sub('', src).strip()
 
 DIRT_DIR = Path('../../src/main/java/it/unimi/di/prog2/temisvolti/')
 CLEAN_DIR = Path('../../../temi-svolti/temi')
@@ -19,9 +26,7 @@ class Solution:
   def extract_markers(source):
     lines = []
     label2se = {}
-    for line in source.splitlines():
-      m = re.match(r'^package.*', line)
-      if m: continue
+    for line in source.strip().splitlines():
       m = re.match(r'[ \t]*\/\/ +(S|E)OF:(.*)', line)
       if m:
         what = m.group(1).strip()
@@ -35,14 +40,15 @@ class Solution:
     return label2se, lines
 
   def __init__(self, name):
+    if not (DIRT_DIR / name).is_dir(): raise ValueError('Directory not found.')
     self.name = name
     self._ghse, self._lse, self._lines = {}, {}, {}
     for path in (DIRT_DIR / name).glob('*.java'):
       source = path.read_text()
-      self._ghse[path.stem], clean = Solution.extract_markers(source)
+      self._ghse[path.stem], clean = Solution.extract_markers(remove_package(source))
       if CLEAN_DIR.is_dir():
         (CLEAN_DIR / name / path.name).write_text('\n'.join(clean))
-      self._lse[path.stem], self._lines[path.stem] = Solution.extract_markers(REMOVE_COMMENT_RE.sub('', source))
+      self._lse[path.stem], self._lines[path.stem] = Solution.extract_markers(remove_package(remove_comment(source)))
 
   def show(self, cls, fragment = None, highlight = None, linenos = False):
     ghse, lse, lines = self._ghse[cls], self._lse[cls], self._lines[cls]
