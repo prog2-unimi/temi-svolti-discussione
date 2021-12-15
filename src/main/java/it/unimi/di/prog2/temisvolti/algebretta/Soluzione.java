@@ -44,11 +44,11 @@ public class Soluzione {
   public static void main(String[] args) {
     try (final Scanner s = new Scanner(System.in)) {
       while (s.hasNextLine()) {
-        // SOF: body
         final String[] lor = Parser.partiOperazione(s.nextLine());
         final char op = lor[1].charAt(0);
         final String left = lor[0], right = lor[2];
         if (op == '+') {
+          // SOF: add
           if (Parser.èVettore(left) && Parser.èVettore(right)) {
             Vettore u = new VettoreDenso(Parser.valoriVettore(left));
             Vettore v = new VettoreDenso(Parser.valoriVettore(right));
@@ -58,8 +58,10 @@ public class Soluzione {
             Matrice N = valueOf(Parser.tipoMatrice(right), Parser.valoriMatrice(right));
             System.out.println(M.più(N));
           }
+          // EOF: add
         } else { // op == '*', altrimenti partiOperazione solleva eccezione
-          if (Parser.èScalare(left)) {
+        if (Parser.èScalare(left)) {
+            // SOF: alphamul
             int alpha = Parser.valoreScalare(left);
             if (Parser.èVettore(right)) {
               Vettore v = new VettoreDenso(Parser.valoriVettore(right));
@@ -68,7 +70,9 @@ public class Soluzione {
               Matrice M = valueOf(Parser.tipoMatrice(right), Parser.valoriMatrice(right));
               System.out.println(M.per(alpha));
             }
+            // EOF: alphamul
           } else if (Parser.èMatrice(left)) {
+            // SOF: mul
             Matrice M = valueOf(Parser.tipoMatrice(left), Parser.valoriMatrice(left));
             if (Parser.èMatrice(right)) {
               Matrice N = valueOf(Parser.tipoMatrice(right), Parser.valoriMatrice(right));
@@ -77,6 +81,7 @@ public class Soluzione {
               Vettore v = new VettoreDenso(Parser.valoriVettore(right));
               System.out.println(M.per(v));
             }
+            // EOF: mul
           }
         }
       }

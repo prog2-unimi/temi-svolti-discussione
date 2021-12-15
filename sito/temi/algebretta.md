@@ -17,9 +17,6 @@ sol = Solution('algebretta')
 ```
 # Algebretta
 
-:::{warning}
-Questo versione della soluzione è **preliminare** e potrebbe subire modifiche.
-:::
 ## La traccia
 
 Scopo della prova è progettare e implementare una gerarchia di oggetti utili a
@@ -108,13 +105,13 @@ elenco di righe separate da punti e virgola e racchiuse tra parentesi quadre,
 dove ogni riga è data da un elenco di interi separati da virgole.
 Pertanto, la stringa `(1, 2, 3, 4, 5, 6, 7, 8, 9)` rappresenta il vettore
 
-	1	2	3	4	5	6	7	8	9
+    1 2 3 4 5 6 7 8 9
 
 mentre la stringa `[1, 2, 3; 4, 5, 6; 7, 8, 9]` rappresenta la matrice
 
-	1	2	3
-	4	5	6
-	7	8	9
+    1 2 3
+    4 5 6
+    7 8 9
 
 Alcune matrici hanno una rappresentazione particolare:
 
@@ -194,8 +191,8 @@ la stessa dimensione (ossia sono conformi).
 Iniziamo con una osservazione sull'interfaccia: prima di effettuare una
 operazione tra vettori o matrici è necessario sapere se due vettori sono
 *conformi*, o se un vettore è *conforme* ad una matrice; dato che tale
-informazione dipende solo dalla dimenzione (che è una competenza espressa dalle
-interfacce), può aver senso aggiugnere due metodi di *default*
+informazione dipende solo dalla dimensione (che è una competenza espressa dalle
+interfacce), può aver senso aggiungere due metodi (sovraccaricati) di *default*
 
 ```{code-cell}
 :tags:  [remove-input]
@@ -220,7 +217,7 @@ ha invocato li costruttore possa mantenere un riferimento all'array che
 costituisce la rappresentazione del vettore.
 
 L'implementazione dei metodi prescritti dall'interfaccia è ovvia, se ne rimanda
-la presentazione alla sezione sulle estensioni (dato cha l'aggiunta del vettore
+la presentazione alla sezione sulle estensioni (dato che l'aggiunta del vettore
 nullo rende in parte più sofisticati anche i metodi del vettore qui sviluppato).
 
 ### Le matrici
@@ -247,7 +244,7 @@ sol.show('Matrice', 'default')
 Sarebbe utile sovrascrivere qui anche il metodo `toString` (che dipende solo
 dalle competenze nell'interfaccia), ma sfortunatamente non è possibile usare un
 metodo di default per farlo; a tale sopo può essere introdotta una *classe
-astratta* che implementi (parzialmente) l'intefacciae di fatto soltanto
+astratta* che implementi (parzialmente) l'interfaccia di fatto soltanto
 sovrascrivendo `toString`
 
 ```{code-cell}
@@ -365,14 +362,15 @@ in modo ovvio nel codice:
 sol.show('MatriceNulla', 'ops')
 ```
 
-Unica accortezza è sollevare le necessari eccezioni in ottemperanza alle
+Unica accortezza è sollevare le necessarie eccezioni in ottemperanza alle
 specifiche dell'interfaccia.
 
 #### La matrice diagonale
 
 Nel caso della matrice diagonale, essendo sufficiente ricordare solo i valori
-lungo la diagonale, la rappresentazione è un array di interi (per cui valgono
-considerazioni analoghe alle precedenti per costruttori e invariante):
+lungo la diagonale, la rappresentazione è un array monodimensionale di interi
+(per cui valgono considerazioni analoghe alle precedenti per costruttori e
+invariante):
 
 ```{code-cell}
 :tags:  [remove-input]
@@ -455,7 +453,8 @@ sol.show('MatriceIdentità', 'permat')
 #### Il vettore nullo
 
 Nell'implementazione dei prodotti matrice vettore, avendo a che fare con la
-matrice nulla, può risultare utile avere una implementazione del vettore nullo. Questo completa la gerarchia relativa ai vettori che diventa:
+matrice nulla, può risultare utile avere una implementazione del vettore nullo.
+Questo completa la gerarchia relativa ai vettori che diventa:
 
 :::{mermaid}
 :align: center
@@ -537,3 +536,96 @@ sol.show('MatriceIdentità', 'pervec')
 
 Si osservi il codice evidenziato che tratta i casi speciali dovuti al vettore
 nullo (che sono rilevanti solo per la matrice densa e diagonale).
+
+### L'uso di `instanceof`
+
+In generale, differenziare il comportamento all'interno del codice di un metodo
+tramite l'uso di `instanceof` (o di strategie analoghe) è un segno di cattiva
+progettazione ad oggetti: il modo più indicato, nella programmazione orientata
+agli oggetti, per gestire il polimorfismo è infatti l'uso della sovrascrittura e
+del sovraccaricamento dei metodi.
+
+Va però osservato che, per via del meccanismo di dispatching, operando su
+istanze di tipo apparente `Matrice` e `Vettore`, potrebbe capitare che non venga
+di fatto mai eseguito il codice "ottimizzato": la scelta della segnatura del
+metodo da eseguire effettua la ricerca sul tipo apparente dell'istanza su cui è
+invocato e del parametro passato!
+
+Per ovviare a questo limite, nel caso di una gerarchia come la presente che
+comprende pochi tipi e che difficilmente è soggetta ad ulteriore espansione (non
+ci sono molte altre matrici "speciali"), l'uso di `instanceof` può costituire
+una ragionevole ottimizzazione (anche se certamente non necessaria ai fini della
+correttezza).
+
+### La classe di test
+
+Nella scrittura è possibile avvalersi della classe di utilità `Parser` che offre
+i seguenti metodi statici (commentati nel Javadoc della classe stessa).
+
+```{code-block} java
+  public static String[] partiOperazione(final String linea);
+  public static boolean èMatrice(final String operando);
+  public static char tipoMatrice(final String operando);
+  public static int[][] valoriMatrice(final String operando);
+  public static boolean èVettore(final String operando);
+  public static int[] valoriVettore(final String operando);
+  public static boolean èScalare(final String operando);
+  public static int valoreScalare(final String operando);
+```
+
+Tali metodi possono essere utilizzati, in un ciclo che consumi l'input per
+righe, per suddividere ciascuna riga nelle parti dell'operazione (operandi e
+operatore) e trattare adeguatamente addizioni e moltiplicazioni (gestendo in tal
+caso l'eventualità che l'operando di sinistra sia, o meno, scalare):
+
+```{code-block} java
+    try (final Scanner s = new Scanner(System.in)) {
+      while (s.hasNextLine()) {
+        final String[] lor = Parser.partiOperazione(s.nextLine());
+        final char op = lor[1].charAt(0);
+        final String left = lor[0], right = lor[2];
+        if (op == '+') {
+          ...
+        } else { // op == '*', altrimenti partiOperazione solleva eccezione
+          if (Parser.èScalare(left)) {
+            ...
+          } else if (Parser.èMatrice(left)) {
+            ...
+          }
+        }
+      }
+    }
+```
+
+La creazione delle matrici può essere effettuata tramite un metodo di
+fabbricazione che tenga conto del tipo di matrice:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('Soluzione', 'fabmat')
+```
+
+Avendo costruito tale struttura, la parte delle addizioni è molto semplice,
+basta distinguere i casi di somma tra vettori, o matrici:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('Soluzione', 'add')
+```
+
+Nel caso della moltiplicazione per scalare, di nuovo basta distinguere il caso
+vettore, o matrice:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('Soluzione', 'alphamul')
+```
+
+Per finire, nella moltiplicazione in cui l'operando di sinistra è una matrice,
+basta distinguere il caso in cui l'altro operando sia di nuovo o un vettore, o
+una matrice:
+
+```{code-cell}
+:tags:  [remove-input]
+sol.show('Soluzione', 'mul')
+```

@@ -25,10 +25,11 @@ rappresentare le informazioni necessarie alla soluzione del problema assegnato.
 
 In questa fase, soprattutto nella determinazione di quali siano le competenze
 *adeguate* per ciascuna entità, è bene non limitarsi strettamente all'obiettivo
-di implementare la class di test descritta al termine del tema d'esame, ma
+di implementare la classe di test descritta al termine del tema d'esame, ma
 riflettere per ciascuna entità su quali siano le competenze minime perché la sua
-specifica sia ragionevole; a questo riguardo, se una entità raccoglie certe
-informazioni, è necessario che sia possibile accedervi.
+specifica sia ragionevole; a questo riguardo, in particolare, se una entità
+raccoglie certe informazioni, è necessario che sia possibile accedervi (con
+opportuni metodi osservazionali).
 
 Una volta ottenuta una specificazione ragionevole, è il momento di dedicarsi al
 passo successivo (più implementativo): si tratterà di scegliere la
@@ -47,14 +48,15 @@ Il tema procede con questa raccomandazione:
 > sorgente.
 
 è inutile ribadire che l'obiettivo non è quello di ottenere del codice tale che
-la classe di test produca un output verosimile: tale compito può essere ottenuto
-anche prescindendo completamente dalla conoscenza ed applicazione delle
+la classe di test produca un output verosimile: tale risultato può essere
+ottenuto anche prescindendo completamente dalla conoscenza ed applicazione delle
 metodiche impartite nell'insegnamento! Il punto cruciale è testimoniare, sia
 attraverso il codice (se sufficientemente esplicito) e la documentazione, la
 propria competenza nell'utilizzo del paradigma di programmazione orientata agli
 oggetti.
 
-A ribadire ulteriormente la scarsa rilevanza degli aspetti sintattici, la parte generale del tema si conclude con questa osservazione:
+A ribadire ulteriormente la scarsa rilevanza degli aspetti sintattici, la parte
+generale del tema si conclude con questa osservazione:
 
 > Presti particolare attenzione agli *errori di compilazione*: il contenuto dei
 > file che il compilatore si rifiuta di compilare *non sarà affatto esaminato*. Se
@@ -63,6 +65,6 @@ A ribadire ulteriormente la scarsa rilevanza degli aspetti sintattici, la parte 
 > commenti; resta inteso che tale codice commentato non sarà valutato.
 
 che significa che se da un lato non è tollerabile per uno studente del secondo
-anon consegnare codice che non compila, è viceversa ammissibile avere una
-implementazione parziale (purché ben specificata e costruita) in cui alcune
+anno consegnare codice che non compila, è viceversa del tutto ammissibile avere
+una implementazione parziale (purché ben specificata e costruita) in cui alcune
 porzioni di codice siano assenti, o commentate.
