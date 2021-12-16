@@ -60,7 +60,7 @@ public class Soluzione {
           }
           // EOF: add
         } else { // op == '*', altrimenti partiOperazione solleva eccezione
-        if (Parser.èScalare(left)) {
+          if (Parser.èScalare(left)) {
             // SOF: alphamul
             int alpha = Parser.valoreScalare(left);
             if (Parser.èVettore(right)) {
