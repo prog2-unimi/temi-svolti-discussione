@@ -470,3 +470,74 @@ il nome della *entry* da aggiungere:
 :tags: [remove-input]
 sol.show('FileSystem', 'make')
 ```
+
+### La shell
+
+La **shell** è molto semplice da realizzare: può fare affidamento sulle
+competenze del *filesystem* per svolgere il suo compito, oltre al *filesystem* è
+sufficiente che memorizzi la *directory corrente* (ossia il percorso assoluto di
+una *directory* del *filesystem*).
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Shell', 'rep')
+```
+
+L'invariante è elementare: gli attributi non devono essere `null` e `cwd` deve
+essere un *path* assoluto che corrispondere sempre ad una *directory*.
+
+Dal momento che in molti comandi può essere specificato un *path* sia assoluto
+che relativo, è comodo avere una funzione privata che risolva questi ultimi
+rispetto alla *directory corrente*:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Shell', 'resolve')
+```
+
+La funzione principale da implementare è l'*interprete* che, letta una riga per
+volta, la suddivida (con uno `Scanner`) nel comando e negli eventuali argomenti
+e agisca di conseguenza (tramite uno `switch`):
+
+```{code-block} java
+for (;;) {
+  final String line = con.readLine();
+  try (final Scanner s = new Scanner(line)) {
+    final String cmd = s.next();
+    switch (cmd) {
+      case "mkdir":
+        ...
+      case "mkfile":
+        ...
+      case "tree":
+        ...
+      case "ls":
+        ...
+      case "pwd":
+        ...
+      case "cd":
+        ...
+      case "size":
+        ...
+      default:
+        System.err.println(PREFIX + "shell: " + cmd + ": command not found!");
+    }
+  } catch (NoSuchElementException e) {
+    System.err.println(PREFIX + "shell: malformed command: " + line);
+  } catch (IOException fse) {
+    System.err.println(PREFIX + "shell: error: " + fse.getMessage());
+  }
+}
+```
+
+I comandi saranno eseguiti delegando al *filesystem* le azioni da compiere,
+emettendo gli eventuali errori.
+
+Per emettere la directory sotto forma d'albero la soluzione più semplice è usare
+la ricorsione:
+
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Shell', 'tree')
+```

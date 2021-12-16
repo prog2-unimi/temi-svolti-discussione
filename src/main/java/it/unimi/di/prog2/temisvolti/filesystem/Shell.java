@@ -29,24 +29,64 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Classe mutabile che rappreseta una <em>shell</em>
+ *
+ */
 public class Shell {
 
+  /** Prefisso per l'output. */
   private static final String PREFIX = ">>> ";
 
+  // SOF: rep
+  /** Il filesystem su cui opera la shell. */
   private final FileSystem fs;
+  /** Il path assoluto della directory corrente */
   private Path cwd;
 
+  /**
+   * Costruisce una <em>shell</em> dato il filesystem.
+   *
+   * <p> La <em>directory corrente</em> è inzialmente la radice del <em>filesystem</em>.
+   *
+   * @param fs il filesystem
+   * @throws NullPointerException se il filesystem è <code>null</code>.
+   */
   public Shell(final FileSystem fs) {
-    this.fs = fs;
+    this.fs = Objects.requireNonNull(fs, "Il filesystem non può essere null.");
     cwd = Path.ROOT;
   }
+  // EOF: rep
 
-  private Path path(final String path) {
+  // RI: fs non è null, cwd non è null ed è un path assoluto che indica una
+  // directory nel filesystem
+
+  // SOF: resolve
+  /**
+   * Risolve il <em>path</em> rispetto alla directory corrente.
+   *
+   * @param path il path.
+   * @return il path assoluto ottenuto ri
+   */
+  private Path resolve(final String path) {
     return cwd.resolve(Path.fromString(path));
   }
+  // EOF: resolve
 
+  // SOF: tree
+  /**
+   * Emette nel flusso d'scita la <em>direcotry</em> data sotto forma di albero.
+   *
+   * <p>Questa funzione richiama ricorsivamente se stessa per emettere
+   * le sottodirectory in forma di albero, usa il prefisso per gestire
+   * l'indentazione dei sottoalberi.
+   *
+   * @param prefix il prefisso da anteporre ad ogni linea emessa.
+   * @param d la directory il cuil albero è da emettere.
+   */
   private static void recursiveTree(final String prefix, final Directory d) {
     Iterator<Entry> it = d.iterator();
     while (it.hasNext()) {
@@ -56,32 +96,52 @@ public class Shell {
     }
   }
 
+  /**
+   * Emette nel flusso d'uscita la <em>directory</em> corrispondente al
+   * <em>path</em> dato.
+   *
+   * @param path il percorso di una directory del filesystem.
+   * @throws FileNotFoundException se il percorso non individua una directory.
+   */
   private void tree(final Path path) throws FileNotFoundException {
     recursiveTree("", fs.findDir(path));
   }
+  // EOF: tree
 
+  // SOF: interpreter
+  /**
+   * Esegue l'interprete di comandi.
+   *
+   * <p>Questa classe legge una linea alla volta dal {@link BufferedReader} fino
+   * a quando legge una linea vuota. Per ciascuna linea, interpreta il comando
+   * che contiene, riportando gli errori eventualmente riportati durante la sua esecuzione.
+   * Al termine dell'esecuzione, restituisce l'elenco dei comandi ricevuti.
+   *
+   * @param con il {@link BufferedReader} da cui vengono letti le linee
+   * contenenti i comandi.
+   * @return l'elenco di comandi ricevuti.
+   * @throws IOException se avviene un errore durante la lettura delle linee.
+   */
   public List<String> interpreter(final BufferedReader con) throws IOException {
-    List<String> history = new ArrayList<>();
+    final List<String> history = new ArrayList<>();
     for (; ; ) {
       final String line = con.readLine();
       if (line == null) break;
       history.add(line);
-      @SuppressWarnings("resource")
-      final Scanner s = new Scanner(line);
-      try {
+      try (final Scanner s = new Scanner(line)) {
         final String cmd = s.next();
         switch (cmd) {
           case "mkdir":
-            fs.mkdir(path(s.next()));
+            fs.mkdir(resolve(s.next()));
             break;
           case "mkfile":
-            fs.mkfile(path(s.next()), s.nextInt());
+            fs.mkfile(resolve(s.next()), s.nextInt());
             break;
           case "tree":
-            tree(s.hasNext() ? path(s.next()) : cwd);
+            tree(s.hasNext() ? resolve(s.next()) : cwd);
             break;
           case "ls":
-            for (Entry e : fs.ls(s.hasNext() ? path(s.next()) : cwd))
+            for (Entry e : fs.ls(s.hasNext() ? resolve(s.next()) : cwd))
               System.out.println(PREFIX + e);
             break;
           case "pwd":
@@ -89,15 +149,16 @@ public class Shell {
             break;
           case "cd":
             if (s.hasNext()) {
-              final Path nwd = path(s.next());
+              final Path nwd = resolve(s.next());
               fs.findDir(nwd);
-              // if the path is not valid, an exception on the above line
-              // will prevent the following assignement
+              // se il path non esiste, o non è una directory
+              // il metodo solleva una eccezione che preverrà
+              // prossimo assegnamento
               cwd = nwd;
             } else cwd = Path.ROOT;
             break;
           case "size":
-            System.out.println(PREFIX + fs.size(s.hasNext() ? path(s.next()) : cwd));
+            System.out.println(PREFIX + fs.size(s.hasNext() ? resolve(s.next()) : cwd));
             break;
           default:
             System.err.println(PREFIX + "shell: " + cmd + ": command not found!");
@@ -110,7 +171,18 @@ public class Shell {
     }
     return history;
   }
+  // EOF: interpreter
 
+  /**
+   * Istanzia l'interprete in modo che legga il flusso di ingresso standard; se
+   * il programma è invocato con degli argomenti, al termine dell'esecuzione
+   * emette la storia dei comandi ricevuti.
+   *
+   * @param args gli argomenti del comando, se presenti verrà emesso l'elenco
+   * dei comandi.
+   * @throws IOException se avviene un errore durante la lettura del flusso di
+   * ingresso.
+   */
   public static void main(String[] args) throws IOException {
     final Shell shell = new Shell(new FileSystem());
     List<String> history = shell.interpreter(new BufferedReader(new InputStreamReader(System.in)));
