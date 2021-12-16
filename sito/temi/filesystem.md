@@ -205,7 +205,7 @@ non produce output.
 
 ## Soluzione
 
-### Entry: file e directory
+### Le entry: file e directory
 
 Dal momento che il *nome* è specificato come attributo comune di *file* e
 *directory* può convenire implementare le **entry** con una classe astratta,
@@ -335,14 +335,82 @@ suo contenuto), dire se un *path* corrisponde ad una delle sue *entry*, oppure
 no.
 
 Per il momento, quindi, la rappresentazione più semplice è quella di conservare
-in una *lista* di stringhe e di un booleano che permetta di distinguere il caso
-*assoluto* da quello *relativo*:
+in una *lista* di stringhe che chiameremo `parts` e di un booleano che permetta
+di distinguere il caso *assoluto* da quello *relativo*. Esternamente a questa
+classe i *path* saranno costruiti a partire da stringhe, ma (come sarà chiaro in
+seguito) può essere utile avere un costruttore privato che accetti una lista di
+stringhe (e controlli l'invariante):
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('Path', 'rep')
 ```
 
+Riguardo all'invariante, è necessario che:
 
+* la lista `parts` non deve essere o contenere `null` (questo è verificato in
+  costruzione grazie al metodo statico `copyOf` di `List`, che per giunta
+  restituisce una lista immutabile che facilita il ragionamento
+  sull'immutabilità della classe);
+* nessuna stringa sia `null` o vuota.
 
+Prima di procedere può essere utile aggiungere qualche costante, per il
+separatore, il percorso corrispondente alla radice del *filesystem* e il
+percorso *vouto*:
 
+```{code-cell}
+:tags: [remove-input]
+sol.show('Path', 'const')
+```
+
+Al costruttore privato è quindi abbinato un metodo di fabbricazione che
+costruisce un *path* a partire da una stringa; si osservi che non sarebbe
+possibile ottenere lo stesso risultato con un costruttore che invochi quello
+privato (perché l'invocazione dovrebbe avvenire come prima istruzione, fatto che
+impedirebbe di gestire gli altri casi particolari).
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Path', 'fab')
+```
+
+Le prime operazioni che è utile implementare sono quelle per suddividere un
+percorso nel suo prefisso (a meno dell'ultima componente) e nell'ultima
+componente (se presente); tali operazioni saranno utili ad esempio alla *shell*
+per decidere, dato il *path* di un *file* da creare, il nome della *directory*
+dove crearlo (prefisso) e del *file* (ultima componente). Data la scelta della
+rappresentazione, tali operazioni hanno una implementazione elementare:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Path', 'simple')
+```
+
+Due operazioni che possono risultare comode riguardano "concatenazione" e
+"spezzamento" tra due percorsi; più formalmente, possono essere utili:
+
+* la *risoluzione* di un percorso relativo rispetto ad uno assoluto (che
+  corrisponde in sostanza a concatenare i due percorsi),
+* la *relativizzazione* di un percorso rispetto ad un suo prefisso (che è
+  sostanzialmente l'operazione inversa rispetto alla precedente);
+
+La prima operazione, in particolare, sarà necessaria alla *shell* per conoscere
+il percorso assoluto su cui operare qualora tra gli argomenti di un comando sia
+presente un percorso relativo, che andrà risolto (come vedremo) rispetto al
+percorso assoluto della directory corrente.
+
+L'implementazione di tali operazioni richiede un minimo di attenzione ai casi
+particolari, ma è ragionevolmente semplice:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Path', 'rr')
+```
+
+Per finire, può essere comodo che il `path` implementi un `Iterable<String>`
+sulle sue parti; i metodi sovrascritti pertanto sono:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Path', 'override')
+```

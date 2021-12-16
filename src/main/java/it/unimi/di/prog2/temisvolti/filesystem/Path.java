@@ -30,11 +30,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Classe che implementa un <em>path</em>.
+ * Classe immutabile che rappresenta un <em>path</em>.
  *
  */
 public class Path implements Iterable<String> {
 
+  // SOF: const
   /** Carattere separatore delle parti di un percorso */
   public static final String SEPARATOR = ":";
 
@@ -43,7 +44,9 @@ public class Path implements Iterable<String> {
 
   /** Costante corrispondente al path vuoto (path relativo, senza parti) */
   public static final Path EMPTY = new Path(false, Collections.emptyList());
+  // EOF: const
 
+  // SOF: rep
   /** Indica se il path è assouto. */
   private final boolean isAbsolute;
 
@@ -70,7 +73,9 @@ public class Path implements Iterable<String> {
         throw new InvalidPathException(p, "La componente contiene il separatore.");
     }
   }
+  // EOF: rep
 
+  // SOF: fab
   /**
    * Metodo di fabbricazione che restituisce un <em>path</em> a partire da una stringa.
    *
@@ -99,7 +104,9 @@ public class Path implements Iterable<String> {
     if (parts[0].isEmpty()) return new Path(true, Arrays.asList(parts).subList(1, parts.length));
     return new Path(false, Arrays.asList(parts));
   }
+  // EOF: fab
 
+  // SOF: simple
   /**
    * Consente di sapere se il <em>path</em> è <em>assoluto</em>.
    *
@@ -129,7 +136,9 @@ public class Path implements Iterable<String> {
     if (parts.isEmpty()) return null;
     return parts.get(parts.size() - 1);
   }
+  // EOF: simple
 
+  // SOF: rr
   /**
    * Risolve il <em>path</em> dato rispetto a questo.
    *
@@ -175,7 +184,9 @@ public class Path implements Iterable<String> {
       throw new IllegalArgumentException("Il percorso non ha un prefisso in comune con questo.");
     return new Path(false, other.parts.subList(parts.size(), other.parts.size()));
   }
+  // EOF: rr
 
+  // SOF: override
   @Override
   public String toString() {
     return (isAbsolute ? SEPARATOR : "") + String.join(SEPARATOR, parts);
@@ -185,4 +196,6 @@ public class Path implements Iterable<String> {
   public Iterator<String> iterator() {
     return Collections.unmodifiableList(parts).iterator();
   }
+  // EOF: override
+
 }
