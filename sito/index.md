@@ -21,6 +21,8 @@ Il materiale è organizzato in due parti:
 * la seconda, contiene una selezione di temi, ciascuno con il suo svolgimento:
 
     * [Algebretta](temi/algebretta), assegnato il 18/2/2020;
+    * Bancarelle, assegnato il 15/9/2020;
+    * [Filesystem](temi/filesystem), assegnato il 19/2/2021;
     * [Piastrelle](temi/piastrelle), assegnato il 21/9/2021.
 
 :::{toctree}
@@ -36,4 +38,5 @@ intro/consegne
 
 temi/algebretta
 temi/piastrelle
+temi/filesystem
 :::
