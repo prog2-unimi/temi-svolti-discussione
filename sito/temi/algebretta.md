@@ -563,14 +563,14 @@ Nella scrittura è possibile avvalersi della classe di utilità `Parser` che off
 i seguenti metodi statici (commentati nel Javadoc della classe stessa).
 
 ```{code-block} java
-  public static String[] partiOperazione(final String linea);
-  public static boolean èMatrice(final String operando);
-  public static char tipoMatrice(final String operando);
-  public static int[][] valoriMatrice(final String operando);
-  public static boolean èVettore(final String operando);
-  public static int[] valoriVettore(final String operando);
-  public static boolean èScalare(final String operando);
-  public static int valoreScalare(final String operando);
+public static String[] partiOperazione(final String linea);
+public static boolean èMatrice(final String operando);
+public static char tipoMatrice(final String operando);
+public static int[][] valoriMatrice(final String operando);
+public static boolean èVettore(final String operando);
+public static int[] valoriVettore(final String operando);
+public static boolean èScalare(final String operando);
+public static int valoreScalare(final String operando);
 ```
 
 Tali metodi possono essere utilizzati, in un ciclo che consumi l'input per
@@ -579,22 +579,22 @@ operatore) e trattare adeguatamente addizioni e moltiplicazioni (gestendo in tal
 caso l'eventualità che l'operando di sinistra sia, o meno, scalare):
 
 ```{code-block} java
-    try (final Scanner s = new Scanner(System.in)) {
-      while (s.hasNextLine()) {
-        final String[] lor = Parser.partiOperazione(s.nextLine());
-        final char op = lor[1].charAt(0);
-        final String left = lor[0], right = lor[2];
-        if (op == '+') {
-          ...
-        } else { // op == '*', altrimenti partiOperazione solleva eccezione
-          if (Parser.èScalare(left)) {
-            ...
-          } else if (Parser.èMatrice(left)) {
-            ...
-          }
-        }
+try (final Scanner s = new Scanner(System.in)) {
+  while (s.hasNextLine()) {
+    final String[] lor = Parser.partiOperazione(s.nextLine());
+    final char op = lor[1].charAt(0);
+    final String left = lor[0], right = lor[2];
+    if (op == '+') {
+      ...
+    } else { // op == '*', altrimenti partiOperazione solleva eccezione
+      if (Parser.èScalare(left)) {
+        ...
+      } else if (Parser.èMatrice(left)) {
+        ...
       }
     }
+  }
+}
 ```
 
 La creazione delle matrici può essere effettuata tramite un metodo di
