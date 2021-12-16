@@ -11,7 +11,7 @@ kernelspec:
 ---
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 from tslib import Solution
 sol = Solution('algebretta')
 ```
@@ -28,7 +28,7 @@ Una plausibile **interfaccia** per un *vettore* a valori interi potrebbe avere i
 seguenti metodi
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Vettore', 'signatures')
 ```
 
@@ -195,7 +195,7 @@ informazione dipende solo dalla dimensione (che è una competenza espressa dalle
 interfacce), può aver senso aggiungere due metodi (sovraccaricati) di *default*
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Vettore', 'default')
 ```
 
@@ -207,7 +207,7 @@ invarianti sono che l'array non sia un riferimento nullo e che contenga almeno
 un elemento e che tali invarianti possono essere controllati solo in costruzione
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('VettoreDenso', 'rapcostr')
 ```
 
@@ -228,7 +228,7 @@ Per iniziare, è opportuno sviluppare una *interfaccia* `Matrice` che esprima le
 competenze richieste per tutte le matrici
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Matrice', 'signatures')
 ```
 
@@ -237,7 +237,7 @@ consentano di valutare la conformità e (per comodità) se due coordinate siano
 valide.
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Matrice', 'default')
 ```
 
@@ -248,7 +248,7 @@ astratta* che implementi (parzialmente) l'interfaccia di fatto soltanto
 sovrascrivendo `toString`
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('AbsMatrice', 'tostring')
 ```
 
@@ -295,7 +295,7 @@ immutabili, gli invarianti sono che l'array non sia un riferimento a null, sia
 costruzione.
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDensa', 'rapcostr', 'copy')
 ```
 
@@ -306,7 +306,7 @@ Nel soddisfare l'interfaccia, osserviamo che alcuni metodi sono banali da
 implementare:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDensa', 'dimval')
 ```
 
@@ -316,7 +316,7 @@ moltiplicazione per lo scalare zero (evidenziato nella seguente porzione di
 codice):
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDensa', 'peralpha', 'perzero')
 ```
 
@@ -324,7 +324,7 @@ o di somma con la matrice nulla, nel qual caso va restituita la matrice stessa
 (soluzione resa possibile dall'immutabilità):
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDensa', 'piumat', 'piuzero')
 ```
 
@@ -332,7 +332,7 @@ o di prodotto sia con la matrice nulla (che risulta nella matrice nulla), o con
 la matrice identità (che risulta la matrice stessa):
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDensa', 'permat', 'perspeciale')
 ```
 
@@ -343,14 +343,14 @@ coincide esclusivamente con la sua dimensione, quindi l'invariante e i
 costruttori sono cosa ovvia:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceNulla', 'rapcostr')
 ```
 
 Alcune competenze prescritte dall'interfaccia sono immediati da implementare:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceNulla', 'dimval')
 ```
 
@@ -358,7 +358,7 @@ Nel caso delle operazioni, le proprietà algebriche delle matrici si riflettono
 in modo ovvio nel codice:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceNulla', 'ops')
 ```
 
@@ -373,14 +373,14 @@ lungo la diagonale, la rappresentazione è un array monodimensionale di interi
 invariante):
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDiagonale', 'rapcostr')
 ```
 
 Alcuni metodi prescritti dall'interfaccia hanno al solito implementazioni ovvie:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDiagonale', 'dimval')
 ```
 
@@ -390,7 +390,7 @@ moltiplicazione per lo scalare zero (evidenziato nella seguente porzione di
 codice):
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDiagonale', 'peralpha', 'perzero')
 ```
 
@@ -398,7 +398,7 @@ o di somma con la matrice nulla, nel qual caso va ancora restituita la matrice
 stessa:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDiagonale', 'piumat', 'piuzero')
 ```
 
@@ -406,7 +406,7 @@ o di prodotto sia con la matrice nulla (che risulta nella matrice nulla), o con
 la matrice identità (che risulta la matrice stessa):
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDiagonale', 'permat', 'perspeciale')
 ```
 
@@ -416,7 +416,7 @@ Come nel caso della matrice nulla, anche per l'identità è sufficiente ricordar
 la sola dimensione, quindi rappresentazione, invariante e costruttori sono:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceIdentità', 'rapcostr')
 ```
 
@@ -424,7 +424,7 @@ Al solito, alcune competenze prescritte dall'interfaccia sono immediate da
 implementare:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceIdentità', 'dimval')
 ```
 
@@ -432,19 +432,19 @@ Il prodotto per scalare e la somma trattano al solito in modo speciale il caso
 dello zero:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceIdentità', 'peralpha', 'perzero')
 ```
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceIdentità', 'piumat', 'piuzero')
 ```
 
 mentre il caso del prodotto è elementare per via delle proprietà algebriche:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceIdentità', 'permat')
 ```
 
@@ -477,21 +477,21 @@ Iniziamo con la rappresentazione che, come nel caso della matrice nulla, è data
 soltanto dalla dimensione:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('VettoreNullo', 'rapcostr')
 ```
 
 Le competenze più immediate da implementare sono:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('VettoreNullo', 'dimval')
 ```
 
 Le operazioni sono anch'esse semplici, date le proprietà algebriche:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('VettoreNullo', 'ops')
 ```
 
@@ -501,7 +501,7 @@ Per aggiungere la funzionalità della moltiplicazione tra matrice e vettore è
 sufficiente aggiungere una competenza all'interfaccia
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Matrice', 'pervec')
 ```
 
@@ -509,28 +509,28 @@ che poi sarà implementata in modo semplice nei vari tipi di matrice, a partire
 dalla densa:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDensa', 'pervec', 'pervzero')
 ```
 
 alla nulla:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceNulla', 'pervec')
 ```
 
 per passare alla diagonale:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceDiagonale', 'pervec', 'pervzero')
 ```
 
 e infine all'identità:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('MatriceIdentità', 'pervec')
 ```
 
@@ -601,7 +601,7 @@ La creazione delle matrici può essere effettuata tramite un metodo di
 fabbricazione che tenga conto del tipo di matrice:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Soluzione', 'fabmat')
 ```
 
@@ -609,7 +609,7 @@ Avendo costruito tale struttura, la parte delle addizioni è molto semplice,
 basta distinguere i casi di somma tra vettori, o matrici:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Soluzione', 'add')
 ```
 
@@ -617,7 +617,7 @@ Nel caso della moltiplicazione per scalare, di nuovo basta distinguere il caso
 vettore, o matrice:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Soluzione', 'alphamul')
 ```
 
@@ -626,6 +626,6 @@ basta distinguere il caso in cui l'altro operando sia di nuovo o un vettore, o
 una matrice:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Soluzione', 'mul')
 ```

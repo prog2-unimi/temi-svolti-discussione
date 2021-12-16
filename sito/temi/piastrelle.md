@@ -11,7 +11,7 @@ kernelspec:
 ---
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 from tslib import Solution
 sol = Solution('piastrelle')
 ```
@@ -172,7 +172,7 @@ Rivestimento <|-- Pavimentazione
 la cui interfaccia corrisponde al seguente codice
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Rivestimento')
 ```
 ### Le piastrelle
@@ -217,7 +217,7 @@ Piastrella <|-- PiastrellaRomboidale
 Un primo abbozzo di implementazione della piastrella è dato dal seguente codice
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Piastrella', highlight = 'rappr')
 ```
 
@@ -239,7 +239,7 @@ comprenda solo un costruttore e quanto necessario a soddisfare l'interfaccia
 seguente
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('PiastrellaRomboidale', highlight = 'rappr')
 ```
 
@@ -282,7 +282,7 @@ del rivestimento da cui è composto e dalla sua quantità — come mostrano le l
 evidenziate).
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show(
   'Pavimentazione',
   'componente',
@@ -309,7 +309,7 @@ Lo stato e il costruttore (che garantisce tale invariante) sono dati dal codice
 seguente:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show(
   'Pavimentazione',
   'rappr',
@@ -327,7 +327,7 @@ il quale, tra l'altro, assicura che `componenti` non sia e non contenga `null`.
 La rappresentazione scelta rende banale soddisfare l'interfaccia `Rivestimento`, sono infatti sufficienti poche linee di codice:
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Pavimentazione', 'rivestimento')
 ```
 
@@ -339,7 +339,7 @@ il suo "contenuto" sia una piastrella, o un rivestimento.
 Per finire, è plausibile rendere la pavimentazione un iterabile di componenti
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Pavimentazione', 'iterable')
 ```
 
@@ -354,7 +354,7 @@ classe di test è elementare: è sufficiente il metodo `main` che conservi due
 liste (una per tutti i rivestimenti creati e una delle sole pavimentazioni)
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Soluzione', 'rappr')
 ```
 
@@ -379,7 +379,7 @@ parametri da passare ai costruttori.
 
 
 ```{code-cell}
-:tags:  [remove-input]
+:tags: [remove-input]
 sol.show('Soluzione', 'switch', 'mkpav')
 ```
 
