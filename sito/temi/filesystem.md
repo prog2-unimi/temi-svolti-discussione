@@ -414,3 +414,59 @@ sulle sue parti; i metodi sovrascritti pertanto sono:
 :tags: [remove-input]
 sol.show('Path', 'override')
 ```
+
+### Il filesystem
+
+
+La rappresentazione del **filesystem** è del tutto elementare in quanto coincide
+con la sua *directory* radice, a cui verranno man mano aggiunti *file* e
+*directory* (a cui, a loro vota, potranno essere aggiunti *file* e *directory*).
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('FileSystem', 'rep')
+```
+
+Non c'è in realtà bisogno d'altro invariante che di assicurare che `root` non
+sia  `null` (che è vero per via dell'inizializzazione e non potrà mai cessare
+d'esserlo dal momento che il campo è `final`).
+
+Le competenze del **filesystem** sono elencate direttamente nella traccia
+
+* reperire una entry dato il suo path assoluto,
+* ottenere la dimensione di una entry dato il suo path assoluto.
+* elencare il contenuto di una directory dato il suo path assoluto,
+* creare una directory dato il suo path assoluto,
+* creare un file dato il suo path assoluto e una dimensione,
+
+La prima è la più complessa da implementare: richiede che, a partire dalla
+radice, le componenti del path siano usate in sequenza per determinare (lungo il
+prefisso) le *directory* coinvolte e alla fine l'*enetry*; può essere comodo
+avere una versione del metodo di ricerca che sollevi una eccezione nel caso
+l'ultima *entry* non sia essa stessa una *directory* (questo sarà utile per
+tutti i casi in cui si intende assicurarsi che tale sia il caso):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('FileSystem', 'find')
+```
+
+Le competenze "osservazionali" (restituire la dimensione di una *entry* o un
+iteratore sul contenuto di una *direcotry*) sono di facile implementazoine, una
+volta dati i due metodi di ricerca appena sviluppati basterà delegare alle
+*entry*:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('FileSystem', 'observe')
+```
+
+Un discorso simile vale per le competenze "mutazionali" (creare un *file* o
+*directory*), il punto cruciale è usare `findDir` su `path.parent()` per trovare
+la *directory* su cui effettuare l'inserimento e `path.name()` per individuare
+il nome della *entry* da aggiungere:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('FileSystem', 'make')
+```

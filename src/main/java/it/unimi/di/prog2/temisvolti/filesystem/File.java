@@ -21,9 +21,7 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package it.unimi.di.prog2.temisvolti.filesystem;
 
-/**
- * Classe immutabile che rappresenta un <em>file</em>.
- */
+/** Classe immutabile che rappresenta un <em>file</em>. */
 public class File extends Entry {
 
   // SOF: rep

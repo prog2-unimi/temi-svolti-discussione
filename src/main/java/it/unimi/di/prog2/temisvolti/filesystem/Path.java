@@ -29,10 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Classe immutabile che rappresenta un <em>path</em>.
- *
- */
+/** Classe immutabile che rappresenta un <em>path</em>. */
 public class Path implements Iterable<String> {
 
   // SOF: const
