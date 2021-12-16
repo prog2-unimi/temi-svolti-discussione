@@ -20,12 +20,13 @@ javadoc {
   options.showFromPrivate()
   options.footer = '<script type=\'text/javascript\' src=\'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\'></script>'
   options.addBooleanOption('-allow-script-in-comments', true)
+  javadoc.options.addStringOption('Xdoclint:none', '-quiet')
 }
 
 spotless {
   enforceCheck false
   java {
-    googleJavaFormat('1.9')
+    googleJavaFormat('1.11.0')
     removeUnusedImports()
     licenseHeaderFile 'src/licenseHeaderFile.txt'
   }
