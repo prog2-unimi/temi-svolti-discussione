@@ -1,5 +1,6 @@
 package it.unimi.di.prog2.temisvolti.filesystem;
 
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -27,7 +28,7 @@ public class Directory extends Entry implements Iterable<Entry> {
   }
   // EOF: rep
 
-
+  // SOF: methods
   /**
    * Restituisce l'<em>entry</em> dato il suo <em>nome</em> se presente
    * (altrimenti restituisce <code>null</code>).
@@ -48,21 +49,22 @@ public class Directory extends Entry implements Iterable<Entry> {
    *
    * @param e l'entry da aggiungere.
    * @throws NullPointerException se l'entry è <code>null</code>
-   * @thrwos {@link IllegalArgumentException} se la directory contiene una entry
+   * @thrwos {@link FileAlreadyExistsException} se la directory contiene una entry
    * con lo stesso nome di quella da aggiungere.
    */
-  void add(final Entry e) {
+  void add(final Entry e) throws FileAlreadyExistsException {
     Objects.requireNonNull(e);
-    if (find(e.name) != null) throw new IllegalArgumentException("La directory contiene già una entry con lo stesso nome.");
+    if (find(e.name) != null) throw new FileAlreadyExistsException("La directory contiene già una entry con lo stesso nome.");
     entries.add(e);
   }
+  // EOF: methods
 
+  // SOF: override
   @Override
   public boolean isDir() {
     return true;
   }
 
-  // SOF: override
   @Override
   public int size() {
     int sum = 0;

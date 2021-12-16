@@ -1,4 +1,7 @@
+package it.unimi.di.prog2.temisvolti.filesystem;
+
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -32,7 +35,7 @@ public class Shell {
     }
   }
 
-  private void tree(final Path path) {
+  private void tree(final Path path) throws FileNotFoundException {
     recursiveTree("", fs.findDir(path));
   }
 
@@ -80,7 +83,7 @@ public class Shell {
         }
       } catch (NoSuchElementException e) {
         System.err.println(PREFIX + "shell: malformed command: " + line);
-      } catch (FileSystem.Exception fse) {
+      } catch (IOException fse) {
         System.err.println(PREFIX + "shell: error: " + fse.getMessage());
       }
     }

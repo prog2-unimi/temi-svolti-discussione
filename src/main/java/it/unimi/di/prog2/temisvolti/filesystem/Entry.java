@@ -23,14 +23,14 @@ public abstract class Entry {
    */
   // il costruttore è protetto perché sarà usato solo dalle sottoclassi
   protected Entry(final String name) {
-    if (Objects.requireNonNull(name).isEmpty()) throw new IllegalArgumentException("Il nome non può essere vuoto");
+    if (Objects.requireNonNull(name).isEmpty()) throw new IllegalArgumentException("Il nome non può essere vuoto.");
       this.name = name;
   }
   // EOF: rep
 
   // SOF: methods
   /**
-   * Consente di saper se una <em>entry</em> è una <em>directory</em>.
+   * Consente di sapere se una <em>entry</em> è una <em>directory</em>.
    *
    * @return <code>true</code> sse l'entry è una directory.
    */

@@ -1,19 +1,14 @@
 package it.unimi.di.prog2.temisvolti.filesystem;
 
+import java.io.FileNotFoundException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.Iterator;
-import java.util.List;
 
 public class FileSystem {
-  @SuppressWarnings("serial")
-  public static class Exception extends RuntimeException {
-    public Exception(final String msg) {
-      super(msg);
-    }
-  }
 
   public final Directory root = new Directory("ROOT");
 
-  public Entry find(final Path path) {
+  public Entry find(final Path path) throws FileNotFoundException {
     final Iterator<String> it = path.iterator();
     Directory d = root;
     Entry e = d;
@@ -21,35 +16,39 @@ public class FileSystem {
       final String p = it.next();
       e = d.find(p);
       if (e == null)
-        throw new FileSystem.Exception("not found: " + p);
+        throw new FileNotFoundException("File non trovato " + p);
       if (it.hasNext()) {
         if (e.isDir()) d = (Directory) e;
-        else throw new FileSystem.Exception("not a dir: " + p);
+        else throw new FileNotFoundException("Non è una directory " + p);
       }
     }
     return e;
   }
 
-  public Directory findDir(final Path path) {
+  public Directory findDir(final Path path) throws FileNotFoundException {
     final Entry e = find(path);
-    if (!e.isDir()) throw new FileSystem.Exception("not a dir: " + path);
+    if (!e.isDir()) throw new FileNotFoundException("Non è una directory " + path);
     return (Directory) e;
   }
 
-  public List<Entry> ls(final Path path) {
-    return findDir(path).ls();
+  public Iterable<Entry> ls(final Path path) throws FileNotFoundException {
+    return findDir(path);
   }
 
-  public int size(final Path path) {
+  public int size(final Path path) throws FileNotFoundException {
     return find(path).size();
   }
 
-  public void mkdir(final Path path) {
-    findDir(path.parent()).add(new Directory(path.name()));
+  public void mkdir(final Path path) throws FileNotFoundException, FileAlreadyExistsException {
+    final String name = path.name();
+    if (name == null) throw new IllegalArgumentException("Il percorso non può essere vuoto");
+    findDir(path.parent()).add(new Directory(name));
   }
 
-  public void mkfile(final Path path, final int size) {
-    findDir(path.parent()).add(new File(path.name(), size));
+  public void mkfile(final Path path, final int size) throws FileNotFoundException, FileAlreadyExistsException {
+    final String name = path.name();
+    if (name == null) throw new IllegalArgumentException("Il percorso non può essere vuoto");
+    findDir(path.parent()).add(new File(name, size));
   }
 
 }

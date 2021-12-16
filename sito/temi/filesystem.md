@@ -285,18 +285,25 @@ sol.show('Directory', 'override')
 
 L'ultimo metodo serve per far si che questa classe implementi `Iterable<Entry>`,
 così che possa offrire un modo comodo di operare sul contenuto della
-*directory*.
+*directory*. Si noti l'uso del metodo statico `unmodifiableList` di
+`Collections` che serve ad avvolgere l'elenco di entry della directory
+rendendolo una lista non modificabile (in modo da non esporre la
+rappresentazione consentendo che venga modificata dall'esterno).
 
+```{code-cell}
+:tags: [remove-input]
+sol.show('Directory', 'methods')
+```
 
-
-
-e, dando
-luogo alla gerarchia
+Per concludere, la gerarchia realizzata fin qui è:
 
 :::{mermaid}
 :align: center
 
 classDiagram
+class Iterable {
+  <<interface>>
+}
 class Entry {
   <<abstract>>
   name
@@ -308,9 +315,34 @@ class File {
 }
 class Directory {
   size()
+  find(Entry)
+  add(Entry)
 }
 Entry <|-- File
 Entry <|-- Directory
+Iterable <|-- Directory
 :::
+
+
+### I path
+
+Un **path** è una sequenza di stringhe non vuote che non contengono il
+*separatore* `:`, può essere *assoluto* (nel qual caso la sua rappresentazione
+testuale inizia col separatore), oppure *relativo*; non è necessaria alcuna
+altra restrizione, in particolare non è necessario che esista una relazione a
+priori tra un *path* e le *entry*: sarà compito del *filesystem* (a partire dal
+suo contenuto), dire se un *path* corrisponde ad una delle sue *entry*, oppure
+no.
+
+Per il momento, quindi, la rappresentazione più semplice è quella di conservare
+in una *lista* di stringhe e di un booleano che permetta di distinguere il caso
+*assoluto* da quello *relativo*:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Path', 'rep')
+```
+
+
 
 
