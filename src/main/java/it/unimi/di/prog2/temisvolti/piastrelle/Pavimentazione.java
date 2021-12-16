@@ -28,7 +28,7 @@ import java.util.Objects;
 
 /**
  * Una <em>pavimentazione</em> immutabile, la cui rappresentazione è costituita da una collezione di
- * {@link Componenti} ciascuno dei quali rappresenta una certa <em>quantità</em> di un
+ * {@link Componente} ciascuno dei quali rappresenta una certa <em>quantità</em> di un
  * <em>rivestimento</em> (sia esso una <em>piastrella</em> o un'altra <em>pavimentazione</em>); è
  * possibile accedere al suo contenuto tramite <em>iterazione</em>.
  */

@@ -1,3 +1,24 @@
+/*
+
+Copyright 2021 Massimo Santini
+
+This file is part of "Programmazione 2 @ UniMI" teaching material.
+
+This is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This material is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 package it.unimi.di.prog2.temisvolti.filesystem;
 
 import java.nio.file.FileAlreadyExistsException;
@@ -7,9 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Classe mutabile che rappresenta una <em>directory</em>.
- */
+/** Classe mutabile che rappresenta una <em>directory</em>. */
 public class Directory extends Entry implements Iterable<Entry> {
 
   // SOF: rep
@@ -18,7 +37,8 @@ public class Directory extends Entry implements Iterable<Entry> {
 
   // RI: entries non è null e non contiene null, non contiene due entry con lo stesso nome
 
-  /** Costruisce una <em>directory</em> vuota dato il suo <em>nome</em>
+  /**
+   * Costruisce una <em>directory</em> vuota dato il suo <em>nome</em>
    *
    * @param name il nome.
    * @throws IllegalArgumentException se il nome è <code>null</code> o vuoto.
@@ -30,17 +50,16 @@ public class Directory extends Entry implements Iterable<Entry> {
 
   // SOF: methods
   /**
-   * Restituisce l'<em>entry</em> dato il suo <em>nome</em> se presente
-   * (altrimenti restituisce <code>null</code>).
+   * Restituisce l'<em>entry</em> dato il suo <em>nome</em> se presente (altrimenti restituisce
+   * <code>null</code>).
    *
    * @param name il nome dell'entry.
-   * @return l'entry di dato nome (o <code>null</code> se nessuna entry ha il
-   * nome dato).
+   * @return l'entry di dato nome (o <code>null</code> se nessuna entry ha il nome dato).
    * @throws NullPointerException se il <code>name</code> è <code>null</code>.
    */
   public Entry find(final String name) {
     Objects.requireNonNull(name);
-    for (Entry e: entries) if (e.name.equals(name)) return e;
+    for (Entry e : entries) if (e.name.equals(name)) return e;
     return null;
   }
 
@@ -49,12 +68,14 @@ public class Directory extends Entry implements Iterable<Entry> {
    *
    * @param e l'entry da aggiungere.
    * @throws NullPointerException se l'entry è <code>null</code>
-   * @thrwos {@link FileAlreadyExistsException} se la directory contiene una entry
-   * con lo stesso nome di quella da aggiungere.
+   * @thrwos {@link FileAlreadyExistsException} se la directory contiene una entry con lo stesso
+   *     nome di quella da aggiungere.
    */
   void add(final Entry e) throws FileAlreadyExistsException {
     Objects.requireNonNull(e);
-    if (find(e.name) != null) throw new FileAlreadyExistsException("La directory contiene già una entry con lo stesso nome.");
+    if (find(e.name) != null)
+      throw new FileAlreadyExistsException(
+          "La directory contiene già una entry con lo stesso nome.");
     entries.add(e);
   }
   // EOF: methods
