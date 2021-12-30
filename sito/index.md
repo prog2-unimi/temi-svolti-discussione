@@ -37,7 +37,7 @@ intro/consegne
 :hidden:
 
 temi/algebretta
-temi/bancarella
+temi/bancarelle
 temi/piastrelle
 temi/filesystem
 :::

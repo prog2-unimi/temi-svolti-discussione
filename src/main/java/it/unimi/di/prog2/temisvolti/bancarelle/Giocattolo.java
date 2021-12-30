@@ -26,6 +26,7 @@ import java.util.Objects;
 /** Classe concreta immutabile che rappresenta un giocattolo. */
 public class Giocattolo {
 
+  // SOF: rep
   /** Il nome e materiale di cui è costituito il giocattolo. */
   public final String nome, materiale;
 
@@ -41,10 +42,13 @@ public class Giocattolo {
    * @throws IllegalArgumentException se nome o materiale sono stringhe vuote.
    */
   public Giocattolo(final String nome, final String materiale) {
+    // SOF: inv
     this.nome = Objects.requireNonNull(nome);
     this.materiale = Objects.requireNonNull(materiale);
     if (nome.isEmpty() || materiale.isEmpty()) throw new IllegalArgumentException();
+    // EOF: inv
   }
+  // EOF: rep
 
   @Override
   public int hashCode() {

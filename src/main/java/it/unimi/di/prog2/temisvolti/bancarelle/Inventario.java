@@ -43,8 +43,10 @@ import java.util.Objects;
  */
 public class Inventario implements Iterable<Giocattolo> {
 
+  // SOF: rep
   /** Mappa che tiene traccia della numerosità di ciascun giocattolo presente nell'inventario */
   private final Map<Giocattolo, Integer> inventario = new HashMap<>();
+  // EOF: rep
 
   // RI: le chiavi sono diverse da null, i valori sono positivi; detto
   // altrimenti, la mappa non contiene i giocattoli presenti con numerosità 0.
@@ -67,6 +69,7 @@ public class Inventario implements Iterable<Giocattolo> {
       aggiungi(e.getValue(), e.getKey());
   }
 
+  // SOF: add
   /**
    * Aggiunge un certo numero di giocattoli dello stesso tipo all'inventario. Se sono già presenti
    * giocattoli di quel tipo, ne aggiorna il numero.
@@ -97,7 +100,9 @@ public class Inventario implements Iterable<Giocattolo> {
   public int aggiungi(final Giocattolo giocattolo) {
     return aggiungi(1, giocattolo);
   }
+  // EOF: add
 
+  // SOF: rem
   /**
    * Rimuove (se possibile) il numero indicato di giocattoli di un certo tipo dall'inventario.
    *
@@ -114,14 +119,18 @@ public class Inventario implements Iterable<Giocattolo> {
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
     if (!inventario.containsKey(giocattolo))
       throw new NoSuchElementException("Giocattolo non presente: " + giocattolo);
+    // SOF: zero
     final int totale = inventario.get(giocattolo) - num;
     if (totale < 0)
       throw new IllegalArgumentException("Non ci sono abbastanza giocattoli: " + giocattolo);
     if (totale == 0) inventario.remove(giocattolo);
     else inventario.put(giocattolo, totale);
+    // EOF: zero
     return totale;
   }
+  // EOF: rem
 
+  // SOF: quanti
   /**
    * Restituisce il numero di giocattoli del tipo indicato presenti nell'inventario.
    *
@@ -130,12 +139,14 @@ public class Inventario implements Iterable<Giocattolo> {
    *     l'inventario non contiene il giocattolo indicato).
    * @throws NullPointerException se giocattolo è <code>null</code>
    */
-  public int quanti(final Giocattolo giocattolo) {
+  public int quantità(final Giocattolo giocattolo) {
     Objects.requireNonNull(giocattolo);
     if (!inventario.containsKey(giocattolo)) return 0;
     return inventario.get(giocattolo);
   }
+  // EOF: quanti
 
+  // SOF: iter
   @Override
   public Iterator<Giocattolo> iterator() {
     final List<Giocattolo> giocattoli = new ArrayList<>(inventario.keySet());
@@ -149,6 +160,7 @@ public class Inventario implements Iterable<Giocattolo> {
         });
     return giocattoli.iterator();
   }
+  // EOF: iter
 
   @Override
   public String toString() {

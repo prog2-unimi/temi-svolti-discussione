@@ -253,3 +253,76 @@ nel flusso d'uscita.
 
 ## Soluzione
 
+### Il giocattolo
+
+La classe più elementare è il giocattolo, potrebbe essere anche un `record`, ma
+seguendo un approccio più datato è sufficiente una classe immutabile con due
+attributi il cui invariante (del tutto ovvio) può essere controllato in
+costruzione:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Giocattolo', 'rep', 'inv')
+```
+
+### L'inventario
+
+Poco più complicato è l'*inventario*, per tener traccia del numero di giocattoli
+è sufficiente una `Map<Giocattolo, Integer>` il cui invariante è che non
+contenga chiavi o valori nulli e contenga solo numeri positivi:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Inventario', 'rep')
+```
+
+I metodi *mutazionali* devono prestare attenzione a mantenere l'invariante.
+Iniziamo con l'aggiunta di giocattoli: per prima cosa è necessario accertarsi
+che non ce ne siano già del tipo indicato (in quel caso, il numero specificato
+deve aggiungersi a quello già presente nella mappa), viceversa è sufficiente
+aggiungere una nuova *entry*:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Inventario', 'add')
+```
+
+Si osservi che è oltre al metodo per aggiungere un solo giocattolo delega al
+metodo più generale, fare il contrario sarebbe stato poco conveniente perché nel
+metodo generale sarebbe stato necessario effettuare un ciclo che aggiungesse un
+giocattolo alla volta (usando l'altro metodo).
+
+In modo del tutto simmetrico, il metodo per rimuovere un certo numero di
+giocattoli deve verificare che il numero rimanente di giocattoli non sia
+negativo e, nel caso sia nullo, eliminare la chiave dalla mappa (come
+evidenziato nel codice):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Inventario', 'rem', 'zero')
+```
+
+I metodi *osservazionali* sono più elementari. Conoscere la quantità di giocattoli di un certo tipo è banale:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Inventario', 'quanti')
+```
+
+Unica cosa degna di nota è la decisione di restituire 0 nel caso l'inventario
+non comprenda il giocattolo (senza sollevare eccezione); questa scelta permette
+di evitare l'aggiunta di un metodo per sapere se un giocattolo sia presente o
+meno nell'inventario.
+
+Per finire, appare comodo rendere la classe un *iterabile* sui giocattoli, in
+modo che (con l'ausilio del metodo precedente) si possa conoscerne completamente
+lo stato.
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Inventario', 'iter')
+```
+
+Si noti l'uso della classe anonima che implementa l'interfaccia
+`Comparator<Giocattolo>` utile a consentire una iterazione in ordine
+lessicografico (della rappresentazione testuale dei giocattoli).
