@@ -127,7 +127,7 @@ public class Inventario implements Iterable<Giocattolo> {
    *
    * @param giocattolo il giocattolo.
    * @return il numero di giocattoli di tale tipo presenti nell'inventario,
-   * eventualmente 0 se l'inventario non contiene il giocattolo indicato.
+   * (eventualmente 0 se l'inventario non contiene il giocattolo indicato).
    * @throws NullPointerException se giocattolo è <code>null</code>
    */
   public int quanti(final Giocattolo giocattolo) {

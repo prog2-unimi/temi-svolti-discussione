@@ -45,6 +45,7 @@ public interface Listino {
    * @return il prezzo del dato numero di giocattoli indicati.
    * @throws NullPointerException se il giocattolo è <code>null</code>.
    * @throws IllegalArgumentException se il numero non è positivo.
+   * @throws NoSuchElementException se il giocattolo non è noto al listino.
    */
   public int prezzo(final int num, final Giocattolo giocattolo);
 }
