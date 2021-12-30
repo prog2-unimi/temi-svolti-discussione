@@ -13,9 +13,9 @@ kernelspec:
 ```{code-cell}
 :tags:  [remove-input]
 from tslib import Solution
-sol = Solution('algebretta')
+sol = Solution('bancarelle')
 ```
-# Bancarella
+# Bancarelle
 
 :::{warning}
 Questa versione della soluzione è **preliminare** e potrebbe subire modifiche.
