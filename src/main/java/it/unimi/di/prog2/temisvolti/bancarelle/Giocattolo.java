@@ -23,10 +23,7 @@ package it.unimi.di.prog2.temisvolti.bancarelle;
 
 import java.util.Objects;
 
-/**
- * Classe concreta immutabile che rappresenta un giocattolo.
- *
- */
+/** Classe concreta immutabile che rappresenta un giocattolo. */
 public class Giocattolo {
 
   /** Il nome e materiale di cui è costituito il giocattolo. */
@@ -38,7 +35,8 @@ public class Giocattolo {
    * Costruisce un giocattolo dato nome e materiale.
    *
    * @param nome il nome del giocattolo, deve essere una stringa non vuota.
-   * @param materiale il materiale di cui è costituito il giocattolo, deve essere una stringa non vuota.
+   * @param materiale il materiale di cui è costituito il giocattolo, deve essere una stringa non
+   *     vuota.
    * @throws NullPointerException se nome o materiale sono <code>null</code>
    * @throws IllegalArgumentException se nome o materiale sono stringhe vuote.
    */

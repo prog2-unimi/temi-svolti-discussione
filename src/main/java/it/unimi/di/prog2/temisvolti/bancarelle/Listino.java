@@ -24,8 +24,8 @@ package it.unimi.di.prog2.temisvolti.bancarelle;
 /**
  * Interfaccia che rappresenta un listino prezzi.
  *
- * Il listino indica il prezzo di un certo numero di giocattoli di dato tipo e
- * se è a conoscenza del prezzo di un certo giocattolo.
+ * <p>Il listino indica il prezzo di un certo numero di giocattoli di dato tipo e se è a conoscenza
+ * del prezzo di un certo giocattolo.
  */
 public interface Listino {
 

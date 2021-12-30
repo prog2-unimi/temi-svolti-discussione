@@ -24,16 +24,13 @@ package it.unimi.di.prog2.temisvolti.bancarelle;
 import java.util.Map;
 
 /**
- * Classe concreta che implementa un listino in cui il prezzo totale di
- * <samp>n</samp> giocattoli di un dato tipo è pari a <samp>n</samp> volte il
- * prezzo unitario di tale giocattolo (eventualmente scontato per i valori di
- * <samp>n</samp> che eccedono una certa soglia).
+ * Classe concreta che implementa un listino in cui il prezzo totale di <samp>n</samp> giocattoli di
+ * un dato tipo è pari a <samp>n</samp> volte il prezzo unitario di tale giocattolo (eventualmente
+ * scontato per i valori di <samp>n</samp> che eccedono una certa soglia).
  *
- * <p>Ad esempio, se la soglia fosse 20 e lo sconto 30%, acquistando un giocattolo di
- * prezzo unitario 12, i primi 20 giocattoli avrebbero un prezzo di 12 l'uno, quelli dal 21
- * in poi avrebbero prezzo pari a 8 (che è 12 a cui viene applicata una riduzione del
- * 30%).
- *
+ * <p>Ad esempio, se la soglia fosse 20 e lo sconto 30%, acquistando un giocattolo di prezzo
+ * unitario 12, i primi 20 giocattoli avrebbero un prezzo di 12 l'uno, quelli dal 21 in poi
+ * avrebbero prezzo pari a 8 (che è 12 a cui viene applicata una riduzione del 30%).
  */
 public class ListinoScontato extends AbstracListinoUnitario {
 
@@ -43,14 +40,14 @@ public class ListinoScontato extends AbstracListinoUnitario {
   // RI: 0 < soglia e 0 < sconto < 100
 
   /**
-   * Costruisce un listino a partire da una mappa tra giocattoli e prezzi
-   * unitari e i valori di soglia e sconto.
+   * Costruisce un listino a partire da una mappa tra giocattoli e prezzi unitari e i valori di
+   * soglia e sconto.
    *
    * @param prezzoUnitario la mappa.
    * @param soglia la soglia.
    * @param sconto lo sconto.
-   * @throws IllegalArgumentException se la soglia non è positiva, o lo sconto
-   * non è compreso tra 1 e 100 (estremi inclusi).
+   * @throws IllegalArgumentException se la soglia non è positiva, o lo sconto non è compreso tra 1
+   *     e 100 (estremi inclusi).
    * @see AbstracListinoUnitario
    */
   public ListinoScontato(
@@ -58,7 +55,8 @@ public class ListinoScontato extends AbstracListinoUnitario {
     super(prezzoUnitario);
     if (soglia <= 0) throw new IllegalArgumentException("La soglia deve essere positiva.");
     this.soglia = soglia;
-    if (sconto < 1 || sconto > 100) throw new IllegalArgumentException("Lo sconto dev'essere compreso tra 1 e 100.");
+    if (sconto < 1 || sconto > 100)
+      throw new IllegalArgumentException("Lo sconto dev'essere compreso tra 1 e 100.");
     this.sconto = sconto;
   }
 

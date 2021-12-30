@@ -26,11 +26,10 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
- * Una bancarella ha un proprietario ed espone un certo insieme di giocattoli
- * che può vendere.
+ * Una bancarella ha un proprietario ed espone un certo insieme di giocattoli che può vendere.
  *
- * <p>È un {@link Iterable} dei giocattoli che contiene il suo inventario, in
- * ordine lessicografico della loro rappresentazione tetuale.
+ * <p>È un {@link Iterable} dei giocattoli che contiene il suo inventario, in ordine lessicografico
+ * della loro rappresentazione testuale.
  */
 public class Bancarella implements Iterable<Giocattolo> {
 
@@ -53,12 +52,13 @@ public class Bancarella implements Iterable<Giocattolo> {
    * @param inventario l'inventario.
    * @param listino il listino.
    * @throws NullPointerException se uno dei parametri è <code>null</code>
-   * @throws IllegalArgumentException se l'inventario contiene un giocattolo il
-   * cui prezzo non è presente nel listino.
+   * @throws IllegalArgumentException se l'inventario contiene un giocattolo il cui prezzo non è
+   *     presente nel listino.
    */
   public Bancarella(final String proprietario, final Inventario inventario, final Listino listino) {
     this.proprietario = Objects.requireNonNull(proprietario);
-    if (proprietario.isEmpty()) throw new IllegalArgumentException("Il proprietario non deve essere vuoto.");
+    if (proprietario.isEmpty())
+      throw new IllegalArgumentException("Il proprietario non deve essere vuoto.");
     this.listino = Objects.requireNonNull(listino);
     this.inventario = Objects.requireNonNull(inventario);
     for (final Giocattolo g : inventario)
@@ -71,12 +71,11 @@ public class Bancarella implements Iterable<Giocattolo> {
    *
    * @param num il numero di giocattoli da vendere.
    * @param giocattolo il giocattolo da vendere.
-   * @return il numero rimanente di giocattoli del tipo appena venduto ancora
-   * presenti nell'inventario della bancarella.
+   * @return il numero rimanente di giocattoli del tipo appena venduto ancora presenti
+   *     nell'inventario della bancarella.
    * @throws NullPointerException se il giocattolo è <code>null</code>.
-   * @throws IllegalArgumentException se il numero non è positivo, o eccede il
-   * numero di giocattoli di quel tipo presenti nell'inventario della
-   * bancarella.
+   * @throws IllegalArgumentException se il numero non è positivo, o eccede il numero di giocattoli
+   *     di quel tipo presenti nell'inventario della bancarella.
    */
   public int vende(final int num, final Giocattolo giocattolo) {
     return inventario.rimuovi(num, giocattolo);
@@ -89,20 +88,18 @@ public class Bancarella implements Iterable<Giocattolo> {
    * @param giocattolo il giocattolo da vendere.
    * @return il prezzo della quantità indicata del giocattolo specificato.
    * @throws NullPointerException se giocattolo è <code>null</code>
-   * @throws NoSuchElementException se al listino della bancarella non è noto il
-   * prezzo del giocattolo.
+   * @throws NoSuchElementException se al listino della bancarella non è noto il prezzo del
+   *     giocattolo.
    */
   public int prezzo(final int num, final Giocattolo giocattolo) {
     return listino.prezzo(num, giocattolo);
   }
 
   /**
-   * Restituisce la quantità del giocattolo specificato nell'inventario della
-   * bancarella.
+   * Restituisce la quantità del giocattolo specificato nell'inventario della bancarella.
    *
    * @param giocattolo il giocattolo.
-   * @return il numero di giocattoli specificato nell'inventario della
-   * bancarella (eventualmente 0).
+   * @return il numero di giocattoli specificato nell'inventario della bancarella (eventualmente 0).
    * @throws NullPointerException se giocattolo è <code>null</code>
    */
   public int quanti(final Giocattolo giocattolo) {

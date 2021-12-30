@@ -33,8 +33,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Descrizione di un possibile acquisto di un giocattolo effettuato tra varie
- * bancarelle.
+ * Descrizione di un possibile acquisto di un giocattolo effettuato tra varie bancarelle.
  *
  * <p>È un {@link Iterable} delle bancarelle coinvolte.
  */
@@ -43,8 +42,7 @@ public class Acquisto implements Iterable<Bancarella> {
   /** Il giocattolo acquistato. */
   public final Giocattolo giocattolo;
 
-  /** Una mappa che associa a ciascuna bancarella il numero di giocattoli
-   * acquistati da essa. */
+  /** Una mappa che associa a ciascuna bancarella il numero di giocattoli acquistati da essa. */
   private final Map<Bancarella, Integer> descrizione;
 
   /** Il prezzo totale e la quantità complessiva di giocattoli nell'acquisto. */
@@ -62,19 +60,20 @@ public class Acquisto implements Iterable<Bancarella> {
   }
 
   /**
-   * Aggiunge alla descrizione dell'acuisto l'intenzione di comprare un certo
-   * numero di giocattoli da una data bancarella.
+   * Aggiunge alla descrizione dell'acuisto l'intenzione di comprare un certo numero di giocattoli
+   * da una data bancarella.
    *
    * @param num il numero di giocattoli.
    * @param bancarella la bancarella.
    * @throws NullPointerException se la bancarella è <code>null</code>.
-   * @throws IllegalArgumentException se il numero non è positivo, o la
-   * bancarella è già presente nella descrizione.
+   * @throws IllegalArgumentException se il numero non è positivo, o la bancarella è già presente
+   *     nella descrizione.
    */
   public void aggiungi(final int num, final Bancarella bancarella) {
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
     Objects.requireNonNull(bancarella);
-    if (descrizione.containsKey(bancarella)) throw new IllegalArgumentException("La bancarella è già elencata nell'acquisto.");
+    if (descrizione.containsKey(bancarella))
+      throw new IllegalArgumentException("La bancarella è già elencata nell'acquisto.");
     prezzo += bancarella.prezzo(num, giocattolo);
     quantità += num;
     descrizione.put(bancarella, num);
@@ -108,7 +107,8 @@ public class Acquisto implements Iterable<Bancarella> {
    */
   public int quantità(final Bancarella bancarella) {
     Objects.requireNonNull(bancarella);
-    if (!descrizione.containsKey(bancarella)) throw new NoSuchElementException("L'acquisto non riguarda la bancarella specificata.");
+    if (!descrizione.containsKey(bancarella))
+      throw new NoSuchElementException("L'acquisto non riguarda la bancarella specificata.");
     return descrizione.get(bancarella);
   }
 

@@ -27,16 +27,12 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
- * Classe astratta che rappresenta i listini in cui il prezzo di un certo numero
- * di giocattoli di un certo tipo dipende dal prezzo unitario di un giocattolo
- * di tale tipo.
- *
+ * Classe astratta che rappresenta i listini in cui il prezzo di un certo numero di giocattoli di un
+ * certo tipo dipende dal prezzo unitario di un giocattolo di tale tipo.
  */
 public abstract class AbstracListinoUnitario implements Listino {
 
-
-  /** Mappa che tiene traccia del costo prezzo unitario di ciascun giocattolo
-   * noto al listino. */
+  /** Mappa che tiene traccia del costo prezzo unitario di ciascun giocattolo noto al listino. */
   private final Map<Giocattolo, Integer> prezzoUnitario;
 
   // RI: le chiavi sono diverse da null, i valori sono positivi.
@@ -65,8 +61,7 @@ public abstract class AbstracListinoUnitario implements Listino {
    * @param giocattolo il giocattolo.
    * @return il suo prezzo unitario.
    * @throws NullPointerException se il giocattolo è <code>null</code>
-   * @throws NoSuchElementException se il listino ignora il prezzo del
-   * giocattolo.
+   * @throws NoSuchElementException se il listino ignora il prezzo del giocattolo.
    */
   public int prezzoUnitario(final Giocattolo giocattolo) {
     Objects.requireNonNull(giocattolo);

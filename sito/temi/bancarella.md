@@ -151,7 +151,7 @@ sorgente* della funzione `main` così definita
     final Scanner s = new Scanner(System.in);
 
     final int numBancarelle = s.nextInt();
-    final Set<Bancarella> bancarelle = new HashSet<>(numBancarelle);
+    final List<Bancarella> bancarelle = new ArrayList<>(numBancarelle);
     final Map<Giocattolo, Integer> giocattolo2prezzo = new HashMap<>();
     final Inventario inventario = new Inventario();
 

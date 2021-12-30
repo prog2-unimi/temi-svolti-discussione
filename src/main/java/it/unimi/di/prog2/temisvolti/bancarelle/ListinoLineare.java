@@ -24,16 +24,14 @@ package it.unimi.di.prog2.temisvolti.bancarelle;
 import java.util.Map;
 
 /**
- * Classe concreta che implementa un listino in cui il prezzo totale di
- * <samp>n</samp> giocattoli di un dato tipo è pari a <samp>n</samp> volte il
- * prezzo unitario di tale giocattolo.
- *
+ * Classe concreta che implementa un listino in cui il prezzo totale di <samp>n</samp> giocattoli di
+ * un dato tipo è pari a <samp>n</samp> volte il prezzo unitario di tale giocattolo.
  */
 public class ListinoLineare extends AbstracListinoUnitario {
 
   /**
-   * Costruisce un listino a partire da una mappa tra giocattoli e prezzi
-   * unitari.
+   * Costruisce un listino a partire da una mappa tra giocattoli e prezzi unitari.
+   *
    * @param prezzoUnitario la mappa.
    * @see AbstracListinoUnitario
    */
