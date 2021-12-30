@@ -21,6 +21,7 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package it.unimi.di.prog2.temisvolti.bancarelle;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,7 +44,7 @@ public abstract class AbstractCompratore {
    *
    * @param bancarelle le bancarelle.
    */
-  public AbstractCompratore(final List<Bancarella> bancarelle) {
+  public AbstractCompratore(final Collection<Bancarella> bancarelle) {
     Objects.requireNonNull(bancarelle);
     if (bancarelle.isEmpty())
       throw new IllegalArgumentException("Il mercatino deve contenere almeno una bancarella");
@@ -83,8 +84,3 @@ public abstract class AbstractCompratore {
     return result.toString();
   }
 }
-
-/*
-https://www.sciencedirect.com/science/article/abs/pii/S0167637707000648
-https://or-dii.unibs.it/doc/tr/RT_2011-02-66.pdf
-*/

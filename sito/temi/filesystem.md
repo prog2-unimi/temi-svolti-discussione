@@ -17,10 +17,6 @@ sol = Solution('filesystem')
 ```
 # Filesystem
 
-:::{warning}
-Questo versione della soluzione è **preliminare** e potrebbe subire modifiche.
-:::
-
 ## La traccia
 
 Scopo della prova è progettare e implementare una gerarchia di oggetti utili a

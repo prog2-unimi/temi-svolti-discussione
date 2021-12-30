@@ -18,7 +18,7 @@ sol = Solution('algebretta')
 # Bancarella
 
 :::{warning}
-Questo versione della soluzione è **preliminare** e potrebbe subire modifiche.
+Questa versione della soluzione è **preliminare** e potrebbe subire modifiche.
 :::
 
 ## La traccia
@@ -124,16 +124,27 @@ bancarella che esibisce il minor prezzo unitario, o dalle bancarelle che hanno
 maggior disponibilità del giocattolo, o scegliendo a caso da quali bancarelle
 comprare.
 
+:::{seealso} Osservate che determinare una strategia "ottima" è in generale
+molto difficile e non è affatto richiesto per portare a termine il progetto, gli
+studenti curiosi possono farsi una idea della questione sfogliando ad esempio
+l'articolo [Allocating procurement to capacitated suppliers with concave
+quantity
+discounts](https://www.sciencedirect.com/science/article/abs/pii/S0167637707000648)
+o li rapporto tecnico [An exact method for the Capacitated Total Quantity
+Discount Problem](https://or-dii.unibs.it/doc/tr/RT_2011-02-66.pdf).
+:::
+
 Potrebbe aver senso raccogliere alcune competenze comuni a tutti i compratori in
 una *classe astratta* fornendo poi delle implementazioni concrete che realizzino
 in modo diverso le varie strategie d'acquisto.
 
 In ogni modo, la classe concreta dovrà avere almeno un costruttore che riceva un
-parametro di tipo `Set<Bancarella>` e un metodo di segnatura
+parametro di tipo `Collection<Bancarella>` e un metodo di segnatura
 
     public Acquisto compra(final int num, final Giocattolo giocattolo)
 
 che sarà usata per effettuare l'acquisto.
+
 
 #### La classe di test
 
