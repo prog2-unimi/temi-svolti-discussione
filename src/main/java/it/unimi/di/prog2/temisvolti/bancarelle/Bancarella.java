@@ -33,6 +33,7 @@ import java.util.Objects;
  */
 public class Bancarella implements Iterable<Giocattolo> {
 
+  // SOF: rep
   /** Il proprietario della bancarella. */
   public final String proprietario;
 
@@ -61,11 +62,15 @@ public class Bancarella implements Iterable<Giocattolo> {
       throw new IllegalArgumentException("Il proprietario non deve essere vuoto.");
     this.listino = Objects.requireNonNull(listino);
     this.inventario = Objects.requireNonNull(inventario);
+    // SOF: ri
     for (final Giocattolo g : inventario)
-      if (!listino.contiene(g))
+      if (!listino.conosce(g))
         throw new IllegalArgumentException("Il listino manca del prezzo per: " + g);
+    // EOF: ri
   }
+  // EOF: rep
 
+  // SOF: mod
   /**
    * Effettua la vendita del numero richiesto del giocattolo indicato.
    *
@@ -79,6 +84,19 @@ public class Bancarella implements Iterable<Giocattolo> {
    */
   public int vende(final int num, final Giocattolo giocattolo) {
     return inventario.rimuovi(num, giocattolo);
+  }
+  // EOF: mod
+
+  // SOF: obs
+  /**
+   * Restituisce la quantità del giocattolo specificato nell'inventario della bancarella.
+   *
+   * @param giocattolo il giocattolo.
+   * @return il numero di giocattoli specificato nell'inventario della bancarella (eventualmente 0).
+   * @throws NullPointerException se giocattolo è <code>null</code>
+   */
+  public int quantità(final Giocattolo giocattolo) {
+    return inventario.quantità(giocattolo);
   }
 
   /**
@@ -95,21 +113,11 @@ public class Bancarella implements Iterable<Giocattolo> {
     return listino.prezzo(num, giocattolo);
   }
 
-  /**
-   * Restituisce la quantità del giocattolo specificato nell'inventario della bancarella.
-   *
-   * @param giocattolo il giocattolo.
-   * @return il numero di giocattoli specificato nell'inventario della bancarella (eventualmente 0).
-   * @throws NullPointerException se giocattolo è <code>null</code>
-   */
-  public int quanti(final Giocattolo giocattolo) {
-    return inventario.quanti(giocattolo);
-  }
-
   @Override
   public Iterator<Giocattolo> iterator() {
     return inventario.iterator();
   }
+  // EOF: obs
 
   @Override
   public String toString() {
@@ -117,7 +125,7 @@ public class Bancarella implements Iterable<Giocattolo> {
     result.append("Bancarella di: " + proprietario + "\n");
     for (final Giocattolo g : inventario)
       result.append(
-          "num. " + inventario.quanti(g) + " " + g + ", prezzo: " + listino.prezzo(1, g) + "\n");
+          "num. " + inventario.quantità(g) + " " + g + ", prezzo: " + listino.prezzo(1, g) + "\n");
     return result.toString();
   }
 }

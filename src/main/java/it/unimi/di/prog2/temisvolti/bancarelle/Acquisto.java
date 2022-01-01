@@ -39,6 +39,7 @@ import java.util.Set;
  */
 public class Acquisto implements Iterable<Bancarella> {
 
+  // SOF: rep
   /** Il giocattolo acquistato. */
   public final Giocattolo giocattolo;
 
@@ -47,6 +48,12 @@ public class Acquisto implements Iterable<Bancarella> {
 
   /** Il prezzo totale e la quantità complessiva di giocattoli nell'acquisto. */
   private int prezzo = 0, quantità = 0;
+  // EOF: rep
+
+  // RI: giocatolo e descrizione non sono nulli, la mappa non contiene null e
+  // gli interi sono tutti positivi; quantità ha per valore la somma degli
+  // interi della mappa e prezzo la somma dei prezzi (di ciascuna bancarella, a
+  // fronte di un acquisto del numero di giocattoli acquistati presso di essa).
 
   /**
    * Costruisce un acquisto del dato giocattolo.
@@ -59,6 +66,7 @@ public class Acquisto implements Iterable<Bancarella> {
     this.descrizione = new HashMap<>();
   }
 
+  // SOF: mod
   /**
    * Aggiunge alla descrizione dell'acuisto l'intenzione di comprare un certo numero di giocattoli
    * da una data bancarella.
@@ -72,13 +80,17 @@ public class Acquisto implements Iterable<Bancarella> {
   public void aggiungi(final int num, final Bancarella bancarella) {
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
     Objects.requireNonNull(bancarella);
+    // SOF: ri
     if (descrizione.containsKey(bancarella))
       throw new IllegalArgumentException("La bancarella è già elencata nell'acquisto.");
     prezzo += bancarella.prezzo(num, giocattolo);
     quantità += num;
     descrizione.put(bancarella, num);
+    // EOF: ri
   }
+  // EOF: mod
 
+  // SOF: tivialobs
   /**
    * Restituisce il prezzo complessivo dell'acquisto.
    *
@@ -96,7 +108,9 @@ public class Acquisto implements Iterable<Bancarella> {
   public int quantità() {
     return quantità;
   }
+  // EOF: tivialobs
 
+  // SOF: obs
   /**
    * Restituisce la quantità di giocattoli da acquistare dalla data bancarella.
    *
@@ -117,6 +131,7 @@ public class Acquisto implements Iterable<Bancarella> {
     Set<Bancarella> bancarelle = Collections.unmodifiableSet(descrizione.keySet());
     return bancarelle.iterator();
   }
+  // EOF: obs
 
   @Override
   public String toString() {

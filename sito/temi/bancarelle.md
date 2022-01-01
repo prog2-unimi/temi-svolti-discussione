@@ -428,3 +428,88 @@ Date le due informazioni di cui sopra, l'implementazione del prezzo è semplice
 :tags: [remove-input]
 sol.show('ListinoScontato', 'override', 'value')
 ```
+
+### La bancarella
+
+La bancarella può essere facilmente ottenuta per composizione delle classi
+sviluppate sin qui; essa conterrà un inventario ed un listino (a cui delegherà
+il compito di rispondere a domande sui giochi disponibili e sul loro prezzo).
+
+Oltre agli invarianti banali (concernenti la nullità, per così dire), l'unica accortezza è verificare che il listino contenga i prezzi di tutti i giocattoli nell'inventario; dal momento che durante la vita della bancarella l'inventario può solo essere svutato e che il listino è immutabile, tale controllo può essere fatto in costruzione (codice evidenziato):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Bancarella', 'rep', 'ri')
+```
+
+L'unico metodo mutazionale è quello che esegue una vendita (che di fatto
+comporta solo la riduzione del numero di beni in inventario):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Bancarella', 'mod')
+```
+
+I metodi osservazionali `quantità` e `prezzo` sono di banale implementazione (sono deleghe all'inventario e al listino):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Bancarella', 'obs')
+```
+
+In aggiunta, la classe è resa un `Iterable<Giocattolo>` per consentire una
+ispezione completa del suo stato (sempre attraverso una delega all'inventario).
+
+### L'acquisto
+
+La descrizione dell'acquisto di una determinata quantità di un giocattolo è
+costituita dall'informazione di quanti giocattoli di quel tipo sono stati
+acquistati per ciascuna bancarella e del prezzo totale pagato.
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Acquisto', 'rep')
+```
+
+La rappresentazione di tale informazioni può essere contenuta in una mappa dalle
+bancarelle agli interi e da due valori che memorizzino il prezzo e la quantità
+totali; l'invariante prescrive che tali valori siano tenuti aggiornati in
+dipendenza del contenuto della mappa. Poiché la classe ha un costruttore nullo,
+l'invariante può essere controllato nell'unico metodo mutazionale (codice
+evidenziato):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Acquisto', 'mod', 'ri')
+```
+
+In particolare, si osservi che per semplicità ogni bancarella può essere
+aggiunta una sola volta (altrimenti la mappa andrebbe aggiornata, come avviene
+ad esempio nel metodo `aggiungi` di `Inventario`).
+
+I metodi osservazionali sono in parte banali:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Acquisto', 'tivialobs')
+```
+
+Inoltre, per consentire una piena conoscenza dello stato dell'acquisto, esso è
+reso un `Iterable<Bancarella>` e il metodo `quantità` consente di sapere, per
+ciascuna delle bancarelle restituite dall'iteratore, quanti giocattoli siano
+acquistati da essa:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Acquisto', 'obs')
+```
+
+Si osservi che l'iteratore "protegge" con `Collections.unmodifableSet` le chiavi
+della mappa prima di restituirne un iteratore (che potrebbe mutare la mappa
+grazie al metodo `remove`).
+
+### I compratori
+
+La situazione del compratore richiede una variabilità comparabile a quella del
+listino.
+

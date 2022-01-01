@@ -52,7 +52,7 @@ public class CompratoreMinimoUnitario extends AbstractCompratore {
       int daComprare, minUnitario = Integer.MAX_VALUE;
       Bancarella min = null;
       for (final Bancarella b : bancarelle) {
-        daComprare = Math.min(b.quanti(giocattolo), rimanenti);
+        daComprare = Math.min(b.quantità(giocattolo), rimanenti);
         if (daComprare == 0) continue;
         int unitario = b.prezzo(daComprare, giocattolo) / daComprare;
         if (unitario < minUnitario) {
@@ -60,7 +60,7 @@ public class CompratoreMinimoUnitario extends AbstractCompratore {
           minUnitario = unitario;
         }
       }
-      daComprare = Math.min(min.quanti(giocattolo), rimanenti);
+      daComprare = Math.min(min.quantità(giocattolo), rimanenti);
       min.vende(daComprare, giocattolo);
       acquisto.aggiungi(daComprare, min);
       rimanenti -= daComprare;
