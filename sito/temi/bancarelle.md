@@ -287,15 +287,16 @@ aggiungere una nuova *entry*:
 sol.show('Inventario', 'add')
 ```
 
-Si osservi che è oltre al metodo per aggiungere un solo giocattolo delega al
-metodo più generale, fare il contrario sarebbe stato poco conveniente perché nel
-metodo generale sarebbe stato necessario effettuare un ciclo che aggiungesse un
-giocattolo alla volta (usando l'altro metodo).
+Si osservi che il metodo per aggiungere un solo giocattolo delega al metodo più
+generale, fare il contrario sarebbe stato poco conveniente perché nel metodo
+generale sarebbe stato necessario effettuare un ciclo per aggiungere un
+giocattolo alla volta (usando il metodo di aggiunta di un singolo giocattolo).
 
-In modo del tutto simmetrico, il metodo per rimuovere un certo numero di
-giocattoli deve verificare che il numero rimanente di giocattoli non sia
-negativo e, nel caso sia nullo, eliminare la chiave dalla mappa (come
-evidenziato nel codice):
+In modo del tutto simmetrico all'aggiunta, il metodo per rimuovere un certo
+numero di giocattoli deve verificare che il numero rimanente di giocattoli non
+sia negativo (caso in cui viene sollevata una eccezione, ma lasciato immutato lo
+stato dell'inventario) e, nel caso sia nullo, eliminare la chiave dalla mappa
+(come evidenziato nel codice):
 
 ```{code-cell}
 :tags: [remove-input]
@@ -326,3 +327,104 @@ sol.show('Inventario', 'iter')
 Si noti l'uso della classe anonima che implementa l'interfaccia
 `Comparator<Giocattolo>` utile a consentire una iterazione in ordine
 lessicografico (della rappresentazione testuale dei giocattoli).
+
+
+### I listini
+
+Stando alla traccia, il *listino* è una delle entità a cui è necessario
+provvedere la maggior variabilità possibile di comportamenti. Per questa
+ragione, è utile definire una interfaccia:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Listino')
+```
+
+Il primo metodo è necessario perché il secondo solleverà eccezione se
+interrogato su giocattoli di cui non conosce il prezzo; in un inventario può
+aver senso segnalare l'assenza di un giocattolo restituendo 0 alla domanda sulla
+sua numerosità, viceversa non è sensato dire che una cosa ha prezzo nullo se non
+è compresa nel listino!
+
+A questo punto, i due comportamenti descritti nella traccia dipendono entrambi
+dalla conoscenza del prezzo unitario, ragion per cui appare sensato interporre
+una classe astratta che offra questa compotenza alle due classi concrete che
+realizzino i comportamenti descritti.
+
+:::{mermaid}
+:align: center
+
+classDiagram
+class Listino {
+  <<interface>>
+  prezzo(int, Giocattolo)*
+  conosce(Giocattolo)*
+}
+class AbstracListinoUnitario {
+  <<abstract>>
+  prezzoUnitario(Giocattolo)
+  conosce(Giocattolo)
+}
+class ListinoLineare {
+  prezzo(int, Giocattolo)
+}
+class ListinoScontato {
+  prezzo(int, Giocattolo)
+
+}
+Listino <|-- AbstracListinoUnitario
+AbstracListinoUnitario <|-- ListinoLineare
+AbstracListinoUnitario <|-- ListinoScontato
+:::
+
+La classe astratta deve solo tener traccia (in una mappa tra giocattoli e
+interi) del prezzo unitario, l'invariante di tale rappresentazione (oltre
+all'ovvia richiesta che l'attributo non sia e non contenga null) è che i prezzi
+siano tutti non negativi; la classe può essere immutabile e quindi l'invariante sarà controllato solo in costruzione (codice evidenziato):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstracListinoUnitario', 'rep', 'ri')
+```
+
+La rappresentazione scelta consente di sovrascrivere (in modo da renderlo
+concreto) il metodo `conosce` in modo molto elementare:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstracListinoUnitario', 'override')
+```
+
+Similmente, il suo unico metodo osservazionale consente di tenere la sua
+rappresentazione completamente isolata da quella delle sottoclassi:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstracListinoUnitario', 'obs')
+```
+
+Alle sottoclassi concrete, a questo punto, resta solo l'onere di rendere
+concreto il metodo `prezzo`; nel caso del prezzo lineare, questo può essere
+fatto senza memorizzare ulteriore stato:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('ListinoLineare', 'override')
+```
+
+Nel caso dello sconto, è necessario tener traccia di solgia e percentuale (lo
+stato della classe) che è immutabile e il cui banale invariante può essere
+controllato solo in costruzione:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('ListinoScontato', 'rep', 'ri')
+```
+
+Date le due informazioni di cui sopra, l'implementazione del prezzo è semplice
+(la parte evidenziata nel codice segue dalla definizione nella traccia):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('ListinoScontato', 'override', 'value')
+```

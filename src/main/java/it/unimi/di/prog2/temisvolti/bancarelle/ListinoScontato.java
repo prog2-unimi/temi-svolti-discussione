@@ -34,6 +34,7 @@ import java.util.Map;
  */
 public class ListinoScontato extends AbstracListinoUnitario {
 
+  // SOF: rep
   /** La soglia e lo sconto che caratterizzano questo scontrino. */
   private final int soglia, sconto;
 
@@ -53,20 +54,27 @@ public class ListinoScontato extends AbstracListinoUnitario {
   public ListinoScontato(
       final Map<Giocattolo, Integer> prezzoUnitario, final int soglia, final int sconto) {
     super(prezzoUnitario);
+    // SOF: ri
     if (soglia <= 0) throw new IllegalArgumentException("La soglia deve essere positiva.");
     this.soglia = soglia;
     if (sconto < 1 || sconto > 100)
       throw new IllegalArgumentException("Lo sconto dev'essere compreso tra 1 e 100.");
     this.sconto = sconto;
+    // EOF: ri
   }
+  // EOF: rep
 
+  // SOF: override
   @Override
   public int prezzo(int num, Giocattolo giocattolo) {
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
-    if (num < soglia) return prezzoUnitario(giocattolo) * num;
-    else {
-      int p = prezzoUnitario(giocattolo);
-      return soglia * p + (int) (((num - soglia) * p * (100 - sconto)) / 100.0);
-    }
+    final int prezzoUnitario = prezzoUnitario(giocattolo);
+    // SOF: value
+    return num < soglia
+        ? prezzoUnitario * num
+        : soglia * prezzoUnitario
+            + (int) (((num - soglia) * prezzoUnitario * (100 - sconto)) / 100.0);
+    // EOF: value
   }
+  // EOF: override
 }

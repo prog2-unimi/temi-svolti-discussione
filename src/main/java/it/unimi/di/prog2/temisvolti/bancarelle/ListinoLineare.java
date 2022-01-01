@@ -39,9 +39,11 @@ public class ListinoLineare extends AbstracListinoUnitario {
     super(prezzoUnitario);
   }
 
+  // SOF: override
   @Override
   public int prezzo(final int num, final Giocattolo giocattolo) {
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
     return prezzoUnitario(giocattolo) * num;
   }
+  // EOF: override
 }

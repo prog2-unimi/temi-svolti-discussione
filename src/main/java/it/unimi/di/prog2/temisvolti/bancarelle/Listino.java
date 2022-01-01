@@ -35,7 +35,7 @@ public interface Listino {
    * @param giocattolo il giocattolo.
    * @return se il listino conosce, o meno, il prezzo del giocattolo.
    */
-  public boolean contiene(final Giocattolo giocattolo);
+  public boolean conosce(final Giocattolo giocattolo);
 
   /**
    * Indica il prezzo di un certo numero di giocattoli di un dato tipo.

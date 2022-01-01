@@ -27,11 +27,12 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
- * Classe astratta che rappresenta i listini in cui il prezzo di un certo numero di giocattoli di un
- * certo tipo dipende dal prezzo unitario di un giocattolo di tale tipo.
+ * Classe astratta immutabile che rappresenta i listini in cui il prezzo di un certo numero di
+ * giocattoli di un certo tipo dipende dal prezzo unitario di un giocattolo di tale tipo.
  */
 public abstract class AbstracListinoUnitario implements Listino {
 
+  // SOF: rep
   /** Mappa che tiene traccia del costo prezzo unitario di ciascun giocattolo noto al listino. */
   private final Map<Giocattolo, Integer> prezzoUnitario;
 
@@ -46,6 +47,7 @@ public abstract class AbstracListinoUnitario implements Listino {
    */
   public AbstracListinoUnitario(final Map<Giocattolo, Integer> prezzoUnitario) {
     this.prezzoUnitario = new HashMap<>();
+    // SOF: ri
     for (Map.Entry<Giocattolo, Integer> e : prezzoUnitario.entrySet()) {
       final Giocattolo giocattolo = Objects.requireNonNull(e.getKey());
       final Integer num = Objects.requireNonNull(e.getValue());
@@ -53,8 +55,11 @@ public abstract class AbstracListinoUnitario implements Listino {
         throw new IllegalArgumentException("Il prezzp di " + giocattolo + " deve essere positivo");
       this.prezzoUnitario.put(giocattolo, num);
     }
+    // EOF: ri
   }
+  // EOF: rep
 
+  // SOF: obs
   /**
    * Restituisce il prezzo unitario di un oggetto.
    *
@@ -69,11 +74,14 @@ public abstract class AbstracListinoUnitario implements Listino {
     if (prezzo == null) throw new NoSuchElementException("Giocattolo non trovato: " + giocattolo);
     return prezzo;
   }
+  // EOF: obs
 
+  // SOF: override
   @Override
-  public boolean contiene(final Giocattolo giocattolo) {
+  public boolean conosce(final Giocattolo giocattolo) {
     return prezzoUnitario.containsKey(Objects.requireNonNull(giocattolo));
   }
+  // EOF: override
 
   @Override
   public abstract int prezzo(final int num, final Giocattolo giocattolo);
