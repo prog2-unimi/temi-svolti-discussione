@@ -23,8 +23,6 @@ Questa versione della soluzione è **preliminare** e potrebbe subire modifiche.
 
 ## La traccia
 
-### Descrizione
-
 Se siete andati in vacanza al mare, vi sarà senz'altro capitato di vedere che
 (specialmente alla fine della stagione) i bambini organizzano sulle spiagge, o
 nelle piazzette, delle bancarelle per vendere i giocattoli usati. Spesso si
@@ -61,7 +59,7 @@ potrebbe, ad esempio, effettuare il seguente acquisto
     10 da Federico
     1 da Massimo
 
-#### La bancarella: giocattolo, inventario e listino prezzi
+### La bancarella: giocattolo, inventario e listino prezzi
 
 Per semplicità assumeremo che ciascun **giocattolo** abbia un nome
 (rappresentato con una *stringa*) e sia fatto di un dato materiale (anch'esso
@@ -98,7 +96,7 @@ Una bancarella deve poter indicare quanti giocattoli di un certo tipo è in grad
 di vendere e a che prezzo, nonché procedere alla vendita (aggiornando
 l'inventario).
 
-#### Compratore e acquisto
+### Compratore e acquisto
 
 Se più bancarelle offrono lo stesso giocattolo, il *compratore* che intenda
 acquistarne una certa quantità, può comporre il suo **acquisto** in modi
@@ -139,14 +137,14 @@ una *classe astratta* fornendo poi delle implementazioni concrete che realizzino
 in modo diverso le varie strategie d'acquisto.
 
 In ogni modo, la classe concreta dovrà avere almeno un costruttore che riceva un
-parametro di tipo `Collection<Bancarella>` e un metodo di segnatura
+parametro di tipo `Set<Bancarella>` e un metodo di segnatura
 
     public Acquisto compra(final int num, final Giocattolo giocattolo)
 
 che sarà usata per effettuare l'acquisto.
 
 
-#### La classe di test
+### La classe di test
 
 Per ottenere la classe di test di questo esercizio, partite dalla *bozza di
 sorgente* della funzione `main` così definita
@@ -162,7 +160,7 @@ sorgente* della funzione `main` così definita
     final Scanner s = new Scanner(System.in);
 
     final int numBancarelle = s.nextInt();
-    final List<Bancarella> bancarelle = new ArrayList<>(numBancarelle);
+    final Set<Bancarella> bancarelle = new HashSet<>(numBancarelle);
     final Map<Giocattolo, Integer> giocattolo2prezzo = new HashMap<>();
     final Inventario inventario = new Inventario();
 
@@ -225,7 +223,7 @@ ingresso contiene i seguenti elementi (separati da *white-space*):
 Una volta costruito il compratore, esso dovrà effettuare l'acquisto specificato
 ed emetterlo nel flusso d'uscita (secondo il formato dato dall'esempio).
 
-##### Esempio
+#### Esempio
 
 Eseguendo `soluzione 11 soldatino stagno` e avendo
 
@@ -264,6 +262,16 @@ costruzione:
 :tags: [remove-input]
 sol.show('Giocattolo', 'rep', 'inv')
 ```
+
+Unica cosa degna di nota è la sovrascrittura dei metodi di `Object`:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Giocattolo', 'eqhash', 'hash')
+```
+
+In particolare il codice evidenziato mostra l'uso del metodo `hash` di `Objects`
+che consente di calcolare l'hashcode a partire da un elenco di attributi.
 
 ### L'inventario
 
@@ -348,7 +356,7 @@ sua numerosità, viceversa non è sensato dire che una cosa ha prezzo nullo se n
 
 A questo punto, i due comportamenti descritti nella traccia dipendono entrambi
 dalla conoscenza del prezzo unitario, ragion per cui appare sensato interporre
-una classe astratta che offra questa compotenza alle due classi concrete che
+una classe astratta che offra questa competenza alle due classi concrete che
 realizzino i comportamenti descritti.
 
 :::{mermaid}
@@ -412,7 +420,7 @@ fatto senza memorizzare ulteriore stato:
 sol.show('ListinoLineare', 'override')
 ```
 
-Nel caso dello sconto, è necessario tener traccia di solgia e percentuale (lo
+Nel caso dello sconto, è necessario tener traccia di soglia e percentuale (lo
 stato della classe) che è immutabile e il cui banale invariante può essere
 controllato solo in costruzione:
 
@@ -435,7 +443,11 @@ La bancarella può essere facilmente ottenuta per composizione delle classi
 sviluppate sin qui; essa conterrà un inventario ed un listino (a cui delegherà
 il compito di rispondere a domande sui giochi disponibili e sul loro prezzo).
 
-Oltre agli invarianti banali (concernenti la nullità, per così dire), l'unica accortezza è verificare che il listino contenga i prezzi di tutti i giocattoli nell'inventario; dal momento che durante la vita della bancarella l'inventario può solo essere svutato e che il listino è immutabile, tale controllo può essere fatto in costruzione (codice evidenziato):
+Oltre agli invarianti banali (concernenti la nullità, per così dire), l'unica
+accortezza è verificare che il listino contenga i prezzi di tutti i giocattoli
+nell'inventario; dal momento che durante la vita della bancarella l'inventario
+può solo essere ridotto e che il listino è immutabile, tale controllo può essere
+fatto in costruzione (codice evidenziato):
 
 ```{code-cell}
 :tags: [remove-input]
@@ -459,6 +471,17 @@ sol.show('Bancarella', 'obs')
 
 In aggiunta, la classe è resa un `Iterable<Giocattolo>` per consentire una
 ispezione completa del suo stato (sempre attraverso una delega all'inventario).
+
+Per concludere, siccome sarà comodo usare le bancarelle come chiavi delle mappe
+o come membri degli insiemi (nelle *collections*), sono stati sovrascritti i
+metodi `equals` e `hashCode` considerando uguali bancarelle col medesimo
+proprietario (indipendentemente dall'inventario e dal listino).
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Bancarella', 'eqhash')
+```
+
 
 ### L'acquisto
 
@@ -508,8 +531,102 @@ Si osservi che l'iteratore "protegge" con `Collections.unmodifableSet` le chiavi
 della mappa prima di restituirne un iteratore (che potrebbe mutare la mappa
 grazie al metodo `remove`).
 
+
 ### I compratori
 
-La situazione del compratore richiede una variabilità comparabile a quella del
-listino.
+La situazione del compratore richiede una variabilità di comportamenti (rispetto
+al modo di effettuare l'acquisto) comparabile a quella del listino. Tutti i
+compratori però non possono prescindere dalla conoscenza di un insieme di
+bancarelle da cui acquistare; dovendo condividere dello stato, appare più
+ragionevole mettere a capo della gerarchia una classe astratta.
 
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstractCompratore', 'rep', 'ri')
+```
+
+Riguardo alla rappresentazione essa è `protected` in modo che le sottoclassi
+possano accedervi, ma è dichiarata `final` e l'insieme è immutabile (grazie
+all'uso di `Set.copyOf`, vedi codice evidenziato). Pertanto l'invariante di
+questa rappresentazione è controllato in costruzione e non potrà mai essere
+alterato dalle sottoclassi.
+
+Resterà astratto il metodo che descrive la strategia di acquisto:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstractCompratore', 'abs')
+```
+
+mentre può essere comodo implementare un metodo che, dato l'insieme di
+bancarelle, calcoli la quantità totale di giocattoli di un dato tipo presenti
+nei loro inventari:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstractCompratore', 'obs')
+```
+
+Supponendo quindi di limitarci ai casi descritti nella traccia, potremmo
+implementare la seguente gerarchia:
+
+:::{mermaid}
+:align: center
+
+classDiagram
+class AbstractCompratore {
+  <<abstract>>
+  bancarelle
+  compra(Giocattolo)*
+  quantità(Giocattolo)
+}
+class CompratoreCasuale {
+  compra(int, Giocattolo)
+}
+class CompratoreMinimoUnitario {
+  compra(int, Giocattolo)
+}
+AbstractCompratore <|-- CompratoreCasuale
+AbstractCompratore <|-- CompratoreMinimoUnitario
+:::
+
+Alle sottoclassi concrete non resta che implementare il metodo `compra` sulla
+scorta dello stato condiviso con la superclasse (l'insieme delle bancarelle).
+
+Il caso più elementare è l'acquisto "a caso", ottenuto dispondendo le bancarelle
+in ordine casue (codice evidenziato) e quindi procedendo a comprare quanto più
+possibile da ciascuna bancarella:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('CompratoreCasuale', 'compra', 'rng')
+```
+
+Un po' più complessa l'altra strategia. Finché restano giocattoli da comprare,
+si sceglie di volta in volta la bancarella che ha il minor prezzo unitario
+(comprando da essa tutti i giocattoli possibili):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('CompratoreMinimoUnitario', 'compra', 'min')
+```
+
+Ad ogni passo (codice evidenziato in giallo) si effettua di fatto una ricerca di
+minimo tra tutte le bancarelle che hanno il giocattolo a disposizione.
+
+### La classe di test
+
+La classe di test è sostanzialmente provvista dalla traccia, dato il codice
+sviluppato sin qui è pertanto banale ottenerla. Le uniche modifiche riguardano l'istanziazione del listino:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Soluzione', 'listino')
+```
+
+E l'istanziazione del compratore:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Soluzione', 'compratore')
+```

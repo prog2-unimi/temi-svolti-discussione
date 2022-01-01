@@ -50,9 +50,12 @@ public class Giocattolo {
   }
   // EOF: rep
 
+  // SOF: eqhash
   @Override
   public int hashCode() {
+    // SOF: hash
     return Objects.hash(nome, materiale);
+    // EOF: hash
   }
 
   @Override
@@ -61,6 +64,7 @@ public class Giocattolo {
     final Giocattolo tmp = (Giocattolo) obj;
     return tmp.nome.equals(nome) && tmp.materiale.equals(materiale);
   }
+  // EOF: eqhash
 
   @Override
   public String toString() {

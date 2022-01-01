@@ -21,23 +21,43 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package it.unimi.di.prog2.temisvolti.bancarelle;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 
 /**
  * Classe concreta che rappresenta un compratore che acquista da ciascuna bancarella il massimo
  * numero di giocattoli scegliendo per prime le bancarelle che offrono il minor prezzo unitario.
  */
-public class CompratoreMinimoUnitario extends AbstractCompratore {
+public class CompratoreCasuale extends AbstractCompratore {
+
+  /** Il generatore di numeri casuali usato da questa classe. */
+  private final Random rng = new Random();
 
   /**
-   * Costruisce un compratore.
+   * Costruisce un compratore (permettendo di specificare il seme del generatore, per consentire la
+   * riproduciblità dell'esecuzione).
+   *
+   * @param bancarelle le bancarelle.
+   * @param seed il seme del genratore casuale.
+   * @see AbstractCompratore
+   */
+  public CompratoreCasuale(Set<Bancarella> bancarelle, final long seed) {
+    super(bancarelle);
+    rng.setSeed(seed);
+  }
+
+  /**
+   * Costruisce un compratore (il seme è dato dal tempo corrente all'esecuzione).
    *
    * @param bancarelle le bancarelle.
    * @see AbstractCompratore
    */
-  public CompratoreMinimoUnitario(Set<Bancarella> bancarelle) {
-    super(bancarelle);
+  public CompratoreCasuale(Set<Bancarella> bancarelle) {
+    this(bancarelle, System.currentTimeMillis());
   }
 
   // SOF: compra
@@ -49,26 +69,20 @@ public class CompratoreMinimoUnitario extends AbstractCompratore {
       throw new IllegalArgumentException("Non ci sono abbastanza: " + giocattolo);
     final Acquisto acquisto = new Acquisto(giocattolo);
     int rimanenti = num;
-    while (rimanenti > 0) {
-      // SOF: min
-      int daComprare, minUnitario = Integer.MAX_VALUE;
-      Bancarella min = null; // la bancarella col costo minimo unitario
-      for (final Bancarella b : bancarelle) {
-        daComprare = Math.min(b.quantità(giocattolo), rimanenti);
-        if (daComprare == 0) continue;
-        int unitario = b.prezzo(daComprare, giocattolo) / daComprare;
-        if (unitario < minUnitario) {
-          min = b;
-          minUnitario = unitario;
-        }
-      }
-      // EOF: min
-      daComprare = Math.min(min.quantità(giocattolo), rimanenti);
-      min.vende(daComprare, giocattolo);
-      acquisto.aggiungi(daComprare, min);
+    // SOF: rng
+    final List<Bancarella> aCaso = new ArrayList<>(bancarelle);
+    Collections.shuffle(aCaso, rng);
+    // EOF: rng
+    for (final Bancarella b : aCaso) {
+      if (rimanenti == 0) break;
+      final int daComprare = Math.min(b.quantità(giocattolo), rimanenti);
+      if (daComprare == 0) continue;
+      b.vende(daComprare, giocattolo);
+      acquisto.aggiungi(daComprare, b);
       rimanenti -= daComprare;
     }
     return acquisto;
   }
   // EOF: compra
+
 }

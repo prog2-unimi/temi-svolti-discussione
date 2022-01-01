@@ -30,6 +30,10 @@ import java.util.Objects;
  *
  * <p>È un {@link Iterable} dei giocattoli che contiene il suo inventario, in ordine lessicografico
  * della loro rappresentazione testuale.
+ *
+ * <p>Dal momento che le bancarelle entreranno in diverse *collections* sono stati sovrascritti i
+ * metodi `equals` e `hashCode` in modo che siano uguali (ai fini del progetto) bancarelle col
+ * medesimo propirietario (indipendentemente da inventaroi e listino).
  */
 public class Bancarella implements Iterable<Giocattolo> {
 
@@ -118,6 +122,19 @@ public class Bancarella implements Iterable<Giocattolo> {
     return inventario.iterator();
   }
   // EOF: obs
+
+  // SOF: eqhash
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Bancarella)) return false;
+    return ((Bancarella) other).proprietario.equals(proprietario);
+  }
+
+  @Override
+  public int hashCode() {
+    return proprietario.hashCode();
+  }
+  // EOF: eqhash
 
   @Override
   public String toString() {
