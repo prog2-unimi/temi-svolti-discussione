@@ -17,10 +17,6 @@ sol = Solution('bancarelle')
 ```
 # Bancarelle
 
-:::{warning}
-Questa versione della soluzione è **preliminare** e potrebbe subire modifiche.
-:::
-
 ## La traccia
 
 Se siete andati in vacanza al mare, vi sarà senz'altro capitato di vedere che
@@ -254,8 +250,8 @@ nel flusso d'uscita.
 ### Il giocattolo
 
 La classe più elementare è il giocattolo, potrebbe essere anche un `record`, ma
-seguendo un approccio più datato è sufficiente una classe immutabile con due
-attributi il cui invariante (del tutto ovvio) può essere controllato in
+seguendo un approccio più convenzionale è sufficiente una classe immutabile con
+due attributi il cui invariante (del tutto ovvio) può essere controllato in
 costruzione:
 
 ```{code-cell}
@@ -295,10 +291,10 @@ aggiungere una nuova *entry*:
 sol.show('Inventario', 'add')
 ```
 
-Si osservi che il metodo per aggiungere un solo giocattolo delega al metodo più
-generale, fare il contrario sarebbe stato poco conveniente perché nel metodo
+Si osservi che il metodo per aggiungere un singolo giocattolo delega al metodo
+più generale, fare il contrario sarebbe stato poco conveniente perché nel metodo
 generale sarebbe stato necessario effettuare un ciclo per aggiungere un
-giocattolo alla volta (usando il metodo di aggiunta di un singolo giocattolo).
+giocattolo alla volta (usando il metodo di aggiunta singola).
 
 In modo del tutto simmetrico all'aggiunta, il metodo per rimuovere un certo
 numero di giocattoli deve verificare che il numero rimanente di giocattoli non
@@ -320,8 +316,8 @@ sol.show('Inventario', 'quanti')
 
 Unica cosa degna di nota è la decisione di restituire 0 nel caso l'inventario
 non comprenda il giocattolo (senza sollevare eccezione); questa scelta permette
-di evitare l'aggiunta di un metodo per sapere se un giocattolo sia presente o
-meno nell'inventario.
+di evitare l'aggiunta di un metodo per sapere esplicitamente se un giocattolo
+sia presente o meno nell'inventario.
 
 Per finire, appare comodo rendere la classe un *iterabile* sui giocattoli, in
 modo che (con l'ausilio del metodo precedente) si possa conoscerne completamente
@@ -349,10 +345,10 @@ sol.show('Listino')
 ```
 
 Il primo metodo è necessario perché il secondo solleverà eccezione se
-interrogato su giocattoli di cui non conosce il prezzo; in un inventario può
+interrogato su giocattoli di cui non conosce il prezzo: in un inventario può
 aver senso segnalare l'assenza di un giocattolo restituendo 0 alla domanda sulla
-sua numerosità, viceversa non è sensato dire che una cosa ha prezzo nullo se non
-è compresa nel listino!
+sua numerosità, viceversa non è sensato dire che una cosa ha prezzo 0 se non è
+compresa nel listino!
 
 A questo punto, i due comportamenti descritti nella traccia dipendono entrambi
 dalla conoscenza del prezzo unitario, ragion per cui appare sensato interporre
@@ -387,8 +383,9 @@ AbstracListinoUnitario <|-- ListinoScontato
 
 La classe astratta deve solo tener traccia (in una mappa tra giocattoli e
 interi) del prezzo unitario, l'invariante di tale rappresentazione (oltre
-all'ovvia richiesta che l'attributo non sia e non contenga null) è che i prezzi
-siano tutti non negativi; la classe può essere immutabile e quindi l'invariante sarà controllato solo in costruzione (codice evidenziato):
+all'ovvia richiesta che l'attributo non sia e non contenga `null`) è che i
+prezzi siano tutti positivi; la classe può essere immutabile e quindi
+l'invariante sarà controllato solo in costruzione (codice evidenziato):
 
 ```{code-cell}
 :tags: [remove-input]
@@ -396,7 +393,8 @@ sol.show('AbstracListinoUnitario', 'rep', 'ri')
 ```
 
 La rappresentazione scelta consente di sovrascrivere (in modo da renderlo
-concreto) il metodo `conosce` in modo molto elementare:
+concreto) il metodo `conosce` prescritto dall'interfaccia in modo molto
+elementare:
 
 ```{code-cell}
 :tags: [remove-input]
@@ -412,8 +410,9 @@ sol.show('AbstracListinoUnitario', 'obs')
 ```
 
 Alle sottoclassi concrete, a questo punto, resta solo l'onere di rendere
-concreto il metodo `prezzo`; nel caso del prezzo lineare, questo può essere
-fatto senza memorizzare ulteriore stato:
+concreto il metodo `prezzo` (che è l'unico metodo che resta astratto, nella
+classe astratta); nel caso del prezzo lineare, questo può essere fatto senza
+memorizzare ulteriore stato:
 
 ```{code-cell}
 :tags: [remove-input]
@@ -439,7 +438,7 @@ sol.show('ListinoScontato', 'override', 'value')
 
 ### La bancarella
 
-La bancarella può essere facilmente ottenuta per composizione delle classi
+La bancarella può essere facilmente ottenuta per *composizione* delle classi
 sviluppate sin qui; essa conterrà un inventario ed un listino (a cui delegherà
 il compito di rispondere a domande sui giochi disponibili e sul loro prezzo).
 
@@ -462,7 +461,8 @@ comporta solo la riduzione del numero di beni in inventario):
 sol.show('Bancarella', 'mod')
 ```
 
-I metodi osservazionali `quantità` e `prezzo` sono di banale implementazione (sono deleghe all'inventario e al listino):
+I metodi osservazionali `quantità` e `prezzo` sono di banale implementazione (in
+quanto *delegati* all'inventario e al listino):
 
 ```{code-cell}
 :tags: [remove-input]
@@ -470,7 +470,8 @@ sol.show('Bancarella', 'obs')
 ```
 
 In aggiunta, la classe è resa un `Iterable<Giocattolo>` per consentire una
-ispezione completa del suo stato (sempre attraverso una delega all'inventario).
+ispezione completa del suo stato (anche in questo caso, attraverso una delega
+all'inventario).
 
 Per concludere, siccome sarà comodo usare le bancarelle come chiavi delle mappe
 o come membri degli insiemi (nelle *collections*), sono stati sovrascritti i
@@ -538,7 +539,7 @@ La situazione del compratore richiede una variabilità di comportamenti (rispett
 al modo di effettuare l'acquisto) comparabile a quella del listino. Tutti i
 compratori però non possono prescindere dalla conoscenza di un insieme di
 bancarelle da cui acquistare; dovendo condividere dello stato, appare più
-ragionevole mettere a capo della gerarchia una classe astratta.
+ragionevole mettere a capo della loro sotto-gerarchia una classe astratta.
 
 ```{code-cell}
 :tags: [remove-input]
@@ -593,8 +594,8 @@ AbstractCompratore <|-- CompratoreMinimoUnitario
 Alle sottoclassi concrete non resta che implementare il metodo `compra` sulla
 scorta dello stato condiviso con la superclasse (l'insieme delle bancarelle).
 
-Il caso più elementare è l'acquisto "a caso", ottenuto dispondendo le bancarelle
-in ordine casue (codice evidenziato) e quindi procedendo a comprare quanto più
+Il caso più elementare è l'acquisto "a caso", ottenuto disponendo le bancarelle
+in ordine casuale (codice evidenziato) e quindi procedendo a comprare quanto più
 possibile da ciascuna bancarella:
 
 ```{code-cell}
@@ -617,7 +618,8 @@ minimo tra tutte le bancarelle che hanno il giocattolo a disposizione.
 ### La classe di test
 
 La classe di test è sostanzialmente provvista dalla traccia, dato il codice
-sviluppato sin qui è pertanto banale ottenerla. Le uniche modifiche riguardano l'istanziazione del listino:
+sviluppato sin qui è pertanto banale ottenerla. Le uniche modifiche riguardano
+l'istanziazione del listino:
 
 ```{code-cell}
 :tags: [remove-input]
