@@ -9,7 +9,7 @@ Questo repository contiene il materiale relativo allo svolgimento di alcuni
 *temi d'esame* della prova pratica dell'insegnamento di [Programmazione
 II](https://prog2.di.unimi.it/) del corso di laurea in
 [Informatica](https://informatica.cdl.unimi.it/it) dell'[Università degli Studi
-di Milano](http://www.unimi.it/)
+di Milano](http://www.unimi.it/).
 
 Gli studenti interessati possono consultare:
 
@@ -19,3 +19,8 @@ Gli studenti interessati possono consultare:
 La *consultazione diretta del contenuto di questo repository è sconsigliata*, si
 raccomanda di **partire dalla lettura della discussione riportata sopra** e quindi
 dei sorgenti (che sono i medesimi citati dalla discussione).
+
+Chiunque riscontrasse degli errori (nel testo della discussione, o nel codice
+sorgente delle soluzioni), è pregato di segnalarli tramite le
+[issue](https://github.com/prog2-unimi/temi-svoti-discussione/issues) di questo
+repository.
