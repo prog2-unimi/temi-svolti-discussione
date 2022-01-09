@@ -1,5 +1,6 @@
 # Prog2@UniMI Temi d'esame svolti — <span style="font-size:smaller">Discussione</span>
 
+[![DOI](https://zenodo.org/badge/413484675.svg)](https://zenodo.org/badge/latestdoi/413484675)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-blue.svg)](http://creativecommons.org/licenses/by-sa/4.0/)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/513ae578-1d90-42f7-a941-d04f456c8881/deploy-status)](https://app.netlify.com/sites/prog2unimi-temi-svolti/deploys)
