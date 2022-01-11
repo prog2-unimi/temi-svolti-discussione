@@ -65,8 +65,8 @@ public class Bancarella implements Iterable<Giocattolo> {
     if (proprietario.isEmpty())
       throw new IllegalArgumentException("Il proprietario non deve essere vuoto.");
     this.listino = Objects.requireNonNull(listino);
-    this.inventario = Objects.requireNonNull(inventario);
     // SOF: ri
+    this.inventario = new Inventario(Objects.requireNonNull(inventario));
     for (final Giocattolo g : inventario)
       if (!listino.conosce(g))
         throw new IllegalArgumentException("Il listino manca del prezzo per: " + g);

@@ -69,6 +69,18 @@ public class Inventario implements Iterable<Giocattolo> {
       aggiungi(e.getValue(), e.getKey());
   }
 
+  // SOF: copyc
+  /**
+   * Costruisce una copia dell'inventario dato.
+   *
+   * @param originale l'inventario di cui effettuare una copia.
+   * @throws NullPointerException se inventario è <code>null</code>.
+   */
+  public Inventario(final Inventario originale) {
+    this(originale.inventario);
+  }
+  // EOF: copyc
+
   // SOF: add
   /**
    * Aggiunge un certo numero di giocattoli dello stesso tipo all'inventario. Se sono già presenti

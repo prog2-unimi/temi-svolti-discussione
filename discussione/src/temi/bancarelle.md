@@ -280,6 +280,15 @@ contenga chiavi o valori nulli e contenga solo numeri positivi:
 sol.show('Inventario', 'rep')
 ```
 
+Tra i costruttori, si osservi il *costruttore copia*
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Inventario', 'copyc')
+```
+
+che potrà rivelarsi utile, dal momento che l'inventario è mutabile.
+
 I metodi *mutazionali* devono prestare attenzione a mantenere l'invariante.
 Iniziamo con l'aggiunta di giocattoli: per prima cosa è necessario accertarsi
 che non ce ne siano già del tipo indicato (in quel caso, il numero specificato
@@ -452,6 +461,11 @@ fatto in costruzione (codice evidenziato):
 :tags: [remove-input]
 sol.show('Bancarella', 'rep', 'ri')
 ```
+
+Si osservi l'uso del costruttore copia invocato sull'inventario, che ha lo scopo
+di evitare che chi ha costruito l'inventario prima dell'invocazione del
+costruttore non possa successivamente modificarlo (magari invalidando
+l'invariante di questa classe aggiungendo giocattoli non nel listino).
 
 L'unico metodo mutazionale è quello che esegue una vendita (che di fatto
 comporta solo la riduzione del numero di beni in inventario):
