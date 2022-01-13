@@ -2,8 +2,13 @@
 
 BUILD_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
 
-curl -s "https://get.sdkman.io" | bash
-#sdk install java 17-open
+source "/opt/buildhome/.sdkman/bin/sdkman-init.sh" && true
+if [[ "$(type -t sdk)" != "function" ]]; then
+  echo "### Installing sdkman and java 17-open"
+  curl -s "https://get.sdkman.io" | bash
+  source "/opt/buildhome/.sdkman/bin/sdkman-init.sh"
+  sdk install java 17-open
+else
 
 if ! jupyter kernelspec list | grep -q java; then
   echo "### Installing Java kernel"
@@ -13,4 +18,5 @@ if ! jupyter kernelspec list | grep -q java; then
     && python install.py --sys-prefix \
     && rm -rf .install
 fi
+
 cd "$BUILD_HOME" && make html
