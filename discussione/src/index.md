@@ -15,8 +15,12 @@ Il materiale è organizzato in due parti:
 
 % e alcune indicazioni di massima sull'uso delle [collections](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/doc-files/coll-index.html).
 
-* la prima di carattere generale, contiene la [parte iniziale comune a tutte le
-  tracce d'esame](intro/consegne) (ulteriormente commentata)
+* la prima di carattere generale, contiene:
+
+    * la [parte iniziale comune a tutte le tracce d'esame](intro/consegne)
+      (ulteriormente commentata),
+    * un elenco di alcuni [ferri del mestiere](intro/ifdm) che possono risultare
+      utili nello sviluppo delle soluzioni;
 
 * la seconda, contiene una selezione di temi, ciascuno con il suo svolgimento:
 
@@ -30,6 +34,7 @@ Il materiale è organizzato in due parti:
 :hidden:
 
 intro/consegne
+intro/ifdm
 :::
 
 :::{toctree}
@@ -40,5 +45,4 @@ temi/algebretta
 temi/bancarelle
 temi/piastrelle
 temi/filesystem
-temi/java
 :::
