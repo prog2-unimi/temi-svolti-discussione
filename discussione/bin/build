@@ -1,13 +1,13 @@
 #/bin/bash
 
+BUILD_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
+
 if ! jupyter kernelspec list | grep -q java; then
   echo "### Installing Java kernel"
-  rm -rf .install
-  mkdir .install
-  cd .install
-  curl -#LO https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip
-  unzip ijava-1.3.0.zip
-  python install.py --sys-prefix
-  rm -rf .install
+  rm -rf .install && mkdir .install && cd .install \
+    && curl -#LO https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip \
+    && unzip ijava-1.3.0.zip \
+    && python install.py --sys-prefix \
+    && rm -rf .install
 fi
-cd discussione && make html
+cd "$BUILD_HOME" && make html
