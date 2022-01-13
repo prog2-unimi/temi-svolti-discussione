@@ -2,6 +2,9 @@
 
 BUILD_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
 
+curl -s "https://get.sdkman.io" | bash
+#sdk install java 17-open
+
 if ! jupyter kernelspec list | grep -q java; then
   echo "### Installing Java kernel"
   rm -rf .install && mkdir .install && cd .install \
@@ -10,5 +13,4 @@ if ! jupyter kernelspec list | grep -q java; then
     && python install.py --sys-prefix \
     && rm -rf .install
 fi
-apt install openjdk-9-jdk
 cd "$BUILD_HOME" && make html
