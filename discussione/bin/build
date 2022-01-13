@@ -10,4 +10,5 @@ if ! jupyter kernelspec list | grep -q java; then
     && python install.py --sys-prefix \
     && rm -rf .install
 fi
+apt install openjdk-9-jdk
 cd "$BUILD_HOME" && make html
