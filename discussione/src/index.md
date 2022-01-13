@@ -40,4 +40,5 @@ temi/algebretta
 temi/bancarelle
 temi/piastrelle
 temi/filesystem
+temi/java
 :::
