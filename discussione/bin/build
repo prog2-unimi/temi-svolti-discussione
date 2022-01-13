@@ -1,7 +1,7 @@
 #/bin/bash
 
 BUILD_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/.."
-SDK_INIT = "/opt/buildhome/.sdkman/bin/sdkman-init.sh"
+SDK_INIT="/opt/buildhome/.sdkman/bin/sdkman-init.sh"
 
 if [ -r "$SDK_INIT" ]; then
   source "$SDK_INIT"
