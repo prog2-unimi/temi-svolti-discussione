@@ -8,6 +8,7 @@ if [ -r "$SDK_INIT" ]; then
 else
   echo "### Installing sdkman and java 17-open"
   curl -s "https://get.sdkman.io" | bash
+  echo "## Sourcing '$SDK_INIT'."
   source "$SDK_INIT"
   sdk install java 17-open
 fi
