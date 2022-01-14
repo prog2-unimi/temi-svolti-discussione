@@ -318,6 +318,10 @@ ha l'effetto di copiare 3 elementi dalla posizione 2 di `positivi` alla posizion
 Arrays.toString(negativi)
 ```
 
+TODO: copyOf per fare "casting"
+
+https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html#copyOf(U%5B%5D,%20int,%20java.lang.Class)
+
 ##### Adattare la dimensione di un array
 
 Si supponga di voler raccogliere in un array i `long` minori di un bilione
@@ -808,12 +812,29 @@ Arrays.toString(comeArray)
 Attenzione perché omettendo l'argomento sarà selezionato il metodo
 sovraccaricato
 [`toArray`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#toArray())
-che restituisce un `Object[]` e non è possibile effettuare alcun cast che lo
-renda un array di elementi di tipo diverso, come mostra l'esempio seguente
+che restituisce un `Object[]` e non è possibile effettuare alcun cast diretto
+che lo renda un array di elementi di tipo diverso, come mostra l'esempio
+seguente
 ```{code-cell}
 try {
   Integer[] comeArray = (Integer[])interi.toArray();
 } catch (ClassCastException e) {
   System.err.println(e);
 }
+```
+
+Le mappe (che non sono sottotipi di `Collection`) non hanno un metodo che
+consenta di ottenerne direttamente il contenuto sotto forma di array; ogni mappa
+però può restituire l'insieme delle sue `Map.Entry` (ossia delle coppie chiave e
+valore), da cui può essere quindi un array; ad esempio
+```{code-cell}
+Map.Entry[] entries = mappa.entrySet().toArray(new Map.Entry[0])
+```
+tale array però non ha traccia dei parametri con cui era istanziata la mappa
+generica; per questa ragione accedere a chiavi e valori richiede dei cast
+espliciti (invece di godere delle usuali garanzie offerte dai generici)
+```{code-cell}
+String chiave = (String)(entries[0].getKey());
+Integer valore = (Integer)(entries[0].getValue());
+chiave + "; " + valore
 ```
