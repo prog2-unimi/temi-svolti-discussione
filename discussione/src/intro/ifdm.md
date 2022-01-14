@@ -12,12 +12,12 @@ kernelspec:
 
 # I ferri del mestiere
 
-Questa sezione contiene alcuni suggerimenti sull'uso delle [Java Development Kit
-API](https://docs.oracle.com/en/java/javase/17/docs/api/), sebbene **nessuna**
-delle informazioni contenute in questa sezione è *strettamente necessaria* per
-il superamento della prova pratica, tuttavia alcuni dei suggerimenti seguenti
-possono *rendere molto più rapido* lo sviluppo delle soluzioni e *aiutare ad
-evitare errori di programmazione*.
+Questo documento contiene alcuni suggerimenti sull'uso delle [Java Development
+Kit API](https://docs.oracle.com/en/java/javase/17/docs/api/), sebbene
+**nessuna** delle informazioni contenute in questo documento è *strettamente
+necessaria* per il superamento della prova pratica, tuttavia alcuni dei
+suggerimenti seguenti possono *rendere molto più rapido* lo sviluppo delle
+soluzioni e *aiutare ad evitare errori di programmazione*.
 
 L'esposizione è suddivisa in due parti:
 
@@ -28,9 +28,17 @@ L'esposizione è suddivisa in due parti:
 * una introduzione al ["Collections Framework"](#il-collections-framework),
   focalizzata in particolare su aspetti pratici inerenti la prova pratica.
 
-```{admonition} Esempi di codice e output
-Gli esempi di codice riportati di seguito con un bordo verde si intendono *attivi*; dopo alcuni di essi è presente l'*output* che sarebbe prodotto dall'esecuzione dei medesimi (preceduta dall'esecuzione di tutti gli esempi attivi che lo precedono, nell'ordine in cui compaiono). Se l'ultima (o unica) riga di un esempio di codice attivo è una espressione, se il suo valore è diverso da `null` sarò presente sotto di essa (come se l'ultima espressione fosse stata avvolta da `System.out.println(…)` e tale codice fosse stato eseguito).
-```
+:::{admonition} Esempi di codice e output
+Gli esempi di codice riportati di seguito con un bordo verde si intendono
+*attivi*; dopo alcuni di essi è presente l'*output* che sarebbe prodotto
+dall'esecuzione dei medesimi (preceduta dall'esecuzione di tutti gli esempi
+attivi che lo precedono, nell'ordine in cui compaiono). Se l'ultima (o unica)
+riga di un esempio di codice attivo è una espressione, se il suo valore è
+diverso da `null` sarò presente sotto di essa (come se l'ultima espressione
+fosse stata avvolta da `System.out.println(…)` e tale codice fosse stato
+eseguito).
+:::
+
 ## Classi e interfacce di uso pratico
 
 ### La classe `Objects`
@@ -385,31 +393,32 @@ Come esempio della ricerca, consideriamo l'array `cifreOrdinate` che contenga le
 parole corrispondenti alle cifre decimali ordinato lessicograficamente, ottenuto
 come
 ```{code-cell}
-String[] cifreOrdinate = new String[] {"zero", "un", "due", "quattro", "cinque", "sei", "sette", "otto", "nove" };
-Arrays.sort(cifreOrdinate);
-Arrays.toString(cifreOrdinate)
+String[] cifreInParole = new String[] {"zero", "un", "due", "quattro", "cinque", "sei", "sette", "otto", "nove" };
+String[] cifreInParoleOrdinate = cifreInParole.clone();
+Arrays.sort(cifreInParoleOrdinate);
+Arrays.toString(cifreInParoleOrdinate)
 ```
 Usiamo la ricerca per ottenere l'inversa della funzione che mappa `i` in
-`cifreOrdinate[i]`, ossia la funzione che mappa la parola `cifra` corrispondente
-a una cifra in parole nell'indice `i` tale che `cifreOrdinate[i].equals(cifra)`
-sia vero
+`cifreInParoleOrdinate[i]`, ossia la funzione `cifraAPosizione` che mappa la
+parola `cifra` corrispondente a una cifra in parole nell'indice `i` tale che
+`cifreInParoleOrdinate[i].equals(cifra)` sia vero
 ```{code-cell}
-static final int cifra2valore(final String cifra) {
-  int valore = Arrays.binarySearch(cifreOrdinate, cifra);
+static final int cifraAPosizione(final String cifra) {
+  int valore = Arrays.binarySearch(cifreInParoleOrdinate, cifra);
   if (valore < 0) throw new IllegalArgumentException();
   return valore;
 }
 ```
 che si comporta come atteso
 ```{code-cell}
-cifra2valore("zero")
+cifraAPosizione("zero")
 ```
 dato che "z" è certamente l'ultima lettera dell'alfabeto.
 
 Come è facile accorgersi, ci siamo scordati del tre, cercandolo infatti
 otteniamo un valore negativo dell'indice!
 ```{code-cell}
-int idx = Arrays.binarySearch(cifreOrdinate, "tre");
+int idx = Arrays.binarySearch(cifreInParoleOrdinate, "tre");
 idx
 ```
 Secondo il contratto del metodo di ricerca, un risultato negativo non solo
@@ -421,24 +430,26 @@ int pos = -idx - 1;
 pos
 ```
 A questo punto è sufficiente allocare un nuovo array `corretto` con una
-posizione in più, copiare dall'array `cifreOrdinate` errato le posizioni fino a
+posizione in più, copiare dall'array `cifreInParoleOrdinate` errato le posizioni fino a
 `pos` esclusa, aggiungere in tale posizione di `corretto` la stringa `"tre"` e
-quindi copiare le rimanenti `cifreOrdinate.length - pos` posizioni da `cifreOrdinate` a partire da `pos + 1` di `corretto`
+quindi copiare le rimanenti `cifreInParoleOrdinate.length - pos` posizioni da `cifreInParoleOrdinate` a partire da `pos + 1` di `corretto`
 ```{code-cell}
-String[] corretto = new String[cifreOrdinate.length + 1];
-System.arraycopy(cifreOrdinate, 0, corretto, 0, pos);
+String[] corretto = new String[cifreInParoleOrdinate.length + 1];
+System.arraycopy(cifreInParoleOrdinate, 0, corretto, 0, pos);
 corretto[pos] = "tre";
-System.arraycopy(cifreOrdinate, pos, corretto, pos + 1, cifreOrdinate.length - pos);
+System.arraycopy(cifreInParoleOrdinate, pos, corretto, pos + 1, cifreInParoleOrdinate.length - pos);
 Arrays.toString(corretto)
 ```
 
-Osservate che a maggior conferma che nessuna delle conoscenze di questa sezione
-è strettamente necessaria al superamento della prova pratica, quanto mostrato
+:::{note}
+A maggior conferma del fatto che nessuna delle conoscenze di questo documento è
+strettamente necessaria al superamento della prova pratica, quanto mostrato sin
 qui consente di costruire e mantenere un array (eventualmente ordinato) di
 dimensione adattabile facendo uso soltanto di concetti noti (dagli insegnamenti
-di "Programmazione" e "Algoritmi e strutture dati") che possono essere molto
-facilmente implementati anche usando esclusivamente array e cicli `for`.
-
+di "Programmazione" e "Algoritmi e strutture dati") che, peraltro, possono
+essere molto facilmente implementati anche usando esclusivamente array e cicli
+`for`.
+:::
 
 ## Il "Collections Framework"
 
@@ -554,7 +565,7 @@ possono essere implementate direttamente dalla vista sono delegate alla
 collezione d'appoggio. Occorre osservare che, per come è costruita, i
 cambiamenti della collezione d'appoggio però si riflettono nella vista!
 
-Vedremo come costruire delle particolari viste nella prossima sottosezione.
+Vedremo come costruire delle particolari viste nella prossima sezione.
 
 ### Collezioni non modificabili e Immutabilità
 
@@ -622,6 +633,15 @@ Map<String, Integer> mappa = Map.of("uno", 1, "due", 2, "tre", 3);
 lista + "; " + insieme + "; " + mappa
 ```
 
+:::{hint}
+Le collezoini fabbricate con `of` e `copyOf` non possono contenere `null` nel
+senso che se esiste un tale valore tra i riferimenti, verrà sollevata una
+`NullPointerException`; questo può essere molto comodo quando si vuole assegnare
+ad un attributo di una classe una collezione che sia non nulla e non contenga
+elementi nulli; se poi gli elementi sono immutabili, ciò basta per garantire
+l'immutabilità delle collezioni copia.
+:::
+
 Per finire, la classe di metodi statici di utilità
 [`Collections`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html)
 (che incontreremo di nuovo in seguito), contiene i metodi per fabbricare viste
@@ -646,11 +666,119 @@ vuoto.add("nuovo");
 immutabile
 ```
 
+:::{hint}
+Le viste possono essere molto utili nel caso uno degli attributi di una classe
+sia una collezione modificabile e si intenda rendere la classe un *iterabile*
+degli elementi di tale collezione. Restituire direttamente l'iteratore ottenuto
+dalla collezione potrebbe esporre la rappresentazione della classe (alcuni
+iteratori implementano il metodo `remove` che consente di elimianre gli elementi
+della collezione durante l'iterazione); ciò è evitabile restituendo invece
+l'iteratore della vista non modifdicabile. Ad esempio
+```{code-block}
+class AClass implements Iterable<AType> {
+  private final Collection<AType> aModifiableCollection;
+
+  // qui i costruttori e altri metodi di AClass
+
+  @Override
+  public Iterator<AType> iterator() {
+    return Collections.unmodifiableCollection(aModifiableCollection).iterator();
+  }
+}
+```
+:::
 ### Array e `Collection`
 
 C'è un legame nei due versi tra array e collezioni (mappe escluse).
 
-Ciascun sottotipo di `Collection` ha un metodo (ereditato da)
+La classe `Arrays` ha il metodo variadico
+[`asList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#asList(T...))
+che può essere usato per costruire una lista a partire da un array di
+riferimenti (ossia non di tipi primitivi) di cui la lista sarà una sorta di
+"vista" non modificabile. Ad esempio
+```{code-cell}
+String[] mksUnits = new String[] {"metro", "kilo", "secondo"};
+List<String> comeLista = Arrays.asList(mksUnits);
+comeLista
+```
+Attenzione però che se cambia l'array, così cambia la lista
+```{code-cell}
+mksUnits[1] = "kilogrammi";
+comeLista.get(1)
+```
+
+Avvolgere un array in una lista offre la possibilità di effettuare in modo
+conveniente una [*ricerca
+sequenziale*](https://www.wikiwand.com/it/Ricerca_sequenziale) tramite il metodo
+[`indexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
+tra i suoi elementi (basata sul loro metodo `equals`). Rivisitando l'esempio
+delle cifre, l'inversa della funzione che mappa `i` in `cifreInParole[i]`, ossia
+la funzione `cifraAValore` che mappa la parola `cifra` corrispondente a una
+cifra in parole nel suo valore `i` è data da
+```{code-cell}
+static final int cifraAValore(final String cifra) {
+  int valore = Arrays.asList(cifreInParole).indexOf(cifra);
+  if (valore < 0) throw new IllegalArgumentException();
+  return valore;
+}
+```
+che (certamente ad un costo lineare) è però in grado di convertire parole in
+valori
+```{code-cell}
+cifraAValore("due")
+```
+
+Occorre prestare particolare attenzione al metodo `asList` nel caso di argomenti
+che siano di tipo primitivo, sopratutto array di tipo primitivo. Se è evidente
+che, non esitendo tipi parametrici di tipi primitivi, l'invocazione di
+```{code-cell}
+List<Integer> listaDiInteger = Arrays.asList(1, 2, 3);
+listaDiInteger
+```
+non può che restiture una lista di `Integer` e osservando che un metodo
+variadico può essere equivalentemente invocato oltre che con un elenco di
+argomenti con un array di tali elementi
+```{code-cell}
+Integer[] arrayDiInteger = new Integer[] {4, 5, 6};
+Arrays.asList(arrayDiInteger)
+```
+non può che destare stupore il risultato del seguente codice
+```{code-cell}
+int[] arrayDiInt = new int[] {4, 5, 6};
+Arrays.asList(arrayDiInt)
+```
+che ci sarebbe potuti attendere identico al precedente. Quel che accade, invece
+è che:
+* nel primo caso,
+  l'[*autoboxing*](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
+  fa si che l'invocazione su un elenco di parametri `int` venga di fatto
+  indirizzata al metodo generico in cui il parametro di tipo corrisponde ad
+  `Integer`;
+* nel secondo caso, l'array di `Integer` gioca esattamente lo stesso ruolo
+  dell'elenco di argomenti (e l'invocazione è indirizzata alla segnatura di
+  arietà 1);
+* nell'ultimo caso non interviene alcun *autoboxing* e quel che accade è che
+  l'invocazione viene indirizzata alla segnatura di arietà 1 costruendo una
+  lista di un solo elemento dato da un array di `int`.
+
+Si può facilmente verificare che tale è il caso con
+```{code-cell}
+Arrays.asList(arrayDiInt).get(0)[1]
+```
+
+Nella direzione opposta, osserviamo che ciascun sottotipo di `Collection` ha un
+metodo (ereditato da)
 [`toArray`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#toArray(T[]))
+che consente di ottenere un array di riferimenti agli elementi che contiene; la
+segnatura del metodo prevede che venga passato come argomento un array (anche
+vuoto) del tipo dell'array che si intende ottenere (questo è dovuto ad alcune
+particolarità del modo in cui interagiscono array e metodi generici). L'uso di
+tale metodo è elementare
+```{code-cell}
+List<Integer> interi = List.of(1, 2, 3);
+Integer[] comeArray = interi.toArray(new Integer[0]);
+Arrays.toString(comeArray)
+```
+
 
 ### Ordinare e cercare nelle liste
