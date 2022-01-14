@@ -522,15 +522,60 @@ Si rimanda alle conoscenze acquisite dall'insegnamento di "Algoritmi e strutture
 dati" per le questioni inerenti l'efficienza delle varie operazioni a seconda
 delle implementazioni scelte.
 
-### Costruttori copia, copie e viste
+### Immutabilità e viste
 
-Ci sono vari modi per derivare una collezione con lo stesso contenuto di una
+Iniziamo con alcune considerazioni di carattere generale, che pongono in
+relazione le collezioni con una delle nozioni centrali dell'insegnamento:
+l'*immutabilità*.
+#### Collezioni non modificabili
+
+Una collezione è *immutabile* se:
+
+* gli elementi che contiene sono a loro volta *immutabili* e
+* non può essere *strutturalmente modificata* (non possono essere aggiunti,
+  eliminati, o riordinati i suoi elementi).
+
+Riguardo al primo punto, è responsabilità del progettista del tipo degli
+elementi decidere se e come renderli immutabili (o se e come "proteggerli",
+quando le collezioni entrano a far parte della rappresentazione di un oggetto).
+
+Riguardo al secondo punto, viceversa, esistono varie implementazioni delle
+collezioni che garantiscono la [*non
+modificabilità*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodifiable);
+dato che evidentemente non è possibile che non implementino i metodi
+*mutazionali* presenti nelle interfacce, la soluzione adottata è che essi,
+qualora invocati, sollevino l'eccezione `UnsupportedOperationException`.
+
+Alcune implementazioni non modificabili sono ottenute tramite una [*vista non
+modificabile*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodview),
+ragion per cui nella prossima sezione sarà illustrato il concetto generale di
+*vista di una collezione*.
+
+#### Viste
+
+La [*vista di una
+collezione*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#view)
+è una implementazione di una collezione che invece di gestire direttamente la
+memorizzazione dei suoi elementi fa uso di una collezione (o array) di appoggio
+per immagazzinarli concretamente; le operazioni che non possono essere
+implementate direttamente dalla vista sono delegate alla collezione (o array)
+d'appoggio. Occorre osservare che, per come sono costruite, i cambiamenti delle
+collezioni d'appoggio si riflettono però sempre nella viste!
+
+Le viste non occupano alcuno spazio per memorizzare gli elementi (nemmeno quello
+dei riferimenti), quindi hanno un basso costo in termini di spazio; d'altro
+canto, la necessità di delegare molti comportamenti alla collezione (o array)
+d'appoggio determina un piccolo costo in termini di tempo.
+
+
+### Collezioni costruite a partire da altre
+
+Ci sono due modi per ottenere una collezione con lo stesso contenuto di una
 esistente:
 
 * costruirla tramite un *costruttore copia*,
 * costruire una collezione vuota ed aggiungergli tutti gli elementi di quella
-  esistente,
-* fabbricare una *vista*.
+  esistente.
 
 Ogni collezione ha un costruttore copia che prende una
 [`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html)
@@ -556,60 +601,30 @@ vuoto.addAll(lista);
 vuoto
 ```
 
-Senza entrare troppo nel dettaglio, la [*vista di una
-collezione*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#view)
-è una implementazione di una collezione che invece di gestire direttamente la
-memorizzazione dei suoi elementi fa uso di una collezione di appoggio (che è
-quella che immagazzina concretamente gli elementi); le operazioni che non
-possono essere implementate direttamente dalla vista sono delegate alla
-collezione d'appoggio. Occorre osservare che, per come è costruita, i
-cambiamenti della collezione d'appoggio però si riflettono nella vista!
+Come è facile dedurre (anche osservando gli esempi), i costruttori copia possono
+essere usati anche per "cambiare" il tipo di una collezione (ad esempio da
+*lista* a *insieme*, oppure tra implementazioni diverse dello stesso tipo).
 
-Vedremo come costruire delle particolari viste nella prossima sezione.
+### Copie e viste non modificabili
 
-### Collezioni non modificabili e Immutabilità
-
-Una prima riflessione riguarda l'*immutabilità*, una collezione è immutabile se:
-
-* non può essere *strutturalmente modificata* (non possono essere aggiunti,
-  eliminati, o riordinati i suoi elementi) e
-* gli elementi che contiene sono a loro volta *immutabili*.
-
-Se, riguardo al secondo punto, è responsabilità del progettista del tipo degli
-elementi decidere se e come renderli immutabili (o se e come "proteggerli",
-quando le collezioni entrano a far parte della rappresentazione di un oggetto),
-riguardo alla [non
-modificabilità](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodifiable)
-come vedremo alcune implementazioni la garantiscono esplicitamente sollevando
-l'eccezione `UnsupportedOperationException` in caso di invocazione di metodi
-*mutazionali*.
-
-Le API offrono tre modi di ottenere una collezione non modificabile:
+Ci sono diversi modi di ottenere una collezione non modificabile:
 
 * fabbricandone una ex-novo a partire da un elenco di elementi (o coppie chiave
   e valore) passati come argomento a un opportuno metodo statico, oppure
-* fabbricando una *copia* o una [*vista non
-  modificabile*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodview)
-  di una collezione esistente.
+* fabbricando una *copia* o una *vista* non modificabili di una collezione
+  esistente.
 
-La fabbricazione di collezioni ex-novo e per copia comporta la memorizzazione
-dei riferimenti agli oggetti in esse contenuti (oltre, ovviamente, agli oggetti
-stessi); viceversa, le *viste* non incorrono in questo costo aggiuntivo, ma da
-un lato non sono indipendenti dalla collezione d'origine (se essa cambia,
-cambiano anche le viste), nonché comportano un piccolo costo aggiuntivo in tempo
-(dovuto al fatto che devono agire delegando alla collezione d'origine).
-
-Ogni interfaccia contiene una serie di metodi `of` (di arietà crescente, fino a
-quello variadico) per fabbricare una collezione; ad esempio
+Ogni interfaccia contiene una serie di metodi statici `of` (di arietà crescente,
+fino a quello variadico) per fabbricare una collezione del suo tipo; ad esempio
 ```{code-cell}
 List<String> lista = List.of("uno", "due", "due");
 Set<String> insieme = Set.of("uno", "due", "tre");
 Map<String, Integer> mappa = Map.of("uno", 1, "due", 2, "tre", 3);
 lista + "; " + insieme + "; " + mappa
 ```
-nel caso delle mappe c'è un anche il metodo statico
+nel caso delle mappe c'è anche il metodo statico
 [`ofEntries`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html#ofEntries(java.util.Map.Entry...))
-che può essere comodamente importando staticamente `java.util.Map.entry`
+che può essere comodamente usato importando staticamente `java.util.Map.entry`
 ```{code-cell}
 import static java.util.Map.entry;
 
@@ -624,7 +639,7 @@ altraMappa
 Ogni interfaccia contiene inoltre i metodi `copyOf` e `copyOfRange` per
 fabbricare una collezione copiando i riferimenti agli elementi dalla collezione
 passata come argomento (similmente al caso degli omonimi metodi della classe
-`Arrays` e anche in questo caso, non vengono copiati gli elementi, ma solo i
+`Arrays` — anche in questo caso, non vengono copiati gli elementi, ma solo i
 loro riferimenti); ad esempio
 ```{code-cell}
 List<String> lista = List.of("uno", "due", "due");
@@ -634,12 +649,12 @@ lista + "; " + insieme + "; " + mappa
 ```
 
 :::{hint}
-Le collezoini fabbricate con `of` e `copyOf` non possono contenere `null` nel
-senso che se esiste un tale valore tra i riferimenti, verrà sollevata una
-`NullPointerException`; questo può essere molto comodo quando si vuole assegnare
-ad un attributo di una classe una collezione che sia non nulla e non contenga
-elementi nulli; se poi gli elementi sono immutabili, ciò basta per garantire
-l'immutabilità delle collezioni copia.
+Le collezioni fabbricate con `of` e `copyOf` non possono contenere `null` nel
+ senso che se esiste un tale valore tra i riferimenti, verrà sollevata una
+ `NullPointerException`; questo può essere molto comodo quando si vuole
+ assegnare ad un attributo di una classe una collezione che sia non nulla e non
+ contenga elementi nulli; se poi gli elementi sono immutabili, ciò basta per
+ garantire l'immutabilità delle collezioni copia.
 :::
 
 Per finire, la classe di metodi statici di utilità
@@ -667,13 +682,13 @@ immutabile
 ```
 
 :::{hint}
-Le viste possono essere molto utili nel caso uno degli attributi di una classe
-sia una collezione modificabile e si intenda rendere la classe un *iterabile*
-degli elementi di tale collezione. Restituire direttamente l'iteratore ottenuto
-dalla collezione potrebbe esporre la rappresentazione della classe (alcuni
-iteratori implementano il metodo `remove` che consente di elimianre gli elementi
-della collezione durante l'iterazione); ciò è evitabile restituendo invece
-l'iteratore della vista non modifdicabile. Ad esempio
+Le viste non modificabili possono essere molto utili nel caso uno degli
+attributi di una classe sia una collezione modificabile e si intenda rendere la
+classe un *iterabile* degli elementi di tale collezione. Restituire direttamente
+l'iteratore ottenuto dalla collezione potrebbe esporre la rappresentazione della
+classe (alcuni iteratori implementano il metodo `remove` che consente di
+elimianre gli elementi della collezione durante l'iterazione); ciò è evitabile
+restituendo invece l'iteratore della vista non modifdicabile. Ad esempio
 ```{code-block}
 class AClass implements Iterable<AType> {
   private final Collection<AType> aModifiableCollection;
@@ -687,34 +702,40 @@ class AClass implements Iterable<AType> {
 }
 ```
 :::
+
 ### Array e `Collection`
 
-C'è un legame nei due versi tra array e collezioni (mappe escluse).
+Come è ovvio attendersi, c'è un notevole legame tra array e collezioni (mappe
+escluse).
 
-La classe `Arrays` ha il metodo variadico
+#### Da array a liste
+
+In un verso, la classe `Arrays` ha il metodo variadico
 [`asList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#asList(T...))
 che può essere usato per costruire una lista a partire da un array di
-riferimenti (ossia non di tipi primitivi) di cui la lista sarà una sorta di
-"vista" non modificabile. Ad esempio
+riferimenti (ossia non di tipi primitivi); tale lista si comporta come una vista
+non modificabile. Ad esempio
 ```{code-cell}
 String[] mksUnits = new String[] {"metro", "kilo", "secondo"};
 List<String> comeLista = Arrays.asList(mksUnits);
 comeLista
 ```
-Attenzione però che se cambia l'array, così cambia la lista
+Attenzione che, come è comune nelle viste, se cambia l'array allora cambia la
+lista
 ```{code-cell}
 mksUnits[1] = "kilogrammi";
 comeLista.get(1)
 ```
 
-Avvolgere un array in una lista offre la possibilità di effettuare in modo
-conveniente una [*ricerca
-sequenziale*](https://www.wikiwand.com/it/Ricerca_sequenziale) tramite il metodo
+Si osservi per inciso che l'uso delle viste costruite a partire da un array
+offre la possibilità di effettuare in modo conveniente tramite il metodo
 [`indexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
-tra i suoi elementi (basata sul loro metodo `equals`). Rivisitando l'esempio
-delle cifre, l'inversa della funzione che mappa `i` in `cifreInParole[i]`, ossia
-la funzione `cifraAValore` che mappa la parola `cifra` corrispondente a una
-cifra in parole nel suo valore `i` è data da
+una [*ricerca sequenziale*](https://www.wikiwand.com/it/Ricerca_sequenziale) tra
+i suoi elementi (basata sul loro metodo `equals`).
+
+Rivisitando l'esempio delle cifre, l'inversa della funzione che mappa `i` in
+`cifreInParole[i]`, ossia la funzione `cifraAValore` che mappa la parola `cifra`
+corrispondente a una cifra in parole nel suo valore `i` è data da
 ```{code-cell}
 static final int cifraAValore(final String cifra) {
   int valore = Arrays.asList(cifreInParole).indexOf(cifra);
@@ -728,43 +749,48 @@ valori
 cifraAValore("due")
 ```
 
-Occorre prestare particolare attenzione al metodo `asList` nel caso di argomenti
-che siano di tipo primitivo, sopratutto array di tipo primitivo. Se è evidente
-che, non esitendo tipi parametrici di tipi primitivi, l'invocazione di
+Occorre prestare però molta attenzione al metodo `asList` nel caso di argomenti
+che siano di tipo primitivo, sopratutto array con elementi di tipo primitivo! Se
+è evidente che, non potendo istanziare tipi generici con tipi primitivi,
+l'invocazione di
 ```{code-cell}
 List<Integer> listaDiInteger = Arrays.asList(1, 2, 3);
 listaDiInteger
 ```
-non può che restiture una lista di `Integer` e osservando che un metodo
+non può che restituire una lista di `Integer`. Osservando che un metodo
 variadico può essere equivalentemente invocato oltre che con un elenco di
-argomenti con un array di tali elementi
+argomenti con un array di tali elementi, è del tutto atteso che
 ```{code-cell}
 Integer[] arrayDiInteger = new Integer[] {4, 5, 6};
 Arrays.asList(arrayDiInteger)
 ```
-non può che destare stupore il risultato del seguente codice
+produca lo stesso risultato del codice precedente. Il risultato del seguente
+codice
 ```{code-cell}
 int[] arrayDiInt = new int[] {4, 5, 6};
 Arrays.asList(arrayDiInt)
 ```
-che ci sarebbe potuti attendere identico al precedente. Quel che accade, invece
-è che:
+a prima vista non può però che destare un certo stupore se ci si attendeva che
+avesse ancora lo stesso comportamento dei casi precedenti. Quel che accade, è
+che
 * nel primo caso,
   l'[*autoboxing*](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
   fa si che l'invocazione su un elenco di parametri `int` venga di fatto
-  indirizzata al metodo generico in cui il parametro di tipo corrisponde ad
-  `Integer`;
+  indirizzata al metodo in cui il parametro di tipo corrisponde ad `Integer` (di
+  arietà 3);
 * nel secondo caso, l'array di `Integer` gioca esattamente lo stesso ruolo
   dell'elenco di argomenti (e l'invocazione è indirizzata alla segnatura di
   arietà 1);
 * nell'ultimo caso non interviene alcun *autoboxing* e quel che accade è che
   l'invocazione viene indirizzata alla segnatura di arietà 1 costruendo una
-  lista di un solo elemento dato da un array di `int`.
+  lista di un solo elemento… dato da un array di `int`!
 
 Si può facilmente verificare che tale è il caso con
 ```{code-cell}
 Arrays.asList(arrayDiInt).get(0)[1]
 ```
+
+#### Da collezioni ad array
 
 Nella direzione opposta, osserviamo che ciascun sottotipo di `Collection` ha un
 metodo (ereditato da)
@@ -779,6 +805,15 @@ List<Integer> interi = List.of(1, 2, 3);
 Integer[] comeArray = interi.toArray(new Integer[0]);
 Arrays.toString(comeArray)
 ```
-
-
-### Ordinare e cercare nelle liste
+Attenzione perché omettendo l'argomento sarà selezionato il metodo
+sovraccaricato
+[`toArray`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#toArray())
+che restituisce un `Object[]` e non è possibile effettuare alcun cast che lo
+renda un array di elementi di tipo diverso, come mostra l'esempio seguente
+```{code-cell}
+try {
+  Integer[] comeArray = (Integer[])interi.toArray();
+} catch (ClassCastException e) {
+  System.err.println(e);
+}
+```
