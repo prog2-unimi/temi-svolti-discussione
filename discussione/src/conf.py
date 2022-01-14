@@ -14,7 +14,6 @@ author = ''
 # -- General configuration ---------------------------------------------------
 
 extensions = [
-#  'myst_parser',
   'myst_nb',
   'sphinxcontrib.mermaid'
 ]
@@ -27,6 +26,8 @@ exclude_patterns = []
 myst_enable_extensions = [
   'colon_fence',
 ]
+
+myst_heading_anchors = 2
 
 mermaid_pdfcrop = 'pdfcrop'
 mermaid_cmd = './bin/dmmdc'

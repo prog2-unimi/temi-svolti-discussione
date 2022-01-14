@@ -16,12 +16,13 @@ Questa sezione contiene alcuni suggerimenti sull'uso delle [Java Development Kit
 API](https://docs.oracle.com/en/java/javase/17/docs/api/) che sono a
 disposizione durante lo sviluppo; si osservi che **nessuna** delle informazioni
 contenute in questo documento è *strettamente necessaria* per il superamento
-dell'esame, tuttavia alcune dei suggerimenti seguenti possono *rendere molto più
-rapido* lo sviluppo delle soluzioni e *aiutare ad evitare errori di
+della prova pratica, tuttavia alcune dei suggerimenti seguenti possono *rendere
+molto più rapido* lo sviluppo delle soluzioni e *aiutare ad evitare errori di
 programmazione*.
 
-L'esposizione inizia con le classi di utilità per oggetti e array, quindi
-procedere con una breve esplorazione del *Collections Framework*.
+L'esposizione inizia con le classi di *metodi statici di utilità* per oggetti e
+array e le interfacce per la *comparazione*, quindi procedere con una breve
+esplorazione del *Collections Framework*.
 
 ## La classe `Objects`
 
@@ -336,3 +337,194 @@ che si comporta come atteso
 cifra2valore("zero");
 ```
 dato che "z" è certamente l'ultima lettera dell'alfabeto.
+
+## Il "Collections Framework"
+
+Questa sezione presenta in modo molto succinto alcune interfacce e classi del
+"Collections Framework" limitatamente agli usi delle medesime che possono
+risultare utili per la prova pratica.
+
+Come per il caso delle interfacce di comparazione, una discussione esaustiva di
+questo argomento esula dagli scopi di questo documento, chi volesse approfondire
+è invitato a iniziare la sua esplorazione dalla [documentazione nel
+JDK](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/doc-files/coll-index.html)
+e il (pur datato) [tutorial
+ufficiale](https://docs.oracle.com/javase/tutorial/collections/).
+
+Le collezioni che possono rivelarsi utili all'esame sono organizzate in due
+famiglie
+
+* i sottotipi dell'interfaccia
+  [`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html), limitatamente a
+  [`List`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html),
+  [`Set`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html)
+  e
+  [`SortedSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html);
+* i sottotipo delle interfacce
+  [`Map`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html)
+  e
+  [`SortedMap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedMap.html).
+
+Per ciascuna di queste interfacce, le API contano diverse implementazioni che si
+distinguono tra loro per vari aspetti, per quel che concerne la prova d'esame la
+differenza principale riguarda l'efficienza rispetto a determinate operazioni.
+
+Le versioni *ordinate* delle interfacce (quelle il cui nome inizia per
+`Sorted`), dipendono dall'*ordine naturale* degli elementi (derivante dal fatto
+che siano *comparabili*), oppure da un eventuale altro loro ordinamento,
+specificato tramite un *comparatore* alla costruzione della collezione.
+
+Per le *liste* le due implementazioni da considerare sono
+
+* [`ArrayList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html)
+  che è basata su un array e perciò consente un efficiente *accesso causale*, e
+* [`LinkedList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/LinkedList.html)
+  che è basata sulle [*liste
+  concatenate*](https://www.wikiwand.com/it/Lista_concatenata) e perciò consente
+  efficienti operazioni di inserimento e cancellazione.
+
+Per *insiemi* e *mappe* le implementazioni da considerare possono essere
+
+* [`HashSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashSet.html)
+  e
+  [`HashMap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html),
+  basate su [*hash table*](https://www.wikiwand.com/it/Hash_table);
+
+* [`TreeSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/TreeSet.html)
+  e
+  [`TreeMap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/TreeMap.html),
+  basate su [*alberi rosso-nero*](https://www.wikiwand.com/it/RB-Albero);
+
+evidentemente le implementazioni basate su *hash table* non sono ordinate e
+richiedono che i metodi `equals` e `hashCode` degli elementi siano
+opportunamente sovrascritti, similmente le implementazioni basate su *alberi
+rosso-nero* sono ordinate e richiedono che gli elementi siano ordinati (nel
+senso di cui sopra).
+
+Si rimanda alle conoscenze acquisite dall'insegnamento di "Algoritmi e strutture
+dati" per le questioni inerenti l'efficienza delle varie operazioni a seconda
+delle implementazioni scelte.
+
+### Costruttori copia e viste
+
+Ci sono tre modi per derivare una collezione da una esistente:
+
+* costruirla tramite un *costruttore copia*,
+* costruire una collezione vuota ed aggiungergli tutti gli elementi di quella
+  esistente,
+* fabbricare una *vista*.
+
+Ogni collezione ha un costruttore copia che prende una
+[`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html)
+per argomento e costruisce una nuova collezione che contiene un nuovo
+riferimento per ciascun elemento (ma non dell'elemento) della collezione da cui
+è copiata; ad esempio
+```{code-cell}
+List<String> lista = new ArrayList<>();
+lista.add("uno");
+lista.add("due");
+lista.add("tre");
+List<String> copia = new LinkedList(lista);
+lista.add("quattro");
+copia.remove("tre");
+System.out.println(lista + ", " + copia);
+```
+una diversa strategia è quella di usare il metodo `addAll`, come la precedente
+può essere usata anche nel caso in cui la destinazione sia di tipo diverso dalla
+sorgente della copia; ad esempio
+```{code-cell}
+SortedSet<String> vuoto = new TreeSet<>();
+vuoto.addAll(lista);
+System.out.println(vuoto);
+```
+
+Senza entrare troppo nel dettaglio, la [*vista di una
+collezione*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#view)
+è una implementazione di una collezione che invece di gestire direttamente la
+memorizzazione dei suoi elementi fa uso di una collezione di appoggio (che è
+quella che immagazzina concretamente gli elementi); le operazioni che non
+possono essere implementate direttamente dalla vista sono delegate alla
+collezione d'appoggio. Occorre osservare che, per come è costruita, i
+cambiamenti della collezione d'appoggio però si riflettono nella vista!
+
+Vedremo come costruire delle particolari viste nella prossima sottosezione.
+
+### Collezioni non modificabili e Immutabilità
+
+Una prima riflessione riguarda l'*immutabilità*, una collezione è immutabile se:
+
+* non può essere *strutturalmente modificata* (non possono essere aggiunti,
+  eliminati, o riordinati i suoi elementi) e
+* gli elementi che contiene sono a loro volta *immutabili*.
+
+Se, riguardo al secondo punto, è responsabilità del progettista del tipo degli
+elementi decidere se e come renderli immutabili (o se e come "proteggerli",
+quando le collezioni entrano a far parte della rappresentazione di un oggetto),
+riguardo alla [non
+modificabilità](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodifiable)
+come vedremo alcune implementazioni la garantiscono esplicitamente sollevando
+l'eccezione `UnsupportedOperationException` in caso di invocazione di metodi
+*mutazionali*.
+
+Le API offrono tre modi di ottenere una collezione non modificabile:
+
+* fabbricandone una ex-novo a partire da un elenco di elementi, o coppie chiave
+  e valore passati come argomento a un opportuno metodo statico, oppure
+* fabbricando una *copia* o una [*vista non
+modificabile*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodview) di una collezione esistente.
+
+Rispetto alla fabbricazione di collezioni ex-novo (che oltre allo spazio per
+memorizzare le informazioni strutturali della collezione, occupano quello per
+memorizzare i riferimenti agli elementi), le *viste* non aumentano
+sostanzialmente il costo in spazio (sebbene aumentino quello in tempo, in quanto
+i metodi osservazionali sono costruiti per delega).
+
+Ogni interfaccia contiene una serie di metodi `of` (di arietà crescente, fino a
+quello variadico) per fabbricare una collezione; ad esempio
+```{code-cell}
+List<String> lista = List.of("uno", "due", "due");
+Set<String> insieme = Set.of("uno", "due", "tre");
+Map<String, Integer> mappa = Map.of("uno", 1, "due", 2, "tre", 3);
+System.out.println(lista);
+System.out.println(insieme);
+System.out.println(mappa);
+```
+similmente, contiene il metodo `copyOf` per fabbricare una collezione copiando i
+riferimenti agli elementi (ma non gli elementi stessi!) dalla collezione passata
+come argomento; ad esempio
+```{code-cell}
+List<String> lista = List.of("uno", "due", "due");
+Set<String> insieme = Set.of("uno", "due", "tre");
+Map<String, Integer> mappa = Map.of("uno", 1, "due", 2, "tre", 3);
+System.out.println(lista);
+System.out.println(insieme);
+System.out.println(mappa);
+```
+
+Per finire, la classe di metodi statici di utilità
+[`Collections`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html)
+(che incontreremo di nuovo in seguito), contiene i metodi per fabbricare viste
+non modificabili delle varie collezioni; ad esempio
+```{code-cell}
+Set<String> immutabile = Collections.unmodifiableSet(vuoto);
+try {
+  immutabile.add("nuovo");
+} catch (UnsupportedOperationException e) {
+  System.err.println("Modifica non consentita!");
+}
+```
+mostra come l'invocazione di un metodo mutazionale sulla vista sollevi in
+effetti l'eccezione attesa; attenzione però: come illustrato parlando delle
+viste, se la collezione sottostante cambia, la modificazione di riflette
+necessariamente anche nella vista
+```{code-cell}
+System.out.println(immutabile);
+vuoto.add("nuovo");
+System.out.println(immutabile);
+```
+
+
+
+### Collezioni ed array
+
+### Ordinare e cercare nelle liste
