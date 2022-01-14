@@ -300,7 +300,32 @@ sufficiente copiarlo in uno di dimensione doppia e quindi procedere. Di ciascun
 metodo esistono anche delle versioni sovraccaricate senza i limiti del segmento
 (che vengono assunti coincidere con l'inizio e la fine dell'array).
 
-Infine, vale la pena ricordare anche due modi di ottenere una copia indipendenti dalla classe `Arrays`.
+Una delle versioni sovraccaricate di
+[`copyOf`](https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html#copyOf(U%5B%5D,%20int,%20java.lang.Class))
+può essere usata per effettuare una sorta di "casting" tra array i cui elementi
+siano l'uno il sottotipo dell'altro. Come è ben noto, anche se `S` è sottotipo
+di `T` ed è certo che gli elementi di un array `t` di tipo `T[]` siano in realtà
+tutti di tipo `S`, non è possibile effettuare il cast di tale array come
+`(S[])t`; per fare un esempio
+```{code-cell}
+Number[] numeri = new Number[] {1, 2, 3};
+try {
+  Integer[] interi = (Integer[])numeri;
+} catch (ClassCastException e) {
+  System.err.println(e);
+}
+```
+evidentemente, il cast non può avvenire solo sul riferimento, dovrebbe essere
+applicato anche elemento per elemento (ad esempio con un ciclo); ma si può anche
+usare `copyOf` nella versione che accetta una istanza di
+[`Class`](https://docs.oracle.com/javase/7/docs/api/java/lang/Class.html) per
+determinare il tipo degli elementi
+```{code-cell}
+Integer[] interi = Arrays.copyOf(numeri, numeri.length, Integer[].class);
+Arrays.toString(interi)
+```
+
+Per concludere, vale la pena ricordare anche due modi di ottenere una copia indipendenti dalla classe `Arrays`.
 
 Il più elementare è usare il metodo `clone` dell'array stesso. Il secondo è
 usare il metodo statico
@@ -317,11 +342,6 @@ ha l'effetto di copiare 3 elementi dalla posizione 2 di `positivi` alla posizion
 ```{code-cell}
 Arrays.toString(negativi)
 ```
-
-TODO: copyOf per fare "casting"
-
-https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html#copyOf(U%5B%5D,%20int,%20java.lang.Class)
-
 ##### Adattare la dimensione di un array
 
 Si supponga di voler raccogliere in un array i `long` minori di un bilione
@@ -571,44 +591,6 @@ dei riferimenti), quindi hanno un basso costo in termini di spazio; d'altro
 canto, la necessità di delegare molti comportamenti alla collezione (o array)
 d'appoggio determina un piccolo costo in termini di tempo.
 
-
-### Collezioni costruite a partire da altre
-
-Ci sono due modi per ottenere una collezione con lo stesso contenuto di una
-esistente:
-
-* costruirla tramite un *costruttore copia*,
-* costruire una collezione vuota ed aggiungergli tutti gli elementi di quella
-  esistente.
-
-Ogni collezione ha un costruttore copia che prende una
-[`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html)
-per argomento e costruisce una nuova collezione che contiene un nuovo
-riferimento per ciascun elemento (ma non dell'elemento) della collezione da cui
-è copiata; ad esempio
-```{code-cell}
-List<String> lista = new ArrayList<>();
-lista.add("uno");
-lista.add("due");
-lista.add("tre");
-List<String> copia = new LinkedList(lista);
-lista.add("quattro");
-copia.remove("tre");
-lista + "; " + copia
-```
-una diversa strategia è quella di usare il metodo `addAll`, come la precedente
-può essere usata anche nel caso in cui la destinazione sia di tipo diverso dalla
-sorgente della copia; ad esempio
-```{code-cell}
-SortedSet<String> vuoto = new TreeSet<>();
-vuoto.addAll(lista);
-vuoto
-```
-
-Come è facile dedurre (anche osservando gli esempi), i costruttori copia possono
-essere usati anche per "cambiare" il tipo di una collezione (ad esempio da
-*lista* a *insieme*, oppure tra implementazioni diverse dello stesso tipo).
-
 ### Copie e viste non modificabili
 
 Ci sono diversi modi di ottenere una collezione non modificabile:
@@ -668,20 +650,22 @@ non modificabili delle varie collezioni, essi hanno nome `unmodifiableT` dove
 `T` è uno delle possibili interfacce per le collezioni; ad esempio
 [`unmodifiableSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#unmodifiableSet(java.util.Set)) consente di ottenere un insieme non modificabile
 ```{code-cell}
-Set<String> immutabile = Collections.unmodifiableSet(vuoto);
+Set<String> mutabile = new HashSet<>();
+mutabile.add("primo");
+mutabile.add("secondo");
+Set<String> immutabile = Collections.unmodifiableSet(mutabile);
 try {
   immutabile.add("nuovo");
 } catch (UnsupportedOperationException e) {
   System.err.println("Modifica non consentita!");
 }
-immutabile
 ```
 mostra come l'invocazione di un metodo mutazionale sulla vista sollevi in
 effetti l'eccezione attesa; attenzione però: come illustrato parlando delle
 viste, se la collezione sottostante cambia, la modifica si riflette
 necessariamente anche nella vista
 ```{code-cell}
-vuoto.add("nuovo");
+mutabile.add("ultimo");
 immutabile
 ```
 
@@ -706,6 +690,44 @@ class AClass implements Iterable<AType> {
 }
 ```
 :::
+
+### Collezioni costruite da altre collezioni
+
+Talvolta può essere utile costruire una collezione modificabile a partire dagli
+elementi contenuti in un'altra collezione. Ci sono due modi molto pratici per
+ottenere una tale collezione:
+
+* costruirla tramite un *costruttore copia*,
+* costruire una collezione vuota ed aggiungergli tutti gli elementi di quella
+  esistente.
+
+Ogni collezione ha un costruttore copia che prende una
+[`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html)
+per argomento e costruisce una nuova collezione che contiene un nuovo
+riferimento per ciascun elemento (ma non dell'elemento) della collezione da cui
+è copiata; ad esempio
+```{code-cell}
+List<String> lista = new ArrayList<>();
+lista.add("uno");
+lista.add("due");
+lista.add("tre");
+List<String> copia = new LinkedList(lista);
+lista.add("quattro");
+copia.remove("tre");
+lista + "; " + copia
+```
+una diversa strategia è quella di usare il metodo `addAll`, come la precedente
+può essere usata anche nel caso in cui la destinazione sia di tipo diverso dalla
+sorgente della copia; ad esempio
+```{code-cell}
+SortedSet<String> vuoto = new TreeSet<>();
+vuoto.addAll(lista);
+vuoto
+```
+
+Come è facile dedurre (anche osservando gli esempi), i costruttori copia possono
+essere usati anche per "cambiare" il tipo di una collezione (ad esempio da
+*lista* a *insieme*, oppure tra implementazioni diverse dello stesso tipo).
 
 ### Array e `Collection`
 
@@ -838,3 +860,10 @@ String chiave = (String)(entries[0].getKey());
 Integer valore = (Integer)(entries[0].getValue());
 chiave + "; " + valore
 ```
+
+### La classe `Collections`
+
+Per finire, analogamente al caso di `Objects` e `Arrays`, nella classe
+[`Collections`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html)
+ci sono una messe di metodi statici di utilità che possono risultare molto
+comodi nella prova pratica.
