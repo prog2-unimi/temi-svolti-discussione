@@ -160,6 +160,39 @@ documento, chi volesse approfondire è invitato a consultare la documentazione
 delle API e a leggere l'Item 14 del Capitolo 3 del libro di testo "Effective
 Java".
 
+Può essere però utile richiamare alcuni metodi (di default e statici) di
+`Comparator` che consentono di ottenere dei comparatori d'uso comune:
+
+* il metodo di default
+  [`reversed`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#reversed())
+  che consente di ottenere il comparatore corrispondente all'ordine inverso;
+* i metodi statici
+  [`naturalOrder`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#naturalOrder())
+  e
+  [`reverseOrder`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#reverseOrder())
+  che restituiscono rispettivamente i comparatori dell'ordine naturale e del suo
+  inverso;
+* i metodi statici
+  [`nullsFirst`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#nullsFirst(java.util.Comparator))
+  e
+  [`nullsLast`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#nullsLast(java.util.Comparator))
+  che restituiscono i comparatori ottenuti dal comparatore specificato che, in
+  aggiunta, considerano i riferimenti `null` rispettivamente minori o maggiori
+  di ogni altro valore.
+
+Osservate che i metodi relativi all'ordine naturale non hanno argomento, devono
+pertanto inferire il tipo del comparatore da restituire o dal contesto, come ad
+esempio in
+```{code-cell}
+Comparator<Integer> DA_GRANDE_A_PICCOLO = Comparator.reverseOrder();
+DA_GRANDE_A_PICCOLO.compare(1, 2)
+```
+dove il tipo è dedotto da quello deella variabile a cui assegnare il risultato,
+oppure da uno *hint*, come in
+```{code-cell}
+Comparator.<Integer>reverseOrder().compare(2, 1)
+```
+
 #### Un esempio di uso
 
 Si consideri una classe che rappresenti un orario della mattina (a prescindere
@@ -386,6 +419,7 @@ che accetta un
 [`Comparator`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html)
 come argomento.
 
+(oec-array)=
 #### Ordinare e cercare
 
 Dato un vettore, è possibile ordinarlo [*in loco*](https://www.wikiwand.com/it/Algoritmo_in_loco) secondo l'*ordine naturale* dei suoi elementi tramite il metodo [`sort`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#sort(java.lang.Object[])), oppure specificando esplicitamente un *comparatore*  con la versoine sovraccaricata [`sort`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#sort(T[],java.util.Comparator)).
@@ -401,7 +435,18 @@ permette di ordinare gli orari secondo l'ordine naturale, mentre
 Arrays.sort(orari, LESSICOGRAFICO_ORE);
 Arrays.toString(orari)
 ```
-li ordina secondo l'ordine lessicografico dell'ora (in parole).
+li ordina secondo l'ordine lessicografico dell'ora (in parole). La versione in
+cui è possibile specificare il comparatore può essere utile per invertire
+l'orine; ad esempio
+```{code-cell}
+Arrays.sort(orari, LESSICOGRAFICO_ORE.reversed());
+Arrays.toString(orari)
+```
+oppure, basandosi sull'ordine naturale,
+```{code-cell}
+Arrays.sort(orari, Comparator.reverseOrder());
+Arrays.toString(orari)
+```
 
 Dato un vettore ordinato, è possibile cercare la posizione di un elemento nel
 vettore (o scoprire se non è contenuto nel vettore), usando la [*ricerca
@@ -591,6 +636,21 @@ dei riferimenti), quindi hanno un basso costo in termini di spazio; d'altro
 canto, la necessità di delegare molti comportamenti alla collezione (o array)
 d'appoggio determina un piccolo costo in termini di tempo.
 
+Un caso tipico di vista sono le *sottocollezioni*, come ad esempio le
+*sottoliste* che possono essere ottenute tramite il metodo
+[`subList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#subList(int,int))
+```{code-cell}
+List<Integer> lista = new ArrayList<>(List.of(1, 2, 3, 5, 6));
+List<Integer> sottolista = lista.subList(2, 4);
+lista + "; " + sottolista
+```
+occorre prestare sempre attenzione a come le alterazioni *anche strutturali*
+della sottocollezione alterano la collezione; ad esempio
+```{code-cell}
+sottolista.add(1, 4);
+lista + "; " + sottolista
+```
+
 ### Copie e viste non modificabili
 
 Ci sono diversi modi di ottenere una collezione non modificabile:
@@ -651,8 +711,7 @@ non modificabili delle varie collezioni, essi hanno nome `unmodifiableT` dove
 [`unmodifiableSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#unmodifiableSet(java.util.Set)) consente di ottenere un insieme non modificabile
 ```{code-cell}
 Set<String> mutabile = new HashSet<>();
-mutabile.add("primo");
-mutabile.add("secondo");
+mutabile.addAll(List.of("primo", "secondo", "terzo"));
 Set<String> immutabile = Collections.unmodifiableSet(mutabile);
 try {
   immutabile.add("nuovo");
@@ -691,7 +750,7 @@ class AClass implements Iterable<AType> {
 ```
 :::
 
-### Collezioni costruite da altre collezioni
+### Copie modificabili
 
 Talvolta può essere utile costruire una collezione modificabile a partire dagli
 elementi contenuti in un'altra collezione. Ci sono due modi molto pratici per
@@ -699,7 +758,8 @@ ottenere una tale collezione:
 
 * costruirla tramite un *costruttore copia*,
 * costruire una collezione vuota ed aggiungergli tutti gli elementi di quella
-  esistente.
+  esistente,
+* invocare il metodo [`clone`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html#clone()).
 
 Ogni collezione ha un costruttore copia che prende una
 [`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html)
@@ -708,9 +768,7 @@ riferimento per ciascun elemento (ma non dell'elemento) della collezione da cui
 è copiata; ad esempio
 ```{code-cell}
 List<String> lista = new ArrayList<>();
-lista.add("uno");
-lista.add("due");
-lista.add("tre");
+lista.addAll(List.of("uno", "due", "tre"));
 List<String> copia = new LinkedList(lista);
 lista.add("quattro");
 copia.remove("tre");
@@ -726,13 +784,16 @@ vuoto
 ```
 
 Come è facile dedurre (anche osservando gli esempi), i costruttori copia possono
-essere usati anche per "cambiare" il tipo di una collezione (ad esempio da
+essere usati anche per "convertire" il tipo di una collezione (ad esempio da
 *lista* a *insieme*, oppure tra implementazioni diverse dello stesso tipo).
+
+Riguardo al metodo `clone`, esso restituisce un `Object` in ottemperanza al
+contratto che eredita da `Object`, per qui il suo uso richiede un cast; per
+questa ragione è generalmente preferibile l'uso dei costruttori copia.
 
 ### Array e `Collection`
 
-Come è ovvio attendersi, c'è un notevole legame tra array e collezioni (mappe
-escluse).
+Come è ovvio attendersi, c'è un notevole legame tra array e collezioni.
 
 #### Da array a liste
 
@@ -756,8 +817,12 @@ comeLista.get(1)
 Si osservi per inciso che l'uso delle viste costruite a partire da un array
 offre la possibilità di effettuare in modo conveniente tramite il metodo
 [`indexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
-una [*ricerca sequenziale*](https://www.wikiwand.com/it/Ricerca_sequenziale) tra
-i suoi elementi (basata sul loro metodo `equals`).
+(o
+[lastIndexOf](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#lastIndexOf(java.lang.Object))
+che inizia la ricerca dal fondo e quindi darà risultati diversi in caso di
+elementi ripetuti) una [*ricerca
+sequenziale*](https://www.wikiwand.com/it/Ricerca_sequenziale) tra i suoi
+elementi (basata sul loro metodo `equals`).
 
 Rivisitando l'esempio delle cifre, l'inversa della funzione che mappa `i` in
 `cifreInParole[i]`, ossia la funzione `cifraAValore` che mappa la parola `cifra`
@@ -844,6 +909,11 @@ try {
   System.err.println(e);
 }
 ```
+Certamente si può effettuare una sorta di cast col metodo `copyOf` come
+suggerito in precedenza, ma ovviamente è più efficiente ottenere direttamente
+l'array del tipo desiderato.
+
+##### Le mappe
 
 Le mappe (che non sono sottotipi di `Collection`) non hanno un metodo che
 consenta di ottenerne direttamente il contenuto sotto forma di array; ogni mappa
@@ -867,3 +937,127 @@ Per finire, analogamente al caso di `Objects` e `Arrays`, nella classe
 [`Collections`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html)
 ci sono una messe di metodi statici di utilità che possono risultare molto
 comodi nella prova pratica.
+
+#### Collezioni vuote, riempimento e rimpiazzamento
+
+In ossequio dell'Item 54 del Capitolo 8 del libro di testo "Effective Java", è
+consigliabile restituire collezioni vuote, piuttosto che `null`. Per questa
+ragione `Collections` mette a disposizione una serie di metodi statici di nome
+`emptyT` dove `T` è il tipo di una collezione (ma anche un iteratore vuoto, ad
+esempio).
+
+:::{hint}
+Non sottovalutate la semplificazione consentita dall'accorgimento di usare
+collezioni vuote (se logicamente ammissibili per le specifiche) al posto di
+`null`. Se il metodo `aCollection` di una classe adottasse tale convenzione, ai
+suoi utilizzatori sarebbe consentito di scrivere, ad esempio
+```{code-block}
+for (AType e : aCollection()) doSomething(e);
+```
+invece del più verboso
+```{code-block}
+Collection<AType> c = aCollection();
+if (c != null) for (AType e : c) doSomething(e);
+```
+o di commettere un errore grave nel caso si omettesse, non avendo adottato la
+convenzione, il controllo di nullità
+:::
+
+I metodi statici
+[`fill`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#fill(java.util.List,T))
+e
+[`replaceAll`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#replaceAll(java.util.List,T,T))
+consentono, rispettivamente, di riempire una lista con un dato elemento, o
+rimpiazzare tutte le occorrenze di un elemento con un altro; il secondo potrebbe
+essere usato, ad esempio, per rimpiazzare i valori `null` con un "default"
+```{code-cell}
+List<String> paroleENull = Arrays.asList("uno", null, "due", null, null, "tre");
+List<String> parole = new ArrayList<>(paroleENull);
+Collections.replaceAll(parole, null, "");
+parole
+```
+
+#### Ordinare, cercare e contare nelle liste
+
+Le osservazioni della [omonima sezione](oec-array) per gli array si applicano in
+modo del tutto analogo per le liste; il metodo
+[`sort`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#sort(java.util.Comparator))
+è però in questo caso di istanza e ha un'unica versione che ha un comparatore
+per argomento (che si intende quello dell'ordine naturale se `null`); inutile
+osservare che siccome l'ordinamento avviene anche in questo caso in loco, è
+necessario che la lista sia modificabile.
+
+Qualche esempio concreto può aiutare a comprenderne l'uso: ordine naturale
+(specificando `null`)
+```{code-cell}
+lista.sort(null);
+lista
+```
+stessa cosa con il metodo statico di `Comparator`
+```{code-cell}
+lista.sort(Comparator.naturalOrder());
+lista
+```
+mentre per l'inverso dell'ordine naturale
+```{code-cell}
+lista.sort(Comparator.reverseOrder());
+lista
+```
+In alcuni casi (ad esempio se è noto che non si riutilizzerà più un certo
+ordine) può essere molto comodo usare una classe anonima
+```{code-cell}
+lista.sort(new Comparator<>() {
+  @Override
+  public int compare(String o1, String o2) {
+    if (o1.isEmpty()) return -1;
+    if (o2.isEmpty()) return 1;
+    return Character.compare(o1.charAt(o1.length() - 1), o2.charAt(o2.length() - 1));
+  }
+});
+lista
+```
+in questo caso, le stringhe sono ordinate in base all'ordine alfabetico del loro ultimo carattere (se non vuote).
+
+Come nel caso degli array, la ricerca di un elemento in una lista ordinata può
+essere effettuata con il metodo
+[`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#binarySearch(java.util.List,T))
+se i suoi elementi sono comparabili, oppure specificando un comparatore col
+metodo
+[`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#binarySearch(java.util.List,T,java.util.Comparator)).
+
+Vale la pena di ricordare che se lista non è ordinata può essere comunque
+effettuata una ricerca di un elemento (in tempo lineare) tramite il suo metodo
+d'istanza
+[`indexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
+(o
+[`lastIndexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#lastIndexOf(java.lang.Object))).
+
+Per cercare una *sottolista*, è invece possibile usare il metodo statico
+[`indexOfSubList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#indexOfSubList(java.util.List,java.util.List))
+(o
+[lastIndexOfSubList](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#lastIndexOfSubList(java.util.List,java.util.List)
+)) di `Collections`; ad esempio
+```{code-cell}
+lista.sort(null);
+int idx = Collections.indexOfSubList(lista, List.of("tre", "uno"));
+lista + "; " + idx
+```
+
+Nel caso delle liste, se non si è interessati all'ordine di tutti gli elementi,
+ma solo ai suoi [*valori
+estremi*](https://www.wikiwand.com/it/Estremo_superiore_e_estremo_inferiore), si
+possono utilizzare i metodi
+[`min`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#min(java.util.Collection))
+e
+[`max`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#max(java.util.Collection))
+che sono basati sull'ordine naturale, oppure le loro versioni che consentono di
+indicare un comparatore come secondo argomento.
+
+Per finire, se si vuole contare il numero di occorrenze di un certo valore, si
+può adoperare il metodo
+[`frequency`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#frequency(java.util.Collection,java.lang.Object)); ad esempio
+```{code-cell}
+int num =  Collections.frequency(paroleENull, null);
+paroleENull + "; " + num
+```
+riporta il numero di `null` nella collezione.
