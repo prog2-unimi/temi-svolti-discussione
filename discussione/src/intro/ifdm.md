@@ -1061,3 +1061,64 @@ int num =  Collections.frequency(paroleENull, null);
 paroleENull + "; " + num
 ```
 riporta il numero di `null` nella collezione.
+
+#### Mescolare e ruotare
+
+Ci sono diverse operazioni comuni che agiscono sulle posizioni degli elementi di
+una collezione senza però modificare gli elementi che essa contiene:
+
+* lo *scambio* di due elementi, ottenuto tramite il metodo
+  [`swap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#swap(java.util.List,int,int));
+* il *rovesciamento* della lista, ottenuto tramite il metodo [`reverse`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#reverse(java.util.List));
+* la *rotazione* della lista, ottenuta tramite il metodo
+  [`rotate`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#rotate(java.util.List,int)),
+  che agisce come se la lista fosse circolare e la testa fosse spostata di una
+  data `distanza` (altrimenti detto l'elemento di posto *i* nella lista ruotata
+  corrisponde a quello di posto *i* - `distanza` nella lista originale);
+* il *mescolamento casuale* degli elementi, ottenuto tramite il metodo
+  [`shuffle`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#shuffle(java.util.List)).
+
+Riguardo all'ultimo metodo, è possibile specificare esplicitamente il generatore
+di [*numeri pseudocasuali*](https://www.wikiwand.com/it/Numeri_pseudo-casuali)
+usando la versione sovraccaricata
+[`shuffle`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#shuffle(java.util.List,java.util.Random))
+che accetta una istanza della classe
+[`Random`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html)
+come argomento; questo è particolarmente importante per rendere *riproducibile*
+il comportamento
+
+:::{hint}
+Quando utilizzate un oggetto di tipo
+[`Random`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html)
+per introdurre della casualità nel comportamento del vostro codice può diventare
+molto arduo individuarne gli errori perché ogni esecuzione procede
+potenzialmente in modo diverso dalle precedenti.
+
+Fortunatamente, la classe `Random` implementa un [*generatore lineare
+congruenziale*](https://www.wikiwand.com/it/Generatore_lineare_congruenziale)
+per cui specificando esplicitamente un dato *seme* usando il costruttore
+[`Random`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html#%3Cinit%3E(long))
+si otterrà sempre la stessa sequenza di esecuzione.
+
+Può essere quindi una buona idea istanziare il generatore tramite una funzione
+del genere
+```{code-block}
+static void Random reproducibleRng(long seed) {
+  if (seed == 0) {
+    seed = System.currentTimeMillis();
+    System.err.println("reproducibleRng: seed = " + seed);
+  }
+  return new Random(seed);
+}
+```
+in questo modo, se la funzione è invocata con un valore nullo del seme essa ne
+sceglierà uno (ogni volta diverso, grazie alla chiamata di
+[`currentTimeMillis`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#currentTimeMillis())
+e ne emetterà il valore sul flusso d'errore.
+
+Eseguendo ripetutamente il programma con un valore nullo del seme si otterranno
+comportamenti casuali sempre diversi; non appena dovesse verificarsi un errore,
+sarebbe sufficiente tornare ad eseguire il codice con seme pari all'ultimo
+valore emesso dalla funzione `reproducibleRng` per ottenere la riproducibilità
+necessaria a determinare e correggere l'errore.
+:::
