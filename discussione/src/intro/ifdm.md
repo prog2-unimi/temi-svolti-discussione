@@ -13,18 +13,18 @@ kernelspec:
 # I ferri del mestiere
 
 :::{warning}
-Il contenuto di questo documento è ancora in una **versione preliminare**, non
+Il contenuto di questo documento è ancora in **versione preliminare**, non
 dovrebbe contenere errori grossolani e probabilmente non sarà radicalmente
 modificato, ma è possibile che in futuro vengano apportate correzioni e piccole
 revisioni.
 :::
 
 Questo documento contiene alcuni suggerimenti sull'uso delle [Java Development
-Kit API](https://docs.oracle.com/en/java/javase/17/docs/api/), sebbene
-**nessuna** delle informazioni contenute in questo documento è *strettamente
-necessaria* per il superamento della prova pratica, tuttavia alcuni dei
-suggerimenti seguenti possono *rendere molto più rapido* lo sviluppo delle
-soluzioni e *aiutare ad evitare errori di programmazione*.
+Kit API](https://docs.oracle.com/en/java/javase/17/docs/api/), sebbene *nessuna*
+delle informazioni contenute in questo documento sia *strettamente necessaria*
+per il superamento della prova pratica, un po' di pratica con gli argomenti
+seguenti può *rendere molto più rapido* lo sviluppo delle soluzioni e *aiutare
+ad evitare errori di programmazione*.
 
 L'esposizione è suddivisa in due parti:
 
@@ -36,14 +36,13 @@ L'esposizione è suddivisa in due parti:
   focalizzata in particolare su aspetti pratici inerenti la prova pratica.
 
 :::{admonition} Esempi di codice e output
-Gli esempi di codice riportati di seguito con un bordo verde si intendono
-*attivi*; dopo alcuni di essi è presente l'*output* che sarebbe prodotto
-dall'esecuzione dei medesimi (preceduta dall'esecuzione di tutti gli esempi
-attivi che lo precedono, nell'ordine in cui compaiono). Se l'ultima (o unica)
-riga di un esempio di codice attivo è una espressione, se il suo valore è
-diverso da `null` sarò presente sotto di essa (come se l'ultima espressione
-fosse stata avvolta da `System.out.println(…)` e tale codice fosse stato
-eseguito).
+Gli esempi di codice riportati di seguito con un bordo verde sono *eseguibili*;
+dopo alcuni di essi è presente l'*output* che verrebbe prodotto dall'esecuzione
+dei medesimi (se successiva all'esecuzione di tutti gli esempi eseguibili che li
+precedono, nell'ordine in cui compaiono); inoltre, se l'ultima (o unica) riga di
+un esempio di codice eseguibile è una espressione e il suo valore è diverso da
+`null`, esso sarà presente sotto di esso (come se l'ultima espressione fosse
+stata avvolta da `System.out.println(…)` prima dell'esecuzione del codice).
 :::
 
 ## Classi e interfacce di uso pratico
@@ -52,8 +51,8 @@ eseguito).
 
 La classe
 [`java.util.Objects`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html)
-contiene alcuni metodi statici di utilità generale che riguardano tutti gli
-oggetti, indipendentemente dal loro tipo.
+contiene alcuni metodi statici di utilità generale che possono essere adoperati
+per tutti gli oggetti, indipendentemente dal loro tipo.
 
 #### Sovrascrivere `hashCode`
 
@@ -78,11 +77,11 @@ Capitolo 3 del libro di testo "Effective Java".
 Il metodo
 [`requireNonNull`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html#requireNonNull(T,java.lang.String))
 consente di verificare se una espressione è `null` e, nel caso, sollevare una
-`NullPointerException` col messaggio indicato; ad esempio:
+`NullPointerException` col messaggio indicato; ad esempio
 ```{code-block} java
 Objects.requireNonNull(espressione, "Messaggio");
 ```
-può essere usato come abbreviazione di:
+può essere usato invece di:
 ```{code-block} java
 if (espressione == null)
   throw new NullPointerException("Messaggio");
@@ -93,7 +92,7 @@ di metodo; ad esempio
 ```{code-block} java
 variabile = Objects.requireNonNull(espressione, "Messaggio");
 ```
-può essere usato come abbreviazione di:
+può essere usato invece di:
 ```{code-block} java
 if (espressione == null)
   throw new NullPointerException("Messaggio");
@@ -103,7 +102,7 @@ e similmente
 ```{code-block} java
 Objects.requireNonNull(espressione, "Messaggio").metodo();
 ```
-può essere usato come abbreviazione di:
+può essere usato invece di:
 ```{code-block} java
 if (espressione == null)
   throw new NullPointerException("Messaggio");
@@ -121,7 +120,7 @@ String stringa = Objects.toString(oggetto);
 boolean uguali = Objects.euqla(questo, quello);
 int hash = Objects.hashCode(oggetto);
 ```
-possono essere rispettivamente usati come abbreviazione di
+possono essere rispettivamente usati invece di
 ```{code-block} java
 String stringa = oggetto == null ? "null" : oggetto.toString();
 boolean uguali = questo == null ? quello == null : questo.equals(quello);
@@ -145,8 +144,8 @@ limite inferiore dell'intervallo), viceversa sollevano una
 ### Le interfacce `Comparable` e `Comparator`
 
 Se si è interessati a definire una [*relazione
-d'ordine*](https://www.wikiwand.com/it/Relazione_d%27ordine)sugli oggetti di una
-certo tipo sono possibili due strategie:
+d'ordine*](https://www.wikiwand.com/it/Relazione_d%27ordine) sugli oggetti di
+una certo tipo sono possibili due strategie:
 
 * se gli oggetti sono dotati di un ordinamento *naturale*, generalmente si
   rendono *comparabili* facendo in modo che il loro tipo lo realizzi
@@ -314,38 +313,37 @@ Arrays.toString(slot)
 ```
 
 Esistono diversi metodi per ottenere una copia di un array (non tutti realizzati
-tramite la classe `Arrays`); è necessario ricordare che nel se gli elementi
+tramite la classe `Arrays`); è necessario ricordare che se gli elementi
 dell'array non sono di tipo primitivo, tutti effettuano una [*copia per
 indirizzo*](https://www.wikiwand.com/it/Copia_di_un_oggetto), ossia copiano solo
-i riferimenti degli oggetti dall'array d'origine a quello copiato, senza però
-copiare gli oggetti stessi. Questo significa, tra l'altro, che se gli oggetti
-sono *mutabili* attraverso la copia dell'array è possibile modificare gli
-elementi dell'array di origine (ovviamente a prescindere dal fatto che i
+i riferimenti degli elementi dall'array d'origine a quello copiato, senza però
+copiare gli elementi stessi. Questo significa, tra l'altro, che se gli elementi
+sono di tipo *mutabile* attraverso la copia dell'array è possibile modificare
+gli elementi dell'array di origine (ovviamente a prescindere dal fatto che i
 riferimenti in cui sono memorizzati gli array siano dichiarati come `final`!).
 
-Con il metodo
+Il primo modo di ottenere una copia è data dal metodo
+[`copyOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#copyOf(T%5B%5D,int));
+osservate che tale metodo può produrre una copia con un numero di elementi
+maggiore di quello dell'originale (popolando con `null` le posizioni
+aggiuntive). Questo può essere molto utile nel caso in cui, memorizzando valori
+in un array, si stia per eccederne la dimensione: sarà sufficiente copiarlo in
+uno di dimensione doppia e quindi procedere. Di ciascun metodo esistono anche
+delle versioni sovraccaricate senza i limiti del segmento (che vengono assunti
+coincidere con l'inizio e la fine dell'array). Con il metodo
 [`copyOfRange`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#copyOfRange(T%5B%5D,int,int))
-è invece possibile ottenere una copia di (un segmento) di un array; da esempio
+è invece possibile ottenere una copia di (un segmento) di un array; ad esempio
 ```{code-cell}
 String[] subslot = Arrays.copyOfRange(slot, 2, 5);
 Arrays.toString(subslot)
 ```
 
-Il metodo
-[`copyOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#copyOf(T%5B%5D,int))
-può produrre una copia più grande dell'originale (riempiendo di valori nulli le
-posizioni aggiuntive). Questo può essere molto utile nel caso in cui,
-memorizzando valori in un array, si stia per eccederne la dimensione: sarà
-sufficiente copiarlo in uno di dimensione doppia e quindi procedere. Di ciascun
-metodo esistono anche delle versioni sovraccaricate senza i limiti del segmento
-(che vengono assunti coincidere con l'inizio e la fine dell'array).
-
 Una delle versioni sovraccaricate di
 [`copyOf`](https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html#copyOf(U%5B%5D,%20int,%20java.lang.Class))
 può essere usata per effettuare una sorta di "casting" tra array i cui elementi
 siano l'uno il sottotipo dell'altro. Come è ben noto, anche se `S` è sottotipo
-di `T` ed è certo che gli elementi di un array `t` di tipo `T[]` siano in realtà
-tutti di tipo `S`, non è possibile effettuare il cast di tale array come
+di `T` ed è certo che gli elementi di un array `t` di tipo `T[]` siano tutti di
+tipo concreto `S`, non è possibile effettuare il cast di tale array come
 `(S[])t`; per fare un esempio
 ```{code-cell}
 Number[] numeri = new Number[] {1, 2, 3};
@@ -355,9 +353,10 @@ try {
   System.err.println(e);
 }
 ```
-evidentemente, il cast non può avvenire solo sul riferimento, dovrebbe essere
-applicato anche elemento per elemento (ad esempio con un ciclo); ma si può anche
-usare `copyOf` nella versione che accetta una istanza di
+solleva una eccezione: evidentemente, il cast non può avvenire solo sul
+riferimento, perché la cosa avesse senso, dovrebbe venir applicato anche
+elemento per elemento (ad esempio con un ciclo); ma si può anche usare `copyOf`
+nella versione che accetta una istanza di
 [`Class`](https://docs.oracle.com/javase/7/docs/api/java/lang/Class.html) per
 determinare il tipo degli elementi
 ```{code-cell}
@@ -365,7 +364,8 @@ Integer[] interi = Arrays.copyOf(numeri, numeri.length, Integer[].class);
 Arrays.toString(interi)
 ```
 
-Per concludere, vale la pena ricordare anche due modi di ottenere una copia indipendenti dalla classe `Arrays`.
+Per concludere, vale la pena ricordare anche due modi di ottenere una copia
+indipendenti dalla classe `Arrays`.
 
 Il più elementare è usare il metodo `clone` dell'array stesso. Il secondo è
 usare il metodo statico
@@ -384,26 +384,27 @@ Arrays.toString(negativi)
 ```
 ##### Adattare la dimensione di un array
 
-Si supponga di voler raccogliere in un array i `long` minori di un bilione
-(convenientemente espresso con la costante letterale `1_000_000_000_000L`, dove
-`_` è adoperato come separatore delle migliaia) che siano potenze di 2 con
-esponente pari; supponendo di non conoscerne il numero a priori, è possibile
-riempire iterativamente l'array `pows`, inizialmente di dimensione 1,
-raddoppiandone la dimensione ogni volta che il numero di potenze individuate ne
-uguaglia la lunghezza:
+Vogliamo raccogliere in un array di `long` di nome `pows` gli elementi
+dell'insieme $\{n < 10^{12} | n = 2^{2k}, k \geq 0 \}$; supponendo di non
+conoscere a priori la cardinalità dell'insieme, possiamo riempire iterativamente
+l'array, inizialmente di dimensione 1, raddoppiandone la dimensione ogni volta
+che il numero `i` di potenze individuate ne uguaglia la lunghezza
 ```{code-cell}
 long[] pows = new long[1];
 long n = 0;
-int i = 0, e = 0;
-while ((n = (long)Math.pow(2, 2 * e++)) < 1_000_000_000_000L) {
+int i = 0, k = 0;
+while ((n = (long)Math.pow(2, 2 * k++)) < 1_000_000_000_000L) {
   if (i == pows.length) pows = Arrays.copyOf(pows, pows.length * 2);
     pows[i++] = n;
 }
 pows = Arrays.copyOf(pows, i);
 Arrays.toString(pows)
 ```
-Osservate come, al termine del riempimento, è possibile copiare il risultato in
-un array di dimensione pari al numero di potenze individuate.
+Osservate come, oltre al modo comodo di scrivere la costante $10^{12}$ come
+`1_000_000_000_000L` interponendo per leggibilità il separatore `_`, al termine
+del riempimento, si possono eliminare le posizioni rimaste vuote dell'array
+copiandolo in uno di dimensione esattamentepari al numero totale di potenze
+individuate.
 
 #### Confrontare
 
@@ -462,7 +463,7 @@ dicotomica*](https://www.wikiwand.com/it/Ricerca_dicotomica), tramite il metodo
 che si basa sull'ordine naturale, o la versione sovraccaricata di
 [`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#binarySearch(T[],T,java.util.Comparator))
 che consente di specificare un comparatore (che, evidentemente, deve essere il
-medesimo usato per ordinare l'array).
+medesimo che era stat usato per ordinare l'array prima della ricerca).
 ##### Un esempio di ricerca e inserimento
 
 Come esempio della ricerca, consideriamo l'array `cifreOrdinate` che contenga le
@@ -500,15 +501,17 @@ idx
 Secondo il contratto del metodo di ricerca, un risultato negativo non solo
 indica che l'elemento non è stato trovato, ma suggerisce la posizione `pos` dove
 dovrebbe venir inserito nell'array secondo la formula `idx = -pos - 1` (che
-ovviamente rende `idx` sempre negativo); usando questa informazione è possibile sistemare la mancanza
+ovviamente rende `idx` sempre negativo); usando questa informazione è possibile
+sistemare la mancanza
 ```{code-cell}
 int pos = -idx - 1;
 pos
 ```
 A questo punto è sufficiente allocare un nuovo array `corretto` con una
-posizione in più, copiare dall'array `cifreInParoleOrdinate` errato le posizioni fino a
+posizione in più, copiare dall'array `cifreInParoleOrdinate` le posizioni fino a
 `pos` esclusa, aggiungere in tale posizione di `corretto` la stringa `"tre"` e
-quindi copiare le rimanenti `cifreInParoleOrdinate.length - pos` posizioni da `cifreInParoleOrdinate` a partire da `pos + 1` di `corretto`
+quindi copiare le rimanenti `cifreInParoleOrdinate.length - pos` posizioni da
+`cifreInParoleOrdinate` in `corretto` a partire da `pos + 1`
 ```{code-cell}
 String[] corretto = new String[cifreInParoleOrdinate.length + 1];
 System.arraycopy(cifreInParoleOrdinate, 0, corretto, 0, pos);
@@ -521,10 +524,21 @@ Arrays.toString(corretto)
 A maggior conferma del fatto che nessuna delle conoscenze di questo documento è
 strettamente necessaria al superamento della prova pratica, quanto mostrato sin
 qui consente di costruire e mantenere un array (eventualmente ordinato) di
-dimensione adattabile facendo uso soltanto di concetti noti (dagli insegnamenti
-di "Programmazione" e "Algoritmi e strutture dati") che, peraltro, possono
+dimensione adattabile facendo uso soltanto di concetti elementari (appresi
+dall'insegnamento di "Programmazione" del primo anno) che, peraltro, possono
 essere molto facilmente implementati anche usando esclusivamente array e cicli
 `for`.
+
+Con un array di dimensione adattabile è molto semplice implementare buona parte
+dei comportamenti delle collezioni che saranno illustrate nella seguente sezione
+(può essere un ottimo esercizio provare a farlo!). Ai fini del superamento della
+prova pratica, le *liste* possono essere banalmente sostituite da un array di
+dimensione adattabile, così come lo possono gli *insiemi* (e sufficiente
+prestare attenzione ai duplicati); persino le *mappe* possono essere
+implementate senza scomodare nessuna struttura dati tra quelle più sofisticate
+(incontrate nell'insegnamento di "Algoritmi e strutture dati" del secondo anno),
+ma usando semplicemente due array "paralleli"; tale implementazione può essere
+persino resa ragionevolmente efficiente se le chiavi sono comparabili!
 :::
 
 ## Il "Collections Framework"
@@ -544,12 +558,13 @@ Le *collezioni* che possono rivelarsi utili all'esame sono organizzate in due
 famiglie
 
 * i sottotipi dell'interfaccia
-  [`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html), limitatamente a
+  [`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html),
+  limitatamente a quelli di
   [`List`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html),
   [`Set`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html)
   e
   [`SortedSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html);
-* i sottotipo delle interfacce
+* i sottotipi delle interfacce
   [`Map`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html)
   e
   [`SortedMap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedMap.html).
@@ -563,9 +578,9 @@ distinguono tra loro per vari aspetti, per quel che concerne la prova d'esame la
 differenza principale riguarda l'efficienza rispetto a determinate operazioni.
 
 Le versioni *ordinate* delle interfacce (quelle il cui nome inizia per
-`Sorted`), dipendono dall'*ordine naturale* degli elementi (derivante dal fatto
-che siano *comparabili*), oppure da un eventuale altro loro ordinamento,
-specificato tramite un *comparatore* alla costruzione della collezione.
+`Sorted`), dipendono dall'*ordine naturale* degli elementi (ossia dal fatto che
+siano *comparabili*), oppure da un eventuale altro loro ordinamento, specificato
+tramite un *comparatore* alla costruzione della collezione.
 
 Per le *liste* le due implementazioni maggiormente utili sono
 
@@ -608,8 +623,8 @@ l'*immutabilità*.
 Una collezione è *immutabile* se:
 
 * gli elementi che contiene sono a loro volta *immutabili* e
-* non può essere *strutturalmente modificata* (non possono essere aggiunti,
-  eliminati, o riordinati i suoi elementi).
+* non può essere *strutturalmente modificata*, ossia non possono essere
+  aggiunti, eliminati, o riordinati i suoi elementi.
 
 Riguardo al primo punto, è responsabilità del progettista del tipo degli
 elementi decidere se e come renderli immutabili (o se e come "proteggerli",
@@ -620,7 +635,8 @@ collezioni che garantiscono la [*non
 modificabilità*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodifiable);
 dato che evidentemente non è possibile che non implementino i metodi
 *mutazionali* presenti nelle interfacce, la soluzione adottata è che essi,
-qualora invocati, sollevino l'eccezione `UnsupportedOperationException`.
+qualora invocati, sollevino l'eccezione non controllata
+`UnsupportedOperationException`.
 
 Alcune implementazioni non modificabili sono ottenute tramite una [*vista non
 modificabile*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodview),
@@ -635,13 +651,15 @@ collezione*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/u
 memorizzazione dei suoi elementi fa uso di una collezione (o array) di appoggio
 per immagazzinarli concretamente; le operazioni che non possono essere
 implementate direttamente dalla vista sono delegate alla collezione (o array)
-d'appoggio. Occorre osservare che, per come sono costruite, i cambiamenti delle
-collezioni d'appoggio si riflettono però sempre nella viste!
+d'appoggio.
 
 Le viste non occupano alcuno spazio per memorizzare gli elementi (nemmeno quello
 dei riferimenti), quindi hanno un basso costo in termini di spazio; d'altro
 canto, la necessità di delegare molti comportamenti alla collezione (o array)
 d'appoggio determina un piccolo costo in termini di tempo.
+
+È di *fondamentale importanza* ricordare però che, per come sono costruite, i
+cambiamenti delle collezioni d'appoggio si riflettono però sempre nella viste!
 
 Un caso tipico di vista sono le *sottocollezioni*, come ad esempio le
 *sottoliste* che possono essere ottenute tramite il metodo
@@ -703,11 +721,11 @@ lista + "; " + insieme + "; " + mappa
 
 :::{hint}
 Le collezioni fabbricate con `of` e `copyOf` non possono contenere `null` nel
- senso che se esiste un tale valore tra i riferimenti, verrà sollevata una
- `NullPointerException`; questo può essere molto comodo quando si vuole
- assegnare ad un attributo di una classe una collezione che sia non nulla e non
- contenga elementi nulli; se poi gli elementi sono immutabili, ciò basta per
- garantire l'immutabilità delle collezioni copia.
+senso che se esiste un tale valore tra gli elementi della collezione da copiare,
+verrà sollevata una `NullPointerException`; questo può essere molto comodo
+quando si vuole assegnare ad un attributo di una classe una collezione che sia
+non nulla e non contenga elementi nulli; se poi gli elementi sono immutabili,
+ciò basta per garantire l'immutabilità della copia!
 :::
 
 Per finire, la classe di metodi statici di utilità
@@ -727,7 +745,7 @@ try {
 }
 ```
 mostra come l'invocazione di un metodo mutazionale sulla vista sollevi in
-effetti l'eccezione attesa; attenzione però: come illustrato parlando delle
+effetti l'eccezione attesa; attenzione però: come già detto parlando delle
 viste, se la collezione sottostante cambia, la modifica si riflette
 necessariamente anche nella vista
 ```{code-cell}
@@ -739,9 +757,10 @@ immutabile
 Le viste non modificabili possono essere molto utili nel caso uno degli
 attributi di una classe sia una collezione modificabile e si intenda rendere la
 classe un *iterabile* degli elementi di tale collezione. Restituire direttamente
-l'iteratore ottenuto dalla collezione potrebbe esporre la rappresentazione della
-classe (alcuni iteratori implementano il metodo `remove` che consente di
-elimianre gli elementi della collezione durante l'iterazione); ciò è evitabile
+l'iteratore ottenuto dalla collezione potrebbe *esporre la rappresentazione*
+della classe conentendone la modifica dall'esterno (alcuni iteratori
+implementano infatti il metodo `remove` che consentirebbe di elimianre gli
+elementi della collezione durante l'iterazione); ciò è facilmente evitabile
 restituendo invece l'iteratore della vista non modifdicabile. Ad esempio
 ```{code-block}
 class AClass implements Iterable<AType> {
@@ -766,7 +785,8 @@ ottenere una tale collezione:
 * costruirla tramite un *costruttore copia*,
 * costruire una collezione vuota ed aggiungergli tutti gli elementi di quella
   esistente,
-* invocare il metodo [`clone`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html#clone()).
+* invocare il metodo
+  [`clone`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html#clone()).
 
 Ogni collezione ha un costruttore copia che prende una
 [`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html)
@@ -814,7 +834,7 @@ String[] mksUnits = new String[] {"metro", "kilo", "secondo"};
 List<String> comeLista = Arrays.asList(mksUnits);
 comeLista
 ```
-Attenzione che, come è comune nelle viste, se cambia l'array allora cambia la
+Attenzione che, come accade nelle viste, se cambia l'array allora cambia la
 lista
 ```{code-cell}
 mksUnits[1] = "kilogrammi";
@@ -848,8 +868,8 @@ cifraAValore("due")
 ```
 
 Occorre prestare però molta attenzione al metodo `asList` nel caso di argomenti
-che siano di tipo primitivo, sopratutto array con elementi di tipo primitivo! Se
-è evidente che, non potendo istanziare tipi generici con tipi primitivi,
+che siano di tipo primitivo, sopratutto array con elementi di tipo primitivo! È
+evidente che, non potendo istanziare tipi generici con tipi primitivi,
 l'invocazione di
 ```{code-cell}
 List<Integer> listaDiInteger = Arrays.asList(1, 2, 3);
@@ -857,7 +877,7 @@ listaDiInteger
 ```
 non può che restituire una lista di `Integer`. Osservando che un metodo
 variadico può essere equivalentemente invocato oltre che con un elenco di
-argomenti con un array di tali elementi, è del tutto atteso che
+argomenti con un array di tali elementi, è anche del tutto atteso che
 ```{code-cell}
 Integer[] arrayDiInteger = new Integer[] {4, 5, 6};
 Arrays.asList(arrayDiInteger)
@@ -868,24 +888,26 @@ codice
 int[] arrayDiInt = new int[] {4, 5, 6};
 Arrays.asList(arrayDiInt)
 ```
-a prima vista non può però che destare un certo stupore se ci si attendeva che
-avesse ancora lo stesso comportamento dei casi precedenti. Quel che accade, è
-che
+non può però che destare un certo stupore, soprattutto se ci si attendeva che si
+comportasse come i casi precedenti. Quel che accade, è che
 * nel primo caso,
   l'[*autoboxing*](https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html)
   fa si che l'invocazione su un elenco di parametri `int` venga di fatto
   indirizzata al metodo in cui il parametro di tipo corrisponde ad `Integer` (di
   arietà 3);
-* nel secondo caso, l'array di `Integer` gioca esattamente lo stesso ruolo
-  dell'elenco di argomenti (e l'invocazione è indirizzata alla segnatura di
-  arietà 1);
+* nel secondo caso, l'array di tipo `Integer[]` gioca esattamente lo stesso
+  ruolo dell'elenco di argomenti (e l'invocazione è indirizzata alla segnatura
+  di arietà 1);
 * nell'ultimo caso non interviene alcun *autoboxing* e quel che accade è che
-  l'invocazione viene indirizzata alla segnatura di arietà 1 costruendo una
-  lista di un solo elemento… dato da un array di `int`!
+  l'invocazione viene indirizzata alla segnatura di arietà 1 che riceve un solo
+  oggetto di tipo `int[]` e quindi costruisce una lista di tipo `List<int[]>` un
+  solo elemento… dato da `arrayDiInt`!
 
 Si può facilmente verificare che tale è il caso con
 ```{code-cell}
-Arrays.asList(arrayDiInt).get(0)[1]
+List<int[]> listaDiArrayDiInt = Arrays.asList(arrayDiInt);
+int[] unicoArray = listaDiArrayDiInt.get(0);
+unicoArray[1]
 ```
 
 #### Da collezioni ad array
@@ -930,8 +952,9 @@ valore), da cui può essere quindi un array; ad esempio
 Map.Entry[] entries = mappa.entrySet().toArray(new Map.Entry[0])
 ```
 tale array però non ha traccia dei parametri con cui era istanziata la mappa
-generica; per questa ragione accedere a chiavi e valori richiede dei cast
-espliciti (invece di godere delle usuali garanzie offerte dai generici)
+generica (e non si può istanziare un array di tipo parametrico); per questa
+ragione accedere a chiavi e valori richiede dei cast espliciti (invece di godere
+delle usuali garanzie offerte dai generici)
 ```{code-cell}
 String chiave = (String)(entries[0].getKey());
 Integer valore = (Integer)(entries[0].getValue());
@@ -986,13 +1009,13 @@ parole
 
 #### Ordinare, cercare e contare nelle liste
 
-Le osservazioni della [omonima sezione](oec-array) per gli array si applicano in
+Le osservazioni della [omologa sezione](oec-array) per gli array si applicano in
 modo del tutto analogo per le liste; il metodo
 [`sort`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#sort(java.util.Comparator))
 è però in questo caso di istanza e ha un'unica versione che ha un comparatore
-per argomento (che si intende quello dell'ordine naturale se `null`); inutile
-osservare che siccome l'ordinamento avviene anche in questo caso in loco, è
-necessario che la lista sia modificabile.
+per argomento (che si intende quello dell'ordine naturale degli elementi della
+lista se `null`); inutile osservare che siccome l'ordinamento avviene anche in
+questo caso in loco, è necessario che la lista sia modificabile.
 
 Qualche esempio concreto può aiutare a comprenderne l'uso: ordine naturale
 (specificando `null`)
@@ -1028,9 +1051,8 @@ in questo caso, le stringhe sono ordinate in base all'ordine alfabetico del loro
 Come nel caso degli array, la ricerca di un elemento in una lista ordinata può
 essere effettuata con il metodo
 [`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#binarySearch(java.util.List,T))
-se i suoi elementi sono comparabili, oppure specificando un comparatore col
-metodo
-[`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#binarySearch(java.util.List,T,java.util.Comparator)).
+se i suoi elementi sono comparabili, oppure specificando un comparatore con la
+versione del metodo che lo riceve come secondo argomento.
 
 Vale la pena di ricordare che se lista non è ordinata può essere comunque
 effettuata una ricerca di un elemento (in tempo lineare) tramite il suo metodo
@@ -1051,7 +1073,7 @@ lista + "; " + idx
 ```
 
 Nel caso delle liste, se non si è interessati all'ordine di tutti gli elementi,
-ma solo ai suoi [*valori
+ma solo ai [*valori
 estremi*](https://www.wikiwand.com/it/Estremo_superiore_e_estremo_inferiore), si
 possono utilizzare i metodi
 [`min`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#min(java.util.Collection))
@@ -1071,8 +1093,8 @@ riporta il numero di `null` nella collezione.
 
 #### Mescolare e ruotare
 
-Ci sono diverse operazioni comuni che agiscono sulle posizioni degli elementi di
-una collezione senza però modificare gli elementi che essa contiene:
+Ci sono diverse operazioni comuni che agiscono sulle *posizioni* degli elementi
+di una collezione senza però modificarne gli elementi stessi:
 
 * lo *scambio* di due elementi, ottenuto tramite il metodo
   [`swap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#swap(java.util.List,int,int));
@@ -1098,12 +1120,12 @@ il comportamento
 Quando utilizzate un oggetto di tipo
 [`Random`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html)
 per introdurre della casualità nel comportamento del vostro codice può diventare
-molto arduo individuarne gli errori perché ogni esecuzione procede
+molto arduo individuarne gli errori perché ogni esecuzione si comporta
 potenzialmente in modo diverso dalle precedenti.
 
 Fortunatamente, la classe `Random` implementa un [*generatore lineare
 congruenziale*](https://www.wikiwand.com/it/Generatore_lineare_congruenziale)
-per cui specificando esplicitamente un dato *seme* usando il costruttore
+per cui specificando esplicitamente il *seme* usando il costruttore
 [`Random`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html#%3Cinit%3E(long))
 si otterrà sempre la stessa sequenza di esecuzione.
 
@@ -1120,7 +1142,7 @@ static void Random reproducibleRng(long seed) {
 ```
 in questo modo, se la funzione è invocata con un valore nullo del seme essa ne
 sceglierà uno (ogni volta diverso, grazie alla chiamata di
-[`currentTimeMillis`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#currentTimeMillis())
+[`currentTimeMillis`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#currentTimeMillis()))
 e ne emetterà il valore sul flusso d'errore.
 
 Eseguendo ripetutamente il programma con un valore nullo del seme si otterranno
