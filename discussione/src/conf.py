@@ -25,6 +25,9 @@ exclude_patterns = []
 
 myst_enable_extensions = [
   'colon_fence',
+  'smartquotes',
+  'replacements',
+  'dollarmath'
 ]
 
 myst_heading_anchors = 2
