@@ -10,7 +10,7 @@ kernelspec:
   name: java
 ---
 
-## Il "Collections Framework"
+# Il "Collections Framework"
 
 Questa sezione presenta in modo molto succinto alcune interfacce e classi del
 "Collections Framework" con particolare attenzione agli usi delle medesime che
@@ -82,12 +82,12 @@ Si rimanda alle conoscenze acquisite dall'insegnamento di "Algoritmi e strutture
 dati" per le questioni inerenti l'efficienza delle varie operazioni a seconda
 delle implementazioni scelte.
 
-### Immutabilità e viste
+## Immutabilità e viste
 
 Iniziamo con alcune considerazioni di carattere generale, che pongono in
 relazione le collezioni con una delle nozioni centrali dell'insegnamento:
 l'*immutabilità*.
-#### Collezioni non modificabili
+### Collezioni non modificabili
 
 Una collezione è *immutabile* se:
 
@@ -112,7 +112,7 @@ modificabile*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java
 ragion per cui nella prossima sezione sarà illustrato il concetto generale di
 *vista di una collezione*.
 
-#### Viste
+### Viste
 
 La [*vista di una
 collezione*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#view)
@@ -145,7 +145,7 @@ sottolista.add(1, 4);
 lista + "; " + sottolista
 ```
 
-### Copie e viste non modificabili
+## Copie e viste non modificabili
 
 Ci sono diversi modi di ottenere una collezione non modificabile:
 
@@ -245,7 +245,7 @@ class AClass implements Iterable<AType> {
 ```
 :::
 
-### Copie modificabili
+## Copie modificabili
 
 Talvolta può essere utile costruire una collezione modificabile a partire dagli
 elementi contenuti in un'altra collezione. Ci sono due modi molto pratici per
@@ -287,11 +287,11 @@ Riguardo al metodo `clone`, esso restituisce un `Object` in ottemperanza al
 contratto che eredita da `Object`, per qui il suo uso richiede un cast; per
 questa ragione è generalmente preferibile l'uso dei costruttori copia.
 
-### Array e `Collection`
+## Array e `Collection`
 
 Come è ovvio attendersi, c'è un notevole legame tra array e collezioni.
 
-#### Da array a liste
+### Da array a liste
 
 In un verso, la classe `Arrays` ha il metodo variadico
 [`asList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#asList(T...))
@@ -383,7 +383,7 @@ int[] unicoArray = listaDiArrayDiInt.get(0);
 unicoArray[1]
 ```
 
-#### Da collezioni ad array
+### Da collezioni ad array
 
 Nella direzione opposta, osserviamo che ciascun sottotipo di `Collection` ha un
 metodo (ereditato da)
@@ -415,7 +415,7 @@ Certamente si può effettuare una sorta di cast col metodo `copyOf` come
 suggerito in precedenza, ma ovviamente è più efficiente ottenere direttamente
 l'array del tipo desiderato.
 
-##### Le mappe
+#### Le mappe
 
 Le mappe (che non sono sottotipi di `Collection`) non hanno un metodo che
 consenta di ottenerne direttamente il contenuto sotto forma di array; ogni mappa
@@ -434,14 +434,14 @@ Integer valore = (Integer)(entries[0].getValue());
 chiave + "; " + valore
 ```
 
-### La classe `Collections`
+## La classe `Collections`
 
 Per finire, analogamente al caso di `Objects` e `Arrays`, nella classe
 [`Collections`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html)
 ci sono una messe di metodi statici di utilità che possono risultare molto
 comodi nella prova pratica.
 
-#### Collezioni vuote, riempimento e rimpiazzamento
+### Collezioni vuote, riempimento e rimpiazzamento
 
 In ossequio dell'Item 54 del Capitolo 8 del libro di testo "Effective Java", è
 consigliabile restituire collezioni vuote, piuttosto che `null`. Per questa
@@ -480,7 +480,7 @@ Collections.replaceAll(parole, null, "");
 parole
 ```
 
-#### Ordinare, cercare e contare nelle liste
+### Ordinare, cercare e contare nelle liste
 
 Le osservazioni della [omologa sezione](oec-array) per gli array si applicano in
 modo del tutto analogo per le liste; il metodo
@@ -564,7 +564,7 @@ paroleENull + "; " + num
 ```
 riporta il numero di `null` nella collezione.
 
-#### Mescolare e ruotare
+### Mescolare e ruotare
 
 Ci sono diverse operazioni comuni che agiscono sulle *posizioni* degli elementi
 di una collezione senza però modificarne gli elementi stessi:
