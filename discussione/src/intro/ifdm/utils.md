@@ -93,7 +93,7 @@ e
 che possono essere usati anche su riferimenti `null`; ad esempio
 ```{code-block} java
 String stringa = Objects.toString(oggetto);
-boolean uguali = Objects.euqla(questo, quello);
+boolean uguali = Objects.euqlals(questo, quello);
 int hash = Objects.hashCode(oggetto);
 ```
 possono essere rispettivamente usati invece di
@@ -182,7 +182,7 @@ dall'opportunità di sviluppare un tipo del genere, accennato qui a solo a titol
 esemplificativo). Una implementazione minimale di tale tipo è data da
 ```{code-cell}
 class OrarioMattina implements Comparable<OrarioMattina> {
-  private static final String[] NUMERO_A_PAROLE = {"mezzanote", "una", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci", "undici", "dodici"};
+  private static final String[] NUMERO_A_PAROLE = {"mezzanotte", "una", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci", "undici", "dodici"};
   public final int ore, minuti;
   public OrarioMattina(final int minutiDaMezzanotte) {
     if (minutiDaMezzanotte < 0 || minutiDaMezzanotte >= 12 * 60 ) throw new IllegalArgumentException();
