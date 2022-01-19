@@ -10,7 +10,7 @@ kernelspec:
   name: java
 ---
 
-## Classi e interfacce di utilità
+# Classi e interfacce di utilità
 
 Nelle API di Java, per diversi tipi `T` è comune incontrare una classe di nome
 `Ts` (di seguito vedremo ad esempio le classi `Objects`, `Arrays` e
@@ -23,14 +23,14 @@ possono risultare molto utili per la prova pratica; inoltre richiama brevemente
 le interfacce che definiscono come *comparare* gli oggetti secondo le API di
 Java.
 
-### La classe `Objects`
+## La classe `Objects`
 
 La classe
 [`java.util.Objects`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html)
 contiene alcuni metodi statici di utilità generale che possono essere adoperati
 per tutti gli oggetti, indipendentemente dal loro tipo.
 
-#### Sovrascrivere `hashCode`
+### Sovrascrivere `hashCode`
 
 Nel caso in cui si intendano sovrascrivere i metodi `equals` e `hashCode` di un
 oggetto, il metodo [`hash`](
@@ -48,7 +48,7 @@ public int hashCode() {
 piuttosto che implementando direttamente la ricetta proposta nell'Item 11 del
 Capitolo 3 del libro di testo "Effective Java".
 
-#### Gestire i `null`
+### Gestire i `null`
 
 Il metodo
 [`requireNonNull`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html#requireNonNull(T,java.lang.String))
@@ -103,7 +103,7 @@ boolean uguali = questo == null ? quello == null : questo.equals(quello);
 int hash = oggetto == null ? 0 : oggetto.hashCode();
 ```
 
-#### Controllare indici e intervalli
+### Controllare indici e intervalli
 
 In molte circostanze può capitare di dover controllare se un indice (o un
 intervallo di indici interi, che può essere specificato dandone gli estremi,
@@ -117,7 +117,7 @@ la condizione sia soddisfatta, essi restituiscono il valore dell'indice (o il
 limite inferiore dell'intervallo), viceversa sollevano una
 `IndexOutOfBoundException`.
 
-### Le interfacce `Comparable` e `Comparator`
+## Le interfacce `Comparable` e `Comparator`
 
 Se si è interessati a definire una [*relazione
 d'ordine*](https://www.wikiwand.com/it/Relazione_d%27ordine) sugli oggetti di
@@ -175,7 +175,7 @@ oppure da uno *hint*, come in
 Comparator.<Integer>reverseOrder().compare(2, 1)
 ```
 
-#### Un esempio di uso
+### Un esempio di uso
 
 Si consideri una classe che rappresenti un orario della mattina (a prescindere
 dall'opportunità di sviluppare un tipo del genere, accennato qui a solo a titolo
@@ -252,7 +252,7 @@ LESSICOGRAFICO_ORE.compare(colazione, merenda) > 0
 in quanto "sette" viene lessicograficamente dopo "dieci" (dato che la "s" è dopo
 la "d" nell'ordine alfabetico).
 
-### La classe `Arrays`
+## La classe `Arrays`
 
 La classe
 [`java.util.Arrays`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html)
@@ -265,7 +265,7 @@ ciascun *tipo primitivo* di argomento (come è ovvio sarà il compilatore a
 scegliere la segnatura adatta di volta in volta, sulla scorta del tipo apparente
 degli argomenti).
 
-#### Il metodo `toString`
+### Il metodo `toString`
 
 Può capitare molte volte di dover emettere il contenuto di un array sotto forma
 di stringa, purtroppo l'implementazione del metodo `toString` di `Object`
@@ -278,7 +278,7 @@ int[] arr = new int[] {1, 2, 3, 4};
 Arrays.toString(arr) + " è più leggibile di " + arr
 ```
 
-#### Riempire o copiare
+### Riempire o copiare
 
 Usando il metodo [`fill`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#fill(java.lang.Object%5B%5D,int,int,java.lang.Object)) è possibile riempire (un segmento) di un array con un valore di *default*; ad esempio
 ```{code-cell}
@@ -358,7 +358,7 @@ ha l'effetto di copiare 3 elementi dalla posizione 2 di `positivi` alla posizion
 ```{code-cell}
 Arrays.toString(negativi)
 ```
-##### Adattare la dimensione di un array
+#### Adattare la dimensione di un array
 
 Vogliamo raccogliere in un array di `long` di nome `pows` gli elementi
 dell'insieme $\{n < 10^{12} | n = 2^{2k}, k \geq 0 \}$; supponendo di non
@@ -382,7 +382,7 @@ del riempimento, si possono eliminare le posizioni rimaste vuote dell'array
 copiandolo in uno di dimensione esattamentepari al numero totale di potenze
 individuate.
 
-#### Confrontare
+### Confrontare
 
 Il metodo
 [`equals`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#equals(java.lang.Object%5B%5D,java.lang.Object%5B%5D))
@@ -404,7 +404,7 @@ che accetta un
 come argomento.
 
 (oec-array)=
-#### Ordinare e cercare
+### Ordinare e cercare
 
 Dato un vettore, è possibile ordinarlo [*in loco*](https://www.wikiwand.com/it/Algoritmo_in_loco) secondo l'*ordine naturale* dei suoi elementi tramite il metodo [`sort`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#sort(java.lang.Object[])), oppure specificando esplicitamente un *comparatore*  con la versoine sovraccaricata [`sort`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#sort(T[],java.util.Comparator)).
 
@@ -440,7 +440,7 @@ che si basa sull'ordine naturale, o la versione sovraccaricata di
 [`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#binarySearch(T[],T,java.util.Comparator))
 che consente di specificare un comparatore (che, evidentemente, deve essere il
 medesimo che era stat usato per ordinare l'array prima della ricerca).
-##### Un esempio di ricerca e inserimento
+#### Un esempio di ricerca e inserimento
 
 Come esempio della ricerca, consideriamo l'array `cifreOrdinate` che contenga le
 parole corrispondenti alle cifre decimali ordinato lessicograficamente, ottenuto
