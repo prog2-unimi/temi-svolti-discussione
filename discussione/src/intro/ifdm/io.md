@@ -10,13 +10,13 @@ kernelspec:
   name: java
 ---
 
-## Input/output
+# Input/output
 
 Questa sezione contiene alcuni suggerimenti su come effettuare l'input/output
 (in senso lato) usando le API di Java (con esempi di codice sorgente che possono
 essere liberamente copiati e adattati nella soluzione della prova pratica).
 
-### Argomenti sulla linea di comando
+## Argomenti sulla linea di comando
 
 Per *argomenti sulla linea di comando* si intendono tutte le parole (stringhe
 massimali non contenenti spazio) che seguono il nome della classe
@@ -62,7 +62,7 @@ che, invocato ad come `java SommaArgs 1 2 3`, produce l'output
 SommaArgs.main(new String[] {"1", "2", "3"})
 ```
 
-### Input/Output
+## Input/Output
 
 Di seguito sono riportati alcuni scampoli di codice Java necessari a gestire
 l'input in formato testuale che tipicamente è richiesto dalla soluzione degli
@@ -100,7 +100,7 @@ consumato (1.) e l'origine dell'input (2.) daranno luogo a quattro diverse
 implementazioni della parte (α), mentre la modalità in cui l'input sarà
 consumato (1.) darà luogo a due diverse implementazioni della parte (β).
 
-#### Parte (α): istanziare l'oggetto usato per l'input
+### Parte (α): istanziare l'oggetto usato per l'input
 
 Per leggere l'input una linea dopo l'altra (1.1.) è sufficiente usare un
 [BufferedReader](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html).
@@ -132,7 +132,7 @@ Le quattro versioni della parte α del codice sono pertanto:
 dove si assume che `path` sia una variabile di tipo stinga che contiene il
 *path* del file che contiene l'input.
 
-#### Parte (β): consumare l'input
+### Parte (β): consumare l'input
 
 Per consumare (ed elaborare) l'input, sono sufficienti due solite
 implementazioni della parte (β), dal momento che il tipo dell'oggetto `in` può
@@ -152,7 +152,7 @@ while ((linea = in.readLine()) != null)
   /* consuma l'input */
 ```
 
-##### Tipi primitivi
+#### Tipi primitivi
 
 Per leggere una sequenza di tipi primitivi (1.2.) si possono utilizzare i metodi
 `nextT` (dove `T` è uno dei tipi primitivi), ad esempio, per gli interi, si può
@@ -170,7 +170,7 @@ while (in.hasNextInt()) {
 }
 ```
 
-##### Stringhe
+#### Stringhe
 
 Qualora sia necessario leggere delle stringhe (1.2.), intese come delle sequenze
 massimali di caratteri diversi da *whitespace* (che sono spazio, segno di
@@ -185,7 +185,7 @@ while (in.hasNext()) {
   /* consuma l'input */
 }
 ```
-#### Osservazioni ed esempi
+### Osservazioni ed esempi
 
 Mettendo assieme gli esempi di codice delle parti (α) e (β) è possibile
 elaborare l'input, come sequenza di linee o tipi primitivi, sia che provenga dal
@@ -252,23 +252,22 @@ che contenga:
 eseguendo il programma con il comando `java SommaInput input.txt`, verrà
 prodotto in output il numero `6.5`
 
-#### Altri approcci
+### Altri approcci
 
-La ricchezza delle API di Java rende possibile risolvere il problema
-descritto in questa guida in molti altri modi. Questo è certamente una
-ricchezza, ma produce anche molta confusione in chi si avvicina per la
-prima volta al linguaggio e alle sue librerie.
+La ricchezza delle API di Java rende possibile risolvere il problema descritto
+in questa guida in molti altri modi. Questo è certamente una ricchezza, ma
+produce anche molta confusione in chi si avvicina per la prima volta al
+linguaggio e alle sue librerie.
 
-Ad esempio, l'input di tipi primitivi potrebbe anche essere
-implementato leggendo l'input per linea, suddividendo poi la linea con
-uno
+Ad esempio, l'input di tipi primitivi potrebbe anche essere implementato
+leggendo l'input per linea, suddividendo poi la linea con uno
 [StringTokenizer](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/StringTokenizer.html),
 o con il metodo
 [split](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#split(java.lang.String))
 di
 [String](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html),
-traducendo in fine le singole parti nei tipi primitivi con i metodi
-`parseT` delle varie sottoclassi
+traducendo in fine le singole parti nei tipi primitivi con i metodi `parseT`
+delle varie sottoclassi
 [Number](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html)
 (dove `T` è uno dei tipi primitivi), come ad esempio con il metodo
 [parseInt](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html#parseInt(java.lang.String))
@@ -276,17 +275,25 @@ di
 [Integer](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html).
 Evidentemente, l'uso della classe
 [Scanner](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html)
-appare una soluzione molto più elementare a questo tipo di problema. In
-ogni modo, una soluzione alternativa, in questo senso, dell'esercizio
-due potrebbe essere la seguente:
-
-::: {.literalinclude}
-./javaio/SommaInputBis.java
-:::
-
-Scarica il
-`codice sorgente <./javaio/SommaInputBis.java>`{.interpreted-text
-role="download"} di questo esempio.
+appare una soluzione molto più elementare a questo tipo di problema. In ogni
+modo, una soluzione alternativa, in questo senso, dell'esercizio due potrebbe
+essere la seguente:
+```{code-cell}
+public class SommaInputBis {
+  public static void main(String[] args) throws IOException {
+    String path = args[0];
+    float somma = 0.0f;
+    try (BufferedReader in = new BufferedReader(new FileReader(path))) {
+      String linea = null;
+      while ((linea = in.readLine()) != null) {
+          float numero = Float.parseFloat(linea);
+          somma += numero;
+      }
+    }
+    System.out.println(somma);
+  }
+}
+```
 
 D'altro canto, a ben guardare, c'è un metodo
 [nextLine](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html#nextLine())
@@ -296,39 +303,36 @@ che si comporta sostanzialmente come il metodo
 [readLine](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html#readLine())
 di
 [BufferedReader](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html);
-in linea di principio, quindi, tutta la discussione si potrebbe di gran
-lunga semplificare limitandosi ad utilizzare la classe
+in linea di principio, quindi, tutta la discussione si potrebbe di gran lunga
+semplificare limitandosi ad utilizzare la classe
 [Scanner](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html)
-sia per leggere l'input linea per linea che in modo *tokenizzato*. Ma è
-altresì vero che l'uso di una classe complessa come
+sia per leggere l'input linea per linea che in modo *tokenizzato*. Ma è altresì
+vero che l'uso di una classe complessa come
 [Scanner](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html)
-per uno scopo così banale come quello di leggere l'input per linee
-sembra del tutto sproporzionato; inoltre, tale classe ha fatto la sua
-comparsa solo nelle versioni più recenti di Java, ragion per cui è bene
-conoscere anche alternative che siano praticabili nel caso in cui si
-abbia a disposizione sono una versione meno recente del linguaggio.
+per uno scopo così banale come quello di leggere l'input per linee sembra del
+tutto sproporzionato; inoltre, tale classe ha fatto la sua comparsa solo nelle
+versioni più recenti di Java, ragion per cui è bene conoscere anche alternative
+che siano praticabili nel caso in cui si abbia a disposizione sono una versione
+meno recente del linguaggio.
 
-#### Dati non testuali
+### Dati non testuali
 
-Come ultima osservazione, si noti che in questa guida (per brevità e
-semplicità) si è trattato solo il caso di file in formato, per così
-dire, testuale. Le API di Java mettono a disposizione anche classi e
-metodi per il trattamento di dati in formato binario (ad esempio,
-tramite le interfacce
+Come ultima osservazione, si noti che in questa guida (per brevità e semplicità)
+si è trattato solo il caso di file in formato, per così dire, testuale. Le API
+di Java mettono a disposizione anche classi e metodi per il trattamento di dati
+in formato binario (ad esempio, tramite le interfacce
 [DataInput](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html)
 e
 [DataOutput](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataOutput.html)
 e relative implementazioni), che meritano una discussione a se stante.
 
-Una interessante aggiunta nelle API delle nuove versioni di Java è la
-classe
-[Files](http://reaper.srv.di.unimi.it/docs/java/api/java/nio/file/Files.html)
-che mette a disposizione una serie di metodi statici per leggere (e
-scrivere) con una sola chiamata l'intero contenuto di un file, come ad
-esempio il metodo
-[readAllBytes](http://reaper.srv.di.unimi.it/docs/java/api/java/nio/file/Files.html#readAllBytes(java.nio.file.Path))
+Una interessante aggiunta nelle API delle nuove versioni di Java è la classe
+[Files](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Files.html)
+che mette a disposizione una serie di metodi statici per leggere (e scrivere)
+con una sola chiamata l'intero contenuto di un file, come ad esempio il metodo
+[readAllBytes](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Files.html#readAllBytes(java.nio.file.Path))
 che restituisce un array di `byte`, o il metodo
-[readAllLines](http://reaper.srv.di.unimi.it/docs/java/api/java/nio/file/Files.html#readAllLines(java.nio.file.Path,%20java.nio.charset.Charset))
+[readAllLines](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Files.html#readAllLines(java.nio.file.Path,%20java.nio.charset.Charset))
 che restituisce una
 [List](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html)
 di stringhe.
