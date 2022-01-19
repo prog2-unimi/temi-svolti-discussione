@@ -19,7 +19,7 @@ Il materiale è organizzato in due parti:
 
     * la [parte iniziale comune a tutte le tracce d'esame](intro/consegne)
       (ulteriormente commentata),
-    * un elenco di alcuni [ferri del mestiere](intro/ifdm) che possono risultare
+    * un elenco di alcuni [ferri del mestiere](intro/ifdm/index) che possono risultare
       utili nello sviluppo delle soluzioni;
 
 * la seconda, contiene una selezione di temi, ciascuno con il suo svolgimento:
@@ -33,8 +33,8 @@ Il materiale è organizzato in due parti:
 :caption: Introduzione
 :hidden:
 
-intro/consegne
-intro/ifdm
+Le consegne del tema <intro/consegne>
+intro/ifdm/index
 :::
 
 :::{toctree}
