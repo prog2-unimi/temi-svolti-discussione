@@ -16,7 +16,7 @@ ad evitare errori di programmazione*.
 
 L'esposizione è suddivisa in due parti:
 
-* alcuni [rudimenti sull'I/O](io),
+* alcuni [suggerimenti su come effettuare l'I/O](io) e la sua "decodifica",
 * una presentazione di alcune [classi e interfacce di uso
   pratico](utils), in particolare di una serie di
   *metodi statici di utilità* per *oggetti* e *array* e le interfacce per la
