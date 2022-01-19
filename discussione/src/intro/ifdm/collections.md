@@ -158,7 +158,7 @@ Ogni interfaccia contiene una serie di metodi statici `of` (di arietà crescente
 fino a quello variadico) per fabbricare una collezione del suo tipo; ad esempio
 ```{code-cell}
 List<String> lista = List.of("uno", "due", "due");
-Set<String> insieme = Set.of("uno", "due", "tre");
+  Set<String> insieme = Set.of("uno", "due", "tre");
 Map<String, Integer> mappa = Map.of("uno", 1, "due", 2, "tre", 3);
 lista + "; " + insieme + "; " + mappa
 ```
@@ -176,16 +176,14 @@ Map<String, Integer> altraMappa = Map.ofEntries(
 altraMappa
 ```
 
-Ogni interfaccia contiene inoltre i metodi `copyOf` e `copyOfRange` per
-fabbricare una collezione copiando i riferimenti agli elementi dalla collezione
-passata come argomento (similmente al caso degli omonimi metodi della classe
-`Arrays` — anche in questo caso, non vengono copiati gli elementi, ma solo i
-loro riferimenti); ad esempio
+Ogni interfaccia contiene inoltre i metodi `copyOf` per fabbricare una
+collezione copiando i riferimenti agli elementi dalla collezione passata come
+argomento (similmente al caso dell'omonimo metodo della classe `Arrays` — anche
+in questo caso, non vengono copiati gli elementi, ma solo i loro riferimenti);
+ad esempio
 ```{code-cell}
-List<String> lista = List.of("uno", "due", "due");
-Set<String> insieme = Set.of("uno", "due", "tre");
-Map<String, Integer> mappa = Map.of("uno", 1, "due", 2, "tre", 3);
-lista + "; " + insieme + "; " + mappa
+Set<String> copia = Set.copyOf(insieme);
+copia
 ```
 
 :::{hint}
@@ -263,19 +261,18 @@ per argomento e costruisce una nuova collezione che contiene un nuovo
 riferimento per ciascun elemento (ma non dell'elemento) della collezione da cui
 è copiata; ad esempio
 ```{code-cell}
-List<String> lista = new ArrayList<>();
-lista.addAll(List.of("uno", "due", "tre"));
-List<String> copia = new LinkedList(lista);
-lista.add("quattro");
+List<String> listaModificabile = new ArrayList<>(List.of("uno", "due", "tre"));
+List<String> copia = new LinkedList(listaModificabile);
+listaModificabile.add("quattro");
 copia.remove("tre");
-lista + "; " + copia
+listaModificabile + "; " + copia
 ```
 una diversa strategia è quella di usare il metodo `addAll`, come la precedente
 può essere usata anche nel caso in cui la destinazione sia di tipo diverso dalla
 sorgente della copia; ad esempio
 ```{code-cell}
 SortedSet<String> vuoto = new TreeSet<>();
-vuoto.addAll(lista);
+vuoto.addAll(listaModificabile);
 vuoto
 ```
 
@@ -493,23 +490,23 @@ questo caso in loco, è necessario che la lista sia modificabile.
 Qualche esempio concreto può aiutare a comprenderne l'uso: ordine naturale
 (specificando `null`)
 ```{code-cell}
-lista.sort(null);
-lista
+listaModificabile.sort(null);
+listaModificabile
 ```
 stessa cosa con il metodo statico di `Comparator`
 ```{code-cell}
-lista.sort(Comparator.naturalOrder());
-lista
+listaModificabile.sort(Comparator.naturalOrder());
+listaModificabile
 ```
 mentre per l'inverso dell'ordine naturale
 ```{code-cell}
-lista.sort(Comparator.reverseOrder());
-lista
+listaModificabile.sort(Comparator.reverseOrder());
+listaModificabile
 ```
 In alcuni casi (ad esempio se è noto che non si riutilizzerà più un certo
 ordine) può essere molto comodo usare una classe anonima
 ```{code-cell}
-lista.sort(new Comparator<>() {
+listaModificabile.sort(new Comparator<>() {
   @Override
   public int compare(String o1, String o2) {
     if (o1.isEmpty()) return -1;
@@ -517,7 +514,7 @@ lista.sort(new Comparator<>() {
     return Character.compare(o1.charAt(o1.length() - 1), o2.charAt(o2.length() - 1));
   }
 });
-lista
+listaModificabile
 ```
 in questo caso, le stringhe sono ordinate in base all'ordine alfabetico del loro ultimo carattere (se non vuote).
 
@@ -540,8 +537,8 @@ Per cercare una *sottolista*, è invece possibile usare il metodo statico
 [lastIndexOfSubList](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#lastIndexOfSubList(java.util.List,java.util.List)
 )) di `Collections`; ad esempio
 ```{code-cell}
-lista.sort(null);
-int idx = Collections.indexOfSubList(lista, List.of("tre", "uno"));
+listaModificabile.sort(null);
+int idx = Collections.indexOfSubList(listaModificabile, List.of("tre", "uno"));
 lista + "; " + idx
 ```
 
