@@ -208,25 +208,47 @@ dichiarazione di tale metodo (come nel codice riportato di seguito).
 
 A titolo di esempio, riportiamo due piccoli programmi. Il primo legge l'input
 dal flusso standard ed emette ogni riga preceduta dal suo numero progressivo
-(per provare il suo funzionamento, si può ad esempio il comando `java java
-NumeraLinee < NumeraLinee.java` che, facendo uso della *redirezione* dell'input,
-numererà le linee del programma stesso).
 ```{code-cell}
 public class NumeraLinee {
   public static void main(String[] args) throws IOException {
     try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
-      String linea;
       int n = 0;
+      String linea;
       while ((linea = in.readLine()) != null)
-        System.out.println(n++ + "\t" + linea);
+        System.out.println(String.format("%02d: %s", ++n, linea));
     }
   }
 }
 ```
+Per provare il suo funzionamento è possibile usare il comando `java java
+NumeraLinee < NumeraLinee.java` che, facendo uso della *redirezione* dell'input,
+numererà le linee del programma stesso producendo l'output
+```{code-cell}
+:tags: [remove-input]
+InputStream is = new ByteArrayInputStream((
+  "public class NumeraLinee {\n" +
+  "  public static void main(String[] args) throws IOException {\n" +
+  "    try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {\n" +
+  "      int n = 0;\n" +
+  "      String linea;\n" +
+  "      while ((linea = in.readLine()) != null)\n" +
+  "        System.out.println(String.format(\"%02d: %s\", ++n, linea)));\n" +
+  "    }\n" +
+  "  }\n" +
+  "}\n").getBytes());
+StringBuffer sb = new StringBuffer();
+try (BufferedReader in = new BufferedReader(new InputStreamReader(is))) {
+  int n = 0;
+  String linea;
+  while ((linea = in.readLine()) != null)
+    sb.append(String.format("%02d: %s\n", ++n, linea));
+}
+sb.toString()
+```
 
 Il secondo legge una sequenza di numeri in virgola mobile da un file il cui
 *path* è specificato come parametro (all'invocazione della JVM), e ne stampa la
-somma.
+somma
 ```{code-cell}
 public class SommaInput {
   public static void main(String[] args) throws IOException {
@@ -242,15 +264,26 @@ public class SommaInput {
   }
 }
 ```
-Di nuovo, a titolo di esempio, assumendo che esista un file `input.txt`
-che contenga:
-
-    1
-    2.5
-    3
-
+Assumendo che esista un file `input.txt` che contenga:
+```
+1
+2.5
+3
+```
 eseguendo il programma con il comando `java SommaInput input.txt`, verrà
-prodotto in output il numero `6.5`
+prodotto l'output
+```{code-cell}
+:tags: [remove-input]
+InputStream is = new ByteArrayInputStream("1\n2.5\n3".getBytes());
+float somma = 0.0f;
+try (Scanner in = new Scanner(is)) {
+  while (in.hasNextFloat()) {
+    float numero = in.nextFloat();
+    somma += numero;
+  }
+}
+somma
+```
 
 ### Altri approcci
 
@@ -332,7 +365,7 @@ che mette a disposizione una serie di metodi statici per leggere (e scrivere)
 con una sola chiamata l'intero contenuto di un file, come ad esempio il metodo
 [readAllBytes](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Files.html#readAllBytes(java.nio.file.Path))
 che restituisce un array di `byte`, o il metodo
-[readAllLines](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Files.html#readAllLines(java.nio.file.Path,%20java.nio.charset.Charset))
+[readAllLines](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Files.html#readAllLines(java.nio.file.Path))
 che restituisce una
 [List](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html)
 di stringhe.
