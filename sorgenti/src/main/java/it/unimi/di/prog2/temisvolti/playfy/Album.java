@@ -167,6 +167,7 @@ public class Album implements Iterable<Album.Brano> {
   }
   // EOF: repa
 
+  // SOF: num
   /**
    * Restituisce il numero di brani dell'album.
    *
@@ -175,6 +176,7 @@ public class Album implements Iterable<Album.Brano> {
   public int numeroBrani() {
     return brani.length;
   }
+  // EOF: num
 
   // SOF: pos
   /**
