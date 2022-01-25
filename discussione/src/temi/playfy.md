@@ -747,6 +747,99 @@ brani della seconda lista, che non devono essere aggiunti se già presenti nella
 lista corrente (codice evidenziato); vale la pena osservare l'uso del metodo
 `posizione` per determinare se un brano è contenuto nella playlist.
 
+Ora restano da implementare i tre iteratori richiesti. Il primo, che enumera
+tutti i brani,
 
+```{code-cell}
+:tags: [remove-input]
+sol.show('Playlist', 'fondi', 'dup')
+```
 
+è banalmente ottenibile tramite l'iteratore della lista, a patto di proteggerlo
+avvolgendolo con
+[`Collections.unmodifiableCollection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#unmodifiableCollection(java.util.Collection))
+(per proteggere la rappresentazione).
+
+Gli altri due richiedono uno sforzo in più e la loro implementazione sarò
+descritta nelle sezioni seguenti. Si potrebbe essere tentati dall'implementarli
+riempiendo dapprima una lista con gli elementi da iterare, restituendone quindi
+l'iteratore; tale soluzione è però non accettabile dal punto di vista
+dell'efficienza e vanifica i benefici derivanti dall'astrazione iterazione che
+consente di trattare gli elementi di una collezione uno alla volta (senza
+preallocare una copia di tutti gli elementi su cui iterare).
+
+#### Enumerare i brani di un dato album
+
+Per enumerare i brani di un dato album è possibile costruire un iteratore come
+[classe
+anonima](https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html);
+lo stato di tale iteratore
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Playlist', 'firep')
+```
+
+è dato un iteratore su tutti i brani della playlist e dal prossimo brano da
+restituire (nonché dall'album dato come parametro, che è visibile in quanto
+parametro formale del metodo che crea l'iteratore).
+
+Come avviene spesso, è opportuno implementare la logica di avanzamento nel
+metodo `hasNext`
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Playlist', 'fihas')
+```
+
+se `next` è diverso da `null` quello sarà il valore da restituire alla prossima
+invocazione dell'omonimo metodo. Viceversa, per sapere se sarà possibile
+restituire un nuovo brano, è necessario scandire l'iteratore di tutti i brani
+della playlist fino a trovarne uno dell'album dato; se ciò non accadesse,
+all'esaurimento dell'iteratore su tutti i brani, verrà segnalato che non ci sono
+più altri brani dell'album dato.
+
+Il metodo `next` a questo punto è di banale implementazione
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Playlist', 'finxt')
+```
+
+dopo aver invocato il metodo `hasNext` per far eventualmente avanzare
+l'iteratore, è sufficiente restituire (se possibile) quanto riferito
+dall'attributo `next` e "invalidarlo" attribuendogli il valore `null`.
+
+#### Enumerare gli album senza ripetizione
+
+Anche in questo caso useremo una classe anonima, il cui stato
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Playlist', 'airep')
+```
+
+coincide con quello dell'iteratore precedente, a cui si aggiunge però un insieme
+utile a tener traccia degli album che sono già stati restituiti dal metodo
+`next`.
+
+La logica di avanzamento, posta nel metodo `hasNext`,
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Playlist', 'aihas')
+```
+
+è molto simile al caso precedente; si cercano album non ancora restituiti
+(annotando man mano nell'insieme quelli trovati). Il metodo `next` è di nuovo
+banale da implementare
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Playlist', 'ainxt')
+```
+
+risultando sostanzialmente identico a quello dell'iteratore precedente.
+
+### La classe di test
 

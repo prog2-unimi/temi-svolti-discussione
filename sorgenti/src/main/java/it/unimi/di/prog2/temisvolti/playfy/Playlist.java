@@ -180,24 +180,40 @@ public class Playlist implements Iterable<Album.Brano> {
   // EOF: fondi
 
   // SOF: filteriter
+  /**
+   * Restituisce un iteratore che enumera tutti i brani della playlist che
+   * provengono dall'album dato.
+   *
+   * @param album l'album.
+   * @return l'iteartore.
+   * @throws NullPointerException se l'album è <code>null</code>.
+   */
   public Iterator<Album.Brano> brani(final Album album) {
+    Objects.requireNonNull(album, "L'album non può essere null.");
     return new Iterator<Album.Brano>() {
 
+      // SOF: firep
+      /** Un iteratore su tutti i brani della playlist. */
       private final Iterator<Album.Brano> it = iterator();
-      private Album.Brano next = null;
 
+      /** Il prossimo brano da restituire. */
+      private Album.Brano next = null;
+      // EOF: firep
+
+      // SOF: fihas
       @Override
       public boolean hasNext() {
         if (next != null) return true;
         while (it.hasNext()) {
           next = it.next();
-          ;
           if (next.appartiene(album)) return true;
         }
         next = null;
         return false;
       }
+      // EOF: fihas
 
+      // SOF: finxt
       @Override
       public Album.Brano next() {
         if (!hasNext()) throw new NoSuchElementException();
@@ -205,32 +221,49 @@ public class Playlist implements Iterable<Album.Brano> {
         next = null;
         return ret;
       }
+      // EOF: finxt
     };
   }
   // EOF: filteriter
 
   // SOF: albumiter
+  /**
+   * Restituisce un iteratore che enumera (senza ripetizioni) gli album di cui
+   * esiste un brano in questa playlist.
+   *
+   * @return l'itertore.
+   */
   public Iterator<Album> album() {
     return new Iterator<Album>() {
 
-      private final Set<Album> seen = new HashSet<>();
+      // SOF: airep
+      /** Un iteratore su tutti i brani della playlist. */
       private final Iterator<Album.Brano> it = iterator();
+
+      /** Il prossimo album da restituire. */
       private Album next = null;
 
+      /** L'insieme degli album restituiti da {@link #next()}. */
+      private final Set<Album> restituiti = new HashSet<>();
+      // EOF: airep
+
+      // SOF: aihas
       @Override
       public boolean hasNext() {
         if (next != null) return true;
         while (it.hasNext()) {
           next = it.next().album();
-          if (!seen.contains(next)) {
-            seen.add(next);
+          if (!restituiti.contains(next)) {
+            restituiti.add(next);
             return true;
           }
         }
         next = null;
         return false;
       }
+      // EOF: aihas
 
+      // SOF: ainxt
       @Override
       public Album next() {
         if (!hasNext()) throw new NoSuchElementException();
@@ -238,6 +271,7 @@ public class Playlist implements Iterable<Album.Brano> {
         next = null;
         return ret;
       }
+      // EOF: ainxt
     };
   }
   // EOF: albumiter
