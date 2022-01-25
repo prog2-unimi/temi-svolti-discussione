@@ -172,7 +172,8 @@ public class Playlist implements Iterable<Album.Brano> {
     final Playlist fusa = new Playlist(nome);
     for (final Album.Brano brano : this) fusa.accoda(brano);
     // SOF: dup
-    for (final Album.Brano brano : Objects.requireNonNull(altra, "La playlist non puà essere null."))
+    for (final Album.Brano brano :
+        Objects.requireNonNull(altra, "La playlist non puà essere null."))
       if (posizione(brano) == 0) fusa.accoda(brano);
     // EOF: dup
     return fusa;
@@ -181,8 +182,8 @@ public class Playlist implements Iterable<Album.Brano> {
 
   // SOF: filteriter
   /**
-   * Restituisce un iteratore che enumera tutti i brani della playlist che
-   * provengono dall'album dato.
+   * Restituisce un iteratore che enumera tutti i brani della playlist che provengono dall'album
+   * dato.
    *
    * @param album l'album.
    * @return l'iteartore.
@@ -228,8 +229,8 @@ public class Playlist implements Iterable<Album.Brano> {
 
   // SOF: albumiter
   /**
-   * Restituisce un iteratore che enumera (senza ripetizioni) gli album di cui
-   * esiste un brano in questa playlist.
+   * Restituisce un iteratore che enumera (senza ripetizioni) gli album di cui esiste un brano in
+   * questa playlist.
    *
    * @return l'itertore.
    */

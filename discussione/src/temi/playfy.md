@@ -843,3 +843,74 @@ risultando sostanzialmente identico a quello dell'iteratore precedente.
 
 ### La classe di test
 
+La classe di test è di implementazione tediosa, ma del tutto banale.
+
+Il suo metodo `main` dovrà conservare un elenco di album (utili a popolare le
+playlist) e la playlist di nome "Fusa" (inizialmente vuota, a cui andranno fuse
+le playlist man mano che saranno lette)
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Soluzione', 'rep')
+```
+
+Il codice è diviso in una parte di lettura (di album e playlist) e una finale in
+cui viene stampata la playlist fusa (in vari modi, grazie anche agli iteratori
+su album e brani degli album). La lettura segue l'usuale schema bastato su uno
+`Scanner`
+
+```{code-block}
+try (final Scanner s = new Scanner(System.in)) {
+  while (s.hasNextLine()) {
+    final String line = s.nextLine();
+    if (line.startsWith("ALBUM")) {
+
+      // lettura di un album
+
+    } else if (line.startsWith("PLAYLIST")) {
+
+      // lettura di una playlist
+
+    }
+  }
+}
+```
+
+La lettura di un album, dopo averne individuato il titolo dalla linea corrente,
+inizia un nuovo ciclo di lettura in ciascun iterato del quale effettua la
+suddivisione della linea letta nelle parti relative a titolo e durata che usa
+per popolare le liste che saranno richieste dal costruttore dell'album
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Soluzione', 'album', 'bralbum')
+```
+
+quando incontra una linea costituita da un solo punto (codice evidenziato)
+interrompe il ciclo interno di lettura, non prima di aver costruito l'album,
+averlo aggiunto alla lista e averlo emesso nel flusso d'uscita.
+
+Molto similmente, la lettura di una playlist, dopo averne individuato il nome
+dalla linea corrente, inizia un nuovo ciclo di lettura in ciascun iterato del
+quale effettua la suddivisione della linea letta nelle parti relative al numero
+di album (che va corretto di 1, dato che le posizioni della lista in cui sono
+contenuti gli album partono da 0) e del brano da aggiungere
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Soluzione', 'playlist', 'brpl')
+```
+
+anche in questo caso, quando incontra una linea costituita da un solo punto
+(codice evidenziato) interrompe il ciclo interno di lettura, non prima di aver
+costruito la playlist, averla fusa a quella di nome "Fusa" e averla emessa nel
+flusso d'uscita.
+
+A questo punto resta solo da emettere la playlist di nome "Fusa" e, con due
+cicli innestati, stamparne gli album e per ciascuno di essi i brani (ottenuti
+grazie ai due iteratori appositi della classe `Playlist`)
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Soluzione', 'last')
+```

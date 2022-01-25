@@ -28,45 +28,59 @@ import java.util.Scanner;
 
 public class Soluzione {
   public static void main(String[] args) {
+
+    // SOF: rep
     final List<Album> album = new ArrayList<>();
-    final List<Playlist> playlist = new ArrayList<>();
+    Playlist fusa = new Playlist("Fusa");
+    // EOF: rep
+
     try (final Scanner s = new Scanner(System.in)) {
       while (s.hasNextLine()) {
         final String line = s.nextLine();
+
         if (line.startsWith("ALBUM")) {
+          // SOF: album
           final String titolo = line.substring(6);
           final List<String> titoli = new ArrayList<>();
           final List<Durata> durate = new ArrayList<>();
           while (s.hasNextLine()) {
             final String aLine = s.nextLine();
             if (aLine.equals(".")) {
-              album.add(new Album(titolo, titoli, durate));
+              // SOF: bralbum
+              final Album a = new Album(titolo, titoli, durate);
+              album.add(a);
+              System.out.println(a);
+              // EOF: bralbum
               break;
             }
             final String[] p = aLine.split("-", 2);
             durate.add(Durata.valueOf(p[0].strip()));
             titoli.add(p[1].strip());
           }
+          // EOF: album
         } else if (line.startsWith("PLAYLIST")) {
+          // SOF: playlist
           final Playlist pl = new Playlist(line.substring(9));
-          playlist.add(pl);
           while (s.hasNextLine()) {
             final String plLine = s.nextLine();
-            if (plLine.equals(".")) break;
+            if (plLine.equals(".")) {
+              // SOF: brpl
+              fusa = fusa.fondi("Fusa", pl);
+              System.out.println(pl);
+              // EOF: brpl
+              break;
+            }
             final String[] p = plLine.split(" ", 2);
             final int aIdx = Integer.parseInt(p[0].strip()) - 1;
             final int bIdx = Integer.parseInt(p[1].strip());
             pl.accoda(album.get(aIdx).brano(bIdx));
           }
+          // EOF: playlist
         }
       }
     }
-    for (final Album a : album) System.out.println(a);
-    Playlist fusa = new Playlist("<VUOTA>");
-    for (final Playlist p : playlist) {
-      fusa = fusa.fondi("Fusa", p);
-      System.out.println(p);
-    }
+
+    // SOF: last
     System.out.println(fusa);
     final Iterator<Album> ait = fusa.album();
     while (ait.hasNext()) {
@@ -75,5 +89,7 @@ public class Soluzione {
       final Iterator<Album.Brano> bit = fusa.brani(a);
       while (bit.hasNext()) System.out.println("\t" + bit.next());
     }
+    // EOF: last
+
   }
 }
