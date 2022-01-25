@@ -312,5 +312,176 @@ sol.show('Durata', 'diff')
 può delegare al costruttore (pur documentandolo) il controllo del fatto che
 dalla differenza non risulti una durata negativa.
 
+### I brani
 
+L'implementazione dei brani richiede una riflessione abbastanza profonda, come
+evidente dal suggerimento implementativo.
+
+Dato un brano è necessario poter determinare l'album a cui appartiene. Non solo
+per poter distinguere brani di album diversi che abbiano accidentalmente il
+medesimo titolo, o per poter aggiungere il titolo dell'album a quello del brano
+(come avviene emettendo il contenuto delle playlist, come negli esempi); ma
+perché ha poco senso parlare di un brano se non nell'ambito del brano di cui
+esso è parte.
+
+Per rappresentare questo legame sono possibili due soluzioni:
+
+- descrivere album e brani in classi indipendenti, memorizzando nel brano un
+  riferimento all'album a cui appartiene,
+- descrivere il brano come una classe interna (non statica) dell'album.
+
+Entrambe le soluzioni richiedono che il "legame" stabilito tra brano ed album
+sia documentato nell'invariante di rappresentazione, costruito e preservato per
+tutta la durata di vita dell'album e dei suoi brani.
+
+#### Classi indipendenti
+
+La prima soluzione può apparire più semplice, nel senso che non richiede
+dimestichezza con le classi interne, ma potrebbe nascondere due problemi nel
+caso in cui le classi siano, come è opportuno, immutabili.
+
+Il primo problema è che il costruttore di brano necessita di un album (per poter
+definire il valore del riferimento ad esso) e il brano potrebbe avere solo un
+costruttore che richieda un elenco di brani; questo renderebbe le due classi non
+istanziabili: non ci sarebbe verso di creare un brano prima di un album, o un
+album prima di un brano!
+
+A tal problema potrebbe essere posto rimedio facendo in modo che l'album abbia
+un costruttore che (come suggerito), invece di un elenco di brani, riceva un
+elenco di titoli e uno di durate, provvedendo a costruire i brani al suo
+interno, dove gli sarà possibile usare il riferimento `this` come valore da
+passare al costruttore di album.
+
+Un esempio di bozza del codice potrebbe essere il seguente
+
+```{code-block} java
+public class Brano {
+  private final Album album;
+  …
+  public Brano(final Album album, final String titolo, final Durata durata) {
+    this.album = album;
+    …
+  }
+  …
+  public Album album() {
+    return album;
+  }
+  …
+}
+
+public class Album {
+  private final Brano[] brani;
+  …
+  public Album(List<String> titoli, List<Durate> durate) {
+    …
+    brani = new Brano[titoli.size()];
+    for (int i = 0; i < titoli.size(); i++)
+      brani[i] = new Brano(this, titoli[i], durate[i]);
+    …
+  }
+}
+```
+
+Il secondo problema è che il brano deve avere un costruttore pubblico il che fa
+si che non sia possibile, una volta costruito un album, evitare che siano
+liberamente creati altri brani che si riferiscono ad esso (oltre a quelli che
+contiene). Come impedire cioè che le classi vengano impiegate come segue
+
+```{code-block} java
+Album album = new Album(List.of("Primo", "Secondo"), List.of(new Durata(10), new Durata(29)));
+Brano terzo = new Brano(album, "Terzo", new Durata(30));
+```
+
+
+Mentre è banale per l'invariante di rappresentazione dell'album controllare che
+in `brani` ci siano solo quelli il cui attributo `album` sia esso stesso
+
+```{code-block} java
+private boolean repOk() { // in Album
+  for (final Brano brano : brani)
+    if (brano.album() != this) return false;
+  …
+}
+```
+
+non è però possibile adottare un atteggiamento simile nel brano; se `contiene`
+fosse un metodo dell'album che consente di determinare se un dato brano gli
+appartiene (ossia figura tra i valori dell'array `brani`), si potrebbe essere
+tentati di scrivere il seguente
+
+```{code-block} java
+private boolean repOk() { // in Brano
+  if (!album.contains(this)) return false;
+  …
+}
+```
+
+questo di certo impedirebbe l'aggiunta impropria del "Terzo" brano nell'esempio
+precedente, ma saremmo di nuovo di fronte ad un problema di non istanziabilità:
+è necessario creare un brano prima di aggiungerlo ad un album! Nel costruttore dell'album, l'istruzione
+
+```{code-block} java
+brani[i] = new Brano(this, titoli[i], durate[i]);
+```
+
+causa l'invocazione del `repOk` di brano (per via dell'istruzione `new`) che
+restituisce `false`, dato che al momento della costruzione l'assegnamento
+all'elemento dell'array è ancora avvenuto!
+
+#### Il brano interno all'album
+
+Le classi interne (*inner class*) sono lo strumento linguistico offerto da Java
+per modellare esattamente la circostanza in cui ci troviamo, ossia di un oggetto
+(il brano) che ha senso solo se "legato" all'istanza di un altro (l'album).
+
+Un esempio di bozza del codice diventa pertanto
+
+```{code-block} java
+public class Album {
+
+  public class Brano {
+    private Brano(final String titolo, final Durata durata) {
+      …
+    }
+    …
+    public Album album() {
+      return Album.this;
+    }
+  }
+  …
+  private final Brano[] brani;
+  …
+  public Album(List<String> titoli, List<Durate> durate) {
+    …
+    brani = new Brano[titoli.size()];
+    for (int i = 0; i < titoli.size(); i++)
+      brani[i] = new Brano(this, titoli[i], durate[i]);
+    …
+  }
+}
+```
+
+La necessità di realizzare il legame tra le istanze di brani e album è risolta
+in modo "automatico" dal linguaggio, in un brano è possibile ottenere il
+riferimento all'istanza di album che lo racchiude con l'espressione
+`Album.this`.
+
+Resta sempre il problema che non è possibile costruire un album se il suo
+costruttore richiede che ne siano indicati i brani, che a loro volta non possono
+essere costruiti prima di avere una istanza dell'album; per questa ragione, il
+costruttore dell'album riceve ancora una lista di titoli e durate.
+
+Con la classe interna è possibile risolvere anche il problema della creazione di
+ulteriori brani oltre a quelli contenuti nell'album. È sufficiente rendere il
+costruttore del brano `private` per far si che esso possa venire invocato
+soltanto all'interno dell'album, che provvederà a farlo solo nel modo adatto a
+garantire che, una volta creato un brano, esso gli venga aggiunto.
+
+Assumendo quindi di seguire il suggerimento implementativo del tema d'esame,
+procediamo con la descrizione della soluzione basata sulla classe interna.
+
+La rappresentazione è data semplicemente da una stringa e da una durata che
+essendo immutabili possono essere lasciate pubbliche, l'invariante si limita a
+richiedere che non siano `null`, il titolo non sia vuoto e la durata non sia
+zero
 
