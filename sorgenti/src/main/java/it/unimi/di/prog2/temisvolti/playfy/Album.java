@@ -37,6 +37,7 @@ public class Album implements Iterable<Album.Brano> {
    */
   public class Brano {
 
+    // SOF: rep
     /** Il titolo del brano. */
     public final String titolo;
 
@@ -56,32 +57,40 @@ public class Album implements Iterable<Album.Brano> {
      * @throws IllegalArgumentException se il titolo è vuoto, o la durata è 0.
      */
     private Brano(final String titolo, final Durata durata) {
+      // SOF: ri
       if (Objects.requireNonNull(titolo, "Il titolo non può essere null.").isEmpty())
         throw new IllegalArgumentException("Il titolo non può essere vuoto.");
-      this.titolo = titolo;
       if (Objects.requireNonNull(durata, "La durata non può essere null.").secondi() == 0)
         throw new IllegalArgumentException("La durata non può essere pari a zero.");
+      // EOF: ri
+      this.titolo = titolo;
       this.durata = durata;
     }
+    // EOF: rep
 
     /**
      * Restituisce un riferimento all'album a cui il brano appartiene.
      *
      * @return l'album di cui questo brano è parte.
      */
+    // SOF: outer
     public Album album() {
       return Album.this;
     }
+    // EOF: outer
 
     /**
      * Consente di determinare se questo brano appartiene al medesimo album di quello dato.
      *
      * @param album l'album del quale è da verificare l'appartenenza.
      * @return <code>true</code> se e solo se questo brano appartiene all'album dato.
+     * @throws NullPointerException se l'album è <code>null</code>.
      */
+    // SOF: appartiene
     public boolean appartiene(final Album album) {
-      return Album.this.equals(album);
+      return Album.this.equals(Objects.requireNonNull(album, "L'album non può essere null."));
     }
+    // EOF: appartiene
 
     /**
      * Restituisce una rappresentazione di questo brano come stringa.
@@ -90,10 +99,12 @@ public class Album implements Iterable<Album.Brano> {
      *     dell'album.
      * @return una rappresentazione testuale del brano.
      */
+    // SOF: stringa
     public String asString(final boolean conAlbum) {
       return String.format(
           "\"%s\" (%s)%s", titolo, durata, conAlbum ? ", (da \"" + album().titolo + "\")" : "");
     }
+    // EOF: stringa
 
     @Override
     public String toString() {
@@ -101,6 +112,7 @@ public class Album implements Iterable<Album.Brano> {
     }
   }
 
+  // SOF: repa
   /** Il titolo dell'album. */
   public final String titolo;
 
@@ -147,12 +159,13 @@ public class Album implements Iterable<Album.Brano> {
         brani[i] = new Brano(titoli.get(i), di);
       } catch (IllegalArgumentException e) {
         throw new IllegalArgumentException(
-            "Le specifiche del brano " + (i + 1) + " sono errate.", e);
+            "Le specifiche del brano " + (i + 1) + " sono errate. " + e.getMessage());
       }
       durata = durata.somma(di);
     }
     this.durata = durata;
   }
+  // EOF: repa
 
   /**
    * Restituisce il numero di brani dell'album.
@@ -163,6 +176,7 @@ public class Album implements Iterable<Album.Brano> {
     return brani.length;
   }
 
+  // SOF: pos
   /**
    * Restituisce il brano che ha nell'album la posizione data.
    *
@@ -191,6 +205,7 @@ public class Album implements Iterable<Album.Brano> {
     Objects.requireNonNull(brano, "Il brano non può essere null.");
     return 1 + Arrays.asList(brani).indexOf(brano);
   }
+  // EOF: pos
 
   /**
    * Restituisce il primo brano con un dato titolo.
@@ -211,11 +226,13 @@ public class Album implements Iterable<Album.Brano> {
    *         <code>null</code> se nessun brano ha tale titolo.
    * @throws NullPointerException se il titolo è <code>null</code>.
    */
+  // SOF: titolo
   public Brano brano(final String titolo) {
     Objects.requireNonNull(titolo, "Il titolo non può essere null.");
     for (final Brano b : brani) if (b.titolo.equals(titolo)) return b;
     return null;
   }
+  // EOF: titolo
 
   @Override
   public String toString() {
@@ -226,8 +243,10 @@ public class Album implements Iterable<Album.Brano> {
     return s.toString();
   }
 
+  // SOF: iter
   @Override
   public Iterator<Album.Brano> iterator() {
     return Arrays.asList(brani).iterator();
   }
+  // EOF: iter
 }

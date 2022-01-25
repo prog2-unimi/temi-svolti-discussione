@@ -312,7 +312,7 @@ sol.show('Durata', 'diff')
 può delegare al costruttore (pur documentandolo) il controllo del fatto che
 dalla differenza non risulti una durata negativa.
 
-### I brani
+### Album e brani
 
 L'implementazione dei brani richiede una riflessione abbastanza profonda, come
 evidente dal suggerimento implementativo.
@@ -324,15 +324,19 @@ medesimo titolo, o per poter aggiungere il titolo dell'album a quello del brano
 perché ha poco senso parlare di un brano se non nell'ambito del brano di cui
 esso è parte.
 
-Per rappresentare questo legame sono possibili due soluzioni:
+Per rappresentare questo legame sono possibili due scelte:
 
 - descrivere album e brani in classi indipendenti, memorizzando nel brano un
   riferimento all'album a cui appartiene,
 - descrivere il brano come una classe interna (non statica) dell'album.
 
-Entrambe le soluzioni richiedono che il "legame" stabilito tra brano ed album
-sia documentato nell'invariante di rappresentazione, costruito e preservato per
+Entrambe le scelte richiedono che il "legame" stabilito tra brano ed album sia
+documentato nell'invariante di rappresentazione, costruito e preservato per
 tutta la durata di vita dell'album e dei suoi brani.
+
+Le due sezioni seguenti discutono molto approfonditamente le caratteristiche
+delle due scelte di cui sopra, chi è meno interessato ai dettagli può proseguire
+la lettura direttamente con la sezione sull'[implementazione](innerimpl).
 
 #### Classi indipendenti
 
@@ -357,27 +361,27 @@ Un esempio di bozza del codice potrebbe essere il seguente
 ```{code-block} java
 public class Brano {
   private final Album album;
-  …
+  ...
   public Brano(final Album album, final String titolo, final Durata durata) {
     this.album = album;
-    …
+    ...
   }
-  …
+  ...
   public Album album() {
     return album;
   }
-  …
+  ...
 }
 
 public class Album {
   private final Brano[] brani;
-  …
+  ...
   public Album(List<String> titoli, List<Durate> durate) {
-    …
+    ...
     brani = new Brano[titoli.size()];
     for (int i = 0; i < titoli.size(); i++)
       brani[i] = new Brano(this, titoli[i], durate[i]);
-    …
+    ...
   }
 }
 ```
@@ -400,7 +404,7 @@ in `brani` ci siano solo quelli il cui attributo `album` sia esso stesso
 private boolean repOk() { // in Album
   for (final Brano brano : brani)
     if (brano.album() != this) return false;
-  …
+  ...
 }
 ```
 
@@ -412,7 +416,7 @@ tentati di scrivere il seguente
 ```{code-block} java
 private boolean repOk() { // in Brano
   if (!album.contains(this)) return false;
-  …
+  ...
 }
 ```
 
@@ -441,22 +445,22 @@ public class Album {
 
   public class Brano {
     private Brano(final String titolo, final Durata durata) {
-      …
+      ...
     }
-    …
+    ...
     public Album album() {
       return Album.this;
     }
   }
-  …
+  ...
   private final Brano[] brani;
-  …
+  ...
   public Album(List<String> titoli, List<Durate> durate) {
-    …
+    ...
     brani = new Brano[titoli.size()];
     for (int i = 0; i < titoli.size(); i++)
       brani[i] = new Brano(this, titoli[i], durate[i]);
-    …
+    ...
   }
 }
 ```
@@ -477,11 +481,118 @@ costruttore del brano `private` per far si che esso possa venire invocato
 soltanto all'interno dell'album, che provvederà a farlo solo nel modo adatto a
 garantire che, una volta creato un brano, esso gli venga aggiunto.
 
+(innerimpl)=
+#### L'implementazione del brano
+
 Assumendo quindi di seguire il suggerimento implementativo del tema d'esame,
 procediamo con la descrizione della soluzione basata sulla classe interna.
 
-La rappresentazione è data semplicemente da una stringa e da una durata che
-essendo immutabili possono essere lasciate pubbliche, l'invariante si limita a
-richiedere che non siano `null`, il titolo non sia vuoto e la durata non sia
-zero
+La rappresentazione di un brano è data semplicemente da una stringa (che ne
+rappresenti il titolo) e da una durata che essendo immutabili possono essere
+lasciate pubbliche, l'invariante si limita a richiedere che non siano `null`, il
+titolo non sia vuoto e la durata non sia zero (codice evidenziato)
 
+```{code-cell}
+:tags: [remove-input]
+sol.show('Album', 'rep', 'ri')
+```
+
+Avendo reso pubblici gli attributi non è necessario scrivere metodi
+osservazionali che li riguardino, può però avere senso aggiungerne alcuni come:
+un metodo che consenta di risalire da un brano all'album che lo contiene
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Album', 'outer')
+```
+
+uno per sapere se il brano appartiene ad un dato album
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Album', 'appartiene')
+```
+
+Infine può aver senso un metodo che consenta di ottenere una rappresentazione
+come stinga che contenga, facoltativamente, anche l'indicazione del titolo
+dell'album (da usare nel `toString` di questa classe e quindi di quella delle
+playlist)
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Album', 'stringa')
+```
+
+Non c'è alcun bisogno di definire i metodi `equals` e `hashCode` per i brani: è
+del tutto palusibile ritenere diverse anche due istanze con la stesso titolo e
+durata; si pensi ad esempio a un album corrispondente alla registrazione di un
+podcast in cui i brani siano una serie di interviste di titolo e durata
+differente alternate ad uno "stacchetto" musicale che abbia sempre la stessa
+durata e "Intermezzo" per titolo.
+
+#### L'implementazione dell'album
+
+La rappresentazione dell'album, oltre al titolo, deve contenere un elenco
+ordinato di brani; dato che il loro numero è fissato ha senso usare un array
+(non c'è bisogno di scomodare le liste). L'array non deve contenere duplicati,
+ossia due riferimenti identici (la coincidenza dei titoli, come osservato in
+precedenza, non è viceversa proibita).
+
+Può essere conveniente precomputare la durata complessiva (che resterà immutata,
+dato che l'elenco dei brani è fissato) e immagazzinarla in un attributo; in tal
+caso è però necessario specificare nell'invariante di rappresentazione la
+coincidenza tra il valore di tale attributo e la somma delle durate degli
+elementi dell'array.
+
+Titolo e durata possono essere pubblici (sono infatti immutabili), ma certamente
+non può esserlo l'array (per quanto dichiarato `final`): renderlo pubblico
+consentirebbe di alterarne il contenuto!
+
+Rappresentazione e costruttore sono quindi dati dal seguente codice; si osservi
+che per le ragioni illustrate in precedenza, il costruttore non riceve un elenco
+di brani, bensì due liste "parallele" di stringhe (i titoli) e durate; è compito
+del costruttore controllare che le liste abbiano la stessa dimensione, non siano
+vuote e che, una volta che i valori corrispondenti siano usati per costruire un
+brano, non venga sollevata una eccezione (che, nel caso, verrà rilanciata come
+eccezione del costruttore dell'album).
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Album', 'repa')
+```
+
+Due dei metodi osservazionali richiesti dalla traccia sono relativi alla
+posizione dei brani
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Album', 'pos')
+```
+
+Il metodo che consente di determinare la posizione di un brano nell'album
+adopera il metodo `indexOf` della lista ottenuta avvolgendo l'array col metodo
+`Arrays.asList`, ma potrebbe essere parimenti implementato con un ciclo for;
+l'uso di `indexOf` si basa sull'identità (non avendo ridefinito i metodi
+`equals` e `hashCode` in brano). Si osservi il dettaglio dato dal fatto che le
+posizioni sono corrette aggiungendo, o togliendo, 1 (a seconda dei casi) dovuto
+al fatto che le posizioni nell'album corrispondono a interi positivi (mentre in
+generale negli array a numero non negativi).
+
+Il metodo che consente di rintracciare un brano dato il titolo
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Album', 'pos')
+```
+
+è più delicato da specificare: dal momento che sono possibili più brani col
+medesimo titolo, occorre specificare cosa accade nel caso di ripetizioni; qui si
+è scelto di restituire il primo (nell'ordine in cui compaiono nell'album), ma si
+sarebbe potuto scegliere anche di sottospecificare.
+
+In nessun caso però i metodi che cercano (dato un brano, o un titolo) sollevano
+eccezione in caso di fallimento della ricerca, ma piuttosto restituiscono un
+valore convenzionale; questo è dovuto al fatto che in genere non costituisce
+condizione eccezionale cercare una elemento che non c'è (come si nota da molti
+metodi analoghi nelle API di Java). In questo modo, le ricerche possono essere
+convenientemente usate anche per determinare l'appartenenza.
