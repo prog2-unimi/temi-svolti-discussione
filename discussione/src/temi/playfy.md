@@ -144,7 +144,7 @@ con la playlist
 si osservi, infatti, che `Mescolotto` contiene il brano dal titolo `Hey You` una
 sola volta (nella posizione in cui compare nelle prima playlist).
 
-## La classe di test
+### La classe di test
 
 Potete implementare dei test in una o più classi; gli esempi di esecuzione
 provvisti assumono che alla fine la soluzione (ossia l'*unica classe che
@@ -233,7 +233,7 @@ Un esempio di output da emettere al termine dell'esecuzione è dato da:
 ### Le durate
 
 Ogni oggetto del tema avrà a che fare con una durata (sia esso un brano, un
-album o una playlist) e su di essere sarà necessario fare un po' di conti (ad
+album o una playlist) e su di esse sarà necessario fare un po' di conti (ad
 esempio sommarle per ottenere le durate totali, o farne la differenza se un
 brano verrà rimosso da una playlist). Per tale ragione, la traccia suggerisce di
 creare un tipo apposito; dato che le sue istanze (usate all'interno delle altre
@@ -249,10 +249,10 @@ tramite una classe concreta con un solo attributo dichiarato come `public final
 int durata`.
 
 L'invariante di tale rappresentazione è che l'intero sia non negativo, lo zero
-on va escluso: servirà per rappresentare la durata delle playlist vuote; dato
+non va escluso: servirà per rappresentare la durata delle playlist vuote; dato
 che il tipo è immutabile, sarà sufficiente accertarsi che questo sia vero in
 costruzione. Osservate che sebbene sarebbe possibile usare anche una stringa di
-formato `HH:MM:SS` come rappresentazione, essa sarebbe scomodissima per
+formato `HH:MM:SS` come rappresentazione, essa sarebbe scomoda per
 effettuare le operazioni di somma e differenza.
 
 Oltre al costruttore (che avrà per parametro il numero di secondi della durata),
@@ -268,15 +268,14 @@ per l'opportuna potenza di 60)
 sol.show('Durata', 'fab', 'conv')
 ```
 
-D'altro canto è molto ripetitivo controllare che ogni componente dell'orario
-sia:
+D'altro canto è ripetitivo controllare che ogni componente dell'orario sia:
 
 - non vuota,
 - traducibile in un intero,
 - abbia un valore corretto: sia compresa tra 0 (incluso) e 60 (escluso) per
-  minuti e secondi e sia positiva nel caso delle ore;
+  minuti e secondi e sia positiva nel caso delle ore.
 
-può essere pertanto comodo un metodo statico di utilità che si accerti di queste
+Può essere pertanto comodo un metodo statico di utilità che si accerti di queste
 condizioni e segnali, con una opportuna eccezione, il caso in cui siano violate
 
 ```{code-cell}
@@ -292,7 +291,7 @@ un unico `try-catch` e risollevando l'eccezione, riusandone il messaggio
 try {
   // chiamate a hoMSS
 } catch (IllegalArgumentException e) {
-  throw new IllegalArgumentException("Formato della durata invalito. " + e.getMessage());
+  throw new IllegalArgumentException("Formato della durata invalido. " + e.getMessage());
 }
 ```
 
@@ -315,14 +314,14 @@ dalla differenza non risulti una durata negativa.
 
 ### Album e brani
 
-Implementare i brani (e gli album che li contengono) non è completamente banale,
-come anticipato nel [suggerimento implementativo](suggerimento) della traccia.
+Implementare i brani (e gli album che li contengono) non è banale, come anticipato
+nel [suggerimento implementativo](suggerimento) della traccia.
 
 Dato un brano è necessario poter determinare l'album a cui appartiene. Non solo
 per poter distinguere brani di album diversi che abbiano accidentalmente il
 medesimo titolo, o per poter aggiungere il titolo dell'album a quello del brano
 (emettendo il contenuto delle playlist, come risulta dagli esempi); ma perché ha
-poco senso in generale parlare di un brano se non nel contesto dell'album a cui
+poco senso, in generale, parlare di un brano se non nel contesto dell'album a cui
 appartiene.
 
 Per rappresentare questo legame sono possibili due scelte:
@@ -331,7 +330,7 @@ Per rappresentare questo legame sono possibili due scelte:
   riferimento all'album a cui appartiene,
 - implementare il brano come una classe interna (non statica) dell'album.
 
-Entrambe le scelte richiedono che il legame stabilito tra brano ed album sia
+Entrambe le scelte richiedono che il legame stabilito tra brano e album sia
 documentato nell'invariante di rappresentazione, costruito e preservato per
 tutta la durata di vita delle due entità.
 
@@ -346,7 +345,7 @@ dimestichezza con le classi interne, ma potrebbe nascondere due problemi nel
 caso in cui le classi siano, come sarebbe opportuno fossero, immutabili.
 
 Il primo problema è che il costruttore di brano necessita di un album (per poter
-definire il valore del riferimento ad esso) e il brano potrebbe avere solo un
+definire il valore del riferimento a esso) e il brano potrebbe avere solo un
 costruttore che richieda un elenco di brani; questo renderebbe le due classi non
 istanziabili: non ci sarebbe verso di creare un brano prima di un album, o un
 album prima di un brano!
@@ -388,9 +387,9 @@ public class Album {
 ```
 
 Il secondo problema è che il brano, per poter essere istanziato, deve avere
-(almeno) un costruttore pubblico il che fa si che non sia possibile, una volta
+(almeno) un costruttore pubblico, il che fa sì che non sia possibile, una volta
 costruito un album, evitare che siano liberamente creati altri brani che si
-riferiscono ad esso (oltre a quelli che contiene). Non è ovvio cioè come
+riferiscono a esso (oltre a quelli che contiene). Non è ovvio cioè come
 impedire che le classi vengano impiegate come segue
 
 ```{code-block} java
@@ -426,7 +425,7 @@ private boolean repOk() { // in Brano
 
 questo di certo impedirebbe la creazione impropria del "Terzo" brano
 nell'esempio precedente, ma finiremmo di nuovo in una condizione di non
-istanziabilità: talvolta è necessario creare un brano prima di aggiungerlo ad un
+istanziabilità: talvolta è necessario creare un brano prima di aggiungerlo a un
 album! Nel costruttore stesso dell'album, l'istruzione
 
 ```{code-block} java
@@ -435,7 +434,7 @@ brani[i] = new Brano(this, titoli[i], durate[i]);
 
 causa l'invocazione del `repOk` di brano (per via dell'istruzione `new`) che
 restituisce `false`, dato che al momento della costruzione l'assegnamento
-all'elemento dell'array è ancora avvenuto!
+all'elemento dell'array non è ancora avvenuto!
 
 #### Il brano interno all'album
 
@@ -483,7 +482,7 @@ e durate.
 
 Con la classe interna è però possibile risolvere il problema della creazione di
 ulteriori brani oltre a quelli contenuti nell'album. È sufficiente rendere il
-costruttore del brano `private` per far si che esso possa venire invocato
+costruttore del brano `private` per far sì che esso possa venire invocato
 soltanto all'interno dell'album, che provvederà a farlo solo nel modo adatto a
 garantire che, una volta creato un brano, esso gli venga aggiunto.
 
@@ -494,7 +493,7 @@ Assumendo quindi di seguire il suggerimento implementativo del tema d'esame,
 procediamo con la descrizione della soluzione basata sulla classe interna.
 
 La rappresentazione di un brano è data semplicemente da una stringa (che ne
-memorizzi il titolo) e da una durata che essendo immutabili possono essere
+memorizzi il titolo) e da una durata, che essendo immutabili possono essere
 lasciate pubbliche, l'invariante si limita a richiedere che non siano `null`, il
 titolo non sia vuoto e la durata non sia zero (codice evidenziato)
 
@@ -504,7 +503,7 @@ sol.show('Album', 'rep', 'ri')
 ```
 
 Avendo reso pubblici gli attributi non è necessario scrivere metodi
-osservazionali che li riguardino, può però avere senso aggiungerne alcuni come:
+"osservazionali" che li riguardino, può però avere senso aggiungerne alcuni come:
 un metodo che consenta di risalire da un brano all'album che lo contiene
 
 ```{code-cell}
@@ -533,7 +532,7 @@ Non c'è alcun bisogno di definire i metodi `equals` e `hashCode` per i brani: �
 del tutto plausibile ritenere diverse anche due istanze con la stesso titolo e
 durata; si pensi ad esempio a un album corrispondente alla registrazione di un
 podcast in cui i brani siano una serie di interviste di titolo e durata
-differente alternate ad uno "stacchetto" musicale che abbia sempre la stessa
+differente alternate a uno "stacchetto" musicale che abbia sempre la stessa
 durata e "Intermezzo" per titolo.
 
 #### L'implementazione dell'album
@@ -554,21 +553,21 @@ Titolo e durata possono essere pubblici (sono infatti immutabili), ma certamente
 non può esserlo l'array (per quanto dichiarato `final`): renderlo pubblico
 consentirebbe di alterarne il contenuto!
 
-Rappresentazione e costruttore sono quindi dati dal seguente codice
+Rappresentazione e costruttore sono quindi dati dal seguente codice:
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('Album', 'repa')
 ```
 
-si osservi che, per le ragioni illustrate in precedenza, il costruttore non
+Si osservi che, per le ragioni illustrate in precedenza, il costruttore non
 riceve un elenco di brani, bensì due liste "parallele" di stringhe (i titoli) e
 durate; è compito del costruttore controllare che le liste abbiano la stessa
 dimensione, non siano vuote e che, una volta che i valori corrispondenti siano
 usati per costruire un brano, non venga sollevata una eccezione (che, nel caso,
 verrà rilanciata come eccezione del costruttore dell'album).
 
-Se i parametri sono accettati, il costruttore prosegue valorizzando gli
+Se i parametri sono accettati, il costruttore prosegue inizializzando gli
 attributi in modo che l'invariante descritto sia verificato; dato che gli
 attributi sono immutabili o, nel caso dell'array, non viene mai assegnato altro
 valore ad alcuno dei suoi elementi fuori dal costruttore, è ovvio constatare che
@@ -587,10 +586,10 @@ adopera il metodo
 [`indexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
 della lista ottenuta avvolgendo l'array col metodo
 [`Arrays.asList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#asList(T...)),
-ma potrebbe essere parimenti implementato con un ciclo for; l'uso di `indexOf`
+ma potrebbe essere parimenti implementato con un ciclo `for`; l'uso di `indexOf`
 si basa sull'identità (non avendo ridefinito i metodi `equals` e `hashCode` in
 brano). Si osservi il dettaglio dato dal fatto che le posizioni sono corrette
-aggiungendo, o togliendo, 1 (a seconda dei casi) dovuto al fatto che le
+aggiungendo o togliendo 1 (a seconda dei casi), dovuto al fatto che le
 posizioni nell'album corrispondono a interi positivi (mentre in generale negli
 array a numero non negativi).
 
@@ -602,13 +601,13 @@ sol.show('Album', 'titolo')
 ```
 
 è più delicato da specificare: dal momento che sono possibili più brani col
-medesimo titolo, occorre specificare cosa accade nel caso di ripetizioni; qui si
-è scelto di restituire il primo (nell'ordine in cui compaiono nell'album), ma si
-sarebbe potuto scegliere anche di sottospecificare.
+medesimo titolo, occorre specificare cosa accade nel caso di ripetizioni; qui
+è stato scelto di restituire il primo (nell'ordine in cui compaiono nell'album), ma,
+in alternativa sarebbe stato possibile scegliere di "sottospecificare".
 
-Osservate che in nessun caso i metodi che cercano (dato un brano, o un titolo)
+Osservate che in nessun caso i metodi che cercano (dato un brano o un titolo)
 sollevano eccezione in caso di fallimento nella ricerca, ma piuttosto
-restituiscono un valore convenzionale (0, o `null`); questo è dovuto al fatto
+restituiscono un valore convenzionale (0 o `null`); questo è dovuto al fatto
 che in genere non costituisce condizione eccezionale cercare un elemento che non
 c'è (come si nota da molti metodi analoghi nelle API di Java). In questo modo,
 peraltro, le ricerche possono essere convenientemente usate anche per
@@ -658,7 +657,7 @@ in inganno:
 - effettuare ricerche per titolo ha senz'altro senso in un album (anche in
   presenza di titoli ripetuti, caso comunque raro), in una playlist invece (dove
   è molto probabile che ci siano titoli ripetuti) la ricerca per titolo ha meno
-  senso e dovrebbe quanto meno essere affiancata da quella per titolo ed album;
+  senso e dovrebbe quanto meno essere affiancata da quella per titolo e album;
 - nell'emettere nel flusso d'uscita un album non ha senso riportarne il titolo
   per ogni brano, mentre in una playlist è necessario farlo.
 
@@ -685,9 +684,9 @@ sol.show('Playlist', 'rep')
 prevede un `nome` (che potrebbe essere cambiato) e un elenco di `brani`, il cui
 numero può aumentare, o diminuire, che pertanto è più pratico mantenere in una
 lista. Come nel caso dell'album può aver senso memorizzare la `durata`
-complessiva in un attributo, li cui valore però non può essere determinato una
+complessiva in un attributo, il cui valore però non può essere determinato una
 volta per tutte, ma andrà mantenuto equivalente alla somma delle durate dei
-brani dell'elenco qualora ad esso ne vengano rimossi, o aggiunti. Per questa
+brani dell'elenco qualora a esso ne vengano rimossi o aggiunti. Per questa
 ragione, ad eccezione della lista che può essere allocata una volta per tutte,
 `nome` e `durata` non possono essere dichiarati `final` (dato che i loro tipi
 sono immutabili).
@@ -705,7 +704,7 @@ Per quanto riguarda il nome è utile avere la coppia di metodi
 sol.show('Playlist', 'nome')
 ```
 
-che consentono di conoscerlo, o modificarlo (prestando attenzione a preservare
+che consentano di conoscerlo o modificarlo (prestando attenzione a preservare
 l'invariante di rappresentazione); il costruttore, peraltro, consiste di fatto
 in una invocazione del secondo metodo sopra riportato.
 
@@ -719,16 +718,16 @@ sol.show('Playlist', 'pos')
 ```
 
 Dato che la playlist è mutabile occorrono almeno due metodi in grado di
-accodare, o rimuovere, un brano dato alla playlist
+accodare o rimuovere un brano dato alla playlist
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('Playlist', 'addrm')
 ```
 
-unica cosa degna di nota nelle implementazioni dei due metodi è l'osservazione
+L'unica cosa degna di nota nelle implementazioni dei due metodi è l'osservazione
 che gli aggiornamenti della durata complessiva sono collocati in posizioni del
-codice che possono essere raggiunte se e solo se l'aggiunta, o la rimozione,
+codice che possono essere raggiunte se e solo se l'aggiunta o la rimozione
 avvengono effettivamente; questo consente di preservare l'invariante di
 rappresentazione. Ovviamente è possibile immaginare una messe di metodi
 analoghi, che funzionino anche tenendo conto della posizione, dell'album, o di
@@ -742,7 +741,7 @@ Un metodo di produzione consente di ottenere la fusione tra playlist
 sol.show('Playlist', 'fondi', 'dup')
 ```
 
-anche in questo caso, l'unica parte degna di nota è quel che accade accodando i
+Anche in questo caso, l'unica parte degna di nota è quel che accade accodando i
 brani della seconda lista, che non devono essere aggiunti se già presenti nella
 lista corrente (codice evidenziato); vale la pena osservare l'uso del metodo
 `posizione` per determinare se un brano è contenuto nella playlist.
@@ -760,7 +759,7 @@ avvolgendolo con
 [`Collections.unmodifiableCollection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#unmodifiableCollection(java.util.Collection))
 (per proteggere la rappresentazione).
 
-Gli altri due richiedono uno sforzo in più e la loro implementazione sarò
+Gli altri due richiedono uno sforzo in più e la loro implementazione sarà
 descritta nelle sezioni seguenti. Si potrebbe essere tentati dall'implementarli
 riempiendo dapprima una lista con gli elementi da iterare, restituendone quindi
 l'iteratore; tale soluzione è però non accettabile dal punto di vista
@@ -780,33 +779,33 @@ lo stato di tale iteratore
 sol.show('Playlist', 'firep')
 ```
 
-è dato un iteratore su tutti i brani della playlist e dal prossimo brano da
+è dato da un iteratore su tutti i brani della playlist e dal prossimo brano da
 restituire (nonché dall'album dato come parametro, che è visibile in quanto
 parametro formale del metodo che crea l'iteratore).
 
 Come avviene spesso, è opportuno implementare la logica di avanzamento nel
-metodo `hasNext`
+metodo `hasNext`:
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('Playlist', 'fihas')
 ```
 
-se `next` è diverso da `null` quello sarà il valore da restituire alla prossima
+Se `next` è diverso da `null` quello sarà il valore da restituire alla prossima
 invocazione dell'omonimo metodo. Viceversa, per sapere se sarà possibile
 restituire un nuovo brano, è necessario scandire l'iteratore di tutti i brani
 della playlist fino a trovarne uno dell'album dato; se ciò non accadesse,
 all'esaurimento dell'iteratore su tutti i brani, verrà segnalato che non ci sono
 più altri brani dell'album dato.
 
-Il metodo `next` a questo punto è di banale implementazione
+Il metodo `next` a questo punto è di banale implementazione:
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('Playlist', 'finxt')
 ```
 
-dopo aver invocato il metodo `hasNext` per far eventualmente avanzare
+Dopo aver invocato il metodo `hasNext` per far eventualmente avanzare
 l'iteratore, è sufficiente restituire (se possibile) quanto riferito
 dall'attributo `next` e "invalidarlo" attribuendogli il valore `null`.
 
@@ -890,18 +889,19 @@ quando incontra una linea costituita da un solo punto (codice evidenziato)
 interrompe il ciclo interno di lettura, non prima di aver costruito l'album,
 averlo aggiunto alla lista e averlo emesso nel flusso d'uscita.
 
-Molto similmente, la lettura di una playlist, dopo averne individuato il nome
-dalla linea corrente, inizia un nuovo ciclo di lettura in ciascun iterato del
-quale effettua la suddivisione della linea letta nelle parti relative al numero
-di album (che va corretto di 1, dato che le posizioni della lista in cui sono
-contenuti gli album partono da 0) e del brano da aggiungere
+La lettura di una playlist può essere implementata in maniera simile: dopo
+averne individuato il nome dalla linea corrente, si inizia un nuovo ciclo di
+lettura. In ciascun iterato è effettuata la suddivisione della linea letta
+nelle parti relative al numero di album (che va corretto di 1, dato che le
+posizioni della lista in cui sono contenuti gli album partono da 0) e del brano
+da aggiungere
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('Soluzione', 'playlist', 'brpl')
 ```
 
-anche in questo caso, quando incontra una linea costituita da un solo punto
+anche in questo caso, quando si incontra una linea costituita da un solo punto
 (codice evidenziato) interrompe il ciclo interno di lettura, non prima di aver
 costruito la playlist, averla fusa a quella di nome "Fusa" e averla emessa nel
 flusso d'uscita.
