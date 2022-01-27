@@ -239,7 +239,7 @@ brano verrà rimosso da una playlist). Per tale ragione, la traccia suggerisce d
 creare un tipo apposito; dato che le sue istanze (usate all'interno delle altre
 classi) saranno presumibilmente passate come parametri e restituite da diversi
 metodi, è bene che il tipo sia *immutabile* (per evitare la necessità di
-proteggere ogni volta le istanze con delle copie).
+proteggerne ogni volta le istanze con delle copie).
 
 Volendo adoperare una delle feature più recenti di Java, il tipo può essere
 definito tramite un
@@ -257,8 +257,13 @@ effettuare le operazioni di somma e differenza.
 
 Oltre al costruttore (che avrà per parametro il numero di secondi della durata),
 è bene avere un metodo statico di *fabbricazione* che costruisca una data a
-partire da una stringa nel formato `HH:MM:SS`, `MM:SS` o `SS`. Tale metodo è
-banale da implementare: basta dividere la stringa in parti col metodo
+partire da una stringa nel formato `HH:MM:SS`, `MM:SS` o `SS`; è preferibile
+avere un metodo di fabbricazione, in modo che la classe abbia un unico
+costruttore (che diventa di fatto l'unico luogo dove controllare l'invariante di
+rappresentazione).
+
+Il metodo di fabbricazione è tedioso, ma banale da implementare: basta dividere
+la stringa in parti col metodo
 [`split`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#split(java.lang.String))
 e sommare gli interi corrispondenti alle varie parti (dopo averli moltiplicati
 per l'opportuna potenza di 60)
@@ -268,10 +273,10 @@ per l'opportuna potenza di 60)
 sol.show('Durata', 'fab', 'conv')
 ```
 
-D'altro canto è ripetitivo controllare che ogni componente dell'orario sia:
+D'altro canto è ripetitivo controllare che ogni componente dell'orario
 
-- non vuota,
-- traducibile in un intero,
+- sia non vuota,
+- possa essere "convertita" in un intero (con `Integer.parseInt`),
 - abbia un valore corretto: sia compresa tra 0 (incluso) e 60 (escluso) per
   minuti e secondi e sia positiva nel caso delle ore.
 
@@ -320,9 +325,9 @@ nel [suggerimento implementativo](suggerimento) della traccia.
 Dato un brano è necessario poter determinare l'album a cui appartiene. Non solo
 per poter distinguere brani di album diversi che abbiano accidentalmente il
 medesimo titolo, o per poter aggiungere il titolo dell'album a quello del brano
-(emettendo il contenuto delle playlist, come risulta dagli esempi); ma perché ha
-poco senso, in generale, parlare di un brano se non nel contesto dell'album a cui
-appartiene.
+emettendo il contenuto delle playlist (come risulta dagli esempi); ma sopratutto
+perché ha poco senso, in generale, parlare di un brano se non nel contesto
+dell'album a cui appartiene.
 
 Per rappresentare questo legame sono possibili due scelte:
 
@@ -332,7 +337,8 @@ Per rappresentare questo legame sono possibili due scelte:
 
 Entrambe le scelte richiedono che il legame stabilito tra brano e album sia
 documentato nell'invariante di rappresentazione, costruito e preservato per
-tutta la durata di vita delle due entità.
+tutta la durata di vita delle due entità. Osserviamo, peraltro, che bon è
+viceversa accettabile che questo legame sia stabilito solo nella playlist.
 
 Le due sezioni seguenti discutono molto approfonditamente le caratteristiche
 delle due scelte di cui sopra, chi è meno interessato ai dettagli può proseguire
@@ -341,8 +347,8 @@ la lettura direttamente con la sezione sull'[implementazione](innerimpl).
 #### Classi indipendenti
 
 La prima soluzione può apparire più semplice, nel senso che non richiede
-dimestichezza con le classi interne, ma potrebbe nascondere due problemi nel
-caso in cui le classi siano, come sarebbe opportuno fossero, immutabili.
+dimestichezza con le classi interne, ma potrebbe nascondere alcuni problemi nel
+caso in cui i tipi fossero, come sarebbe opportuno, immutabili.
 
 Il primo problema è che il costruttore di brano necessita di un album (per poter
 definire il valore del riferimento a esso) e il brano potrebbe avere solo un
@@ -353,7 +359,7 @@ album prima di un brano!
 A tal problema potrebbe essere posto rimedio facendo in modo che l'album abbia
 un costruttore che (come suggerito) invece di un elenco di brani riceva un
 elenco di titoli e di durate, provvedendo a costruire i brani al suo interno,
-dove gli sarà possibile usare il riferimento `this` come valore da passare al
+dove sarà possibile usare il riferimento `this` come valore da passare al
 costruttore di album.
 
 Un esempio di bozza del codice potrebbe essere il seguente
@@ -411,9 +417,9 @@ private boolean repOk() { // in Album
 }
 ```
 
-non è però possibile adottare un atteggiamento simile nel brano; se `contiene` è
-un metodo dell'album che consente di determinare se un dato brano gli appartiene
-(ossia figura tra i valori dell'array `brani`), si potrebbe essere tentati di
+non è però possibile adottare un atteggiamento simile nel brano; se `contiene`
+fosse un metodo dell'album che consentisse di determinare se un dato brano gli
+appartiene (ossia se è un elemento di `brani`), si potrebbe essere tentati di
 scrivere il seguente
 
 ```{code-block} java
@@ -423,8 +429,8 @@ private boolean repOk() { // in Brano
 }
 ```
 
-questo di certo impedirebbe la creazione impropria del "Terzo" brano
-nell'esempio precedente, ma finiremmo di nuovo in una condizione di non
+Questo di certo impedirebbe la creazione impropria del "Terzo" brano
+nell'esempio precedente, ma si finirebbe di nuovo in una condizione di non
 istanziabilità: talvolta è necessario creare un brano prima di aggiungerlo a un
 album! Nel costruttore stesso dell'album, l'istruzione
 
@@ -439,8 +445,9 @@ all'elemento dell'array non è ancora avvenuto!
 #### Il brano interno all'album
 
 Le classi interne (*inner class*) sono lo strumento linguistico offerto da Java
-per modellare esattamente la circostanza in cui ci troviamo, ossia di un oggetto
-(il brano) che ha senso solo se legato all'istanza di un altro (l'album).
+per modellare esattamente la circostanza in cui ci troviamo: quella di un
+oggetto (il brano) che ha senso solo se legato all'istanza di un altro
+(l'album).
 
 Un esempio di bozza del codice con il brano interno all'album è
 
@@ -459,7 +466,7 @@ public class Album {
   ...
   private final Brano[] brani;
   ...
-  public Album(List<String> titoli, List<Durate> durate) {
+  public Album(List<String> titoli, List<Durate> durate, ...) {
     ...
     brani = new Brano[titoli.size()];
     for (int i = 0; i < titoli.size(); i++)
@@ -470,9 +477,9 @@ public class Album {
 ```
 
 La necessità di realizzare il legame tra le istanze di brani e album è risolta
-in modo "automatico" dal linguaggio, di conseguenza in un brano è possibile
-ottenere il riferimento all'istanza di album che lo racchiude con l'espressione
-`Album.this`.
+in modo "automatico" dal linguaggio; in un brano è possibile ottenere il
+riferimento all'istanza di album che lo racchiude semplicemente con
+l'espressione `Album.this`.
 
 Resta sempre il problema che non è possibile costruire un album se il suo
 costruttore richiede che ne siano indicati i brani, che a loro volta non possono
@@ -482,9 +489,9 @@ e durate.
 
 Con la classe interna è però possibile risolvere il problema della creazione di
 ulteriori brani oltre a quelli contenuti nell'album. È sufficiente rendere il
-costruttore del brano `private` per far sì che esso possa venire invocato
-soltanto all'interno dell'album, che provvederà a farlo solo nel modo adatto a
-garantire che, una volta creato un brano, esso gli venga aggiunto.
+costruttore del brano `private` per far sì che esso possa essere invocato
+soltanto nel contesto del codice del'album, che può garantire di farlo solo nel
+modo adatto a garantire che, una volta creato un brano, esso gli venga aggiunto.
 
 (innerimpl)=
 #### L'implementazione del brano
@@ -493,8 +500,8 @@ Assumendo quindi di seguire il suggerimento implementativo del tema d'esame,
 procediamo con la descrizione della soluzione basata sulla classe interna.
 
 La rappresentazione di un brano è data semplicemente da una stringa (che ne
-memorizzi il titolo) e da una durata, che essendo immutabili possono essere
-lasciate pubbliche, l'invariante si limita a richiedere che non siano `null`, il
+memorizzi il titolo) e da una durata che, essendo immutabili, possono essere
+lasciate pubbliche; l'invariante si limita a richiedere che non siano `null`, il
 titolo non sia vuoto e la durata non sia zero (codice evidenziato)
 
 ```{code-cell}
@@ -511,7 +518,7 @@ un metodo che consenta di risalire da un brano all'album che lo contiene
 sol.show('Album', 'outer')
 ```
 
-uno per sapere se il brano appartiene ad un dato album
+e uno per sapere se il brano appartiene ad un dato album
 
 ```{code-cell}
 :tags: [remove-input]
@@ -565,13 +572,14 @@ riceve un elenco di brani, bensì due liste "parallele" di stringhe (i titoli) e
 durate; è compito del costruttore controllare che le liste abbiano la stessa
 dimensione, non siano vuote e che, una volta che i valori corrispondenti siano
 usati per costruire un brano, non venga sollevata una eccezione (che, nel caso,
-verrà rilanciata come eccezione del costruttore dell'album).
+verrà rilanciata come eccezione del costruttore dell'album, con l'aggiunta
+dell'indicazione circa il numero di brano che l'ha causata).
 
 Se i parametri sono accettati, il costruttore prosegue inizializzando gli
 attributi in modo che l'invariante descritto sia verificato; dato che gli
 attributi sono immutabili o, nel caso dell'array, non viene mai assegnato altro
 valore ad alcuno dei suoi elementi fuori dal costruttore, è ovvio constatare che
-esso è sempre preservato.
+l'invariante è sempre preservato.
 
 Due dei metodi osservazionali richiesti dalla traccia sono relativi alla
 posizione dei brani
@@ -589,9 +597,9 @@ della lista ottenuta avvolgendo l'array col metodo
 ma potrebbe essere parimenti implementato con un ciclo `for`; l'uso di `indexOf`
 si basa sull'identità (non avendo ridefinito i metodi `equals` e `hashCode` in
 brano). Si osservi il dettaglio dato dal fatto che le posizioni sono corrette
-aggiungendo o togliendo 1 (a seconda dei casi), dovuto al fatto che le
+aggiungendo o togliendo 1 (a seconda dei casi); questo è dovuto al fatto che le
 posizioni nell'album corrispondono a interi positivi (mentre in generale negli
-array a numero non negativi).
+array a interi non negativi).
 
 Il metodo che consente di rintracciare un brano dato il titolo
 
@@ -622,11 +630,11 @@ corretti con cui invocarlo, grazie al metodo osservazionale
 sol.show('Album', 'num')
 ```
 
-tale metodo solleva una `IndexOutOfBoundsException` (conformemente a quel che
-farebbe un array o `List`) nel caso la posizione sia un indice che eccede i
-limiti legittimi.
+la richiesta di un brano di posizione inesistente  solleva una
+`IndexOutOfBoundsException` (conformemente a quel che farebbe un array o `List`)
+nel caso la posizione sia un indice che eccede i limiti legittimi.
 
-Come richiesto, la classe consente di iterare sui suoi brani
+Come richiesto, la classe permette l'iterazione sui suoi brani
 
 ```{code-cell}
 :tags: [remove-input]
@@ -645,11 +653,12 @@ dall'esterno) perché in caso di invocazione di `remove` solleverà una
 
 ### Le playlist
 
-Le playlist hanno parecchie somiglianze con gli album, per iniziare sono elenchi
-di brani con un titolo e una durata complessiva. Non bisogna però farsi trarre
-in inganno:
+Le playlist hanno parecchie somiglianze con gli album, sono entrambe elenchi di
+brani (con una durata complessiva). Non bisogna però farsi trarre in inganno:
 
 - gli album sono immutabili, le playlist no;
+- gli album hanno un titolo, le playlist un nome (che potrebbero dover
+  soddisfare vincoli diversi);
 - gli album contengono sempre almeno un brano, le playlist possono essere vuote
   (o diventarlo);
 - tutti i brani di un album sono relativi a quell'album, le playlist viceversa
@@ -661,17 +670,18 @@ in inganno:
 - nell'emettere nel flusso d'uscita un album non ha senso riportarne il titolo
   per ogni brano, mentre in una playlist è necessario farlo.
 
-Non appare quindi molto semplice raccogliere competenze così dissimili in un
-supertipo (ad esempio una classe astratta) che possa essere fruttuosamente
-utilizzato per definire album e playlist per estensione; il codice di cui
-consentirebbe di evitare la ripetizione molto verosimilmente si limiterebbe a
-quello di alcuni metodi osservazionali (che sono in ogni caso di banale implementazione).
+Non appare quindi molto semplice raccogliere (senza forzature) caratteristiche
+così dissimili in un supertipo (ad esempio una classe astratta) che possa essere
+fruttuosamente utilizzato per definire album e playlist per estensione; il
+codice di cui consentirebbe di evitare la ripetizione molto verosimilmente si
+limiterebbe a quello di alcuni metodi osservazionali (che sono in ogni caso di
+banale implementazione).
 
 A prescindere dalla difficoltà e dall'efficacia (in termini di risparmio di
-codice) ottenibile attraverso un supertipo, sarebbe ancor più discutibile la sua
-utilità. Nella traccia del progetto non c'è alcuna indicazione del fatto che
-potrebbe essere necessario sfruttare il polimorfismo per gestire in modo
-omogeneo playlist e brani. Una classe astratta, o interfaccia, non sarebbe
+codice) derivante dalla definizione di un supertipo, ne sarebbe ancor più
+discutibile l'utilità. Nella traccia del progetto non c'è alcuna indicazione del
+fatto che potrebbe essere necessario sfruttare il polimorfismo per gestire in
+modo omogeneo playlist e album. Una classe astratta, o interfaccia, non sarebbe
 praticamente mai usata come tipo per nessuna delle variabili del progetto!
 
 La rappresentazione di una playlist
@@ -682,20 +692,19 @@ sol.show('Playlist', 'rep')
 ```
 
 prevede un `nome` (che potrebbe essere cambiato) e un elenco di `brani`, il cui
-numero può aumentare, o diminuire, che pertanto è più pratico mantenere in una
-lista. Come nel caso dell'album può aver senso memorizzare la `durata`
-complessiva in un attributo, il cui valore però non può essere determinato una
-volta per tutte, ma andrà mantenuto equivalente alla somma delle durate dei
-brani dell'elenco qualora a esso ne vengano rimossi o aggiunti. Per questa
-ragione, ad eccezione della lista che può essere allocata una volta per tutte,
-`nome` e `durata` non possono essere dichiarati `final` (dato che i loro tipi
-sono immutabili).
+numero può aumentare o diminuire (pertanto è più pratico mantenerlo in una
+lista). Come nel caso dell'album, può aver senso memorizzare la `durata`
+complessiva in un attributo, il cui valore dovrà essere aggiornato in caso di
+aggiunte o rimozioni in modo che risulti equivalente alla somma delle durate dei
+brani dell'elenco. Per queste ragioni, ad eccezione della lista che può essere
+allocata una volta per tutte, `nome` e `durata` non possono essere dichiarati
+`final` (dato che i loro tipi sono immutabili).
 
 L'invariante di rappresentazione (oltre alle banali richieste circa i `null`,
 non ammessi per gli attributi e gli elementi della lista e il nome che non deve
 essere vuoto) deve semplicemente garantire che la durata corrisponda alla somma
 delle durate. Dato che la classe è mutabile, per ogni metodo mutazionale sarà
-necessario riflettere sulla preservazione di tale invariante.
+però necessario riflettere sulla preservazione di tale invariante.
 
 Per quanto riguarda il nome è utile avere la coppia di metodi
 
@@ -731,8 +740,11 @@ codice che possono essere raggiunte se e solo se l'aggiunta o la rimozione
 avvengono effettivamente; questo consente di preservare l'invariante di
 rappresentazione. Ovviamente è possibile immaginare una messe di metodi
 analoghi, che funzionino anche tenendo conto della posizione, dell'album, o di
-combinazioni varie; osserviamo però che i due metodi scelti sono sufficienti a
-sviluppare le funzionalità richieste dal resto del progetto e questo basta.
+combinazioni varie di tali parametri.
+
+Osserviamo però che i due metodi scelti sono sufficienti a popolare
+completamente le playlist, nonché a sviluppare le funzionalità richieste dal
+resto del progetto e questo basta.
 
 Un metodo di produzione consente di ottenere la fusione tra playlist
 
@@ -754,18 +766,20 @@ tutti i brani,
 sol.show('Playlist', 'fondi', 'dup')
 ```
 
-è banalmente ottenibile tramite l'iteratore della lista, a patto di proteggerlo
-avvolgendolo con
+è banalmente ottenibile tramite l'iteratore della lista, a patto di avvolgendolo
+con
 [`Collections.unmodifiableCollection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#unmodifiableCollection(java.util.Collection))
 (per proteggere la rappresentazione).
 
 Gli altri due richiedono uno sforzo in più e la loro implementazione sarà
-descritta nelle sezioni seguenti. Si potrebbe essere tentati dall'implementarli
-riempiendo dapprima una lista con gli elementi da iterare, restituendone quindi
+descritta nelle sezioni seguenti.
+
+Qui osserviamo solo che si potrebbe essere tentati dall'implementarli riempiendo
+dapprima una lista con gli elementi da iterare, restituendone quindi
 l'iteratore; tale soluzione è però non accettabile dal punto di vista
 dell'efficienza e vanifica i benefici derivanti dall'astrazione iterazione che
 consente di trattare gli elementi di una collezione uno alla volta (senza
-preallocare una copia di tutti gli elementi su cui iterare).
+preallocare una copia di tutti gli elementi su cui iterare)!
 
 #### Enumerare i brani di un dato album
 
