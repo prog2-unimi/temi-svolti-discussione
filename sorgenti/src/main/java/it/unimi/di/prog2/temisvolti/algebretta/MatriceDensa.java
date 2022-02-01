@@ -23,16 +23,35 @@ package it.unimi.di.prog2.temisvolti.algebretta;
 
 import java.util.Objects;
 
+/** Implementazione di una matrice densa. */
 public class MatriceDensa extends AbsMatrice {
 
   // SOF: rapcostr
+  /** I valori della matrice. */
   private final int[][] mat;
 
+  // AF: gli elementi dell'array corrispondono a quelli dela matrice RI: mat è
+  // non nullo ed ogni riga ha la stessa dimensione del numero di righe che è
+  // positivo
+
+  /**
+   * Costruttore che costruisce una matrice di dimensione data, con tutti i valori pari a 0.
+   *
+   * @param dim la dimensione
+   * @throws IllegalArgumentException se la dimensione non è positiva.
+   */
   private MatriceDensa(final int dim) {
     if (dim < 0) throw new IllegalArgumentException("La dimensione deve essere positiva.");
     mat = new int[dim][dim];
   }
 
+  /**
+   * Costruisce una matrice a partire da un array.
+   *
+   * @param mat l'array.
+   * @throws IllegalArgumentException se l'array è <code>null</code> o una delle sue righe ha un
+   *     numero di elementi divrso da quello delle altre righe, o il numero di righe è zero.
+   */
   public MatriceDensa(final int[][] mat) {
     Objects.requireNonNull(mat);
     if (mat.length == 0) throw new IllegalArgumentException("La dimensione deve essere positiva.");
@@ -45,6 +64,12 @@ public class MatriceDensa extends AbsMatrice {
   }
 
   // SOF: copy
+  /**
+   * Costruisce una matrice copiando i valori di una matrice data.
+   *
+   * @param A la matrice.
+   * @throws IllegalArgumentException se la matrice è <code>null</code>.
+   */
   public MatriceDensa(final Matrice A) {
     this(Objects.requireNonNull(A).dim());
     for (int i = 0; i < dim(); i++) for (int j = 0; j < dim(); j++) mat[i][j] = A.val(i, j);

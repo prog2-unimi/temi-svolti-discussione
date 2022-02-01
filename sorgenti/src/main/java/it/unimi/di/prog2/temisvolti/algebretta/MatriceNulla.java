@@ -23,11 +23,22 @@ package it.unimi.di.prog2.temisvolti.algebretta;
 
 import java.util.Objects;
 
+/** Classe che implementa una matrice nulla. */
 public class MatriceNulla extends AbsMatrice {
 
   // SOF: rapcostr
+  /** La dimensione della matrice. */
   private final int dim;
 
+  // AF: è la matrice nulla di dimensione pari a dim
+  // RI: dim > 0
+
+  /**
+   * Costruisce una matrice nulla data la sua dimensione.
+   *
+   * @param dim la dimensione.
+   * @throws IllegalArgumentException se la dimensione non è positiva.
+   */
   public MatriceNulla(final int dim) {
     if (dim < 0) throw new IllegalArgumentException();
     this.dim = dim;

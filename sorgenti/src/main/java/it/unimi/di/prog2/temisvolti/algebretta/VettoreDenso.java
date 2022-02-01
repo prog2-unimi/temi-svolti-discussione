@@ -24,16 +24,33 @@ package it.unimi.di.prog2.temisvolti.algebretta;
 import java.util.Arrays;
 import java.util.Objects;
 
+/** Classe che rappresenta un vettore denso. */
 public class VettoreDenso implements Vettore {
 
   // SOF: rapcostr
+  /** I valori del vettore. */
   private final int[] val;
 
-  public VettoreDenso(final int dim) {
+  // AF: l'i-esimo valore del vettore corrisponde all'i-esimo valore dell'array.
+  // RI: val non è null ed ha almeno un elemento.
+
+  /**
+   * Costruttore che costruisce un vettore di dimensione data, con tutti i valori pari a 0.
+   *
+   * @param dim la dimensione.
+   * @throws IllegalArgumentException se la dimensione non è positiva.
+   */
+  private VettoreDenso(final int dim) {
     if (dim <= 0) throw new IllegalArgumentException("La dimensione deve essere positiva.");
     val = new int[dim];
   }
 
+  /**
+   * Costruisce una vettore a partire da un array.
+   *
+   * @param val l'array.
+   * @throws IllegalArgumentException se la val è <code>null</code> o ha zero elementi.
+   */
   public VettoreDenso(final int[] val) {
     Objects.requireNonNull(val);
     if (val.length == 0)

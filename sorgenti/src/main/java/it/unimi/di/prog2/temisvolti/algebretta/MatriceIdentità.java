@@ -23,11 +23,22 @@ package it.unimi.di.prog2.temisvolti.algebretta;
 
 import java.util.Objects;
 
+/** Classe che implementa una matrice identità. */
 public class MatriceIdentità extends AbsMatrice {
 
   // SOF: rapcostr
+  /** La dimensione della matrice. */
   private final int dim;
 
+  // AF: è la matrice identità di dimensione pari a dim
+  // RI: dim > 0
+
+  /**
+   * Costruisce una matrice identità data la sua dimensione.
+   *
+   * @param dim la dimensione.
+   * @throws IllegalArgumentException se la dimensione non è positiva.
+   */
   public MatriceIdentità(final int dim) {
     if (dim < 0) throw new IllegalArgumentException("La dimensoine dev'essere positiva.");
     this.dim = dim;

@@ -21,23 +21,67 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package it.unimi.di.prog2.temisvolti.algebretta;
 
+/** Interfaccia che descrive il contratto di un vettore immutabile a valori interi. */
 public interface Vettore {
 
   // SOF: signatures
+  /**
+   * Restituisce la dimensione di questo vettore, è un valore sempre positivo.
+   *
+   * @return la dimensione.
+   */
   int dim();
 
+  /**
+   * Restituisce il valore di coordinata data di questo vettore.
+   *
+   * @param i la coordinata.
+   * @return il valore.
+   * @throws IndexOutOfBoundsException se la coordinata è negativa, o maggiore o uguale alla
+   *     dimensione di questo vettore.
+   */
   int val(final int i);
 
+  /**
+   * Restituisce un nuovo vettore ottenuto moltiplicando questo vettore per lo scalare dato.
+   *
+   * @param alpha lo scalare.
+   * @return il nuovo vettore.
+   */
   Vettore per(final int alpha);
 
+  /**
+   * Restituisce un nuovo vettore ottenuto sommando questo vettore al vettore dato.
+   *
+   * @param v il vettore.
+   * @return la nuova matrice.
+   * @throws NullPointerException se la il vettore è <code>null</code>.
+   * @throws IllegalArgumentException se i vettori non sono conformi.
+   */
   Vettore più(final Vettore v);
   // EOF: signatures
 
   // SOF: default
+  /**
+   * Restituisce <code>true</code> se e solo se il vettore dato ha la stessa dimensione di questo
+   * vettore.
+   *
+   * @param v il vettore.
+   * @return <code>true</code> se e solo se il vettore è conforme a questo.
+   * @throws NullPointerException se il vettore è <code>null</code>.
+   */
   default boolean conforme(final Vettore v) {
     return dim() == v.dim();
   }
 
+  /**
+   * Restituisce <code>true</code> se e solo se questo vettore dato ha la stessa dimensione della
+   * matrice data.
+   *
+   * @param M la matrice.
+   * @return <code>true</code> se e solo se questo vettore è conforme alla matrice.
+   * @throws NullPointerException se la matrice è <code>null</code>.
+   */
   default boolean conforme(final Matrice M) {
     return dim() == M.dim();
   }
