@@ -52,7 +52,7 @@ corrisponde alla stringa `2:01:35` e viceversa; per tale ragione potrebbe essere
 sensato avere modo di costruire una durata da una stringa del genere, o
 viceversa di ottenere la stringa così formata a partire da una durata. Per
 finire, può tornare utile essere in grado di effettuare *somme* e *sottrazioni*
-(purché il risultato sia positivo) tra durate.
+(purché il risultato non sia negativo) tra durate.
 
 Un esempio di (rappresentazione testuale di) un album è:
 
@@ -337,7 +337,7 @@ Per rappresentare questo legame sono possibili due scelte:
 
 Entrambe le scelte richiedono che il legame stabilito tra brano e album sia
 documentato nell'invariante di rappresentazione, costruito e preservato per
-tutta la durata di vita delle due entità. Osserviamo, peraltro, che bon è
+tutta la durata di vita delle due entità. Osserviamo, peraltro, che non è
 viceversa accettabile che questo legame sia stabilito solo nella playlist.
 
 Le due sezioni seguenti discutono molto approfonditamente le caratteristiche
@@ -653,7 +653,7 @@ dall'esterno) perché in caso di invocazione di `remove` solleverà una
 
 ### Le playlist
 
-Le playlist hanno parecchie somiglianze con gli album, sono entrambe elenchi di
+Le playlist hanno parecchie somiglianze con gli album, sono entrambi elenchi di
 brani (con una durata complessiva). Non bisogna però farsi trarre in inganno:
 
 - gli album sono immutabili, le playlist no;
