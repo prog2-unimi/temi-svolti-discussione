@@ -13,6 +13,10 @@ dependencies {
   testImplementation 'org.hamcrest:hamcrest:2.2'
 }
 
+test {
+  useJUnitPlatform()
+}
+
 javadoc {
   options.docTitle = 'Build Tool Example'
   options.overview = 'src/overview.html'
