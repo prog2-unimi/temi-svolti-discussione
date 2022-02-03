@@ -39,7 +39,7 @@ public abstract class Entry {
    * Costruisce una <em>entry</em> dato il <em>nome</em>.
    *
    * @param name il nome dell'entry.
-   * @throws IllegalArgumentException se il nome è <code>null</code> o vuoto.
+   * @throws IllegalArgumentException se il nome è {@code null} o vuoto.
    */
   // il costruttore è protetto perché sarà usato solo dalle sottoclassi
   protected Entry(final String name) {
@@ -53,7 +53,7 @@ public abstract class Entry {
   /**
    * Consente di sapere se una <em>entry</em> è una <em>directory</em>.
    *
-   * @return <code>true</code> sse l'entry è una directory.
+   * @return {@code true} sse l'entry è una directory.
    */
   public abstract boolean isDir();
 

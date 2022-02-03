@@ -49,8 +49,8 @@ public class MatriceDensa extends AbsMatrice {
    * Costruisce una matrice a partire da un array.
    *
    * @param mat l'array.
-   * @throws IllegalArgumentException se l'array è <code>null</code> o una delle sue righe ha un
-   *     numero di elementi divrso da quello delle altre righe, o il numero di righe è zero.
+   * @throws IllegalArgumentException se l'array è {@code null} o una delle sue righe ha un numero
+   *     di elementi divrso da quello delle altre righe, o il numero di righe è zero.
    */
   public MatriceDensa(final int[][] mat) {
     Objects.requireNonNull(mat);
@@ -68,7 +68,7 @@ public class MatriceDensa extends AbsMatrice {
    * Costruisce una matrice copiando i valori di una matrice data.
    *
    * @param A la matrice.
-   * @throws IllegalArgumentException se la matrice è <code>null</code>.
+   * @throws IllegalArgumentException se la matrice è {@code null}.
    */
   public MatriceDensa(final Matrice A) {
     this(Objects.requireNonNull(A).dim());

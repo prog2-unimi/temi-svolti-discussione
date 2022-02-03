@@ -74,7 +74,7 @@ public class Inventario implements Iterable<Giocattolo> {
    * Costruisce una copia dell'inventario dato.
    *
    * @param originale l'inventario di cui effettuare una copia.
-   * @throws NullPointerException se inventario è <code>null</code>.
+   * @throws NullPointerException se inventario è {@code null}.
    */
   public Inventario(final Inventario originale) {
     this(originale.inventario);
@@ -89,7 +89,7 @@ public class Inventario implements Iterable<Giocattolo> {
    * @param num il numero di giocattoli da aggiungere.
    * @param giocattolo il giocattolo da aggiungere.
    * @return il numero totale dei giocattoli del tipo appena aggiunto presenti nell'inventario.
-   * @throws NullPointerException se il giocattolo è <code>null</code>.
+   * @throws NullPointerException se il giocattolo è {@code null}.
    * @throws IllegalArgumentException se il numero non è positivo.
    */
   public int aggiungi(final int num, final Giocattolo giocattolo) {
@@ -107,7 +107,7 @@ public class Inventario implements Iterable<Giocattolo> {
    *
    * @param giocattolo il giocattolo da aggiungere.
    * @return il numero totale dei giocattoli del tipo appena aggiunto presenti nell'inventario.
-   * @throws NullPointerException se il giocattolo è <code>null</code>.
+   * @throws NullPointerException se il giocattolo è {@code null}.
    */
   public int aggiungi(final Giocattolo giocattolo) {
     return aggiungi(1, giocattolo);
@@ -122,7 +122,7 @@ public class Inventario implements Iterable<Giocattolo> {
    * @param giocattolo il giocattolo da rimuovere.
    * @return il numero rimanente di giocattoli del tipo appena rimosso ancora presenti
    *     nell'inventario.
-   * @throws NullPointerException se il giocattolo è <code>null</code>.
+   * @throws NullPointerException se il giocattolo è {@code null}.
    * @throws IllegalArgumentException se il numero non è positivo, o eccede il numero di giocattoli
    *     di quel tipo presenti nell'inventario.
    */
@@ -149,7 +149,7 @@ public class Inventario implements Iterable<Giocattolo> {
    * @param giocattolo il giocattolo.
    * @return il numero di giocattoli di tale tipo presenti nell'inventario, (eventualmente 0 se
    *     l'inventario non contiene il giocattolo indicato).
-   * @throws NullPointerException se giocattolo è <code>null</code>
+   * @throws NullPointerException se giocattolo è {@code null}
    */
   public int quantità(final Giocattolo giocattolo) {
     Objects.requireNonNull(giocattolo);

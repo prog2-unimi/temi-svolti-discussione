@@ -41,7 +41,7 @@ public class Directory extends Entry implements Iterable<Entry> {
    * Costruisce una <em>directory</em> vuota dato il suo <em>nome</em>
    *
    * @param name il nome.
-   * @throws IllegalArgumentException se il nome è <code>null</code> o vuoto.
+   * @throws IllegalArgumentException se il nome è {@code null} o vuoto.
    */
   public Directory(final String name) {
     super(name);
@@ -51,11 +51,11 @@ public class Directory extends Entry implements Iterable<Entry> {
   // SOF: methods
   /**
    * Restituisce l'<em>entry</em> dato il suo <em>nome</em> se presente (altrimenti restituisce
-   * <code>null</code>).
+   * {@code null}).
    *
    * @param name il nome dell'entry.
-   * @return l'entry di dato nome (o <code>null</code> se nessuna entry ha il nome dato).
-   * @throws NullPointerException se il <code>name</code> è <code>null</code>.
+   * @return l'entry di dato nome (o {@code null} se nessuna entry ha il nome dato).
+   * @throws NullPointerException se il {@code name} è {@code null}.
    */
   public Entry find(final String name) {
     Objects.requireNonNull(name);
@@ -67,7 +67,7 @@ public class Directory extends Entry implements Iterable<Entry> {
    * Aggiunge una <em>entry</em>.
    *
    * @param e l'entry da aggiungere.
-   * @throws NullPointerException se l'entry è <code>null</code>
+   * @throws NullPointerException se l'entry è {@code null}
    * @thrwos {@link FileAlreadyExistsException} se la directory contiene una entry con lo stesso
    *     nome di quella da aggiungere.
    */

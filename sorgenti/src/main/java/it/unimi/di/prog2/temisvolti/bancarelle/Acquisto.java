@@ -59,7 +59,7 @@ public class Acquisto implements Iterable<Bancarella> {
    * Costruisce un acquisto del dato giocattolo.
    *
    * @param giocattolo il giocattolo da acquistare.
-   * @throws NullPointerException se il giocattolo è <code>null</code>.
+   * @throws NullPointerException se il giocattolo è {@code null}.
    */
   public Acquisto(final Giocattolo giocattolo) {
     this.giocattolo = Objects.requireNonNull(giocattolo);
@@ -73,7 +73,7 @@ public class Acquisto implements Iterable<Bancarella> {
    *
    * @param num il numero di giocattoli.
    * @param bancarella la bancarella.
-   * @throws NullPointerException se la bancarella è <code>null</code>.
+   * @throws NullPointerException se la bancarella è {@code null}.
    * @throws IllegalArgumentException se il numero non è positivo, o la bancarella è già presente
    *     nella descrizione.
    */
@@ -116,7 +116,7 @@ public class Acquisto implements Iterable<Bancarella> {
    *
    * @param bancarella la bancarella.
    * @return la quantità di giocattoli da acquistare.
-   * @throws NullPointerException se la bancarella è <code>null</code>.
+   * @throws NullPointerException se la bancarella è {@code null}.
    * @throws NoSuchElementException se l'acquisto non riguarda la bancarella specificata.
    */
   public int quantità(final Bancarella bancarella) {

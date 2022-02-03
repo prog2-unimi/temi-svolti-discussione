@@ -49,7 +49,7 @@ public class VettoreDenso implements Vettore {
    * Costruisce una vettore a partire da un array.
    *
    * @param val l'array.
-   * @throws IllegalArgumentException se la val è <code>null</code> o ha zero elementi.
+   * @throws IllegalArgumentException se la val è {@code null} o ha zero elementi.
    */
   public VettoreDenso(final int[] val) {
     Objects.requireNonNull(val);

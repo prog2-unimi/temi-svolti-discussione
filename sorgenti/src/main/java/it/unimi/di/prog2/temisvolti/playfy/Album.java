@@ -83,8 +83,8 @@ public class Album implements Iterable<Album.Brano> {
      * Consente di determinare se questo brano appartiene al medesimo album di quello dato.
      *
      * @param album l'album del quale è da verificare l'appartenenza.
-     * @return <code>true</code> se e solo se questo brano appartiene all'album dato.
-     * @throws NullPointerException se l'album è <code>null</code>.
+     * @return {@code true} se e solo se questo brano appartiene all'album dato.
+     * @throws NullPointerException se l'album è {@code null}.
      */
     // SOF: appartiene
     public boolean appartiene(final Album album) {
@@ -95,8 +95,7 @@ public class Album implements Iterable<Album.Brano> {
     /**
      * Restituisce una rappresentazione di questo brano come stringa.
      *
-     * @param conAlbum se <code>true</code> alla rappresentazione viene aggiunto il titolo
-     *     dell'album.
+     * @param conAlbum se {@code true} alla rappresentazione viene aggiunto il titolo dell'album.
      * @return una rappresentazione testuale del brano.
      */
     // SOF: stringa
@@ -136,8 +135,8 @@ public class Album implements Iterable<Album.Brano> {
    * @param titolo titolo dell'album.
    * @param titoli lista dei titoli.
    * @param durate lista delle durate.
-   * @throws NullPointerException se uno dei parametri è <code>null</code>, o una delle liste
-   *     contine un <code>null</code>.
+   * @throws NullPointerException se uno dei parametri è {@code null}, o una delle liste contine un
+   *     {@code null}.
    * @throws IllegalArgumentException se il titolo dell'album è vuoto, il numero di titoli è diverso
    *     da quello delle durate, il numero di titoli e durate è 0, uno dei titoli è vuoto, una delle
    *     durate è 0.
@@ -201,7 +200,7 @@ public class Album implements Iterable<Album.Brano> {
    *
    * @param brano il brano.
    * @return la sua posizione nell'album, o 0 se il brano non appartiene all'album.
-   * @throws NullPointerException se il brano è <code>null</code>
+   * @throws NullPointerException se il brano è {@code null}
    */
   public int posizione(final Brano brano) {
     Objects.requireNonNull(brano, "Il brano non può essere null.");
@@ -217,16 +216,16 @@ public class Album implements Iterable<Album.Brano> {
    * pertanto se il valore della stringa `titolo` corrisponde al titolo di
    * almeno un brano di quest'album, questo metodo è tale che:
    * <ul>
-   * <li> <code>brano.titolo.equals(titolo)</code>,
-   * <li>per ogni <code>pos &lt; posizione(brano)</code> si ha che
-   * <code>!brano(pos).titolo.equals(titolo)</code>.
+   * <li> {@code brano.titolo.equals(titolo)},
+   * <li>per ogni {@code pos &lt; posizione(brano)} si ha che
+   * {@code !brano(pos).titolo.equals(titolo)}.
    * </ul>
    * dove <code>brano = brano(titolo)<code>.
    *
    * @param titolo il titolo.
    * @return un brano tale la posizione del primo brano con tale titolo, oppure
-   *         <code>null</code> se nessun brano ha tale titolo.
-   * @throws NullPointerException se il titolo è <code>null</code>.
+   *         {@code null} se nessun brano ha tale titolo.
+   * @throws NullPointerException se il titolo è {@code null}.
    */
   // SOF: titolo
   public Brano brano(final String titolo) {

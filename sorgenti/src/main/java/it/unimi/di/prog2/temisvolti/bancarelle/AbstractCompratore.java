@@ -37,13 +37,13 @@ public abstract class AbstractCompratore {
   /** L'elenco di bancarelle da cui effettuare gli acquisti. */
   protected final Set<Bancarella> bancarelle;
 
-  // RI: bancarelle non è e non contiene <code>null</code>,
+  // RI: bancarelle non è e non contiene {@code null},
 
   /**
    * Costruisce un compratore a partire dall'elenco di bancarelle da cui acquistare.
    *
    * @param bancarelle le bancarelle.
-   * @throws NullPointerException se le bancarello sono, o contengono, <code>null</code>.
+   * @throws NullPointerException se le bancarello sono, o contengono, {@code null}.
    * @throws IllegalArgumentException se l'insieme di bancarelle è vuoto.
    */
   public AbstractCompratore(final Set<Bancarella> bancarelle) {
@@ -63,7 +63,7 @@ public abstract class AbstractCompratore {
    *
    * @param giocattolo il giocattolo.
    * @return la somma delle quantità del giocattolo in tutte le bancarelle.
-   * @throws NullPointerException se il giocattolo è <code>null</code>.
+   * @throws NullPointerException se il giocattolo è {@code null}.
    */
   public int quantità(final Giocattolo giocattolo) {
     int quantità = 0;
@@ -79,7 +79,7 @@ public abstract class AbstractCompratore {
    * @param num il numero di giocattoli da comprare.
    * @param giocattolo il giocattolo da comprare.
    * @return un acquisto del giocattolo e quantità assegnate.
-   * @throws NullPointerException se il giocattolo è <code>null</code>.
+   * @throws NullPointerException se il giocattolo è {@code null}.
    * @throws IllegalArgumentException se il numero non è positivio, o eccede la disponibilità
    *     complessiva delle bancarelle.
    */

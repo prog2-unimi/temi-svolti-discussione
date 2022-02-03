@@ -50,7 +50,7 @@ public class Shell {
    * <p>La <em>directory corrente</em> è inzialmente la radice del <em>filesystem</em>.
    *
    * @param fs il filesystem
-   * @throws NullPointerException se il filesystem è <code>null</code>.
+   * @throws NullPointerException se il filesystem è {@code null}.
    */
   public Shell(final FileSystem fs) {
     this.fs = Objects.requireNonNull(fs, "Il filesystem non può essere null.");

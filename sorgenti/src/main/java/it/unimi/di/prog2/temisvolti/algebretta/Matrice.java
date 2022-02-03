@@ -56,7 +56,7 @@ public interface Matrice {
    *
    * @param B la matrice.
    * @return la nuova matrice.
-   * @throws NullPointerException se la matrice è <code>null</code>.
+   * @throws NullPointerException se la matrice è {@code null}.
    * @throws IllegalArgumentException se le matrici non sono conformi.
    */
   Matrice più(final Matrice B) throws NullPointerException, IllegalArgumentException;
@@ -66,7 +66,7 @@ public interface Matrice {
    *
    * @param B la matrice.
    * @return la nuova matrice.
-   * @throws NullPointerException se la matrice è <code>null</code>.
+   * @throws NullPointerException se la matrice è {@code null}.
    * @throws IllegalArgumentException se le matrici non sono conformi.
    */
   Matrice per(final Matrice B) throws NullPointerException, IllegalArgumentException;
@@ -78,7 +78,7 @@ public interface Matrice {
    *
    * @param v il vettore.
    * @return il risultato.
-   * @throws NullPointerException se il vettore è <code>null</code>.
+   * @throws NullPointerException se il vettore è {@code null}.
    * @throws IllegalArgumentException se le matrice e il vettore non sono confrmi.
    */
   Vettore per(final Vettore v) throws NullPointerException, IllegalArgumentException;
@@ -86,23 +86,23 @@ public interface Matrice {
 
   // SOF: default
   /**
-   * Restituisce <code>true</code> se e solo se il vettore dato ha la stessa dimensione di quetsa
+   * Restituisce {@code true} se e solo se il vettore dato ha la stessa dimensione di quetsa
    * matrice.
    *
    * @param v il vettore.
-   * @return <code>true</code> se e solo se il vettore è conforme a questa matrice.
-   * @throws NullPointerException se il vettore è <code>null</code>.
+   * @return {@code true} se e solo se il vettore è conforme a questa matrice.
+   * @throws NullPointerException se il vettore è {@code null}.
    */
   default boolean conforme(final Vettore v) throws NullPointerException {
     return dim() == v.dim();
   }
 
   /**
-   * Restituisce <code>true</code> se e solo se la matrice data ha la stessa dimensione di quetsa.
+   * Restituisce {@code true} se e solo se la matrice data ha la stessa dimensione di quetsa.
    *
    * @param M la matrice.
-   * @return <code>true</code> se e solo se la matrice è conforme a questa.
-   * @throws NullPointerException se la matrice è <code>null</code>.
+   * @return {@code true} se e solo se la matrice è conforme a questa.
+   * @throws NullPointerException se la matrice è {@code null}.
    */
   default boolean conforme(final Matrice M) throws NullPointerException {
     return dim() == M.dim();

@@ -53,7 +53,7 @@ public record Durata(int secondi) {
    * @param componente la componente dell'orario.
    * @param bounded se il il valore numerico della componente dev'essere minore di 60.
    * @return il valore numerico della componente.
-   * @throws NullPointerException se la componente è <code>null</code>.
+   * @throws NullPointerException se la componente è {@code null}.
    * @throws IllegalArgumentException se la componente è vuota, se non può essere converita in un
    *     intero, se il suo valore non è compreso tra 0 (compreso) e il bound specificato (escluso).
    */
@@ -83,7 +83,7 @@ public record Durata(int secondi) {
    *
    * @param durata la durata nel formato specificato.
    * @return una {@link Durata}.
-   * @throws NullPointerException se la durata è <code>null</code>.
+   * @throws NullPointerException se la durata è {@code null}.
    * @throws IllegalArgumentException se la stringa è nulla, o non è nel formato specificato.
    */
   // SOF: fab
@@ -112,7 +112,7 @@ public record Durata(int secondi) {
    *
    * @param altra la durata da sommare a questa.
    * @return la somma delle durate.
-   * @throws NullPointerException se la durata è <code>null</code>.
+   * @throws NullPointerException se la durata è {@code null}.
    */
   // SOF: sum
   public Durata somma(final Durata altra) {
@@ -126,7 +126,7 @@ public record Durata(int secondi) {
    *
    * @param altra la durata da sottrarre da questa.
    * @return la differenza delle durate.
-   * @throws NullPointerException se la durata è <code>null</code>.
+   * @throws NullPointerException se la durata è {@code null}.
    * @throws IllegalArgumentException se l'altra durata è maggiore di questa.
    */
   // SOF: diff

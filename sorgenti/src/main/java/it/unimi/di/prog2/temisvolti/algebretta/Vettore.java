@@ -55,7 +55,7 @@ public interface Vettore {
    *
    * @param v il vettore.
    * @return la nuova matrice.
-   * @throws NullPointerException se la il vettore è <code>null</code>.
+   * @throws NullPointerException se la il vettore è {@code null}.
    * @throws IllegalArgumentException se i vettori non sono conformi.
    */
   Vettore più(final Vettore v);
@@ -63,24 +63,24 @@ public interface Vettore {
 
   // SOF: default
   /**
-   * Restituisce <code>true</code> se e solo se il vettore dato ha la stessa dimensione di questo
+   * Restituisce {@code true} se e solo se il vettore dato ha la stessa dimensione di questo
    * vettore.
    *
    * @param v il vettore.
-   * @return <code>true</code> se e solo se il vettore è conforme a questo.
-   * @throws NullPointerException se il vettore è <code>null</code>.
+   * @return {@code true} se e solo se il vettore è conforme a questo.
+   * @throws NullPointerException se il vettore è {@code null}.
    */
   default boolean conforme(final Vettore v) {
     return dim() == v.dim();
   }
 
   /**
-   * Restituisce <code>true</code> se e solo se questo vettore dato ha la stessa dimensione della
-   * matrice data.
+   * Restituisce {@code true} se e solo se questo vettore dato ha la stessa dimensione della matrice
+   * data.
    *
    * @param M la matrice.
-   * @return <code>true</code> se e solo se questo vettore è conforme alla matrice.
-   * @throws NullPointerException se la matrice è <code>null</code>.
+   * @return {@code true} se e solo se questo vettore è conforme alla matrice.
+   * @throws NullPointerException se la matrice è {@code null}.
    */
   default boolean conforme(final Matrice M) {
     return dim() == M.dim();

@@ -56,7 +56,7 @@ public class Bancarella implements Iterable<Giocattolo> {
    * @param proprietario il proprietario.
    * @param inventario l'inventario.
    * @param listino il listino.
-   * @throws NullPointerException se uno dei parametri è <code>null</code>
+   * @throws NullPointerException se uno dei parametri è {@code null}
    * @throws IllegalArgumentException se l'inventario contiene un giocattolo il cui prezzo non è
    *     presente nel listino.
    */
@@ -82,7 +82,7 @@ public class Bancarella implements Iterable<Giocattolo> {
    * @param giocattolo il giocattolo da vendere.
    * @return il numero rimanente di giocattoli del tipo appena venduto ancora presenti
    *     nell'inventario della bancarella.
-   * @throws NullPointerException se il giocattolo è <code>null</code>.
+   * @throws NullPointerException se il giocattolo è {@code null}.
    * @throws IllegalArgumentException se il numero non è positivo, o eccede il numero di giocattoli
    *     di quel tipo presenti nell'inventario della bancarella.
    */
@@ -97,7 +97,7 @@ public class Bancarella implements Iterable<Giocattolo> {
    *
    * @param giocattolo il giocattolo.
    * @return il numero di giocattoli specificato nell'inventario della bancarella (eventualmente 0).
-   * @throws NullPointerException se giocattolo è <code>null</code>
+   * @throws NullPointerException se giocattolo è {@code null}
    */
   public int quantità(final Giocattolo giocattolo) {
     return inventario.quantità(giocattolo);
@@ -109,7 +109,7 @@ public class Bancarella implements Iterable<Giocattolo> {
    * @param num la quantità di cui determinare il prezzo.
    * @param giocattolo il giocattolo da vendere.
    * @return il prezzo della quantità indicata del giocattolo specificato.
-   * @throws NullPointerException se giocattolo è <code>null</code>
+   * @throws NullPointerException se giocattolo è {@code null}
    * @throws NoSuchElementException se al listino della bancarella non è noto il prezzo del
    *     giocattolo.
    */

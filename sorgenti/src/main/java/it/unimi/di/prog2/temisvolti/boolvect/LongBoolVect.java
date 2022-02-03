@@ -68,7 +68,7 @@ public class LongBoolVect extends AbstractBoolVect {
    * dell'argomento siano entrambi BoolVectLong.
    *
    * Per aumentare l'utilità dell'implementazine più specifica, il metodo
-   * sovrascrito usa uno stratagemma (<code>getClass()</code>) per indirizzare
+   * sovrascrito usa uno stratagemma ({@code getClass()}) per indirizzare
    * l'esecuzione all'implementazione più specifica se è il caso.
    *
    * Il metodo con l'implementazione specifica, a questo punto, non ha motivo di

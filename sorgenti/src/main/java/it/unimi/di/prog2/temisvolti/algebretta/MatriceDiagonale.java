@@ -38,7 +38,7 @@ public class MatriceDiagonale extends AbsMatrice {
    * Costruisce una matrice diagonale dati i valori lungo la diagonale.
    *
    * @param diagonale i valori.
-   * @throws NullPointerException se la diagonale è <code>null</code>
+   * @throws NullPointerException se la diagonale è {@code null}
    */
   public MatriceDiagonale(final int[] diagonale) {
     Objects.requireNonNull(diagonale);

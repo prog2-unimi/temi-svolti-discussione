@@ -38,7 +38,7 @@ public class Giocattolo {
    * @param nome il nome del giocattolo, deve essere una stringa non vuota.
    * @param materiale il materiale di cui è costituito il giocattolo, deve essere una stringa non
    *     vuota.
-   * @throws NullPointerException se nome o materiale sono <code>null</code>
+   * @throws NullPointerException se nome o materiale sono {@code null}
    * @throws IllegalArgumentException se nome o materiale sono stringhe vuote.
    */
   public Giocattolo(final String nome, final String materiale) {

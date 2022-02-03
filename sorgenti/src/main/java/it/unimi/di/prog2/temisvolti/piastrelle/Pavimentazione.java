@@ -41,7 +41,7 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
    */
   public static class Componente implements Rivestimento {
 
-    /** Il rivestimento di cui è costituito questo componente, non è mai <code>null</code>. */
+    /** Il rivestimento di cui è costituito questo componente, non è mai {@code null}. */
     public final Rivestimento rivestimento;
 
     /** La quantità di rivestimenti di cui è costituito il componente, è sempre positiva. */
@@ -80,8 +80,8 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
 
   // SOF: rappr
   /**
-   * La collezione di componenti compresi in questa pavimentazione, non è <code>nulL</code>, non è
-   * vuota e non contiene <code>null</code>.
+   * La collezione di componenti compresi in questa pavimentazione, non è {@code nulL}, non è vuota
+   * e non contiene {@code null}.
    */
   private final Collection<Componente> componenti;
 
@@ -89,7 +89,7 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
    * Costruisce una pavimentazione data la collezione di componenti che comprende.
    *
    * @param componenti una collezione di componenti.
-   * @throws NullPointerException se la collezione è o contiene <code>null</code>
+   * @throws NullPointerException se la collezione è o contiene {@code null}
    * @throws IllegalArgumentException se la collezione è vuota.
    */
   public Pavimentazione(final Collection<Componente> componenti) {

@@ -28,8 +28,8 @@ public interface BoolVect {
    * Restituisce la <em>dimensione</em> del BoolVect.
    *
    * <p>La <em>dimensione</em> del BoolVect è il più grande intero <em>d</em> tale che il valore di
-   * verità in posizione <em>d - 1</em> del BoolVect è è <code>true</code>. La <em>dimensione</em>
-   * ha un valore compreso tra 0 e la <em>taglia</em> (estremi inclusi).
+   * verità in posizione <em>d - 1</em> del BoolVect è è {@code true}. La <em>dimensione</em> ha un
+   * valore compreso tra 0 e la <em>taglia</em> (estremi inclusi).
    *
    * @return la dimensione.
    */
@@ -40,7 +40,7 @@ public interface BoolVect {
    *
    * <p>La <em>taglia</em> del BoolVect è il massimo valore possibile per la sua
    * <em>dimensione</em>; detto altrimenti, è il più grande intero <em>d</em> per cui il valore di
-   * verità di posizione <em>d - 1</em> può essere <code>true</code>. La <em>taglia</em> è un numero
+   * verità di posizione <em>d - 1</em> può essere {@code true}. La <em>taglia</em> è un numero
    * positivo sempre maggiore o uguale alla <em>dimensione</em> e vale convenzionalmente {@link
    * Integer#MAX_VALUE} se la <em>dimensione</em> non è limitata.
    *
@@ -48,14 +48,14 @@ public interface BoolVect {
    */
   int taglia();
 
-  /** Rende <code>false</code> tutti i valori di verità del BoolVect. */
+  /** Rende {@code false} tutti i valori di verità del BoolVect. */
   void pulisci();
 
   /**
    * Legge il valore di verità di posizione specificata.
    *
    * <p>Se la posizione eccede la dimensione (o la taglia) verrà restituito convenzionalmente il
-   * valore <code>false</code>.
+   * valore {@code false}.
    *
    * @param pos la posizione.
    * @return il valore di verità.
@@ -80,8 +80,8 @@ public interface BoolVect {
    *
    * <p>Si osservi che, sebbene la dimensione degli operandi può essere diversa, in nessun caso la
    * dimensione del risultato può eccedere la minore tra le due; l'<em>and</em> infatti è senz'altro
-   * <code>false</code> per tutte le posizioni che sono maggiori della dimensione di uno, o
-   * dell'altro, BoolVect booleano.
+   * {@code false} per tutte le posizioni che sono maggiori della dimensione di uno, o dell'altro,
+   * BoolVect booleano.
    *
    * @param other l'altro BoolVect.
    * @throws IndexOutOfBoundsException se la taglia di questo BoolVect è minore della dimensione del
@@ -95,8 +95,8 @@ public interface BoolVect {
    *
    * <p>Si osservi che se la dimensione dell'altro BoolVect è maggiore della taglia (e quindi
    * dimensione) di questo, allora il valore di verità in posizione pari alla dimensione dell'altro
-   * BoolVect sarà <code>true</code>, ma non potrà essere memorizzato in questo BoolVect per via
-   * della sua taglia.
+   * BoolVect sarà {@code true}, ma non potrà essere memorizzato in questo BoolVect per via della
+   * sua taglia.
    *
    * @param other l'altro BoolVect.
    * @throws IndexOutOfBoundsException se la taglia di questo BoolVect è minore della dimensione del
@@ -110,8 +110,8 @@ public interface BoolVect {
    *
    * <p>Si osservi che se la dimensione dell'altro BoolVect è maggiore della taglia (e quindi
    * dimensione) di questo, allora il valore di verità in posizione pari alla dimensione dell'altro
-   * BoolVect sarà <code>true</code>, ma non potrà essere memorizzato in questo BoolVect per via
-   * della sua taglia.
+   * BoolVect sarà {@code true}, ma non potrà essere memorizzato in questo BoolVect per via della
+   * sua taglia.
    *
    * @param other l'altro BoolVect.
    * @throws IndexOutOfBoundsException se la taglia di questo BoolVect è minore della dimensione del
@@ -123,8 +123,8 @@ public interface BoolVect {
    * Rende il BoolVect uguale ai valori di verità specificati nella stringa data.
    *
    * <p>La stringa può contenere qualunque carattere, l'<em>i</em>-esimo valore di verità del
-   * BoolVect sarà <code>true</code> se e solo se l'<em>i</em>-esimo carattere della stringa
-   * (contando da destra) è `V`.
+   * BoolVect sarà {@code true} se e solo se l'<em>i</em>-esimo carattere della stringa (contando da
+   * destra) è `V`.
    *
    * @param vals la stringa dei valori di verità.
    * @throws IndexOutOfBoundsException se la stringa è più lunga della taglia del BoolVect.

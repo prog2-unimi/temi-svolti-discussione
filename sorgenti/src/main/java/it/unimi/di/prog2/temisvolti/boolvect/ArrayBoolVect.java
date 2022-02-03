@@ -42,7 +42,7 @@ public class ArrayBoolVect extends AbstractBoolVect {
    * Costruisce un BoolVect di taglia assegnata.
    *
    * @param taglia la taglia
-   * @throws IllegalArgumentException se la taglia è <= 0.
+   * @throws IllegalArgumentException se la taglia non è positiva.
    */
   public ArrayBoolVect(final int taglia) {
     if (taglia <= 0) throw new IllegalArgumentException("La taglia deve essere positiva.");

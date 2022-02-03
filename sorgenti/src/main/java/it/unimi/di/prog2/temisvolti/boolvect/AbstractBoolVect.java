@@ -80,7 +80,7 @@ public abstract class AbstractBoolVect implements BoolVect {
    * componente a componente ottenuta dall'operatore booleano ai due BoolVect e ne salva il
    * risultato nel primo BoolVect.
    *
-   * <p>Gli argomenti non devono essere <code>null</code> (questa è una funzione parziale).
+   * <p>Gli argomenti non devono essere {@code null} (questa è una funzione parziale).
    *
    * @param op l'operatore booleano.
    * @param t il primo BoolVect.
@@ -113,10 +113,10 @@ public abstract class AbstractBoolVect implements BoolVect {
    *
    * <p>Se la dimensione del BoolVect è 0 restituisce "F", altrimenti restituisce una stringa che
    * comprende un numero di caratteri pari alla dimensione del BoolVect, detto altrimenti i valori
-   * di verità <code>false</code> che hanno posizione maggiore della dimensione non sono parte della
+   * di verità {@code false} che hanno posizione maggiore della dimensione non sono parte della
    * stringa; l'<em>i</em>-esimo carattere della stringa (contando da destra) è `V` se
-   * l'<em>i</em>-esima posizione del BoolVect ha valore di verità <code>true</code>, o `F` se vale
-   * <code>false</code>.
+   * l'<em>i</em>-esima posizione del BoolVect ha valore di verità {@code true}, o `F` se vale
+   * {@code false}.
    *
    * @return la stringa corrispondente a questo BoolVect.
    */

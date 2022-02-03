@@ -37,8 +37,8 @@ public class File extends Entry {
    *
    * @param name il nome.
    * @param size la dimensione.
-   * @throws IllegalArgumentException se la dimensione non è positiva, o il nome è <code>null</code>
-   *     o vuoto.
+   * @throws IllegalArgumentException se la dimensione non è positiva, o il nome è {@code null} o
+   *     vuoto.
    */
   public File(final String name, final int size) {
     super(name);

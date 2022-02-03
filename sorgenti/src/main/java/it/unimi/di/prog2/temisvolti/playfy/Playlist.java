@@ -48,7 +48,7 @@ public class Playlist implements Iterable<Album.Brano> {
    * Costruisce una playlist di nome dato.
    *
    * @param nome il nome.
-   * @throws NullPointerException se il nome è <code>null</code>.
+   * @throws NullPointerException se il nome è {@code null}.
    * @throws IllegalArgumentException se il nome è vuoto.
    */
   public Playlist(final String nome) {
@@ -69,7 +69,7 @@ public class Playlist implements Iterable<Album.Brano> {
    * Cambia il nome della playlst.
    *
    * @param nome il nome.
-   * @throws NullPointerException se il nome è <code>null</code>.
+   * @throws NullPointerException se il nome è {@code null}.
    * @throws IllegalArgumentException se il nome è vuoto.
    */
   public void nome(final String nome) {
@@ -122,7 +122,7 @@ public class Playlist implements Iterable<Album.Brano> {
    *
    * @param brano il brano.
    * @return la sua posizione nella playlist, o 0 se il brano non appartiene all'album.
-   * @throws NullPointerException se il brano è <code>null</code>
+   * @throws NullPointerException se il brano è {@code null}
    */
   public int posizione(final Album.Brano brano) {
     return 1 + brani.indexOf(Objects.requireNonNull(brano, "Il brano non può essere null."));
@@ -134,7 +134,7 @@ public class Playlist implements Iterable<Album.Brano> {
    * Aggiunge il brano dato alla playlist.
    *
    * @param brano il brano.
-   * @throws NullPointerException se il brano è <code>null</code>.
+   * @throws NullPointerException se il brano è {@code null}.
    */
   public void accoda(final Album.Brano brano) {
     brani.add(Objects.requireNonNull(brano, "Il brano non può essere null."));
@@ -145,7 +145,7 @@ public class Playlist implements Iterable<Album.Brano> {
    * Rimuove il brano dato dalla playlist.
    *
    * @param brano il brano.
-   * @throws NullPointerException se il brano è <code>null</code>.
+   * @throws NullPointerException se il brano è {@code null}.
    */
   public void rimuovi(final Album.Brano brano) {
     if (brani.remove(Objects.requireNonNull(brano, "Il brano non può essere null.")))
@@ -165,7 +165,7 @@ public class Playlist implements Iterable<Album.Brano> {
    * @param nome il nome della playlist risultante.
    * @param altra l'altra playlist con cui fondere questa.
    * @return la playlist risultante.
-   * @throws NullPointerException se il nome, o l'altra playlist sono <code>null</code>.
+   * @throws NullPointerException se il nome, o l'altra playlist sono {@code null}.
    * @throws IllegalArgumentException se il nome è vuoto.
    */
   public Playlist fondi(final String nome, final Playlist altra) {
@@ -187,7 +187,7 @@ public class Playlist implements Iterable<Album.Brano> {
    *
    * @param album l'album.
    * @return l'iteartore.
-   * @throws NullPointerException se l'album è <code>null</code>.
+   * @throws NullPointerException se l'album è {@code null}.
    */
   public Iterator<Album.Brano> brani(final Album album) {
     Objects.requireNonNull(album, "L'album non può essere null.");
