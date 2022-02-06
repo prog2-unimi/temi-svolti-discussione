@@ -21,46 +21,40 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package it.unimi.di.prog2.temisvolti.boolvect;
 
-/** Classe di metodi di utilità statici che implementano gli operatori logici and, or e xor. */
+/** Classe di singoletti che implementano gli operatori logici and, or e xor. */
 public class BooleanOperators {
 
   private BooleanOperators() {} // rende la classe non istanziabile
-
-  /** Singoletto dell'operatore logico and. */
-  public static BooleanOperator AND = new And();
-
-  /** Singoletto dell'operatore logico or. */
-  public static BooleanOperator OR = new Or();
-
-  /** Singoletto dell'operatore logico xor. */
-  public static BooleanOperator XOR = new Xor();
 
   /** Interfaccia che descrive un operatore logico binario. */
   public interface BooleanOperator {
     boolean apply(final boolean a, final boolean b);
   }
 
-  /** Implementazione dell'operatore logico and. */
-  private static class And implements BooleanOperator {
-    @Override
-    public boolean apply(boolean a, boolean b) {
-      return a & b;
-    }
-  }
+  /** Singoletto dell'operatore logico and. */
+  public static BooleanOperator AND =
+      new BooleanOperator() {
+        @Override
+        public boolean apply(boolean a, boolean b) {
+          return a & b;
+        }
+      };
 
-  /** Implementazione dell'operatore logico or. */
-  private static class Or implements BooleanOperator {
-    @Override
-    public boolean apply(boolean a, boolean b) {
-      return a | b;
-    }
-  }
+  /** Singoletto dell'operatore logico or. */
+  public static BooleanOperator OR =
+      new BooleanOperator() {
+        @Override
+        public boolean apply(boolean a, boolean b) {
+          return a | b;
+        }
+      };
 
-  /** Implementazione dell'operatore logico xor. */
-  private static class Xor implements BooleanOperator {
-    @Override
-    public boolean apply(boolean a, boolean b) {
-      return a ^ b;
-    }
-  }
+  /** Singoletto dell'operatore logico xor. */
+  public static BooleanOperator XOR =
+      new BooleanOperator() {
+        @Override
+        public boolean apply(boolean a, boolean b) {
+          return a ^ b;
+        }
+      };
 }

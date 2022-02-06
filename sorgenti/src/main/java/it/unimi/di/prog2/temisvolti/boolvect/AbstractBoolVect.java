@@ -21,6 +21,8 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package it.unimi.di.prog2.temisvolti.boolvect;
 
+import java.util.Objects;
+
 /**
  * Classe astratta che provvede l'implementazione di alcuni dei metodi dell'inferfaccia {@link
  * BoolVect}.
@@ -95,17 +97,17 @@ public abstract class AbstractBoolVect implements BoolVect {
 
   @Override
   public void and(final BoolVect other) throws IndexOutOfBoundsException {
-    componenteAComponente(BooleanOperators.AND, this, other);
+    componenteAComponente(BooleanOperators.AND, this, Objects.requireNonNull(other, "L'argomento non può essere null."));
   }
 
   @Override
   public void or(final BoolVect other) throws IndexOutOfBoundsException {
-    componenteAComponente(BooleanOperators.OR, this, other);
+    componenteAComponente(BooleanOperators.OR, this, Objects.requireNonNull(other, "L'argomento non può essere null."));
   }
 
   @Override
   public void xor(final BoolVect other) throws IndexOutOfBoundsException {
-    componenteAComponente(BooleanOperators.XOR, this, other);
+    componenteAComponente(BooleanOperators.XOR, this, Objects.requireNonNull(other, "L'argomento non può essere null."));
   }
 
   /**

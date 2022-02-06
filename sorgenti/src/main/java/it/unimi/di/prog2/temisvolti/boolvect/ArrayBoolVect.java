@@ -35,8 +35,8 @@ public class ArrayBoolVect extends AbstractBoolVect {
   // RI: * 0 <= dimensione <= valore.length
   //     * valore[dimensione - 1] == true && valore[p] == false se p >= dimensione
   //     * valore != null
-  // AF: BoolVect di taglia valore.length il cui i--esimo valore di verità è l'i-esimo elemento di
-  // valore
+  // AF: BoolVect di taglia valore.length il cui i-esimo valore di verità è l'i-esimo
+  //     elemento dell'array valore
 
   /**
    * Costruisce un BoolVect di taglia assegnata.
@@ -78,7 +78,7 @@ public class ArrayBoolVect extends AbstractBoolVect {
   public void scriviParziale(final int pos, final boolean val) {
     valore[pos] = val;
     if (val && pos >= dimensione) dimensione = pos + 1;
-    if (!val && pos == dimensione - 1)
+    else if (!val && pos == dimensione - 1)
       while (dimensione > 0 && !valore[dimensione - 1]) dimensione--;
   }
 

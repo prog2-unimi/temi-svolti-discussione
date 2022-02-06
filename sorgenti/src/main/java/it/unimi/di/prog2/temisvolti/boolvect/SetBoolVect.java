@@ -21,6 +21,7 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package it.unimi.di.prog2.temisvolti.boolvect;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -60,39 +61,29 @@ public class SetBoolVect extends AbstractBoolVect {
     else positions.remove(pos);
   }
 
-  /* Per una discussione dei seguenti sei metodi si veda il sorgente di {@link LongBoolVect}. */
-
   @Override
   public void and(BoolVect other) throws IndexOutOfBoundsException {
-    if (other.getClass() == SetBoolVect.class) andSet((SetBoolVect) other);
+    Objects.requireNonNull(other, "L'argomento non può essere null.");
+    if (other instanceof SetBoolVect) positions.retainAll(((SetBoolVect) other).positions);
     else super.and(other);
-  }
-
-  public void andSet(SetBoolVect other) throws IndexOutOfBoundsException {
-    positions.retainAll(other.positions);
   }
 
   @Override
   public void or(BoolVect other) throws IndexOutOfBoundsException {
-    if (other.getClass() == SetBoolVect.class) orSet((SetBoolVect) other);
+    Objects.requireNonNull(other, "L'argomento non può essere null.");
+    if (other instanceof SetBoolVect) positions.addAll(((SetBoolVect) other).positions);
     else super.or(other);
-  }
-
-  public void orSet(SetBoolVect other) throws IndexOutOfBoundsException {
-    positions.addAll(other.positions);
   }
 
   @Override
   public void xor(BoolVect other) throws IndexOutOfBoundsException {
-    if (other.getClass() == SetBoolVect.class) xorSet((SetBoolVect) other);
-    else super.xor(other);
-  }
-
-  public void xorSet(SetBoolVect other) throws IndexOutOfBoundsException {
-    Set<Integer> intersection = new TreeSet<>(positions);
-    intersection.retainAll(other.positions);
-    positions.addAll(other.positions);
-    positions.removeAll(intersection);
+    Objects.requireNonNull(other, "L'argomento non può essere null.");
+    if (other instanceof SetBoolVect) {
+      Set<Integer> intersection = new TreeSet<>(positions);
+      intersection.retainAll(((SetBoolVect) other).positions);
+      positions.addAll(((SetBoolVect) other).positions);
+      positions.removeAll(intersection);
+    } else super.xor(other);
   }
 
   @Override
