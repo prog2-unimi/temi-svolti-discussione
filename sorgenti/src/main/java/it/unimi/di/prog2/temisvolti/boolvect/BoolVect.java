@@ -68,9 +68,8 @@ public interface BoolVect {
    *
    * @param pos la posizione.
    * @param val il valore di verità
-   * @throws IndexOutOfBoundsException se la posizione è negativa, o il valore è
-   *                                   <code>true<code> e la posizione è maggiore
-   *                                   o uguale alla taglia.
+   * @throws IndexOutOfBoundsException se la posizione è negativa, o il valore è {@code true} e la
+   *     posizione è maggiore o uguale alla taglia.
    */
   void scrivi(final int pos, final boolean val) throws IndexOutOfBoundsException;
 
@@ -101,6 +100,7 @@ public interface BoolVect {
    * @param other l'altro BoolVect.
    * @throws IndexOutOfBoundsException se la taglia di questo BoolVect è minore della dimensione del
    *     risultato.
+   * @throws NullPointerException se l'aromento è {@code null}.
    */
   void or(final BoolVect other) throws IndexOutOfBoundsException;
 
@@ -116,6 +116,7 @@ public interface BoolVect {
    * @param other l'altro BoolVect.
    * @throws IndexOutOfBoundsException se la taglia di questo BoolVect è minore della dimensione del
    *     risultato.
+   * @throws NullPointerException se l'aromento è {@code null}.
    */
   void xor(final BoolVect other) throws IndexOutOfBoundsException;
 
@@ -128,6 +129,7 @@ public interface BoolVect {
    *
    * @param vals la stringa dei valori di verità.
    * @throws IndexOutOfBoundsException se la stringa è più lunga della taglia del BoolVect.
+   * @throws NullPointerException se l'aromento è {@code null}.
    */
   default void daString(final String vals) throws IndexOutOfBoundsException {
     pulisci();

@@ -211,20 +211,21 @@ public class Album implements Iterable<Album.Brano> {
   /**
    * Restituisce il primo brano con un dato titolo.
    *
-   * <p>
-   * Non è garantito che l'album contenga un solo brano con un dato titolo;
-   * pertanto se il valore della stringa `titolo` corrisponde al titolo di
-   * almeno un brano di quest'album, questo metodo è tale che:
+   * <p>Non è garantito che l'album contenga un solo brano con un dato titolo; pertanto se il valore
+   * della stringa `titolo` corrisponde al titolo di almeno un brano di quest'album, questo metodo è
+   * tale che:
+   *
    * <ul>
-   * <li> {@code brano.titolo.equals(titolo)},
-   * <li>per ogni {@code pos &lt; posizione(brano)} si ha che
-   * {@code !brano(pos).titolo.equals(titolo)}.
+   *   <li>{@code brano.titolo.equals(titolo)},
+   *   <li>per ogni {@code pos &lt; posizione(brano)} si ha che {@code
+   *       !brano(pos).titolo.equals(titolo)}.
    * </ul>
-   * dove <code>brano = brano(titolo)<code>.
+   *
+   * dove {@code brano = brano(titolo)}.
    *
    * @param titolo il titolo.
-   * @return un brano tale la posizione del primo brano con tale titolo, oppure
-   *         {@code null} se nessun brano ha tale titolo.
+   * @return un brano tale la posizione del primo brano con tale titolo, oppure {@code null} se
+   *     nessun brano ha tale titolo.
    * @throws NullPointerException se il titolo è {@code null}.
    */
   // SOF: titolo

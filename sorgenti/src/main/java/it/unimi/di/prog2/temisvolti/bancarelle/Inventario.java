@@ -59,8 +59,8 @@ public class Inventario implements Iterable<Giocattolo> {
    * debba contenere l'inventario.
    *
    * @param inventario una mappa tra giocattoli e le loro numerosità.
-   * @throws NullPointerException se inventario è null, o contiene chiavi o valori uguali a <code>
-   *     null</code>.
+   * @throws NullPointerException se inventario è null, o contiene chiavi o valori uguali a {@code
+   *     null}.
    * @throws IllegalArgumentException se uno dei valori non è positivo.
    */
   public Inventario(final Map<Giocattolo, Integer> inventario) {

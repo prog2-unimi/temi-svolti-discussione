@@ -54,8 +54,8 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
      *
      * @param quantità la quantità.
      * @param rivestimento il rivestimento.
-     * @throws IllegalArgumentException se la quantità non è positiva, o il rivestimento è <code>
-     *     null</code>.
+     * @throws IllegalArgumentException se la quantità non è positiva, o il rivestimento è {@code
+     *     null}.
      */
     public Componente(final int quantità, final Rivestimento rivestimento) {
       this.rivestimento = Objects.requireNonNull(rivestimento);
