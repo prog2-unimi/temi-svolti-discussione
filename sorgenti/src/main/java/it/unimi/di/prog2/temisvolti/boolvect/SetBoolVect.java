@@ -62,21 +62,21 @@ public class SetBoolVect extends AbstractBoolVect {
   }
 
   @Override
-  public void and(BoolVect other) throws IndexOutOfBoundsException {
+  public void and(BoolVect other) throws NullPointerException {
     Objects.requireNonNull(other, "L'argomento non può essere null.");
     if (other instanceof SetBoolVect) positions.retainAll(((SetBoolVect) other).positions);
     else super.and(other);
   }
 
   @Override
-  public void or(BoolVect other) throws IndexOutOfBoundsException {
+  public void or(BoolVect other) throws NullPointerException, IllegalArgumentException {
     Objects.requireNonNull(other, "L'argomento non può essere null.");
     if (other instanceof SetBoolVect) positions.addAll(((SetBoolVect) other).positions);
     else super.or(other);
   }
 
   @Override
-  public void xor(BoolVect other) throws IndexOutOfBoundsException {
+  public void xor(BoolVect other) throws NullPointerException, IllegalArgumentException {
     Objects.requireNonNull(other, "L'argomento non può essere null.");
     if (other instanceof SetBoolVect) {
       Set<Integer> intersection = new TreeSet<>(positions);

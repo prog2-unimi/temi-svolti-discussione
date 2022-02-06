@@ -159,3 +159,79 @@ caso di BoolVect sparsi, su dimensioni molto maggiori di quelle dell'esempio
 precedente!
 
 ## La soluzione
+
+Per prima cosa occorre progettare una *interfaccia* che rappresenti le
+competenze dei BoolVect; valuteremo in un secondo momento se è il caso di
+interporre una *classe astratta* tra questa interfaccia e le implementazioni
+concrete.
+
+### L'interfaccia BoolVect
+
+Le competenze informalmente descritte nella traccia sono:
+
+* indicare la propria *taglia*,
+* indicare la propria *dimensione*,
+* *leggere* il valore di verità di data posizione,
+* *scrivere* il valore di verità dato nella posizione assegnata,
+* effettuare l'*and* con un altro vettore,
+* effettuare l'*or* con un altro vettore e
+* effettuare l'*xor* con un altro vettore.
+
+Per tradurre questa descrizione informale in una specifica precisa, descritta da
+una interfaccia, è necessario fare alcune scelte soffermandosi a riflettere
+sulle conseguenze di esse.
+
+Per quanto riguarda le prime tre competenze, essere saranno rappresentate da tre
+metodi osservazionali
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('BoolVect', 'obs')
+```
+
+Unica osservazione degna di nota è l'eccezione sollevata dal metodo di lettura,
+che accadrà senz'altro se la posizione richiesta è negativa; riguardo alle
+posizioni che eccedono la dimensione è plausibile che tale funzione restituisca
+il valore `false`. Si può decidere cosa fare nel caso in cui sia addirittura
+ecceduta la taglia (sollevare eccezione, o restituire sempre `false`).
+
+Maggior attenzione è richiesta dalle competenze che possono produrre cambiamento
+nel BoolVect; è necessario riflettere sulla mutabilità dei BoolVect:
+l'operazione di scrittura può essere pensata sia come una mutazione dello stato,
+che come una produzione che restituisca un nuovo vettore ad ogni invocazione. La
+seconda scelta appare però troppo onerosa: una sequenza di invocazioni su un
+BoolVect di dimensione elevata produrrebbe una grande quantità di valori
+intermedi di grandi dimensioni, probabilmente destinati ad avere una vita molto
+corta. Appare quindi più ragionevole che l'interfaccia sia pensata per la
+mutabilità.
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('BoolVect', 'write')
+```
+
+L'eccezione in questo caso accade sia se la posizione è negativa che se si tenta
+di scrivere un valore di verità vero in posizione maggiore o uguale alla taglia:
+la scrittura di tale valore infatti determinerebbe l'aumento della dimensione
+oltre il valore della taglia (che è impossibile per definizione)…
+
+Scelta la mutabilità, anche le operazioni booleane sono specificate in modo che
+modifichino il BoolVect su cui sono invocate rendendolo uguale al risultato
+dell'operazione.
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('BoolVect', 'bop')
+```
+
+A prescindere dalle ovvie eccezioni legate alla nullità dell'argomento, è
+necessario tener conto di un problema legato alla taglia: non è detto che il
+risultato possa sempre essere rappresentato modificando il primo operando.
+
+Con un po' di riflessione risulta evidente che i metodi relativi alle operazioni
+booleane dovrebbero sollevare eccezione quando la taglia del primo operando è
+minore della dimensione del risultato: ad esempio l'or tra un BoolVect di taglia
+2 e uno di dimensione 3 produce un risultato di dimensione 3, che evidentemente
+non può essere memorizzato nel primo operando di taglia 2. Questo certamente non
+può accadere nel caso dell'and (in cui il risultato non può in nessun caso avere
+dimensione maggiore di quella del primo operando).

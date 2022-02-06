@@ -89,25 +89,44 @@ public abstract class AbstractBoolVect implements BoolVect {
    * @param u il secondo BoolVect.
    */
   private static void componenteAComponente(
-      BooleanOperators.BooleanOperator op, BoolVect t, BoolVect u) {
+      BooleanOperators.BooleanOperator op, BoolVect t, BoolVect u) throws IllegalArgumentException {
     final int maxDimension = Math.max(t.dimensione(), u.dimensione());
-    for (int pos = 0; pos <= maxDimension; pos++)
-      t.scrivi(pos, op.apply(t.leggi(pos), u.leggi(pos)));
+      for (int pos = 0; pos <= maxDimension; pos++)
+        t.scrivi(pos, op.apply(t.leggi(pos), u.leggi(pos)));
   }
 
   @Override
-  public void and(final BoolVect other) throws IndexOutOfBoundsException {
-    componenteAComponente(BooleanOperators.AND, this, Objects.requireNonNull(other, "L'argomento non può essere null."));
+  public void and(final BoolVect other) throws NullPointerException {
+    componenteAComponente(
+        BooleanOperators.AND,
+        this,
+        Objects.requireNonNull(other, "L'argomento non può essere null."));
   }
 
   @Override
-  public void or(final BoolVect other) throws IndexOutOfBoundsException {
-    componenteAComponente(BooleanOperators.OR, this, Objects.requireNonNull(other, "L'argomento non può essere null."));
+  public void or(final BoolVect other) throws NullPointerException, IllegalArgumentException {
+    try {
+      componenteAComponente(
+          BooleanOperators.OR,
+          this,
+          Objects.requireNonNull(other, "L'argomento non può essere null."));
+    } catch (IndexOutOfBoundsException e) {
+      throw new IllegalArgumentException(
+          "La taglia di questo vettore è minore della dimensione del risultato.");
+    }
   }
 
   @Override
-  public void xor(final BoolVect other) throws IndexOutOfBoundsException {
-    componenteAComponente(BooleanOperators.XOR, this, Objects.requireNonNull(other, "L'argomento non può essere null."));
+  public void xor(final BoolVect other) throws NullPointerException, IllegalArgumentException {
+    try {
+      componenteAComponente(
+          BooleanOperators.XOR,
+          this,
+          Objects.requireNonNull(other, "L'argomento non può essere null."));
+    } catch (IndexOutOfBoundsException e) {
+      throw new IllegalArgumentException(
+          "La taglia di questo vettore è minore della dimensione del risultato.");
+    }
   }
 
   /**

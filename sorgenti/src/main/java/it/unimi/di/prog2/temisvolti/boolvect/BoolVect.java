@@ -24,6 +24,7 @@ package it.unimi.di.prog2.temisvolti.boolvect;
 /** Interfaccia che stabilisce li contratto dei BoolVect. */
 public interface BoolVect {
 
+  // SOF: obs
   /**
    * Restituisce la <em>dimensione</em> del BoolVect.
    *
@@ -48,9 +49,6 @@ public interface BoolVect {
    */
   int taglia();
 
-  /** Rende {@code false} tutti i valori di verità del BoolVect. */
-  void pulisci();
-
   /**
    * Legge il valore di verità di posizione specificata.
    *
@@ -62,7 +60,9 @@ public interface BoolVect {
    * @throws IndexOutOfBoundsException se la posizione è negativa.
    */
   boolean leggi(final int pos) throws IndexOutOfBoundsException;
+  // EOF: obs
 
+  // SOF: write
   /**
    * Scrive il valore di verità dato nella posizione specificata.
    *
@@ -72,7 +72,9 @@ public interface BoolVect {
    *     posizione è maggiore o uguale alla taglia.
    */
   void scrivi(final int pos, final boolean val) throws IndexOutOfBoundsException;
+  // EOF: write
 
+  // SOF: bop
   /**
    * Rende questo BoolVect uguale all'<em>and componente a componente</em> di questo BoolVect e
    * quello specificato.
@@ -83,10 +85,9 @@ public interface BoolVect {
    * BoolVect booleano.
    *
    * @param other l'altro BoolVect.
-   * @throws IndexOutOfBoundsException se la taglia di questo BoolVect è minore della dimensione del
-   *     risultato.
+   * @throws NullPointerException se l'agromento è {@code null}.
    */
-  void and(final BoolVect other) throws IndexOutOfBoundsException;
+  void and(final BoolVect other) throws NullPointerException;
 
   /**
    * Rende questo BoolVect uguale all'<em>or componente a componente</em> di questo BoolVect e
@@ -98,11 +99,11 @@ public interface BoolVect {
    * sua taglia.
    *
    * @param other l'altro BoolVect.
-   * @throws IndexOutOfBoundsException se la taglia di questo BoolVect è minore della dimensione del
+   * @throws IllegalArgumentException se la taglia di questo BoolVect è minore della dimensione del
    *     risultato.
-   * @throws NullPointerException se l'aromento è {@code null}.
+   * @throws NullPointerException se l'agromento è {@code null}.
    */
-  void or(final BoolVect other) throws IndexOutOfBoundsException;
+  void or(final BoolVect other) throws NullPointerException, IllegalArgumentException;
 
   /**
    * Rende questo BoolVect uguale allo <em>xor componente a componente</em> di questo BoolVect e
@@ -114,11 +115,15 @@ public interface BoolVect {
    * sua taglia.
    *
    * @param other l'altro BoolVect.
-   * @throws IndexOutOfBoundsException se la taglia di questo BoolVect è minore della dimensione del
+   * @throws IllegalArgumentException se la taglia di questo BoolVect è minore della dimensione del
    *     risultato.
-   * @throws NullPointerException se l'aromento è {@code null}.
+   * @throws NullPointerException se l'agromento è {@code null}.
    */
-  void xor(final BoolVect other) throws IndexOutOfBoundsException;
+  void xor(final BoolVect other) throws NullPointerException, IllegalArgumentException;
+  // EOF: bop
+
+  /** Rende {@code false} tutti i valori di verità del BoolVect. */
+  void pulisci();
 
   /**
    * Rende il BoolVect uguale ai valori di verità specificati nella stringa data.
@@ -128,10 +133,10 @@ public interface BoolVect {
    * destra) è `V`.
    *
    * @param vals la stringa dei valori di verità.
-   * @throws IndexOutOfBoundsException se la stringa è più lunga della taglia del BoolVect.
-   * @throws NullPointerException se l'aromento è {@code null}.
+   * @throws IllegalArgumentException se la stringa è più lunga della taglia del BoolVect.
+   * @throws NullPointerException se l'agromento è {@code null}.
    */
-  default void daString(final String vals) throws IndexOutOfBoundsException {
+  default void daString(final String vals) throws NullPointerException, IllegalArgumentException {
     pulisci();
     final int dim = vals.length();
     for (int i = 0; i < dim; i++) scrivi(i, vals.charAt(dim - i - 1) == 'V');

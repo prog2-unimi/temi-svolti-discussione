@@ -59,21 +59,21 @@ public class LongBoolVect extends AbstractBoolVect {
   }
 
   @Override
-  public void and(BoolVect other) throws IndexOutOfBoundsException {
+  public void and(BoolVect other) throws NullPointerException {
     Objects.requireNonNull(other, "L'argomento non può essere null.");
     if (other instanceof LongBoolVect) bits &= ((LongBoolVect) other).bits;
     else super.and(other);
   }
 
   @Override
-  public void or(BoolVect other) throws IndexOutOfBoundsException {
+  public void or(BoolVect other) throws NullPointerException, IllegalArgumentException {
     Objects.requireNonNull(other, "L'argomento non può essere null.");
     if (other instanceof LongBoolVect) bits |= ((LongBoolVect) other).bits;
     else super.or(other);
   }
 
   @Override
-  public void xor(BoolVect other) throws IndexOutOfBoundsException {
+  public void xor(BoolVect other) throws NullPointerException, IllegalArgumentException {
     Objects.requireNonNull(other, "L'argomento non può essere null.");
     if (other instanceof LongBoolVect) bits ^= ((LongBoolVect) other).bits;
     else super.xor(other);
