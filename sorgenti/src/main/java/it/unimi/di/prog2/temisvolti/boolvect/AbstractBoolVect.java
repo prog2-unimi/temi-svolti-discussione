@@ -46,6 +46,7 @@ import java.util.Objects;
  */
 public abstract class AbstractBoolVect implements BoolVect {
 
+  // SOF: leggiscrivi
   /**
    * Funzione parziale che restituisce il valore di verità di posizione specificata.
    *
@@ -74,30 +75,14 @@ public abstract class AbstractBoolVect implements BoolVect {
     if (pos >= taglia() && val)
       throw new IndexOutOfBoundsException(
           "Non è possibile scrivere un valore di verità vero in posizione maggiore o uguale alla taglia.");
-    if (pos < taglia()) scriviParziale(pos, val);
+    scriviParziale(pos, val);
   }
+  // EOF: leggiscrivi
 
-  /**
-   * Funzione parziale che, dato un operatore booleano e due BoolVect applica l'operazione
-   * componente a componente ottenuta dall'operatore booleano ai due BoolVect e ne salva il
-   * risultato nel primo BoolVect.
-   *
-   * <p>Gli argomenti non devono essere {@code null} (questa è una funzione parziale).
-   *
-   * @param op l'operatore booleano.
-   * @param t il primo BoolVect.
-   * @param u il secondo BoolVect.
-   */
-  private static void componenteAComponente(
-      BooleanOperators.BooleanOperator op, BoolVect t, BoolVect u) throws IllegalArgumentException {
-    final int maxDimension = Math.max(t.dimensione(), u.dimensione());
-    for (int pos = 0; pos <= maxDimension; pos++)
-      t.scrivi(pos, op.apply(t.leggi(pos), u.leggi(pos)));
-  }
-
+  // SOF: defop
   @Override
   public void and(final BoolVect other) throws NullPointerException {
-    componenteAComponente(
+    BooleanOperators.componenteAComponente(
         BooleanOperators.AND,
         this,
         Objects.requireNonNull(other, "L'argomento non può essere null."));
@@ -106,7 +91,7 @@ public abstract class AbstractBoolVect implements BoolVect {
   @Override
   public void or(final BoolVect other) throws NullPointerException, IllegalArgumentException {
     try {
-      componenteAComponente(
+      BooleanOperators.componenteAComponente(
           BooleanOperators.OR,
           this,
           Objects.requireNonNull(other, "L'argomento non può essere null."));
@@ -119,7 +104,7 @@ public abstract class AbstractBoolVect implements BoolVect {
   @Override
   public void xor(final BoolVect other) throws NullPointerException, IllegalArgumentException {
     try {
-      componenteAComponente(
+      BooleanOperators.componenteAComponente(
           BooleanOperators.XOR,
           this,
           Objects.requireNonNull(other, "L'argomento non può essere null."));
@@ -128,7 +113,9 @@ public abstract class AbstractBoolVect implements BoolVect {
           "La taglia di questo vettore è minore della dimensione del risultato.");
     }
   }
+  // EOF: defop
 
+  // SOF: obj
   /**
    * Restituisce la versione stringa di questo BoolVect.
    *
@@ -165,4 +152,6 @@ public abstract class AbstractBoolVect implements BoolVect {
     if (leggi(i) != altro.leggi(i)) return false;
     return true;
   }
+  // EOF: obj
+
 }

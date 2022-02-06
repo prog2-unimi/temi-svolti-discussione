@@ -26,12 +26,15 @@ import java.util.Objects;
 /** Classe concreta che implementa un {@link BoolVect} denso di taglia pari a {@link Long#SIZE}. */
 public class LongBoolVect extends AbstractBoolVect {
 
+  // SOF: rep
   /** I bit che rappresentano il BoolVector. */
   private long bits = 0;
+  // EOF: rep
 
   // RI: (vuoto)
   // AF: l'i-esimo valore di verità del BoolVect è vero se e solo se l'i-esimo bit di bits è 1.
 
+  // SOF: trivial
   @Override
   public int taglia() {
     return Long.SIZE;
@@ -46,7 +49,9 @@ public class LongBoolVect extends AbstractBoolVect {
   public void pulisci() {
     bits = 0;
   }
+  // EOF: trivial
 
+  // SOF: partial
   @Override
   public boolean leggiParziale(final int pos) {
     return (bits & (1L << pos)) != 0;
@@ -54,10 +59,13 @@ public class LongBoolVect extends AbstractBoolVect {
 
   @Override
   public void scriviParziale(final int pos, final boolean val) {
-    if (val) bits |= 1L << pos;
-    else bits &= ~(1L << pos);
+    final long mask = 1L << pos;
+    if (val) bits |= mask;
+    else bits &= ~mask;
   }
+  // EOF: partial
 
+  // SOF: op
   @Override
   public void and(BoolVect other) throws NullPointerException {
     Objects.requireNonNull(other, "L'argomento non può essere null.");
@@ -78,7 +86,9 @@ public class LongBoolVect extends AbstractBoolVect {
     if (other instanceof LongBoolVect) bits ^= ((LongBoolVect) other).bits;
     else super.xor(other);
   }
+  // EOF: op
 
+  // SOF: obj
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof LongBoolVect) return bits == ((LongBoolVect) obj).bits;
@@ -89,4 +99,5 @@ public class LongBoolVect extends AbstractBoolVect {
   public int hashCode() {
     return Long.hashCode(bits);
   }
+  // EOF: obj
 }

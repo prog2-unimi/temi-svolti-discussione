@@ -122,10 +122,10 @@ public interface BoolVect {
   void xor(final BoolVect other) throws NullPointerException, IllegalArgumentException;
   // EOF: bop
 
+  // SOF: init
   /** Rende {@code false} tutti i valori di verità del BoolVect. */
   void pulisci();
 
-  // SOF: daString
   /**
    * Rende il BoolVect uguale ai valori di verità specificati nella stringa data.
    *
@@ -139,8 +139,8 @@ public interface BoolVect {
    */
   default void daString(final String vals) throws NullPointerException, IllegalArgumentException {
     pulisci();
-    final int dim = vals.length();
-    for (int i = 0; i < dim; i++) scrivi(i, vals.charAt(dim - i - 1) == 'V');
+    final int len = vals.length();
+    for (int i = 0; i < len; i++) scrivi(i, vals.charAt(len - i - 1) == 'V');
   }
-  // EOF: daString
+  // EOF: init
 }

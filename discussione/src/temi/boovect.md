@@ -243,3 +243,317 @@ minore della dimensione del risultato: ad esempio l'or tra un BoolVect di taglia
 non può essere memorizzato nel primo operando di taglia 2. Questo certamente non
 può accadere nel caso dell'and (in cui il risultato non può in nessun caso avere
 dimensione maggiore di quella del primo operando).
+
+Per concludere, può essere utile aggiungere un metodo per rendere un BoolVect
+uguale ai valori specificati tramite una stringa; tale metodo può essere comodo
+per poter effettuarea una inizializzare in modo uniforme (nelle varie
+implementazioni); tale metodo ammette una elementare implementazione di
+*default* a partire da un metodo che renda tutti i valori di verità pari al
+valore falso.
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('BoolVect', 'init')
+```
+
+### Una implementazione parziale
+
+A ben pensare, alcuni dei metodi dell'interfaccia possono essere sviluppati a
+partire dai soli metodi `leggi` e `scrivi`, per questa ragione sarebbe possibile
+aggiungere all'interfaccia stessa alcune implementazioni di *default*; va però
+osservato che anche i metodi `toString` e `equals` potrebbero essere scritti a
+partire dai soli `leggi` e `scrivi`, ma tali metodi non possono essere
+realizzati come metodi di *default* (una interfaccia non può sovrascrivere i
+metodi di `Object`). Per tale ragione può aver senso introdurre una classe
+astratta (priva di stato, fatto positivo dal punto di vista
+dell'incapsulamento).
+
+Ma c'è di più. È verosimile che le versioni *totali* di `leggi` e `scrivi`
+dell'interfaccia (che si devono prendere cura del valore della posizione e, nel
+caso, sollevare eccezioni) possano essere realizzate in modo molto semplice a
+patto di avere a disposizione due metodi *parziali* (che potremmo chiamare
+rispettivamente `leggiParziale` e `scriviParziale`) che operino sotto la
+pre-condizione che la posizione sia sempre compresa tra 0 (incluso) e la taglia
+(esclusa); inoltre, implementare tali versioni parziali per i sottotipi è più
+semplice che implementare le versioni totali dell'interfaccia.
+
+Il codice di questa parte della classe astratta è elementare
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstractBoolVect', 'leggiscrivi')
+```
+
+Un'altra cosa di cui è possibile occuparsi a questo livello sono le operazioni
+booleane; ciascuna di esse può essere implementata con un ciclo della forma
+
+```{code-block} Java
+final int maxDimension = Math.max(t.dimensione(), u.dimensione());
+  for (int pos = 0; pos <= maxDimension; pos++)
+    t.scrivi(pos, OP(t.leggi(pos), u.leggi(pos)));
+```
+
+dove `OP` è una "funzione" che realizza uno degli operatori booleani richiesti e
+i BoolVect `t` e `u` sono gli operandi.
+
+Sebbene a questo punto sia assolutamente plausibile ripetere questo ciclo tre
+volte, sostituendo ogni volta un metodo statico che realizzi la funzione `OP`
+che realizzi uno dei tre operatori and, or e xor (implementato nella classe
+stessa, o in una classe apposita), sarebbe ancora più comodo poter
+parametrizzare il ciclo rispetto a tale funzione.
+
+#### Parametrizzare gli operatori booleani
+
+Per fare una cosa del genere, in Java è sufficiente definire una interfaccia che
+contenga un metodo che rappresenti la funzione
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('BooleanOperators', 'op')
+```
+
+e quindi, ad esempio usando le [classi
+anonime](https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html),
+predisporre delle istanze per ciascun operatore logico
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('BooleanOperators', 'singletons')
+```
+
+Grazie a questa impostazione (che mima ad esempio quella vista per gli
+ordinamenti, basati su implementazioni dell'interfaccia `Comparable` che
+contiene il solo metodo `compareTo`), è possibile scrivere un metodo statico
+parziale che tramuti un operatore booleano in una operazione componente a
+componente tra due BoolVect
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('BooleanOperators', 'bitwise')
+```
+
+Questo metodo può essere infine usato per dare una implementazione delle
+operazioni tra BoolVect a livello della classe astratta
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstractBoolVect', 'defop')
+```
+
+Si noti come, nel caso delle due operazioni il cui risultato potrebbe eccedere
+la taglia del primo operando, l'eccezione `IndexOutOfBoundsException` sollevata
+dal metodo `scrivi` venga sollevata al livello logico di una opportuna
+`IllegalArgumentException`.
+
+La classe astratta si chiude coi metodi che sovrascrivono quelli di `Object`
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstractBoolVect', 'obj')
+```
+
+Il contratto di `equals` (e l'overview della classe astratta) devono specificare
+molto chiaramente che è responsabilità delle sottoclassi provvedere una
+plausibile implementazione di `hashCode` (che non ha senso implementare al
+livello della classe astratta).
+
+### Le implementazioni concrete
+
+Avendo costruito con tanta attenzione la classe astratta appena descritta, il
+compito di implementare (e documentare) delle sottoclassi concrete risulta
+immensamente semplificato (anche perché è sostanzialmente possibile evitare ogni
+ripetizione di codice).
+
+Le implementazioni concrete devono provvedere i soli metodi (già documentati):
+
+* `dimensione`, `taglia` e `pulisci`,
+* `leggiParziale` e `scriviParziale`,
+* `hashCode`;
+
+inoltre possono (in modo del tutto facoltativo, se si ritiene utile e semplice
+farlo) provvedere delle implementazioni ottimizzate per i metodi:
+
+* `and`, `or`, `xor`,
+* `equals`.
+
+La decisione di lasciare alle classi concrete l'implementazione del metodo
+`dimensione` è legata al fatto che, come vedremo, avere a disposizione la
+rappresentazione rende molto efficiente il calcolo.
+
+La traccia richiede (almeno) due implementazioni, una adatta al caso *denso* e
+una a quello *sparso*; seguendo l'esempio dei polinomi, presentato nel libro di
+testo di Liskov et. al. e durante le lezioni ed esercitazioni, si possono
+individuare due rappresentazioni adatte, rispettivamente, ai due casi:
+
+* un *array* di valori booleani, uno per ciascun valore di verità del BoolVect;
+* un *insieme* di posizioni corrispondenti a tutti e soli i valori di verità
+  veri del BoolVect.
+
+La rappresentazione con un array condurrà ad un BoolVect di taglia *finita*
+(pari al numero di elementi dell'array), mentre quella basata sull'insieme ad un
+BoolVect di taglia *illimitata*.
+
+Le due rappresentazioni, oltre che per la loro semplicità, risultano
+particolarmente interessanti anche perché consentono di confrontarsi (e mostrare
+la propria comprensione della traccia) in due casi distinti secondo la taglia.
+
+Sostituendo una *lista* all'array è possibile trattare il caso denso con taglia
+illimitata, aumentando di poco la complessità del codice (rischiando di
+complicarsi la vita, senza mostrare però competenze più avanzate che nel caso
+dell'array)
+
+Viceversa, sostituire una *lista* (o un array) all'insieme nella
+rappresentazione sparsa pone notevoli complessità implementative (ad esempio: la
+necessità di mantenere distinti gli elementi e di effettuare ricerche efficienti
+per ottenere la lettura e scrittura). Avendo a disposizione gli insiemi, l'uso
+di una lista appare una inutile complicazione.
+
+Per finire, le *mappe* sono una pessima rappresentazione sia per il caso denso
+(se la chiave è la posizione) che quello sparso (se tra i valori vengono
+memorizzati anche quelli falsi).
+
+#### Caso denso basato su array
+
+La classe concreta più elementare è quella che deriva dalla classe astratta e
+rappresenta i valori del BoolVect in un array di tipo `boolean[]`. Per comodità
+aggiungiamo alla rappresentazione anche il valore precalcolato della dimensione
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('ArrayBoolVect', 'rep')
+```
+
+l'invariante (oltre alla banale questione della nullità di `valore`) dovrà
+garantire che `dimensione` coincida sempre con la dimensione del BoolVect, ossia
+che in `dimensione - 1` si trovi l'ultimo `true` dell'array.
+
+I primi tre metodi da implementare sono del tutto banali
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('ArrayBoolVect', 'trivial')
+```
+
+ma anche letture e scritture (che possono assumere, dato che sono parziali, che
+la posizione sia sempre valida) sono molto semplici da scrivere
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('ArrayBoolVect', 'partial')
+```
+
+l'unico accorgimento è che la scrittura si occupi di tenere aggiornata la
+dimensione precalcolata (che può crescere se viene aggiunto un valore di verità
+vero, o deve essere diminuita se viene posto a falso il valore di verità che era
+in posizione più alta).
+
+Data questa rappresentazione, per le operazioni booleane è difficile fare meglio
+di quanto implementato nel supertipo; per questa ragione la classe si può
+concludere con la sola ottimizzazione dei metodi di `Object`
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('ArrayBoolVect', 'obj')
+```
+
+#### Caso sparso bastato su insieme
+
+Se i valori di verità veri sono pochi, si può usare una struttura dati ben più
+onerosa di un array, sfruttando però il fatto che (appunto) conterrà pochi
+elementi. Gli interi sono naturalmente ordinati e conoscere la posizione più
+grande è comodo per calcolare la dimensione; la rappresentazione più pratica è
+quindi quella di un insieme ordinato
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('SetBoolVect', 'rep')
+```
+
+L'invariante è banalmente quello della nullità; i primi tre metodi (come nel
+caso denso) sono di immediata implementazione
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('SetBoolVect', 'trivial')
+```
+
+Il fatto di non dover precalcolare la dimensione, rende molto semplici anche i
+metodi parziali di lettura e scrittura
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('SetBoolVect', 'partial')
+```
+
+In questo caso, vale però la pena di ottimizzare le operazioni booleane almeno
+nel caso in cui anche gli operandi siano sparsi; in tali circostanze, i metodi
+and, or e xor si riducono a operazioni su insiemi che possono essere
+implementate in modo molto efficiente
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('SetBoolVect', 'op')
+```
+
+Anche i metodi di `Object` si prestano a simili ottimizzazioni
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('SetBoolVect', 'obj')
+```
+
+#### Caso denso basato su `long`
+
+Sebbene una implementazione per ciascun genere di BoolVect sia sufficiente a
+superare la prova, riflettendo sull'opportunità di ottimizzare le operazioni
+booleane non si può non riflettere che il linguaggio Java mette a disposizione
+operatori booleani bit-a-bit per tutti i tipi numerici primitivi.
+
+Questo suggerisce l'idea di usare un `long` per rappresentare BoolVect di taglia
+64 (tanti sono i bit che tale tipo può memorizzare in Java)
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('LongBoolVect', 'rep')
+```
+
+L'invariante è sempre soddisfatto; i primi tre metodi sono ancora di immediata
+implementazione
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('LongBoolVect', 'trivial')
+```
+
+la dimensione può essere per pigrizia calcolata col metodo statico
+[`Long.numberOfLeadingZeros`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html#numberOfLeadingZeros(long));
+questo rende molto banali anche i metodi parziali di lettura e scrittura
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('LongBoolVect', 'partial')
+```
+
+L'ottimizzazione delle operazioni booleane (tra BoolVect basati su `long`) si
+riduce all'uso degli operatori corrispondenti previsti dal linguaggio Java
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('LongBoolVect', 'op')
+```
+
+Per finire, anche i metodi di `Object` sono similmente banali
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('LongBoolVect', 'obj')
+```
+
+### La classe di test
+
+In questo tema la classe di test è del tutto banale per via del formato
+dell'input. Si tratta semplicemente di leggere una linea alla volta, separando
+poi ogni linea nelle sue parti e decidendo le operazioni da compiere sulla
+scorta del primo carattere della linea; per ciascuna linea è sufficiente
+istanziare i BoolVect necessari e (se necessario), inizializzarne il valore col
+metodo `daString` previsto dall'interfaccia.

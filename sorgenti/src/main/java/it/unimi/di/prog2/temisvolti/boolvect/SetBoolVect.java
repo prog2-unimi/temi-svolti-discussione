@@ -29,12 +29,15 @@ import java.util.TreeSet;
 /** Classe concreta che implementa un {@link BoolVect} sparso di taglia illimitata. */
 public class SetBoolVect extends AbstractBoolVect {
 
+  // SOF: rep
   /** L'insieme delle posizioni dei valori di verità veri del BoolVect. */
   private final SortedSet<Integer> positions = new TreeSet<>();
+  // EOF: rep
 
-  // RI: positions != null
+  // RI: positions != null e non contiene null
   // AF: l'i-esimo valore di verità del BoolVect è verso se e solo se i appartiene a positions.
 
+  // SOF: trivial
   @Override
   public int taglia() {
     return Integer.MAX_VALUE;
@@ -49,7 +52,9 @@ public class SetBoolVect extends AbstractBoolVect {
   public void pulisci() {
     positions.clear();
   }
+  // EOF: trivial
 
+  // SOF: partial
   @Override
   public boolean leggiParziale(final int pos) {
     return positions.contains(pos);
@@ -60,7 +65,9 @@ public class SetBoolVect extends AbstractBoolVect {
     if (val) positions.add(pos);
     else positions.remove(pos);
   }
+  // EOF: partial
 
+  // SOF: op
   @Override
   public void and(BoolVect other) throws NullPointerException {
     Objects.requireNonNull(other, "L'argomento non può essere null.");
@@ -85,7 +92,9 @@ public class SetBoolVect extends AbstractBoolVect {
       positions.removeAll(intersection);
     } else super.xor(other);
   }
+  // EOF: op
 
+  // SOF: obj
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof SetBoolVect) return positions.equals(((SetBoolVect) obj).positions);
@@ -96,4 +105,5 @@ public class SetBoolVect extends AbstractBoolVect {
   public int hashCode() {
     return positions.hashCode();
   }
+  // EOF: obj
 }

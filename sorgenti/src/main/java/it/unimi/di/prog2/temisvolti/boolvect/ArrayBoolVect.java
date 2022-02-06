@@ -26,11 +26,12 @@ import java.util.Arrays;
 /** Classe concreta che implementa un {@link BoolVect} denso di taglia assegnata. */
 public class ArrayBoolVect extends AbstractBoolVect {
 
-  /** La dimensione del BoolVect. */
-  private int dimensione = 0;
-
+  // SOF: rep
   /** I valori del BoolVect. */
   private final boolean[] valore;
+
+  /** La dimensione del BoolVect. */
+  private int dimensione = 0;
 
   // RI: * 0 <= dimensione <= valore.length
   //     * valore[dimensione - 1] == true && valore[p] == false se p >= dimensione
@@ -48,10 +49,17 @@ public class ArrayBoolVect extends AbstractBoolVect {
     if (taglia <= 0) throw new IllegalArgumentException("La taglia deve essere positiva.");
     valore = new boolean[taglia];
   }
+  // EOF: rep
 
   /** Costruisce un BoolVect di taglia 1024. */
   public ArrayBoolVect() {
     this(1024);
+  }
+
+  // SOF: trivial
+  @Override
+  public int taglia() {
+    return valore.length;
   }
 
   @Override
@@ -60,15 +68,12 @@ public class ArrayBoolVect extends AbstractBoolVect {
   }
 
   @Override
-  public int taglia() {
-    return valore.length;
-  }
-
-  @Override
   public void pulisci() {
     Arrays.fill(valore, false);
   }
+  // EOF: trivial
 
+  // SOF: partial
   @Override
   public boolean leggiParziale(final int pos) {
     return valore[pos];
@@ -81,7 +86,9 @@ public class ArrayBoolVect extends AbstractBoolVect {
     else if (!val && pos == dimensione - 1)
       while (dimensione > 0 && !valore[dimensione - 1]) dimensione--;
   }
+  // EOF: partial
 
+  // SOF: obj
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof ArrayBoolVect) return Arrays.equals(valore, ((ArrayBoolVect) obj).valore);
@@ -92,4 +99,5 @@ public class ArrayBoolVect extends AbstractBoolVect {
   public int hashCode() {
     return Arrays.hashCode(valore);
   }
+  // EOF: obj
 }
