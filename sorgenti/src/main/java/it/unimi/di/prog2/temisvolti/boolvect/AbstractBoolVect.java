@@ -91,8 +91,8 @@ public abstract class AbstractBoolVect implements BoolVect {
   private static void componenteAComponente(
       BooleanOperators.BooleanOperator op, BoolVect t, BoolVect u) throws IllegalArgumentException {
     final int maxDimension = Math.max(t.dimensione(), u.dimensione());
-      for (int pos = 0; pos <= maxDimension; pos++)
-        t.scrivi(pos, op.apply(t.leggi(pos), u.leggi(pos)));
+    for (int pos = 0; pos <= maxDimension; pos++)
+      t.scrivi(pos, op.apply(t.leggi(pos), u.leggi(pos)));
   }
 
   @Override

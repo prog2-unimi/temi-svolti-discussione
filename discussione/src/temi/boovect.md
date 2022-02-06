@@ -165,6 +165,14 @@ competenze dei BoolVect; valuteremo in un secondo momento se è il caso di
 interporre una *classe astratta* tra questa interfaccia e le implementazioni
 concrete.
 
+Va invece categoricamente esclusa l'idea di sviluppare un tipo per rappresentare
+i valori di verità del vettore: per tale scopo è più che sufficiente il tipo
+primitivo `boolean` o, eventualmente, il corrispondete tipo *boxed* `Boolean`.
+Non c'è alcuna ragione plausibile per progettare un ulteriore tipo. L'esigenza
+di "convertire" dai caratteri `V` e `F` ai valori di verità e viceversa è
+banalmente soddisfatta rispettivamente dalle espressioni `c == 'V'` e `v ? 'V' :
+'F'` (dove `c` è di tipo `char` e `v` è di tipo booleano).
+
 ### L'interfaccia BoolVect
 
 Le competenze informalmente descritte nella traccia sono:
