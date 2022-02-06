@@ -24,8 +24,7 @@ package it.unimi.di.prog2.temisvolti.boolvect;
 /** Classe di singoletti che implementano gli operatori logici and, or e xor. */
 public class BooleanOperators {
 
-  private BooleanOperators() {
-  } // rende la classe non istanziabile
+  private BooleanOperators() {} // rende la classe non istanziabile
 
   // SOF: op
   /** Interfaccia che descrive un operatore logico binario. */
@@ -36,49 +35,48 @@ public class BooleanOperators {
 
   // SOF: singletons
   /** Singoletto dell'operatore logico and. */
-  public static BooleanOperator AND = new BooleanOperator() {
-    @Override
-    public boolean apply(boolean a, boolean b) {
-      return a & b;
-    }
-  };
+  public static BooleanOperator AND =
+      new BooleanOperator() {
+        @Override
+        public boolean apply(boolean a, boolean b) {
+          return a & b;
+        }
+      };
 
   /** Singoletto dell'operatore logico or. */
-  public static BooleanOperator OR = new BooleanOperator() {
-    @Override
-    public boolean apply(boolean a, boolean b) {
-      return a | b;
-    }
-  };
+  public static BooleanOperator OR =
+      new BooleanOperator() {
+        @Override
+        public boolean apply(boolean a, boolean b) {
+          return a | b;
+        }
+      };
 
   /** Singoletto dell'operatore logico xor. */
-  public static BooleanOperator XOR = new BooleanOperator() {
-    @Override
-    public boolean apply(boolean a, boolean b) {
-      return a ^ b;
-    }
-  };
+  public static BooleanOperator XOR =
+      new BooleanOperator() {
+        @Override
+        public boolean apply(boolean a, boolean b) {
+          return a ^ b;
+        }
+      };
 
   // EOF: singletons
 
   // SOF: bitwise
   /**
-   * Funzione parziale che, dato un operatore booleano e due BoolVect applica
-   * l'operazione
-   * componente a componente ottenuta dall'operatore booleano ai due BoolVect e ne
-   * salva il
+   * Funzione parziale che, dato un operatore booleano e due BoolVect applica l'operazione
+   * componente a componente ottenuta dall'operatore booleano ai due BoolVect e ne salva il
    * risultato nel primo BoolVect.
    *
-   * <p>
-   * Gli argomenti non devono essere {@code null} (questa è una funzione
-   * parziale).
+   * <p>Gli argomenti non devono essere {@code null} (questa è una funzione parziale).
    *
    * @param op l'operatore booleano.
-   * @param t  il primo BoolVect.
-   * @param u  il secondo BoolVect.
+   * @param t il primo BoolVect.
+   * @param u il secondo BoolVect.
    */
-  public static void componenteAComponente(
-      BooleanOperator op, BoolVect t, BoolVect u) throws IllegalArgumentException {
+  public static void componenteAComponente(BooleanOperator op, BoolVect t, BoolVect u)
+      throws IllegalArgumentException {
     final int maxDimension = Math.max(t.dimensione(), u.dimensione());
     for (int pos = 0; pos <= maxDimension; pos++)
       t.scrivi(pos, op.apply(t.leggi(pos), u.leggi(pos)));
