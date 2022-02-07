@@ -46,6 +46,8 @@ import java.util.Objects;
  */
 public abstract class AbstractBoolVect implements BoolVect {
 
+  /* Implementaizone dei metodi leggi e scrivi attraverso i corrispondenti non totali */
+
   // SOF: leggiscrivi
   /**
    * Funzione parziale che restituisce il valore di verità di posizione specificata.
@@ -79,21 +81,59 @@ public abstract class AbstractBoolVect implements BoolVect {
   }
   // EOF: leggiscrivi
 
+  /* Implementazione delle operazioni booleane, tramite l'introduzione di una
+   * interfaccia per parametrizzare la costruzione della versione componente a
+   * componente.
+   */
+
+  // SOF: opint
+  /** Interfaccia che descrive l'applicazoine di un operatore logico binario questo BoolVect. */
+  public interface BooleanOperator {
+    boolean apply(final boolean a, final boolean b);
+  }
+  // EOF: opint
+
+  // SOF: bitwise
+  /**
+   * Metodo parziale che, dato un operatore booleano e un BoolVect applica l'operazione componente a
+   * componente ottenuta dall'operatore booleano a questo e il BoolVect dato e ne salva il risultato
+   * in questo.
+   *
+   * <p>Gli argomenti non devono essere {@code null} (questa è una funzione parziale).
+   *
+   * @param op l'operatore booleano.
+   * @param other il primo BoolVect.
+   */
+  public void componenteAComponente(BooleanOperator op, BoolVect other)
+      throws IllegalArgumentException {
+    final int maxDimension = Math.max(dimensione(), other.dimensione());
+    for (int pos = 0; pos <= maxDimension; pos++)
+      scrivi(pos, op.apply(leggi(pos), other.leggi(pos)));
+  }
+  // EOF: bitwise
+
   // SOF: defop
   @Override
   public void and(final BoolVect other) throws NullPointerException {
-    BooleanOperators.componenteAComponente(
-        BooleanOperators.AND,
-        this,
+    componenteAComponente(
+        new BooleanOperator() {
+          public boolean apply(boolean a, boolean b) {
+            return a & b;
+          }
+        },
         Objects.requireNonNull(other, "L'argomento non può essere null."));
   }
 
   @Override
   public void or(final BoolVect other) throws NullPointerException, IllegalArgumentException {
     try {
-      BooleanOperators.componenteAComponente(
-          BooleanOperators.OR,
-          this,
+      componenteAComponente(
+          new BooleanOperator() {
+            @Override
+            public boolean apply(boolean a, boolean b) {
+              return a | b;
+            }
+          },
           Objects.requireNonNull(other, "L'argomento non può essere null."));
     } catch (IndexOutOfBoundsException e) {
       throw new IllegalArgumentException(
@@ -104,9 +144,13 @@ public abstract class AbstractBoolVect implements BoolVect {
   @Override
   public void xor(final BoolVect other) throws NullPointerException, IllegalArgumentException {
     try {
-      BooleanOperators.componenteAComponente(
-          BooleanOperators.XOR,
-          this,
+      componenteAComponente(
+          new BooleanOperator() {
+            @Override
+            public boolean apply(boolean a, boolean b) {
+              return a ^ b;
+            }
+          },
           Objects.requireNonNull(other, "L'argomento non può essere null."));
     } catch (IndexOutOfBoundsException e) {
       throw new IllegalArgumentException(
@@ -114,6 +158,8 @@ public abstract class AbstractBoolVect implements BoolVect {
     }
   }
   // EOF: defop
+
+  /* Implementazione non specializzata dei metodi ereditati da {@code Object}. */
 
   // SOF: obj
   /**
@@ -137,11 +183,11 @@ public abstract class AbstractBoolVect implements BoolVect {
   }
 
   /**
-   * Implementazione generica di equals.
+   * Implementazione non specializzata di equals.
    *
    * <p>Questa implementazione è molto inefficiente per il caso sparso; le sottoclassi dovrebbero
-   * implementare una versione ottimizzat (e in ogni caso sovrascrivere {@link Object#hashCode()} in
-   * modo coerente).
+   * implementare una versione ottimizzata e in ogni caso sovrascrivere {@link Object#hashCode()} in
+   * modo coerente.
    */
   @Override
   public boolean equals(Object obj) {
