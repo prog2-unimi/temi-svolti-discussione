@@ -105,7 +105,7 @@ public abstract class AbstractBoolVect implements BoolVect {
    * @param other il primo BoolVect.
    */
   public void componenteAComponente(BooleanOperator op, BoolVect other)
-      throws IllegalArgumentException {
+      throws IndexOutOfBoundsException {
     final int maxDimension = Math.max(dimensione(), other.dimensione());
     for (int pos = 0; pos <= maxDimension; pos++)
       scrivi(pos, op.apply(leggi(pos), other.leggi(pos)));

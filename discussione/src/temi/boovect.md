@@ -161,17 +161,17 @@ precedente!
 ## La soluzione
 
 Per prima cosa occorre progettare una *interfaccia* che rappresenti le
-competenze dei BoolVect; valuteremo in un secondo momento se è il caso di
+competenze dei BoolVect; valuteremo in un secondo momento se sarà il caso di
 interporre una *classe astratta* tra questa interfaccia e le implementazioni
 concrete.
 
-Va invece categoricamente esclusa l'idea di sviluppare un tipo per rappresentare
-i valori di verità del vettore: per tale scopo è più che sufficiente il tipo
-primitivo `boolean` o, eventualmente, il corrispondete tipo *boxed* `Boolean`.
-Non c'è alcuna ragione plausibile per progettare un ulteriore tipo. L'esigenza
-di "convertire" dai caratteri `V` e `F` ai valori di verità e viceversa è
-banalmente soddisfatta rispettivamente dalle espressioni `c == 'V'` e `v ? 'V' :
-'F'` (dove `c` è di tipo `char` e `v` è di tipo booleano).
+Va invece categoricamente esclusa sin dal principio l'idea di sviluppare un tipo
+per rappresentare i valori di verità del vettore: per tale scopo è più che
+sufficiente il tipo primitivo `boolean` o, eventualmente, il corrispondete tipo
+*boxed* `Boolean`. Non c'è alcuna ragione plausibile per progettare un ulteriore
+tipo! L'esigenza di "convertire" dai caratteri `V` e `F` ai valori di verità e
+viceversa è banalmente soddisfatta rispettivamente dalle espressioni `c == 'V'`
+e `v ? 'V' : 'F'` (dove `c` è di tipo `char` e `v` è di tipo booleano).
 
 ### L'interfaccia BoolVect
 
@@ -181,50 +181,64 @@ Le competenze informalmente descritte nella traccia sono:
 * indicare la propria *dimensione*,
 * *leggere* il valore di verità di data posizione,
 * *scrivere* il valore di verità dato nella posizione assegnata,
-* effettuare l'*and* con un altro vettore,
-* effettuare l'*or* con un altro vettore e
-* effettuare l'*xor* con un altro vettore.
+* effettuare le operazioni booleane *and*, *or* e *xor*.
 
 Per tradurre questa descrizione informale in una specifica precisa, descritta da
-una interfaccia, è necessario fare alcune scelte soffermandosi a riflettere
-sulle conseguenze di esse.
+una interfaccia, è necessario fare alcune scelte, considerandone attentamente le
+conseguenze.
 
-Per quanto riguarda le prime tre competenze, essere saranno rappresentate da tre
-metodi osservazionali
+Per quanto riguarda le prime tre competenze, essere corrispondono a tre metodi
+*osservazionali*
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('BoolVect', 'obs')
 ```
 
-Unica osservazione degna di nota è l'eccezione sollevata dal metodo di lettura,
-che accadrà senz'altro se la posizione richiesta è negativa; riguardo alle
-posizioni che eccedono la dimensione è plausibile che tale funzione restituisca
-il valore `false`. Si può decidere cosa fare nel caso in cui sia addirittura
-ecceduta la taglia (sollevare eccezione, o restituire sempre `false`).
+Unico dettaglio degno di nota è l'eccezione sollevata dal metodo di lettura, che
+accadrà senz'altro se la posizione richiesta è negativa; riguardo alle posizioni
+che eccedono la dimensione è plausibile (come discusso nella traccia) che tale
+funzione restituisca il valore `false`. Si può decidere abbastanza liberamente
+cosa prescrivere nel caso in cui sia addirittura ecceduta la taglia: sollevare
+eccezione, o restituire sempre `false`; la prima soluzione, come vedremo, è più
+consistente col caso della scrittura.
 
-Maggior attenzione è richiesta dalle competenze che possono produrre cambiamento
-nel BoolVect; è necessario riflettere sulla mutabilità dei BoolVect:
-l'operazione di scrittura può essere pensata sia come una mutazione dello stato,
-che come una produzione che restituisca un nuovo vettore ad ogni invocazione. La
-seconda scelta appare però troppo onerosa: una sequenza di invocazioni su un
+Maggior attenzione è richiesta dalle competenze che possono produrre cambiamenti
+nel BoolVect: è necessario riflettere sulla *mutabilità* dei BoolVect.
+L'operazione di scrittura può essere specificata sia come un metodo
+*mutazionale* (che cambi lo stato del BoolVect su cui è invocato), che come un
+metodo di *produzione* (che restituisca un nuovo BoolVect ad ogni invocazione).
+La seconda scelta appare però troppo onerosa: una sequenza di invocazioni su un
 BoolVect di dimensione elevata produrrebbe una grande quantità di valori
-intermedi di grandi dimensioni, probabilmente destinati ad avere una vita molto
-corta. Appare quindi più ragionevole che l'interfaccia sia pensata per la
-mutabilità.
+intermedi, probabilmente destinati ad avere una vita molto corta.
+
+Appare quindi più ragionevole che l'interfaccia consideri le implementazioni di
+BoolVect *mutabili*.
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('BoolVect', 'write')
 ```
 
-L'eccezione in questo caso accade sia se la posizione è negativa che se si tenta
-di scrivere un valore di verità vero in posizione maggiore o uguale alla taglia:
-la scrittura di tale valore infatti determinerebbe l'aumento della dimensione
-oltre il valore della taglia (che è impossibile per definizione)…
+Anche in questo caso, l'eccezione riguarda certamente il caso in cui la
+posizione è negativa. Similmente, se si tenta di scrivere un valore di verità
+vero oltre la taglia non può che venir sollevata una eccezione. Secondo la
+traccia, infatti, la taglia è la massima dimensione possibile: anche qualora
+potesse aumetare durante la vita del BoolVect (e vedremo in seguito che ha poco
+senso), al momento della scrittura posizionare un valore di verità vero oltre la
+taglia farebbe aumentare la dimensione oltre la taglia, fatto vietato dalla
+traccia. Se viceversa il valore fosse falso (e la posizione sempre maggiore o
+uguale alla taglia), potrebbe essere sensato non sollevare eccezione e lasciare
+inalterato il vettore.
+
+D'altro canto, aggiungere all'interfaccia un metodo che consenta di aumentare la
+taglia (ad esempio, prima della scrittura, per evitare l'eccezione di cui
+sopra), sarebbe una pessima idea perché escluderebbe tutte le implementazioni
+basate su rappresentazioni che non consentano tale adattamento (ad esempio,
+quella basata su un `long` che vedremo in seguito).
 
 Scelta la mutabilità, anche le operazioni booleane sono specificate in modo che
-modifichino il BoolVect su cui sono invocate rendendolo uguale al risultato
+modifichino il BoolVect su cui sono invocate, rendendolo uguale al risultato
 dell'operazione.
 
 ```{code-cell}
@@ -232,9 +246,10 @@ dell'operazione.
 sol.show('BoolVect', 'bop')
 ```
 
-A prescindere dalle ovvie eccezioni legate alla nullità dell'argomento, è
-necessario tener conto di un problema legato alla taglia: non è detto che il
-risultato possa sempre essere rappresentato modificando il primo operando.
+A prescindere dalle ovvie eccezioni legate alla nullità dell'argomento, anche in
+questo caso è necessario tener conto di un problema legato alla taglia: non è
+detto che il risultato possa sempre essere rappresentato modificando il primo
+operando.
 
 Con un po' di riflessione risulta evidente che i metodi relativi alle operazioni
 booleane dovrebbero sollevare eccezione quando la taglia del primo operando è
@@ -246,7 +261,7 @@ dimensione maggiore di quella del primo operando).
 
 Per concludere, può essere utile aggiungere un metodo per rendere un BoolVect
 uguale ai valori specificati tramite una stringa; tale metodo può essere comodo
-per poter effettuarea una inizializzare in modo uniforme (nelle varie
+per "inizializzare" un BoolVect in modo uniforme (rispetto alle varie
 implementazioni); tale metodo ammette una elementare implementazione di
 *default* a partire da un metodo che renda tutti i valori di verità pari al
 valore falso.
@@ -262,7 +277,7 @@ A ben pensare, alcuni dei metodi dell'interfaccia possono essere sviluppati a
 partire dai soli metodi `leggi` e `scrivi`, per questa ragione sarebbe possibile
 aggiungere all'interfaccia stessa alcune implementazioni di *default*; va però
 osservato che anche i metodi `toString` e `equals` potrebbero essere scritti a
-partire dai soli `leggi` e `scrivi`, ma tali metodi non possono essere
+partire dai soli `leggi` e `scrivi`, ma tali metodi non potrebbero essere
 realizzati come metodi di *default* (una interfaccia non può sovrascrivere i
 metodi di `Object`). Per tale ragione può aver senso introdurre una classe
 astratta (priva di stato, fatto positivo dal punto di vista
@@ -274,8 +289,8 @@ caso, sollevare eccezioni) possano essere realizzate in modo molto semplice a
 patto di avere a disposizione due metodi *parziali* (che potremmo chiamare
 rispettivamente `leggiParziale` e `scriviParziale`) che operino sotto la
 pre-condizione che la posizione sia sempre compresa tra 0 (incluso) e la taglia
-(esclusa); inoltre, implementare tali versioni parziali per i sottotipi è più
-semplice che implementare le versioni totali dell'interfaccia.
+(esclusa); inoltre, implementare tali versioni parziali per i sottotipi sarà
+senz'altro più semplice che implementare le versioni totali dell'interfaccia.
 
 Il codice di questa parte della classe astratta è elementare
 
@@ -288,64 +303,61 @@ Un'altra cosa di cui è possibile occuparsi a questo livello sono le operazioni
 booleane; ciascuna di esse può essere implementata con un ciclo della forma
 
 ```{code-block} Java
-final int maxDimension = Math.max(t.dimensione(), u.dimensione());
+final int maxDimension = Math.max(dimensione(), other.dimensione());
   for (int pos = 0; pos <= maxDimension; pos++)
-    t.scrivi(pos, OP(t.leggi(pos), u.leggi(pos)));
+    scrivi(pos, leggi(pos) OP other.leggi(pos));
 ```
 
-dove `OP` è una "funzione" che realizza uno degli operatori booleani richiesti e
-i BoolVect `t` e `u` sono gli operandi.
-
-Sebbene a questo punto sia assolutamente plausibile ripetere questo ciclo tre
-volte, sostituendo ogni volta un metodo statico che realizzi la funzione `OP`
-che realizzi uno dei tre operatori and, or e xor (implementato nella classe
-stessa, o in una classe apposita), sarebbe ancora più comodo poter
-parametrizzare il ciclo rispetto a tale funzione.
+dove `OP` è uno degli operatori booleani tra `&`, `|` e `^` di Java e il
+BoolVect `other` è, oltre a `this`, quello su cui operare. Sebbene a questo
+punto sia assolutamente plausibile ripetere questo ciclo tre volte (uno per
+ciascuna delle tre operazioni `and`, `or` e `xor`) sarebbe più elegante poter
+parametrizzare il ciclo rispetto all'operatore logico.
 
 #### Parametrizzare gli operatori booleani
 
-Per fare una cosa del genere, in Java è sufficiente definire una interfaccia che
-contenga un metodo che rappresenti la funzione
+Purtroppo non è possibile avere un operatore del linguaggio come parametro di
+una funzione; per ottenere lo scopo desiderato, in Java è necessario definire
+una interfaccia che contenga un metodo che rappresenti una funzione che applica
+l'operatore ai suoi argomenti e ne restituisce il valore
 
 ```{code-cell}
 :tags: [remove-input]
-sol.show('BooleanOperators', 'op')
+sol.show('AbstractBoolVect', 'opint')
 ```
 
-e quindi, ad esempio usando le [classi
+Grazie a questo approccio (che mima ad esempio quello visto per gli ordinamenti,
+basati su implementazioni dell'interfaccia `Comparable` che contiene il solo
+metodo `compareTo`), è possibile scrivere un metodo parziale che tramuti un
+operatore booleano in una operazione componente a componente tra BoolVect
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('AbstractBoolVect', 'bitwise')
+```
+
+A questo punto, usando le [classi
 anonime](https://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html),
-predisporre delle istanze per ciascun operatore logico
-
-```{code-cell}
-:tags: [remove-input]
-sol.show('BooleanOperators', 'singletons')
-```
-
-Grazie a questa impostazione (che mima ad esempio quella vista per gli
-ordinamenti, basati su implementazioni dell'interfaccia `Comparable` che
-contiene il solo metodo `compareTo`), è possibile scrivere un metodo statico
-parziale che tramuti un operatore booleano in una operazione componente a
-componente tra due BoolVect
-
-```{code-cell}
-:tags: [remove-input]
-sol.show('BooleanOperators', 'bitwise')
-```
-
-Questo metodo può essere infine usato per dare una implementazione delle
-operazioni tra BoolVect a livello della classe astratta
+è possibile dare una implementazione parametrizzata rispetto all'operatore
+logico delle operazioni booleane tra BoolVect a livello della classe astratta
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('AbstractBoolVect', 'defop')
 ```
 
-Si noti come, nel caso delle due operazioni il cui risultato potrebbe eccedere
-la taglia del primo operando, l'eccezione `IndexOutOfBoundsException` sollevata
-dal metodo `scrivi` venga sollevata al livello logico di una opportuna
-`IllegalArgumentException`.
+Questo approccio è più complesso della duplicazione del codice, ma è ben più
+versatile: una volta messo in piedi esso potrebbe essere usato facilmente per
+estendere i comportamenti dei BoolVect a tutte le possibili operazioni booleane
+componente a componente!
 
-La classe astratta si chiude coi metodi che sovrascrivono quelli di `Object`
+Si noti per concludere come, nel caso delle due operazioni il cui risultato
+potrebbe eccedere la taglia del primo operando, l'eccezione
+`IndexOutOfBoundsException` che potrebbe essere sollevata dal metodo `scrivi`
+venga sollevata al livello logico di una opportuna `IllegalArgumentException`.
+
+La classe astratta si chiude con due metodi non ottimizzati che sovrascrivono
+quelli di `Object`
 
 ```{code-cell}
 :tags: [remove-input]
@@ -357,10 +369,15 @@ molto chiaramente che è responsabilità delle sottoclassi provvedere una
 plausibile implementazione di `hashCode` (che non ha senso implementare al
 livello della classe astratta).
 
+Per concludere osserviamo che la decisione di lasciare alle classi concrete
+l'implementazione dei metodi `taglia` e `dimensione` dell'interfaccia è legata
+al fatto che, come vedremo, tali funzioni sono molto semplici da implementare in
+modo efficiente avendo accesso alla rappresentazione.
+
 ### Le implementazioni concrete
 
 Avendo costruito con tanta attenzione la classe astratta appena descritta, il
-compito di implementare (e documentare) delle sottoclassi concrete risulta
+compito di implementare (e documentare) le sottoclassi concrete risulta
 immensamente semplificato (anche perché è sostanzialmente possibile evitare ogni
 ripetizione di codice).
 
@@ -376,10 +393,6 @@ farlo) provvedere delle implementazioni ottimizzate per i metodi:
 * `and`, `or`, `xor`,
 * `equals`.
 
-La decisione di lasciare alle classi concrete l'implementazione del metodo
-`dimensione` è legata al fatto che, come vedremo, avere a disposizione la
-rappresentazione rende molto efficiente il calcolo.
-
 La traccia richiede (almeno) due implementazioni, una adatta al caso *denso* e
 una a quello *sparso*; seguendo l'esempio dei polinomi, presentato nel libro di
 testo di Liskov et. al. e durante le lezioni ed esercitazioni, si possono
@@ -391,16 +404,24 @@ individuare due rappresentazioni adatte, rispettivamente, ai due casi:
 
 La rappresentazione con un array condurrà ad un BoolVect di taglia *finita*
 (pari al numero di elementi dell'array), mentre quella basata sull'insieme ad un
-BoolVect di taglia *illimitata*.
-
-Le due rappresentazioni, oltre che per la loro semplicità, risultano
-particolarmente interessanti anche perché consentono di confrontarsi (e mostrare
-la propria comprensione della traccia) in due casi distinti secondo la taglia.
+BoolVect di taglia *illimitata*. Le due rappresentazioni, oltre che per la loro
+semplicità, risultano quindi particolarmente interessanti anche perché
+consentono di confrontarsi (e mostrare la propria comprensione della traccia)
+con due casi distinti secondo il tipo di taglia.
 
 Sostituendo una *lista* all'array è possibile trattare il caso denso con taglia
 illimitata, aumentando di poco la complessità del codice (rischiando di
 complicarsi la vita, senza mostrare però competenze più avanzate che nel caso
-dell'array)
+dell'array). Si osservi che non ha però senz'altro senso che, in questo caso, il
+metodo `taglia` restituisca la dimensione corrente della lista: la taglia deve
+indicare la dimensione massima quindi i casi sono due:
+
+* o non si è disposti a modificare la dimensione della lista (e allora
+  l'implementazione basata su array è senz'altro più semplice e preferibile);
+
+* o viceversa si è sempre disposti ad aumentare la dimensione della lista (ad
+  esempio a seguito di una scrittura), per cui è *scorretto* indicare una taglia
+  finita.
 
 Viceversa, sostituire una *lista* (o un array) all'insieme nella
 rappresentazione sparsa pone notevoli complessità implementative (ad esempio: la
@@ -487,8 +508,9 @@ sol.show('SetBoolVect', 'partial')
 
 In questo caso, vale però la pena di ottimizzare le operazioni booleane almeno
 nel caso in cui anche gli operandi siano sparsi; in tali circostanze, i metodi
-and, or e xor si riducono a operazioni su insiemi che possono essere
-implementate in modo molto efficiente
+`and`, `or` e `xor` si riducono a operazioni su insiemi. Tali operazoini possono
+peraltro essere implementate in modo molto banale a partire dai metodi di `Set`
+(come illustrato nell'approfondimento sul "Collections framework").
 
 ```{code-cell}
 :tags: [remove-input]
@@ -506,7 +528,7 @@ sol.show('SetBoolVect', 'obj')
 
 Sebbene una implementazione per ciascun genere di BoolVect sia sufficiente a
 superare la prova, riflettendo sull'opportunità di ottimizzare le operazioni
-booleane non si può non riflettere che il linguaggio Java mette a disposizione
+booleane non si può non ricordare che il linguaggio Java mette a disposizione
 operatori booleani bit-a-bit per tutti i tipi numerici primitivi.
 
 Questo suggerisce l'idea di usare un `long` per rappresentare BoolVect di taglia
@@ -527,7 +549,8 @@ sol.show('LongBoolVect', 'trivial')
 
 la dimensione può essere per pigrizia calcolata col metodo statico
 [`Long.numberOfLeadingZeros`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html#numberOfLeadingZeros(long));
-questo rende molto banali anche i metodi parziali di lettura e scrittura
+l'uso dell'operatore di *shift* rende molto banali anche i metodi parziali di
+lettura e scrittura
 
 ```{code-cell}
 :tags: [remove-input]
