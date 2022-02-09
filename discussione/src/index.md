@@ -29,6 +29,7 @@ Il materiale è organizzato in due parti:
     * [Filesystem](temi/filesystem), assegnato il 19/2/2021;
     * [Piastrelle](temi/piastrelle), assegnato il 21/9/2021;
     * [Playfy](temi/playfy), assegnato il 20/1/2022;
+    * [BoolVect](temi/boolvect), assegnato il 3/2/2022.
 
 
 :::{toctree}
@@ -48,4 +49,5 @@ temi/bancarelle
 temi/filesystem
 temi/piastrelle
 temi/playfy
+temi/boolvect
 :::
