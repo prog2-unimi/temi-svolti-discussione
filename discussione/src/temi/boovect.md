@@ -168,10 +168,11 @@ concrete.
 Va invece categoricamente esclusa sin dal principio l'idea di sviluppare un tipo
 per rappresentare i valori di verità del vettore: per tale scopo è più che
 sufficiente il tipo primitivo `boolean` o, eventualmente, il corrispondete tipo
-*boxed* `Boolean`. Non c'è alcuna ragione plausibile per progettare un ulteriore
-tipo! L'esigenza di "convertire" dai caratteri `V` e `F` ai valori di verità e
-viceversa è banalmente soddisfatta rispettivamente dalle espressioni `c == 'V'`
-e `v ? 'V' : 'F'` (dove `c` è di tipo `char` e `v` è di tipo booleano).
+*wrapper* (o *involucro*) `Boolean`. Non c'è alcuna ragione plausibile di
+progettare un ulteriore tipo! L'esigenza di "convertire" dai caratteri `V` e `F`
+ai valori di verità e viceversa è banalmente soddisfatta rispettivamente dalle
+espressioni `c == 'V'` e `v ? 'V' : 'F'` (dove `c` è di tipo `char` e `v` è di
+tipo booleano).
 
 ### L'interfaccia BoolVect
 
@@ -207,7 +208,7 @@ Maggior attenzione è richiesta dalle competenze che possono produrre cambiament
 nel BoolVect: è necessario riflettere sulla *mutabilità* dei BoolVect.
 L'operazione di scrittura può essere specificata sia come un metodo
 *mutazionale* (che cambi lo stato del BoolVect su cui è invocato), che come un
-metodo di *produzione* (che restituisca un nuovo BoolVect ad ogni invocazione).
+metodo di *produzione* (che restituisca un nuovo BoolVect a ogni invocazione).
 La seconda scelta appare però troppo onerosa: una sequenza di invocazioni su un
 BoolVect di dimensione elevata produrrebbe una grande quantità di valori
 intermedi, probabilmente destinati ad avere una vita molto corta.
@@ -224,12 +225,12 @@ Anche in questo caso, l'eccezione riguarda certamente il caso in cui la
 posizione è negativa. Similmente, se si tenta di scrivere un valore di verità
 vero oltre la taglia non può che venir sollevata una eccezione. Secondo la
 traccia, infatti, la taglia è la massima dimensione possibile: anche qualora
-potesse aumetare durante la vita del BoolVect (e vedremo in seguito che ha poco
+potesse aumentare durante la vita del BoolVect (e vedremo in seguito che ha poco
 senso), al momento della scrittura posizionare un valore di verità vero oltre la
 taglia farebbe aumentare la dimensione oltre la taglia, fatto vietato dalla
 traccia. Se viceversa il valore fosse falso (e la posizione sempre maggiore o
-uguale alla taglia), potrebbe essere sensato non sollevare eccezione e lasciare
-inalterato il vettore.
+uguale alla taglia), potrebbe essere sensato non sollevare alcuna eccezione e
+lasciare inalterato il vettore.
 
 D'altro canto, aggiungere all'interfaccia un metodo che consenta di aumentare la
 taglia (ad esempio, prima della scrittura, per evitare l'eccezione di cui
@@ -246,18 +247,18 @@ dell'operazione.
 sol.show('BoolVect', 'bop')
 ```
 
-A prescindere dalle ovvie eccezioni legate alla nullità dell'argomento, anche in
-questo caso è necessario tener conto di un problema legato alla taglia: non è
-detto che il risultato possa sempre essere rappresentato modificando il primo
-operando.
+A prescindere dalle ovvie eccezioni legate al fatto che l'argomento sia `null`,
+anche in questo caso è necessario tener conto di un problema legato alla taglia:
+non è detto che il risultato possa sempre essere rappresentato modificando il
+primo operando.
 
 Con un po' di riflessione risulta evidente che i metodi relativi alle operazioni
-booleane dovrebbero sollevare eccezione quando la taglia del primo operando è
+booleane dovrebbero sollevare un'eccezione quando la taglia del primo operando è
 minore della dimensione del risultato: ad esempio l'or tra un BoolVect di taglia
-2 e uno di dimensione 3 produce un risultato di dimensione 3, che evidentemente
+2 e uno di dimensione 3 produce un BoolVect di dimensione 3, che evidentemente
 non può essere memorizzato nel primo operando di taglia 2. Questo certamente non
-può accadere nel caso dell'and (in cui il risultato non può in nessun caso avere
-dimensione maggiore di quella del primo operando).
+può accadere nel caso dell'and, perché il risultato non può in nessun caso avere
+dimensione maggiore di quella del primo operando.
 
 Per concludere, può essere utile aggiungere un metodo per rendere un BoolVect
 uguale ai valori specificati tramite una stringa; tale metodo può essere comodo
@@ -351,7 +352,7 @@ versatile: una volta messo in piedi esso potrebbe essere usato facilmente per
 estendere i comportamenti dei BoolVect a tutte le possibili operazioni booleane
 componente a componente!
 
-Si noti per concludere come, nel caso delle due operazioni il cui risultato
+Per concludere, si noti come, nel caso delle due operazioni il cui risultato
 potrebbe eccedere la taglia del primo operando, l'eccezione
 `IndexOutOfBoundsException` che potrebbe essere sollevata dal metodo `scrivi`
 venga sollevata al livello logico di una opportuna `IllegalArgumentException`.
@@ -390,20 +391,25 @@ Le implementazioni concrete devono provvedere i soli metodi (già documentati):
 inoltre possono (in modo del tutto facoltativo, se si ritiene utile e semplice
 farlo) provvedere delle implementazioni ottimizzate per i metodi:
 
-* `and`, `or`, `xor`,
+* `and`, `or`, `xor`, e
 * `equals`.
 
 La traccia richiede (almeno) due implementazioni, una adatta al caso *denso* e
-una a quello *sparso*; seguendo l'esempio dei polinomi, presentato nel libro di
-testo di Liskov et. al. e durante le lezioni ed esercitazioni, si possono
-individuare due rappresentazioni adatte, rispettivamente, ai due casi:
+una a quello *sparso*. È molto importante notare che la scelta
+dell'implementazione da utilizzare ricadrà sull'utente delle classi, e quindi
+non dovrà essere fatta alcuna decisione (in fase di costruzione o di modifica
+dei BoolVect) inerente alla classe concreta più adatta da utilizzare.
+
+Seguendo l'esempio dei polinomi, presentato nel libro di testo di Liskov et. al.
+e durante le lezioni ed esercitazioni, si possono individuare due
+rappresentazioni adatte, rispettivamente, ai due casi:
 
 * un *array* di valori booleani, uno per ciascun valore di verità del BoolVect;
 * un *insieme* di posizioni corrispondenti a tutti e soli i valori di verità
   veri del BoolVect.
 
-La rappresentazione con un array condurrà ad un BoolVect di taglia *finita*
-(pari al numero di elementi dell'array), mentre quella basata sull'insieme ad un
+La rappresentazione con un array condurrà a un BoolVect di taglia *finita*
+(pari al numero di elementi dell'array), mentre quella basata sull'insieme a un
 BoolVect di taglia *illimitata*. Le due rappresentazioni, oltre che per la loro
 semplicità, risultano quindi particolarmente interessanti anche perché
 consentono di confrontarsi (e mostrare la propria comprensione della traccia)
@@ -481,9 +487,9 @@ sol.show('ArrayBoolVect', 'obj')
 
 Se i valori di verità veri sono pochi, si può usare una struttura dati ben più
 onerosa di un array, sfruttando però il fatto che (appunto) conterrà pochi
-elementi. Gli interi sono naturalmente ordinati e conoscere la posizione più
-grande è comodo per calcolare la dimensione; la rappresentazione più pratica è
-quindi quella di un insieme ordinato
+elementi. Gli interi sono naturalmente ordinati e conoscere la posizione
+più grande è comodo per calcolare la dimensione; la rappresentazione più pratica
+è quindi quella di un insieme ordinato
 
 ```{code-cell}
 :tags: [remove-input]
@@ -498,7 +504,7 @@ caso denso) sono di immediata implementazione
 sol.show('SetBoolVect', 'trivial')
 ```
 
-Il fatto di non dover precalcolare la dimensione, rende molto semplici anche i
+Il fatto di non dover precalcolare la dimensione rende molto semplici anche i
 metodi parziali di lettura e scrittura
 
 ```{code-cell}
@@ -508,9 +514,9 @@ sol.show('SetBoolVect', 'partial')
 
 In questo caso, vale però la pena di ottimizzare le operazioni booleane almeno
 nel caso in cui anche gli operandi siano sparsi; in tali circostanze, i metodi
-`and`, `or` e `xor` si riducono a operazioni su insiemi. Tali operazoini possono
-peraltro essere implementate in modo molto banale a partire dai metodi di `Set`
-(come illustrato nell'approfondimento sul "Collections framework").
+`and`, `or` e `xor` si riducono a operazioni su insiemi. Tali operazioni possono
+peraltro essere implementate in modo diretto a partire dai metodi di `Set` (come
+illustrato nell'approfondimento sul "Collections framework").
 
 ```{code-cell}
 :tags: [remove-input]
@@ -549,7 +555,7 @@ sol.show('LongBoolVect', 'trivial')
 
 la dimensione può essere per pigrizia calcolata col metodo statico
 [`Long.numberOfLeadingZeros`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html#numberOfLeadingZeros(long));
-l'uso dell'operatore di *shift* rende molto banali anche i metodi parziali di
+l'uso dell'operatore di *shift* rende molto facili anche i metodi parziali di
 lettura e scrittura
 
 ```{code-cell}
@@ -574,7 +580,7 @@ sol.show('LongBoolVect', 'obj')
 
 ### La classe di test
 
-In questo tema la classe di test è del tutto banale per via del formato
+In questo tema la classe di test è molto semplice per via del formato
 dell'input. Si tratta semplicemente di leggere una linea alla volta, separando
 poi ogni linea nelle sue parti e decidendo le operazioni da compiere sulla
 scorta del primo carattere della linea; per ciascuna linea è sufficiente

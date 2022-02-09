@@ -106,8 +106,8 @@ public abstract class AbstractBoolVect implements BoolVect {
    */
   public void componenteAComponente(BooleanOperator op, BoolVect other)
       throws IndexOutOfBoundsException {
-    final int maxDimension = Math.max(dimensione(), other.dimensione());
-    for (int pos = 0; pos <= maxDimension; pos++)
+    final int dimensioneMax = Math.max(dimensione(), other.dimensione());
+    for (int pos = 0; pos <= dimensioneMax; pos++)
       scrivi(pos, op.apply(leggi(pos), other.leggi(pos)));
   }
   // EOF: bitwise
@@ -117,7 +117,8 @@ public abstract class AbstractBoolVect implements BoolVect {
   public void and(final BoolVect other) throws NullPointerException {
     componenteAComponente(
         new BooleanOperator() {
-          public boolean apply(boolean a, boolean b) {
+            @Override
+            public boolean apply(boolean a, boolean b) {
             return a & b;
           }
         },
