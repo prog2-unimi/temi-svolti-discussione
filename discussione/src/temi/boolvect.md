@@ -395,10 +395,12 @@ farlo) provvedere delle implementazioni ottimizzate per i metodi:
 * `equals`.
 
 La traccia richiede (almeno) due implementazioni, una adatta al caso *denso* e
-una a quello *sparso*. È molto importante notare che la scelta
-dell'implementazione da utilizzare ricadrà sull'utente delle classi, e quindi
-non dovrà essere fatta alcuna decisione (in fase di costruzione o di modifica
-dei BoolVect) inerente alla classe concreta più adatta da utilizzare.
+una a quello *sparso*. È molto importante notare che la scelta di quale
+implementazione utilizzare (tra quelle che provvederete) sarà prerogativa
+esclusiva dell'utente di tali classi, pertanto non dovrà essere il vostro codice
+a prendere tale decisione (ad esempio in fase di costruzione o di modifica dei
+BoolVect, sopratutto non sulla scorta della frazione corrente di valori di
+verità veri).
 
 Seguendo l'esempio dei polinomi, presentato nel libro di testo di Liskov et. al.
 e durante le lezioni ed esercitazioni, si possono individuare due
