@@ -17,12 +17,6 @@ sol = Solution('playfy')
 ```
 # Playfy
 
-:::{warning}
-Lo svolgimento di questo tema è ancora in **versione preliminare**, non dovrebbe
-contenere errori grossolani e probabilmente non sarà radicalmente modificato, ma
-è possibile che in futuro vengano apportate correzioni e piccole revisioni.
-:::
-
 ## La traccia
 
 Scopo della prova è progettare e implementare una gerarchia di oggetti utili a
