@@ -151,7 +151,8 @@ public class Path implements Iterable<String> {
    * @return il percorso risolto.
    */
   public Path resolve(final Path other) {
-    if (Objects.requireNonNull(other, "Il path da risolvere non può essere null.").isAbsolute()) return other;
+    if (Objects.requireNonNull(other, "Il path da risolvere non può essere null.").isAbsolute())
+      return other;
     final List<String> parts = new ArrayList<>(this.parts);
     parts.addAll(other.parts);
     return new Path(isAbsolute, parts);

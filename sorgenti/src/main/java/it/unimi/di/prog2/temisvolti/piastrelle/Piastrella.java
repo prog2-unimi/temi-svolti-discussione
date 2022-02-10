@@ -22,9 +22,9 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package it.unimi.di.prog2.temisvolti.piastrelle;
 
 /**
- * Una <em>piastrella</em> astratta ed immutabile, che implementa parzialmente l'interfaccia {@link
- * Rivestimento}, la sua rappresentazione è un singolo attributo intero, necessario ad implementare
- * il metodo {@link #costo}.
+ * Classe astratta e immutabile che rappresenta una <em>piastrella</em>; è una
+ * implementa parzialmente l'interfaccia {@link Rivestimento}, il cui stato è
+ * dato dal <em>costo</em>.
  */
 public abstract class Piastrella implements Rivestimento {
 

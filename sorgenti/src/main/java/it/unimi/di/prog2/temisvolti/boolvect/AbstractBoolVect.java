@@ -34,10 +34,9 @@ import java.util.Objects;
  * implementazione molto snella.
  *
  * <p>Implementa inoltre i metodi {@link BoolVect#and(BoolVect)}, {@link BoolVect#or(BoolVect)} e
- * {@link BoolVect#xor(BoolVect)} a partire dai corrispondendi operatori booleani definiti in {@link
- * BooleanOperators}, grazie alla funzione {@link
- * #componenteAComponente(BooleanOperators.BooleanOperator, BoolVect, BoolVect)} che li estende
- * componente a componente.
+ * {@link BoolVect#xor(BoolVect)} a partire dagli operatori booleani definiti in base
+ * all'interfaccia {@link AbstractBoolVect.BooleanOperator}, grazie alla funzione {@link
+ * #componenteAComponente(BooleanOperator, BoolVect)} che li estende componente a componente.
  *
  * <p>Infine, provvede una implementazione elementare di {@link #toString()} ed una molto
  * inefficiente per {@link #equals(Object)}, le sottoclassi concrete devono implementare se
@@ -117,8 +116,8 @@ public abstract class AbstractBoolVect implements BoolVect {
   public void and(final BoolVect other) throws NullPointerException {
     componenteAComponente(
         new BooleanOperator() {
-            @Override
-            public boolean apply(boolean a, boolean b) {
+          @Override
+          public boolean apply(boolean a, boolean b) {
             return a & b;
           }
         },

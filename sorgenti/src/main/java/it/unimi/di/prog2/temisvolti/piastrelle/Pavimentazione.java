@@ -27,10 +27,11 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Una <em>pavimentazione</em> immutabile, la cui rappresentazione è costituita da una collezione di
- * {@link Componente} ciascuno dei quali rappresenta una certa <em>quantità</em> di un
- * <em>rivestimento</em> (sia esso una <em>piastrella</em> o un'altra <em>pavimentazione</em>); è
- * possibile accedere al suo contenuto tramite <em>iterazione</em>.
+ * Classe immutabile che rappresenta una <em>pavimentazione</em> data da una
+ * collezione di {@link Componente} ciascuno dei quali rappresenta una certa
+ * <em>quantità</em> di un <em>rivestimento</em> (sia esso una
+ * <em>piastrella</em> o un'altra <em>pavimentazione</em>); è possibile accedere
+ * al suo contenuto tramite <em>iterazione</em>.
  */
 public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Componente> {
 
@@ -58,7 +59,8 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
      *     null}.
      */
     public Componente(final int quantità, final Rivestimento rivestimento) {
-      this.rivestimento = Objects.requireNonNull(rivestimento, "Il rivestimento non può essere null.");
+      this.rivestimento =
+          Objects.requireNonNull(rivestimento, "Il rivestimento non può essere null.");
       if (quantità <= 0) throw new IllegalArgumentException("La quantità dev'essere positiva");
       this.quantità = quantità;
     }

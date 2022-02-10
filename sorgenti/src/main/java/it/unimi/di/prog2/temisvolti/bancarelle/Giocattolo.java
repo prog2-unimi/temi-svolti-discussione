@@ -45,7 +45,8 @@ public class Giocattolo {
     // SOF: inv
     this.nome = Objects.requireNonNull(nome, "Il nome non può essere null.");
     this.materiale = Objects.requireNonNull(materiale, "Il materiale non può essere null");
-    if (nome.isEmpty() || materiale.isEmpty()) throw new IllegalArgumentException("Nome e materiale non devono essere vuoti.");
+    if (nome.isEmpty() || materiale.isEmpty())
+      throw new IllegalArgumentException("Nome e materiale non devono essere vuoti.");
     // EOF: inv
   }
   // EOF: rep

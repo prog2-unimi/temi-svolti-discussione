@@ -61,12 +61,14 @@ public class Bancarella implements Iterable<Giocattolo> {
    *     presente nel listino.
    */
   public Bancarella(final String proprietario, final Inventario inventario, final Listino listino) {
-    this.proprietario = Objects.requireNonNull(proprietario, "Il proprietario non può essere null.");
+    this.proprietario =
+        Objects.requireNonNull(proprietario, "Il proprietario non può essere null.");
     if (proprietario.isEmpty())
       throw new IllegalArgumentException("Il proprietario non deve essere vuoto.");
     this.listino = Objects.requireNonNull(listino, "Il listino non può essere null.");
     // SOF: ri
-    this.inventario = new Inventario(Objects.requireNonNull(inventario, "L'inventario non può essere null."));
+    this.inventario =
+        new Inventario(Objects.requireNonNull(inventario, "L'inventario non può essere null."));
     for (final Giocattolo g : inventario)
       if (!listino.conosce(g))
         throw new IllegalArgumentException("Il listino manca del prezzo per: " + g);

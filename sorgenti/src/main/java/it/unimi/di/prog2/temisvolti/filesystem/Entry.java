@@ -24,7 +24,7 @@ package it.unimi.di.prog2.temisvolti.filesystem;
 import java.util.Objects;
 
 /**
- * Una classe astratta che rappresenta una <em>entry<em> del filesystem con assegnato <em>nome</em>.
+ * Classe astratta che rappresenta una <em>entry<em> del filesystem con assegnato <em>nome</em>.
  */
 public abstract class Entry {
 

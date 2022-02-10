@@ -64,7 +64,8 @@ public class Inventario implements Iterable<Giocattolo> {
    * @throws IllegalArgumentException se uno dei valori non è positivo.
    */
   public Inventario(final Map<Giocattolo, Integer> inventario) {
-    Objects.requireNonNull(inventario, "La mappa che rappresenta l'inventario non può essere null.");
+    Objects.requireNonNull(
+        inventario, "La mappa che rappresenta l'inventario non può essere null.");
     for (Map.Entry<Giocattolo, Integer> e : inventario.entrySet())
       aggiungi(e.getValue(), e.getKey());
   }

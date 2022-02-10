@@ -22,9 +22,8 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package it.unimi.di.prog2.temisvolti.piastrelle;
 
 /**
- * Una <em>piastrella quadrata</em> immutabile, la cui rappresentazione è costituita dalla lunghezza
- * (sempre positiva) del suo <em>lato</em> (memorizzata in un attributo intero, non modificabile e
- * pubblico, fatto che rende non necessario un <em>getter</em>).
+ * Classe immutabile che rappresenta <em>piastrella quadrata</em>, lo stato è
+ * costituito dalla lunghezza (sempre positiva) del suo <em>lato</em>.
  */
 public class PiastrellaQuadrata extends Piastrella {
 
