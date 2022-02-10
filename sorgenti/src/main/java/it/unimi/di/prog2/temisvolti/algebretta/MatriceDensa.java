@@ -30,9 +30,9 @@ public class MatriceDensa extends AbsMatrice {
   /** I valori della matrice. */
   private final int[][] mat;
 
-  // AF: gli elementi dell'array corrispondono a quelli dela matrice RI: mat è
-  // non nullo ed ogni riga ha la stessa dimensione del numero di righe che è
-  // positivo
+  // AF: gli elementi dell'array corrispondono a quelli dela matrice
+  // RI: mat è non nullo ed ogni riga ha la stessa dimensione del numero di righe che è
+  //     positivo
 
   /**
    * Costruttore che costruisce una matrice di dimensione data, con tutti i valori pari a 0.
@@ -41,7 +41,7 @@ public class MatriceDensa extends AbsMatrice {
    * @throws IllegalArgumentException se la dimensione non è positiva.
    */
   private MatriceDensa(final int dim) {
-    if (dim < 0) throw new IllegalArgumentException("La dimensione deve essere positiva.");
+    if (dim <= 0) throw new IllegalArgumentException("La dimensione deve essere positiva.");
     mat = new int[dim][dim];
   }
 

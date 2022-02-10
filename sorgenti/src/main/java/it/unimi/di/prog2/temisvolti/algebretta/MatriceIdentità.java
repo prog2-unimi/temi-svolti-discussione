@@ -40,7 +40,7 @@ public class MatriceIdentità extends AbsMatrice {
    * @throws IllegalArgumentException se la dimensione non è positiva.
    */
   public MatriceIdentità(final int dim) {
-    if (dim < 0) throw new IllegalArgumentException("La dimensoine dev'essere positiva.");
+    if (dim <= 0) throw new IllegalArgumentException("La dimensoine dev'essere positiva.");
     this.dim = dim;
   }
   // EOF: rapcostr
@@ -73,7 +73,7 @@ public class MatriceIdentità extends AbsMatrice {
   // SOF: piumat
   @Override
   public Matrice più(final Matrice B) {
-    Objects.requireNonNull(B,"La matrice non può essere null.");
+    Objects.requireNonNull(B, "La matrice non può essere null.");
     if (!conforme(B)) throw new IllegalArgumentException("Le matrici non sono conformi.");
     // SOF: piuzero
     if (B instanceof MatriceNulla) return this;

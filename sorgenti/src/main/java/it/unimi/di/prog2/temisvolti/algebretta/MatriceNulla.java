@@ -23,7 +23,7 @@ package it.unimi.di.prog2.temisvolti.algebretta;
 
 import java.util.Objects;
 
-/** Classe che implementa una matrice nulla. */
+/** Classe che implementa una matrice nulla (anche detta zero). */
 public class MatriceNulla extends AbsMatrice {
 
   // SOF: rapcostr

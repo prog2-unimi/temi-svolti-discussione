@@ -24,6 +24,7 @@ package it.unimi.di.prog2.temisvolti.algebretta;
 import java.util.Collections;
 import java.util.Objects;
 
+/** Classe che implementa il vettore null (anche detto zero). */
 public class VettoreNullo implements Vettore {
 
   // SOF: rapcostr
