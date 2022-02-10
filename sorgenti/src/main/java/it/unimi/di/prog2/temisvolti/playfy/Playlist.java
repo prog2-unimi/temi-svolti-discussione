@@ -35,7 +35,7 @@ public class Playlist implements Iterable<Album.Brano> {
 
   // SOF: rep
   /** Il nome della playlist. */
-  public String nome;
+  private String nome;
 
   /** La durata complessiva della playlist. */
   private Durata durata = new Durata(0);
