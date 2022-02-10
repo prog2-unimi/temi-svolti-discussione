@@ -21,9 +21,8 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package it.unimi.di.prog2.temisvolti.piastrelle;
 /**
- * Classe immutabile che rappresenta una <em>piastrella romboidale</em>, lo
- * stato è costituito dalla lunghezza (sempre positiva) delle sue diagonali
- * <em>minore</em> e <em>maggiore</em>.
+ * Classe immutabile che rappresenta una <em>piastrella romboidale</em>, lo stato è costituito dalla
+ * lunghezza (sempre positiva) delle sue diagonali <em>minore</em> e <em>maggiore</em>.
  */
 public class PiastrellaRomboidale extends Piastrella {
 

@@ -27,11 +27,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Classe immutabile che rappresenta una <em>pavimentazione</em> data da una
- * collezione di {@link Componente} ciascuno dei quali rappresenta una certa
- * <em>quantità</em> di un <em>rivestimento</em> (sia esso una
- * <em>piastrella</em> o un'altra <em>pavimentazione</em>); è possibile accedere
- * al suo contenuto tramite <em>iterazione</em>.
+ * Classe immutabile che rappresenta una <em>pavimentazione</em> data da una collezione di {@link
+ * Componente} ciascuno dei quali rappresenta una certa <em>quantità</em> di un
+ * <em>rivestimento</em> (sia esso una <em>piastrella</em> o un'altra <em>pavimentazione</em>); è
+ * possibile accedere al suo contenuto tramite <em>iterazione</em>.
  */
 public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Componente> {
 

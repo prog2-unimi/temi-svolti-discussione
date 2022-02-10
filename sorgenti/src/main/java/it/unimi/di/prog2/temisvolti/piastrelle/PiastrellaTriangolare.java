@@ -22,9 +22,8 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package it.unimi.di.prog2.temisvolti.piastrelle;
 
 /**
- * Classe immutabile che rappresenta una <em>piastrella triangolare</em>, lo
- * stato è costituito dalla lunghezza (sempre positiva) della sua <em>base</em>
- * ed <em>altezza</em>.
+ * Classe immutabile che rappresenta una <em>piastrella triangolare</em>, lo stato è costituito
+ * dalla lunghezza (sempre positiva) della sua <em>base</em> ed <em>altezza</em>.
  */
 public class PiastrellaTriangolare extends Piastrella {
 

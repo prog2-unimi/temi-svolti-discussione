@@ -22,8 +22,8 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package it.unimi.di.prog2.temisvolti.piastrelle;
 
 /**
- * Interfaccia che descrive un <em>rivestimento</em>, cioè una qualunque entità
- * dotata di <em>costo</em> e <em>superficie</em>.
+ * Interfaccia che descrive un <em>rivestimento</em>, cioè una qualunque entità dotata di
+ * <em>costo</em> e <em>superficie</em>.
  */
 public interface Rivestimento {
   /**
