@@ -62,7 +62,7 @@ public class Acquisto implements Iterable<Bancarella> {
    * @throws NullPointerException se il giocattolo è {@code null}.
    */
   public Acquisto(final Giocattolo giocattolo) {
-    this.giocattolo = Objects.requireNonNull(giocattolo);
+    this.giocattolo = Objects.requireNonNull(giocattolo, "Il giocattolo non può essere null.");
     this.descrizione = new HashMap<>();
   }
 
@@ -79,7 +79,7 @@ public class Acquisto implements Iterable<Bancarella> {
    */
   public void aggiungi(final int num, final Bancarella bancarella) {
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
-    Objects.requireNonNull(bancarella);
+    Objects.requireNonNull(bancarella, "La bancarella non può essere null.");
     // SOF: ri
     if (descrizione.containsKey(bancarella))
       throw new IllegalArgumentException("La bancarella è già elencata nell'acquisto.");
@@ -120,7 +120,7 @@ public class Acquisto implements Iterable<Bancarella> {
    * @throws NoSuchElementException se l'acquisto non riguarda la bancarella specificata.
    */
   public int quantità(final Bancarella bancarella) {
-    Objects.requireNonNull(bancarella);
+    Objects.requireNonNull(bancarella, "La bancarella non può essere null.");
     if (!descrizione.containsKey(bancarella))
       throw new NoSuchElementException("L'acquisto non riguarda la bancarella specificata.");
     return descrizione.get(bancarella);

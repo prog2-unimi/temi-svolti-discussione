@@ -41,7 +41,7 @@ public class MatriceDiagonale extends AbsMatrice {
    * @throws NullPointerException se la diagonale è {@code null}
    */
   public MatriceDiagonale(final int[] diagonale) {
-    Objects.requireNonNull(diagonale);
+    Objects.requireNonNull(diagonale, "L'array diagonale non può essere null.");
     if (diagonale.length == 0)
       throw new IllegalArgumentException("La diagonale deve contenere almeno un valore.");
     this.diagonale = diagonale.clone();
@@ -76,7 +76,7 @@ public class MatriceDiagonale extends AbsMatrice {
   // SOF: piumat
   @Override
   public Matrice più(final Matrice B) {
-    Objects.requireNonNull(B);
+    Objects.requireNonNull(B, "La matrice non può essere null.");
     if (!conforme(B)) throw new IllegalArgumentException("Le matrici non sono conformi.");
     // SOF: piuzero
     if (B instanceof MatriceNulla) return this;
@@ -88,7 +88,7 @@ public class MatriceDiagonale extends AbsMatrice {
   // SOF: permat
   @Override
   public Matrice per(final Matrice B) {
-    Objects.requireNonNull(B);
+    Objects.requireNonNull(B, "La matrice non può essere null.");
     if (!conforme(B)) throw new IllegalArgumentException("Le matrici non sono conformi.");
     // SOF: perspeciale
     if (B instanceof MatriceNulla) return B;
@@ -101,7 +101,7 @@ public class MatriceDiagonale extends AbsMatrice {
   // SOF: pervec
   @Override
   public Vettore per(final Vettore v) {
-    Objects.requireNonNull(v);
+    Objects.requireNonNull(v, "Il vettore non può essere null.");
     if (!conforme(v))
       throw new IllegalArgumentException("Il vettore e la matrice non sono conformi.");
     // SOF: pervzero

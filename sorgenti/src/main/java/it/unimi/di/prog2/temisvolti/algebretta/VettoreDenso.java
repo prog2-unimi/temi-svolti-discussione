@@ -52,7 +52,7 @@ public class VettoreDenso implements Vettore {
    * @throws IllegalArgumentException se la val è {@code null} o ha zero elementi.
    */
   public VettoreDenso(final int[] val) {
-    Objects.requireNonNull(val);
+    Objects.requireNonNull(val, "L'array val non può essere null.");
     if (val.length == 0)
       throw new IllegalArgumentException("Il vettore deve comprendere almeno un valore.");
     this.val = val.clone(); // per proteggere la rappresentazione
@@ -81,8 +81,8 @@ public class VettoreDenso implements Vettore {
 
   @Override
   public Vettore più(final Vettore v) {
-    Objects.requireNonNull(v);
-    if (!conforme(v)) throw new IllegalArgumentException();
+    Objects.requireNonNull(v, "Il vettore non può essere null.");
+    if (!conforme(v)) throw new IllegalArgumentException("Il vettore non è conforme a questo.");
     if (v instanceof VettoreNullo) return this;
     final VettoreDenso res = new VettoreDenso(dim());
     for (int i = 0; i < val.length; i++) res.val[i] = val[i] + v.val(i);

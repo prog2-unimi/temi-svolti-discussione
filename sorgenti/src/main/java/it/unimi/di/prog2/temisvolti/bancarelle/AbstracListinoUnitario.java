@@ -49,8 +49,8 @@ public abstract class AbstracListinoUnitario implements Listino {
     this.prezzoUnitario = new HashMap<>();
     // SOF: ri
     for (Map.Entry<Giocattolo, Integer> e : prezzoUnitario.entrySet()) {
-      final Giocattolo giocattolo = Objects.requireNonNull(e.getKey());
-      final Integer num = Objects.requireNonNull(e.getValue());
+      final Giocattolo giocattolo = Objects.requireNonNull(e.getKey(), "La mappa non può contenere chiavi null.");
+      final Integer num = Objects.requireNonNull(e.getValue(), "La mappa non può contenere valori null.");
       if (num <= 0)
         throw new IllegalArgumentException("Il prezzp di " + giocattolo + " deve essere positivo");
       this.prezzoUnitario.put(giocattolo, num);
@@ -69,7 +69,7 @@ public abstract class AbstracListinoUnitario implements Listino {
    * @throws NoSuchElementException se il listino ignora il prezzo del giocattolo.
    */
   public int prezzoUnitario(final Giocattolo giocattolo) {
-    Objects.requireNonNull(giocattolo);
+    Objects.requireNonNull(giocattolo, "Il giocattolo non può essere null.");
     final Integer prezzo = prezzoUnitario.get(giocattolo);
     if (prezzo == null) throw new NoSuchElementException("Giocattolo non trovato: " + giocattolo);
     return prezzo;

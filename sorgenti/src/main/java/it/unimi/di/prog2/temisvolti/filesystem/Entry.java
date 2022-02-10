@@ -43,7 +43,7 @@ public abstract class Entry {
    */
   // il costruttore è protetto perché sarà usato solo dalle sottoclassi
   protected Entry(final String name) {
-    if (Objects.requireNonNull(name).isEmpty())
+    if (Objects.requireNonNull(name, "Il nome non può essere null.").isEmpty())
       throw new IllegalArgumentException("Il nome non può essere vuoto.");
     this.name = name;
   }

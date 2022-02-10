@@ -64,7 +64,7 @@ public class Inventario implements Iterable<Giocattolo> {
    * @throws IllegalArgumentException se uno dei valori non è positivo.
    */
   public Inventario(final Map<Giocattolo, Integer> inventario) {
-    Objects.requireNonNull(inventario);
+    Objects.requireNonNull(inventario, "La mappa che rappresenta l'inventario non può essere null.");
     for (Map.Entry<Giocattolo, Integer> e : inventario.entrySet())
       aggiungi(e.getValue(), e.getKey());
   }
@@ -93,7 +93,7 @@ public class Inventario implements Iterable<Giocattolo> {
    * @throws IllegalArgumentException se il numero non è positivo.
    */
   public int aggiungi(final int num, final Giocattolo giocattolo) {
-    Objects.requireNonNull(giocattolo);
+    Objects.requireNonNull(giocattolo, "Il giocattolo non può essere null.");
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
     int totale = num;
     if (inventario.containsKey(giocattolo)) totale += inventario.get(giocattolo);
@@ -127,7 +127,7 @@ public class Inventario implements Iterable<Giocattolo> {
    *     di quel tipo presenti nell'inventario.
    */
   public int rimuovi(final int num, final Giocattolo giocattolo) {
-    Objects.requireNonNull(giocattolo);
+    Objects.requireNonNull(giocattolo, "Il giocattolo non può essere null.");
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
     if (!inventario.containsKey(giocattolo))
       throw new NoSuchElementException("Giocattolo non presente: " + giocattolo);
@@ -152,7 +152,7 @@ public class Inventario implements Iterable<Giocattolo> {
    * @throws NullPointerException se giocattolo è {@code null}
    */
   public int quantità(final Giocattolo giocattolo) {
-    Objects.requireNonNull(giocattolo);
+    Objects.requireNonNull(giocattolo, "Il giocattolo non può essere null.");
     if (!inventario.containsKey(giocattolo)) return 0;
     return inventario.get(giocattolo);
   }

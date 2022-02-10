@@ -53,7 +53,7 @@ public class MatriceDensa extends AbsMatrice {
    *     di elementi divrso da quello delle altre righe, o il numero di righe è zero.
    */
   public MatriceDensa(final int[][] mat) {
-    Objects.requireNonNull(mat);
+    Objects.requireNonNull(mat, "La matrice non può essere null.");
     if (mat.length == 0) throw new IllegalArgumentException("La dimensione deve essere positiva.");
     final int dim = mat.length;
     this.mat = new int[dim][dim];
@@ -71,7 +71,7 @@ public class MatriceDensa extends AbsMatrice {
    * @throws IllegalArgumentException se la matrice è {@code null}.
    */
   public MatriceDensa(final Matrice A) {
-    this(Objects.requireNonNull(A).dim());
+    this(Objects.requireNonNull(A, "La matrice non può essere null.").dim());
     for (int i = 0; i < dim(); i++) for (int j = 0; j < dim(); j++) mat[i][j] = A.val(i, j);
   }
   // EOF: copy
@@ -105,7 +105,7 @@ public class MatriceDensa extends AbsMatrice {
   // SOF: piumat
   @Override
   public MatriceDensa più(final Matrice B) {
-    Objects.requireNonNull(B);
+    Objects.requireNonNull(B, "La matrice non può essere null.");
     if (!conforme(B)) throw new IllegalArgumentException("Le matrici non sono conformi.");
     // SOF: piuzero
     if (B instanceof MatriceNulla) return this;
@@ -120,7 +120,7 @@ public class MatriceDensa extends AbsMatrice {
   // SOF: permat
   @Override
   public Matrice per(final Matrice B) {
-    Objects.requireNonNull(B);
+    Objects.requireNonNull(B, "La matrice non può essere null.");
     if (!conforme(B)) throw new IllegalArgumentException("Le matrici non sono conformi.");
     // SOF: perspeciale
     if (B instanceof MatriceNulla) return B;
@@ -137,7 +137,7 @@ public class MatriceDensa extends AbsMatrice {
   // SOF: pervec
   @Override
   public Vettore per(final Vettore v) {
-    Objects.requireNonNull(v);
+    Objects.requireNonNull(v, "Il vettore non può essere null.");
     if (!conforme(v))
       throw new IllegalArgumentException("Il vettore e la matrice non sono conformi.");
     // SOF: pervzero

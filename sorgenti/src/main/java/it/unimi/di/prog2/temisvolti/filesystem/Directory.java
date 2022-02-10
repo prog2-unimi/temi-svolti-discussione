@@ -58,7 +58,7 @@ public class Directory extends Entry implements Iterable<Entry> {
    * @throws NullPointerException se il {@code name} è {@code null}.
    */
   public Entry find(final String name) {
-    Objects.requireNonNull(name);
+    Objects.requireNonNull(name, "Il nome non può essere null.");
     for (Entry e : entries) if (e.name.equals(name)) return e;
     return null;
   }
@@ -66,17 +66,17 @@ public class Directory extends Entry implements Iterable<Entry> {
   /**
    * Aggiunge una <em>entry</em>.
    *
-   * @param e l'entry da aggiungere.
+   * @param entry l'entry da aggiungere.
    * @throws NullPointerException se l'entry è {@code null}
    * @thrwos {@link FileAlreadyExistsException} se la directory contiene una entry con lo stesso
    *     nome di quella da aggiungere.
    */
-  void add(final Entry e) throws FileAlreadyExistsException {
-    Objects.requireNonNull(e);
-    if (find(e.name) != null)
+  void add(final Entry entry) throws FileAlreadyExistsException {
+    Objects.requireNonNull(entry, "L'entry non può essere null.");
+    if (find(entry.name) != null)
       throw new FileAlreadyExistsException(
           "La directory contiene già una entry con lo stesso nome.");
-    entries.add(e);
+    entries.add(entry);
   }
   // EOF: methods
 

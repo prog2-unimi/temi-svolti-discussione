@@ -58,7 +58,7 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
      *     null}.
      */
     public Componente(final int quantità, final Rivestimento rivestimento) {
-      this.rivestimento = Objects.requireNonNull(rivestimento);
+      this.rivestimento = Objects.requireNonNull(rivestimento, "Il rivestimento non può essere null.");
       if (quantità <= 0) throw new IllegalArgumentException("La quantità dev'essere positiva");
       this.quantità = quantità;
     }

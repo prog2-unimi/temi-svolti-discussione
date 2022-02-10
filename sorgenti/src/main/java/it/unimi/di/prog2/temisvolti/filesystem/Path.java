@@ -94,7 +94,7 @@ public class Path implements Iterable<String> {
    *     consecutivi.
    */
   public static Path fromString(final String path) {
-    Objects.requireNonNull(path);
+    Objects.requireNonNull(path, "Il path non può essere null");
     if (path.isEmpty()) return EMPTY;
     final String[] parts = path.split(SEPARATOR);
     if (parts.length == 0) return ROOT;
@@ -151,7 +151,7 @@ public class Path implements Iterable<String> {
    * @return il percorso risolto.
    */
   public Path resolve(final Path other) {
-    if (Objects.requireNonNull(other).isAbsolute()) return other;
+    if (Objects.requireNonNull(other, "Il path da risolvere non può essere null.").isAbsolute()) return other;
     final List<String> parts = new ArrayList<>(this.parts);
     parts.addAll(other.parts);
     return new Path(isAbsolute, parts);
@@ -173,7 +173,7 @@ public class Path implements Iterable<String> {
    *     dell'argomento.
    */
   public Path relativize(final Path other) {
-    Objects.requireNonNull(other);
+    Objects.requireNonNull(other, "Il path da relativizzare non può esser null.");
     if (!isAbsolute() && other.isAbsolute)
       throw new IllegalArgumentException(
           "Non si può relativizzare un path assoluto rispetto ad un relativo.");

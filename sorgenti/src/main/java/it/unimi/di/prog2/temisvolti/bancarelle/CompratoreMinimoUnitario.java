@@ -43,7 +43,7 @@ public class CompratoreMinimoUnitario extends AbstractCompratore {
   // SOF: compra
   @Override
   public Acquisto compra(int num, Giocattolo giocattolo) {
-    Objects.requireNonNull(giocattolo);
+    Objects.requireNonNull(giocattolo, "Il giocattolo non può essere null.");
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
     if (quantità(giocattolo) < num)
       throw new IllegalArgumentException("Non ci sono abbastanza: " + giocattolo);

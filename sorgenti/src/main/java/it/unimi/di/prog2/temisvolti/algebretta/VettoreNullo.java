@@ -57,8 +57,8 @@ public class VettoreNullo implements Vettore {
 
   @Override
   public Vettore più(Vettore v) {
-    Objects.requireNonNull(v);
-    if (!conforme(v)) throw new IllegalArgumentException();
+    Objects.requireNonNull(v, "Il vettore non può essere null.");
+    if (!conforme(v)) throw new IllegalArgumentException("Il vettore non è conforme a questo.");
     return v;
   }
   // EOF: ops
