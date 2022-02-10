@@ -14,7 +14,9 @@ di Milano](http://www.unimi.it/).
 Gli studenti interessati possono consultare:
 
 - una [accurata discussione](https://prog2unimi-temi-svolti.netlify.app/) degli svolgimenti e
-- i [sorgenti con documentazione](https://github.com/prog2-unimi/temi-svolti) delle soluzioni proposte.
+- i [sorgenti](https://github.com/prog2-unimi/temi-svolti)
+  delle soluzioni proposte e la relativa [documentazione Javadoc](https://prog2-unimi.github.io/temi-svolti/).
+
 
 La *consultazione diretta del contenuto di questo repository è sconsigliata*, si
 raccomanda di **partire dalla lettura della discussione riportata sopra** e quindi
