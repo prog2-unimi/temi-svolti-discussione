@@ -18,7 +18,7 @@ test {
 }
 
 javadoc {
-  options.docTitle = 'Build Tool Example'
+  options.docTitle = 'Prog2@UniMI — Temi Svolti'
   options.overview = 'src/overview.html'
   options.links = [ 'https://docs.oracle.com/en/java/javase/11/docs/api/' ]
   options.showFromPrivate()
