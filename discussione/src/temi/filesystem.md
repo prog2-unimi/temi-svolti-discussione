@@ -215,7 +215,7 @@ sol.show('Entry', 'rep')
 
 il cui invariante è non essere `null` e non essere vuota fatto che può essere
 controllato in costruzione e non dovrà più essere verificato (dato che, riguardo
-a questa porzione di informazioni, la classe è immutaibile).
+a questa porzione di informazioni, la classe è immutabile).
 
 Nell'interprete è necessario sapere se una entry corrisponde o meno ad una
 directory (per segnalare, ad esempio, se sia o meno un errore chiederne
@@ -239,7 +239,7 @@ sol.show('File', 'rep')
 Si osserva che, sebbene l'attributo sia immutabile, non si avrebbe alcun
 vantaggio a renderlo pubblico dal momento che esiste un (omonimo) metodo
 osservazionale; d'altro canto non è possibile rimuovere tale metodo, dato che
-per il caso delle directory non è plausibile (come sarà discusso in segiuto)
+per il caso delle directory non è plausibile (come sarà discusso in seguito)
 memorizzare la dimensione in un attributo. Gli unici metodi da implementare sono
 sovrascritture di metodi delle superclassi:
 
@@ -260,7 +260,7 @@ La rappresentazione più ragionevole appare essere data da una *lista* di
 *entry*. Oltre alle ovvie condizioni dell'invariante (che prescrivano che la
 lista non sia `null` e non contenga `null`) è necessario prestare attenzione che
 essa non contenga più *entry* con lo stesso nome, questo è banalmente vero in
-costruzione e verrà verificato nell'unico medoto mutazionale.
+costruzione e verrà verificato nell'unico metodo mutazionale.
 
 ```{code-cell}
 :tags: [remove-input]
@@ -352,7 +352,7 @@ Riguardo all'invariante, è necessario che:
 
 Prima di procedere può essere utile aggiungere qualche costante, per il
 separatore, il percorso corrispondente alla radice del *filesystem* e il
-percorso *vouto*:
+percorso *vuoto*:
 
 ```{code-cell}
 :tags: [remove-input]
@@ -448,7 +448,7 @@ sol.show('FileSystem', 'find')
 ```
 
 Le competenze "osservazionali" (restituire la dimensione di una *entry* o un
-iteratore sul contenuto di una *direcotry*) sono di facile implementazoine, una
+iteratore sul contenuto di una *direcotry*) sono di facile implementazione, una
 volta dati i due metodi di ricerca appena sviluppati basterà delegare alle
 *entry*:
 

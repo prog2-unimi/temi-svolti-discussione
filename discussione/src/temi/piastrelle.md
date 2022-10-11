@@ -273,7 +273,7 @@ La prima possibilità richiede una certa attenzione nel mantenimento
 dell'invariante di rappresentazione (avere a che fare con due attributi che
 vanno mantenuti in modo coordinato può non essere del tutto banale), la seconda
 richiede l'uso delle mappe (che potrebbe non essere ovvio), mentre la terza
-sempra la più semplice.
+sembra la più semplice.
 
 Procediamo quindi con l'implementare un record, che chiameremo `Componente`;
 osserviamo che è sensato che esso implementi l'interfaccia `Rivestimento` (è

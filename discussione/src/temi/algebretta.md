@@ -290,7 +290,7 @@ non da quello implementativo, come sarà più chiaro in seguito.
 
 Iniziamo dalla matrice densa, la cui rappresentazione sarà data da un array
 bidimensionale; anche in questo caso, essendo sensato che le matrici siano
-immutabili, gli invarianti sono che l'array non sia un riferimento a null, sia
+immutabili, gli invarianti sono che l'array non sia un riferimento a `null`, sia
 "quadrato" e di dimensione almeno 1 x 1 e possono essere controllati solo in
 costruzione.
 
