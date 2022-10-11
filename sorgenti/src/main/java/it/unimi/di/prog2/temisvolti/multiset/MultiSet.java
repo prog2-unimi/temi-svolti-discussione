@@ -62,9 +62,11 @@ interface MultiSet<E> extends Iterable<E> {
    * @param o l'elemento la cui presenza è da verificare.
    * @return <code>true</code> se l'elemento appartiene al multiset.
    */
+  // SOF: contains
   default boolean contains(Object o) {
     return multiplicity(o) > 0;
   }
+  // EOF: contains
  
   /**
    * Restituisce la molteplicità dell'elemento nel multiset.
@@ -87,11 +89,13 @@ interface MultiSet<E> extends Iterable<E> {
    *
    * @return la cardinalità.
    */
+  // SOF: size
   default int size() {
     int size = 0;
     for (E e: this) size += multiplicity(e);
     return size;
   }
+  // EOF: size
  
   /**
    * Resistuisce un nuovo multiset corrispondente all'unione tra questo e l'argomento.

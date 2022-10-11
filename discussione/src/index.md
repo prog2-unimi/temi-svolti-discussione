@@ -51,4 +51,5 @@ temi/filesystem
 temi/piastrelle
 temi/playfy
 temi/boolvect
+temi/multiset
 :::

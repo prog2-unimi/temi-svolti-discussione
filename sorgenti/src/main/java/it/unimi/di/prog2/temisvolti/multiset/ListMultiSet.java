@@ -15,7 +15,9 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
   /**
    * La lista degli elementi del multiset.
    */
+  // SOF: rapp
   private final List<E> elems = new LinkedList<>();
+  // EOF: rapp
 
   /* L'invariante di rappresentazione è semplicemente dato dal fatto che la
    * lista non è <code>null</code> (che è vero in cosruzione e non può mutare in
@@ -23,6 +25,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
    * verificato nell'unico metodo che vi aggiunge elementi).
    */
 
+  // SOF: mutazionali
   @Override
   public int add(E e) {
     Objects.requireNonNull(e);
@@ -36,17 +39,21 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
     elems.remove(o);
     return m;
   }
+  // EOF: mutazionali
 
+  // SOF: multiplicity
   @Override
   public int multiplicity(Object o) {
     return Collections.frequency(elems, o);
   }
+  // EOF: multiplicity
 
   /* Le due implemementazioni seguenti hanno senso solo perché più efficienti
    * di quella di default (in particolare la seconda che ne cambia il costo
    * da quadratico a cosante).
    */
 
+  // SOF: overrides
   @Override
   public boolean contains(Object o) {
     return elems.contains(o); 
@@ -56,7 +63,9 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
   public int size() {
     return elems.size(); 
   }
+  // EOF: overrides
 
+  // SOF: union
   @Override
   public MultiSet<E> union(MultiSet<? extends E> o) {
     Objects.requireNonNull(o);
@@ -68,7 +77,9 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
     }
     return result;
   }
+  // EOF: union
 
+  // SOF: intersection
   @Override
   public MultiSet<E> intersection(MultiSet<? extends E> o) {
     Objects.requireNonNull(o);
@@ -79,7 +90,9 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
     }
     return result;
   }
+  // EOF: intersection
 
+  // SOF: iterator
   @Override
   public Iterator<E> iterator() {
     return new Iterator<>() {
@@ -88,6 +101,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
       private E next = null; 
       private int idx = -1; 
       
+      // SOF: hasNext
       @Override
       public boolean hasNext() {
         if (next != null) return true;
@@ -101,6 +115,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
         }
         return false;
       }
+      // EOF: hasNext
 
       @Override
       public E next() {
@@ -112,4 +127,6 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
       
     };
   }
+  // EOF: iterator
+
 }
