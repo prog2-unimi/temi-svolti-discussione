@@ -93,7 +93,7 @@ e
 che possono essere usati anche su riferimenti `null`; ad esempio
 ```{code-block} java
 String stringa = Objects.toString(oggetto);
-boolean uguali = Objects.euqlals(questo, quello);
+boolean uguali = Objects.equals(questo, quello);
 int hash = Objects.hashCode(oggetto);
 ```
 possono essere rispettivamente usati invece di
