@@ -144,6 +144,9 @@ l'arresto del programma (tramite l'invocazione del metodo `System.exit`).
 
 ## Rappresentazione dello stato
 
+Una corretta scelta della rappresentazione è tra gli obiettivi centrali
+dell'insegnamento. 
+
 ### Visibilità e osservabili
 
 L'errore più grave è consentire che lo stato venga alterato dall'esterno della
@@ -180,18 +183,126 @@ public class Persona {
 è inaccettabile dal momento che è impossibile ottenere il cognome o il nome
 della persona (che succede se contengono uno spazio)?
 
-### 
+### Esporre la rappresentazione
 
+Ci sono due "punti" critici in cui la rappresentazione interna alla classe può
+"sfuggire" dal controllo.
+
+Quando lo stato viene ricevuto dall'esterno (come in un costruttore, o in un
+metodo mutazionale) e quando lo stato viene mostrato all'esterno (come in un
+metodo osservazionale, in particolare in un iteratore).
+
+Immagazzinare un riferimento ad un oggetto mutabile esterno alla classe, così
+come cedere un riferimento ad un oggetto mutabile interno alla classe è in
+genere un errore grave.
+
+Ad esempio, il frammento di codice
+
+```java
+class AClass {
+  private final List<String> unaLista;
+  public AClass(List<String> unaLista) {
+    if (Objects.requireNonNull(unaLista).contains(null)) throw new IllegalArgumentException();
+    this.unaLista = unaLista;
+  }
+}
+```
+
+non offre alcuna possibilità di garantire che l'assenza di riferimenti a `null`
+nell'attributo `unaLista` sia preservato dopo la costruzione; si consideri
+infatti il seguente uso della classe
+
+```java
+List<String> unaLista = new ArrayList<>();
+unaLista.add("uno");
+AClass aClass = new AClass(unaLista);
+unaLista.add(null);
+```
+
+che mostra come, nonostante i controlli in costruzione, la lista interna alla
+fine sarà `["uno", null]`.
+
+In modo analogo, il frammento di codice
+
+```java
+class ABetterClass {
+  private final List<String> unaLista;
+  public ABetterClass(List<String> unaLista) {
+    if (Objects.requireNonNull(unaLista).contains(null)) throw new IllegalArgumentException();
+    this.unaLista = new ArrayList<>(unaLista);
+  }
+  public List<String> unaLista() {
+    return unaLista;
+  }
+}
+```
+
+non offre comunque alcuna possibilità di garantire che l'assenza di riferimenti
+a `null` nell'attributo `unaLista` sia preservato dopo la costruzione; si
+consideri infatti il seguente uso della classe
+
+```java
+List<String> unaLista = new ArrayList<>();
+unaLista.add("uno");
+ABetterClass aBetterClass = new ABetterClass(unaLista);
+unaLista = aBetterClass.unaLista();
+unaLista.add(null);
+```
+
+che mostra come, nonostante i controlli in costruzione, la lista interna alla
+fine sarà `["uno", null]`.
+
+Particolare attenzione va rivolta agli *iteratori*, ricordando che essi
+comprendono anche il metodo mutazionale `remove()`, che può consentire modifiche
+inattese.
+
+Ad esempio, il frammento di codice
+
+```java
+class ANonEmptyClass implements Iterable<String> {
+  private final List<String> unaLista;
+  public ANonEmptyClass(List<String> unaLista) {
+    if (Objects.requireNonNull(unaLista).isEmpty()) throw new IllegalArgumentException();
+    this.unaLista = new ArrayList<>(unaLista);
+  }
+  public Iterator<String> iterator() {
+    return unaLista.iterator();
+  }
+}
+```
+
+non offre alcuna possibilità di garantire che la presenza di almeno un elemento
+nell'attributo `unaLista` sia preservato dopo la costruzione; si consideri
+infatti il seguente uso della classe
+
+```java
+ANonEmptyClass aNonEmptyClass = new ANonEmptyClass(List.of("uno"));
+Iterator<String> it = aNonEmptyClass.iterator();
+it.next();
+it.remove();
+```
+
+che mostra come, nonostante i controlli in costruzione, la lista interna alla
+fine sarà vuota.
+
+### Appropriatezza dei tipi di dato
 
 Tranne che in casi eccezionali, l'uso del tipo `String` per rappresentare
 informazioni che non siano stringhe è errore grave.
 
-TODO: da scrivere!
+Similmente, sebbene sia possibile comporre arbitrariamente le strutture dati
+offerti dal "Collections Framework", l'uso di imporbabili matrioske è indicativo
+di scelte spesso discutibili.
 
-- stringhe per rappresentare cose che non siano testo puro
-- attributi privati senza osservazionali (toString non basta)
-- reference leak (non copiare in ingresso, o avvolgere in uscita)
-- iteratori non protetti (ignorare remove)
+Tanto per citare un esempio, una dichiarazione come
+
+```java
+Map<List<String>, Set<List<String>>>
+```
+
+molto improbabilmente è una ragionevole rappresentazione dello stato di una
+classe.
+
 
 ## Classi astratte, interfacce ed ereditarietà
 
