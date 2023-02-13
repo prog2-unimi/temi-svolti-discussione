@@ -16,7 +16,7 @@ esplicito e convincente* nella documentazione allegata all'implementazione.
 
 ## Programmazione di base
 
-Mancanze che riguardano la programmazione in se, ancor prima che orientata agli
+Mancanze che riguardano la programmazione in sé, ancor prima che orientata agli
 oggetti, che sono da considerarsi molto gravi:
 
 * l'incapacità di leggere l'input dal *flusso di ingresso standard*;
@@ -33,7 +33,7 @@ oggetti, che sono da considerarsi molto gravi:
 Quando si ha a che fare con tipi di dato che funzionano da "contenitori", come
 ad esempio gli array (di tipi non primitivi) o i tipi offerti dal "Collections
 Framework", oltre ad assicurarsi che gli attributi, parametri o variabili
-locali, che si riferiscono ad essi non abbiano valore `null`, è generalmente
+locali, che si riferiscono a essi non abbiano valore `null`, è generalmente
 necessario accertarsi che non contengano riferimenti a `null`. Sono rari i casi
 in cui la presenza di `null` nel contenitore sia legittima e, nel caso, vanno
 debitamente documentati nell'invariante di rappresentazione e nella funzione di
@@ -108,8 +108,8 @@ Sono errori estremamente gravi:
 
 * sovrascrivere (*override*) l'implementazione di `equals`, ma non di `hashCode`,
 * sovrascrivere (*override*) l'implementazione di `hashCode`, ma non di `equals`, 
-* sovrascrivere (*override*) l'implementazione di `euqals` e `hashCode` senza
-  rispettare i contratti definiti per entrambe i metodi in `Object`.
+* sovrascrivere (*override*) l'implementazione di `equals` e `hashCode` senza
+  rispettare i contratti definiti per entrambi i metodi in `Object`.
 
 Sono generalmente da considerarsi errori:
 
