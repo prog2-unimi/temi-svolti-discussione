@@ -93,7 +93,7 @@ In particolare, è un errore estremamente grave confrontare espressioni di tipo
 `String` con `==` invece che col metodo `equals` se l'intento è verificare che
 si tratti di stringhe uguali.
 
-Ad esempio, se `unaStirnga` è una variabile locale di tipo `String`
+Ad esempio, se `unaStringa` è una variabile locale di tipo `String`
 l'espressione
 
 ```java
@@ -186,14 +186,12 @@ della persona (che succede se contengono uno spazio)?
 ### Esporre la rappresentazione
 
 Ci sono due "punti" critici in cui la rappresentazione interna alla classe può
-"sfuggire" dal controllo.
+"sfuggire" dal controllo: quando lo stato viene ricevuto dall'esterno (come in
+un costruttore, o in un metodo mutazionale) e quando lo stato viene mostrato
+all'esterno (come in un metodo osservazionale, in particolare in un iteratore).
 
-Quando lo stato viene ricevuto dall'esterno (come in un costruttore, o in un
-metodo mutazionale) e quando lo stato viene mostrato all'esterno (come in un
-metodo osservazionale, in particolare in un iteratore).
-
-Immagazzinare un riferimento ad un oggetto mutabile esterno alla classe, così
-come cedere un riferimento ad un oggetto mutabile interno alla classe è in
+Immagazzinare un riferimento a un oggetto mutabile esterno alla classe, così
+come cedere un riferimento a un oggetto mutabile interno alla classe è in
 genere un errore grave.
 
 Ad esempio, il frammento di codice
@@ -291,7 +289,7 @@ Tranne che in casi eccezionali, l'uso del tipo `String` per rappresentare
 informazioni che non siano stringhe è errore grave.
 
 Similmente, sebbene sia possibile comporre arbitrariamente le strutture dati
-offerti dal "Collections Framework", l'uso di imporbabili matrioske è indicativo
+offerti dal "Collections Framework", l'uso di improbabili matrioske è indicativo
 di scelte spesso discutibili.
 
 Tanto per citare un esempio, una dichiarazione come
@@ -300,7 +298,7 @@ Tanto per citare un esempio, una dichiarazione come
 Map<List<String>, Set<List<String>>>
 ```
 
-molto improbabilmente è una ragionevole rappresentazione dello stato di una
+molto probabilmente non è una ragionevole rappresentazione dello stato di una
 classe.
 
 
