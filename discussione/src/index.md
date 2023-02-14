@@ -19,8 +19,6 @@ Il materiale è organizzato in due parti:
 
     * la [parte iniziale comune a tutte le tracce d'esame](intro/consegne)
       (ulteriormente commentata),
-    * un elenco di "[errori fatali](intro/fatalerror)" che potrebbero
-      compromettere l'esito della valutazione,
     * un elenco di alcuni [ferri del mestiere](intro/ifdm/index) che possono risultare
       utili nello sviluppo delle soluzioni;
 
@@ -40,7 +38,6 @@ Il materiale è organizzato in due parti:
 :hidden:
 
 Le consegne del tema <intro/consegne>
-Errori fatali <intro/fatalerror>
 intro/ifdm/index
 :::
 
@@ -48,6 +45,7 @@ intro/ifdm/index
 :caption: Temi
 :hidden:
 
+Errori fatali <intro/fatalerror>
 temi/algebretta
 temi/bancarelle
 temi/filesystem
