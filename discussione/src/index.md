@@ -45,7 +45,6 @@ intro/ifdm/index
 :caption: Temi
 :hidden:
 
-Errori fatali <intro/fatalerror>
 temi/algebretta
 temi/bancarelle
 temi/filesystem
