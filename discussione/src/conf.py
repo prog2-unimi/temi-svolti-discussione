@@ -41,11 +41,8 @@ mermaid_cmd = './bin/dmmdc'
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
 html_theme_options = {
-  'single_page': False,
-  'logo_only': True,
   'toc_title': 'Sezioni',
   'show_prev_next': False,
-  'extra_navbar': ''
 }
 html_logo = '_static/logo.png'
 html_show_copyright = False
