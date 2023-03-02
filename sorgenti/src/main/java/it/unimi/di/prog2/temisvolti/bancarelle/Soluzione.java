@@ -40,13 +40,13 @@ public class Soluzione {
 
     final int numBancarelle = s.nextInt();
     final Set<Bancarella> bancarelle = new HashSet<>(numBancarelle);
-    final Map<Giocattolo, Integer> giocattolo2prezzo = new HashMap<>();
-    final Inventario inventario = new Inventario();
-
+    
     for (int b = 0; b < numBancarelle; b++) {
       /* Lettura di una bancarella */
       final String proprietario = s.next();
       final int numGiochi = s.nextInt();
+      final Map<Giocattolo, Integer> giocattolo2prezzo = new HashMap<>();
+      final Inventario inventario = new Inventario();
       for (int g = 0; g < numGiochi; g++) {
         /* Lettura dei giochi della bancarella */
         final int num = s.nextInt();
