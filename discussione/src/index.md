@@ -30,7 +30,8 @@ Il materiale è organizzato in due parti:
     * [Piastrelle](temi/piastrelle), assegnato il 21/9/2021;
     * [Playfy](temi/playfy), assegnato il 20/1/2022;
     * [BoolVect](temi/boolvect), assegnato il 3/2/2022;
-    * [Multiset](temi/multiset), assegnato il 29/9/2022.
+    * [Multiset](temi/multiset), assegnato il 29/9/2022;
+    * [Cambiavalute](temi/cambiavalute), assegnato il 27/6/2023.
 
 
 :::{toctree}
@@ -52,4 +53,5 @@ temi/piastrelle
 temi/playfy
 temi/boolvect
 temi/multiset
+temi/cambiavalute
 :::

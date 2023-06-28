@@ -20,6 +20,7 @@ def remove_package(src):
 DIRT_DIR = Path('../../../sorgenti/src/main/java/it/unimi/di/prog2/temisvolti/')
 CLEAN_DIR = Path('../../../../temi-svolti/temi')
 CLEAN_URL = 'https://github.com/prog2-unimi/temi-svolti/blob/master/temi'
+
 class Solution:
 
   @staticmethod
