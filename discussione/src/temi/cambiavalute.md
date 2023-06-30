@@ -296,6 +296,18 @@ dato simbolo:
 sol.show('Valuta', 'valueOf')
 ```
 
+**Senza usare le `enum`**
+
+Una soluzione alternativa (più complessa da realizzare e meno preferibile)
+potrebbe essere quella di una classe concreta; in tal caso è però assolutamente
+necessario che:
+
+* la classe implementi in modo opportuno `equals` e `hashCode`,
+* il costruttore sia privato e venga usato per popolare una struttura dati
+  interna utile a contenere tutte e soltanto le valute descritte dalla traccia;
+* ci sia un metodo di fabbricazione che consenta di ottenere una di tali istanze
+  a partire dal simbolo e/o dal nome.
+
 ### Gli importi
 
 La rappresentazione degli importi richiede un minimo di attenzione in più, dal
@@ -383,6 +395,17 @@ di nuovo, a prescindere dalla nullità, occorre controllare le valute e prestare
 attenzione che `equals` e `compareTo` siano coerenti (ma questo è di nuovo
 elementare data la rappresentazione scelta).
 
+**Usando i `BigDecimal`**
+
+Si potrebbe pensare che la classe
+[]BigDecimal](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html)
+possa essere usata per rappresentare gli importi, ciò è vero a patto di
+occuparsi con estrema attenzione del fatto che il numero di cifre decimali sia
+sempre esattamente uguale a due; ciò è possibile, ma richiede una conoscenza
+abbastanza approfondita del funzionamento di tale classe e una notevole
+attenzione. Questo rende la soluzione proposta, basata sull'uso dei soli
+centesimi, notevolmente più elementare e pratica da implementare.
+
 ### La cassa
 
 La cassa è una collezione di importi, che può essere realizzata tramite una
@@ -393,15 +416,18 @@ mappa:
 sol.show('Cassa', 'rep')
 ```
 
-più precisamente, è possibile usare una [EnumMap](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/EnumMap.html) che offre diversi vantaggi:
+l'*invariante di rappresentazione* richiede, oltre alle banali condizioni di non
+nullità, che l'importo associato ad una valuta sia in tale valuta. 
+
+Dal punto di vista dell'implementazione, è possibile usare una [EnumMap](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/EnumMap.html) che offre diversi vantaggi:
 
 * non consente di inserire chiavi `null` (che non avrebbero senso);
 * è iterabile nell'ordine in cui sono definiti gli elementi dell'enum (che torna
   utile per implementare l'iteratore richiesto dalla traccia);
 
 per rendere elementare l'implementazione dell'iteratore, l'unica accortezza è
-che la mappa non contenga mai importi di valore zero (cosa che annoteremo
-nell'*invariante di rappresentazione*).
+aggiungere all'invariante di rappresentazione il vincolo che la mappa non
+contenga mai importi di valore zero.
 
 Il primo metodo da implementare è quello che consente di conoscere il totale per
 una data valuta:
@@ -439,9 +465,81 @@ prelievo ecceda la disponibilità (fatto che segnaleremo con una eccezione), o
 annulli il totale in cassa: in tal caso dovremo eliminare il valore relativo
 alla valuta (sempre per non violare l'invariante di rappresentazione).
 
-A questo punto l'iteratore è banale da scrivere:
+A questo punto l'iteratore è del tutto banale da scrivere:
 
 ```{code-cell}
 :tags: [remove-input]
 sol.show('Cassa', 'iter')
 ```
+
+### I tassi di cambio
+
+I tassi sono dati da una coppia di importi che, come illustrato nella traccia,
+consente di calcolare per ciascun importo nella valuta del primo importo del
+tasso il valore dell'importo equivalente nella seconda valuta del tasso.
+
+Per rappresentare un singolo tasso può bastare un `record`, il costruttore:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Cambi', 'tasso')
+```
+
+deve occuparsi di assicurare che valga l'invariante di rappresentazione, ossia
+che i due importi non siano nulli, siano positivi e siano relativi a due valute
+diverse.
+
+La competenza di ottenere l'importo equivalente dato un opportuno tasso può essere assegnata all'importo stesso:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Importo', 'conv')
+```
+
+A questo punto può risultare conveniente raccogliere i tassi noti in una classe
+(che chiameremo `Cambi` di cui i record `Tasso` sia interno, per mere questioni
+di *naming*). 
+
+La rappresentazione di tale classe è data da una lista:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Cambi', 'rep')
+```
+
+l'invariate, a parte le banali questioni di nullità, dovrà garantire che, per
+una assegnata coppia di valute distinte, ci sia al più un tasso tra importi di
+tali valute nella lista; dato che i tassi vanno riportati in ordine di aggiunta,
+l'implementazione migliore sembra essere quella della `LinkedList` che
+consentirà di eliminare il vecchio tasso in modo efficiente.
+
+La prima competenza della classe dei cambi è di trovare, se presente, il tasso
+tra due valute assegnate, tale competenza è una banale ricerca lineare:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Cambi', 'cerca')
+```
+
+questa competenza sarà utile non solo al cambiavalute, ma anche internamente,
+per aggiornare i tassi. Tale operazione, infatti, deve dapprima determinare
+l'evenutale presenza di un tasso tra le medesime valute di quello da aggiornare,
+che andrà nel caso eliminato, e quindi accodare il nuovo tasso all'elenco di
+quelli noti:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Cambi', 'aggiorna')
+```
+
+La scelta della rappresentazione e del suo invariante, rendono anche in questo
+caso del tutto banale la scrittura dell'iteratore che realizzi il comportamento
+richiesto dalla traccia:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Cambi', 'iter')
+```
+
+### Il cambiavalute
+

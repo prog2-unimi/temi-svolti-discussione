@@ -14,7 +14,8 @@ public class Cassa implements Iterable<Importo> {
   
   // SOF: rep
   /** Mappa che associa a ciascuna valuta il suo importo in cassa, valute e
-   * importi non devono essere <code>null</code>, gli importi devono essere positivi. */
+   * importi non devono essere <code>null</code>, gli importi devono essere
+   * positivi e avere valuta corrispondente alla chiave. */
   private final Map<Valuta, Importo> valuta2importo = new EnumMap<>(Valuta.class);
   // EOF: rep
   

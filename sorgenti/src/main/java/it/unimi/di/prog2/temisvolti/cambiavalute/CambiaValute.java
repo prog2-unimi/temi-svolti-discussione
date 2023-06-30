@@ -4,20 +4,20 @@ import java.util.List;
 
 public class CambiaValute {
   
-  Cassa cassa = new Cassa();
-  Cambi tassi = new Cambi();
+  private final Cassa cassa = new Cassa();
+  private final Cambi cambi = new Cambi();
   
   public CambiaValute(List<Importo> importi) {
     for (Importo importo : importi) cassa.versa(importo);
   }
 
   public boolean aggiorna(Cambi.Tasso tasso) {
-    return tassi.aggiorna(tasso);
+    return cambi.aggiorna(tasso);
   }
 
   public Importo cambia(Importo da, Valuta aValuta) {
     if (da.valuta == aValuta) throw new IllegalArgumentException("Impossibile cambiare tra valute identiche");
-    Cambi.Tasso t = tassi.cerca(da.valuta, aValuta);
+    Cambi.Tasso t = cambi.cerca(da.valuta, aValuta);
     if (t == null) throw new IllegalArgumentException("Tasso non disponibile");
     Importo a = da.equivalente(t);
     if (cassa.totale(aValuta).compareTo(a) < 0) 
@@ -29,6 +29,6 @@ public class CambiaValute {
 
   @Override
   public String toString() {
-    return tassi.toString() + "\n" + cassa.toString();
+    return cambi.toString() + "\n" + cassa.toString();
   }
 }
