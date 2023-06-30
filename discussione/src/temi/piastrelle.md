@@ -388,7 +388,3 @@ componenti e la popola con un ciclo in cui vengono lette le quantità e gli
 indici dei rivestimenti da utilizzare per costruire la pavimentazione;
 l'invocazione `rivestimento.get(...)` è quella che permette di ottenere il
 rivestimento dato il suo indice.
-
-:::{note}
-Puoi trovare il [codice integrale](https://github.com/prog2-unimi/temi-svolti/tree/master/temi/piastrelle) della soluzione nell'apposito repository.
-:::

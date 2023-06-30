@@ -73,7 +73,7 @@ public class Cambi implements Iterable<Cambi.Tasso>{
    *
    *
    * @param tasso il tasso da aggiornare.
-   * @return <code>true</code> se il tasso è stato aggiornato,
+   * @return <code>true</code> se il tasso sostituisce un tasso precedentemente noto,
    *         <code>false</code> viceversa.
    */
   public boolean aggiorna(Tasso tasso) {

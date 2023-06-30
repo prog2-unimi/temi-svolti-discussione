@@ -296,17 +296,21 @@ dato simbolo:
 sol.show('Valuta', 'valueOf')
 ```
 
-**Senza usare le `enum`**
+:::{note} 
 
-Una soluzione alternativa (più complessa da realizzare e meno preferibile)
-potrebbe essere quella di una classe concreta; in tal caso è però assolutamente
-necessario che:
+Una soluzione alternativa all'uso di una `enum` (non solo più complessa da
+realizzare, ma anche meno efficace) potrebbe essere basata su classe concreta;
+in tal caso è però assolutamente necessario che:
 
 * la classe implementi in modo opportuno `equals` e `hashCode`,
 * il costruttore sia privato e venga usato per popolare una struttura dati
   interna utile a contenere tutte e soltanto le valute descritte dalla traccia;
 * ci sia un metodo di fabbricazione che consenta di ottenere una di tali istanze
   a partire dal simbolo e/o dal nome.
+
+Una classe che consenta all'utente di definire qualunque valuta e non sia in
+grado di stabilire se due valute siano uguali è inutile ai fini della soluzione.
+:::
 
 ### Gli importi
 
@@ -395,16 +399,16 @@ di nuovo, a prescindere dalla nullità, occorre controllare le valute e prestare
 attenzione che `equals` e `compareTo` siano coerenti (ma questo è di nuovo
 elementare data la rappresentazione scelta).
 
-**Usando i `BigDecimal`**
-
+:::{note}
 Si potrebbe pensare che la classe
-[]BigDecimal](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html)
+[BigDecimal](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html)
 possa essere usata per rappresentare gli importi, ciò è vero a patto di
 occuparsi con estrema attenzione del fatto che il numero di cifre decimali sia
 sempre esattamente uguale a due; ciò è possibile, ma richiede una conoscenza
 abbastanza approfondita del funzionamento di tale classe e una notevole
 attenzione. Questo rende la soluzione proposta, basata sull'uso dei soli
 centesimi, notevolmente più elementare e pratica da implementare.
+:::
 
 ### La cassa
 
@@ -543,3 +547,64 @@ sol.show('Cambi', 'iter')
 
 ### Il cambiavalute
 
+Il cambiavalute è una entità molto semplice, ha una sola competenza, quella di
+cambiare importi tra valute di cui conosce i tassi di cambio. Il suo stato sarà
+data da una istanza di `Cassa` e un di `Cambi` a cui delegherà il compito di
+gestire i suoi fondi e la sua conoscenza dei tassi di cambio:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('CambiaValute', 'rep')
+```
+
+Il costruttore riceve una lista di importi (non necessariamente di valute distinte) che verserà in cassa, delegando a quest'ultima il compito di accumulare gli importi per valuta e verificare che non ci siano importi di valore negativo:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('CambiaValute', 'costruttore')
+```
+
+La competenza di cambiare importi tra valute è data dal metodo:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('CambiaValute', 'cambia')
+```
+
+a prescindere dai vari controlli, la logica è molto semplice: calcolato
+l'importo equivalente si versa in cassa quello da cambiare e si preleva quello
+equivalente.
+
+Il cambiavalute può aggiornare i suoi tassi, delegando tale compito ai cambi:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('CambiaValute', 'aggiorna')
+```
+
+Infine, al fine di consentire l'ispezione dello stato del cambiavalute, è
+sufficiente delegare alla cassa e ai cambi il compito di offrire il loro
+iteratore:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('CambiaValute', 'iter')
+```
+
+### La classe di test
+
+Svolgere il test è piuttosto elementare, dapprima andranno letti gli importi
+(ossia le righe che non iniziano con uno dei caratteri `A`, `C` o `P`):
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Soluzione', 'importi')
+```
+
+Quindi si può passare ad elaborare i comandi, uno per riga, avendo l'accortezza
+di avvolgere l'esecuzione dei metodi del cambiavalute in un `try`/`catch` per poter emettere l'eventuale messaggio d'errore contenuto nell'eccezione sollevata:
+
+```{code-cell}
+:tags: [remove-input]
+sol.show('Soluzione', 'comandi')
+```
