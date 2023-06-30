@@ -1,5 +1,5 @@
-Sphinx==5.3.0
-sphinx-book-theme==1.0.0
-sphinxcontrib-mermaid==0.8.1
-myst-nb==0.17.1
-myst-parser==0.18.1
+Sphinx>=5.3.0
+sphinx-book-theme>=1.0.1
+sphinxcontrib-mermaid>=0.8.1
+myst-nb>=0.17.1
+myst-parser>=0.18.1
