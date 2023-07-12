@@ -169,7 +169,7 @@ public class Importo implements Comparable<Importo> {
 
   @Override
   public int compareTo(Importo o) {
-    if (o.valuta != valuta) throw new IllegalArgumentException("Non è possibile confrontare importi di valute diverse.");
+    if (o.valuta != valuta) throw new ClassCastException("Non è possibile confrontare importi di valute diverse.");
     return Integer.compare(centesimi, o.centesimi);
   }
   // EOF: ehc
