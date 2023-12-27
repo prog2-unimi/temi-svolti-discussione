@@ -358,6 +358,7 @@ ha l'effetto di copiare 3 elementi dalla posizione 2 di `positivi` alla posizion
 ```{code-cell}
 Arrays.toString(negativi)
 ```
+
 #### Adattare la dimensione di un array
 
 Vogliamo raccogliere in un array di `long` di nome `pows` gli elementi
@@ -440,6 +441,7 @@ che si basa sull'ordine naturale, o la versione sovraccaricata di
 [`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#binarySearch(T[],T,java.util.Comparator))
 che consente di specificare un comparatore (che, evidentemente, deve essere il
 medesimo che era stat usato per ordinare l'array prima della ricerca).
+
 #### Un esempio di ricerca e inserimento
 
 Come esempio della ricerca, consideriamo l'array `cifreOrdinate` che contenga le
@@ -516,3 +518,68 @@ implementate senza scomodare nessuna struttura dati tra quelle più sofisticate
 ma usando semplicemente due array "paralleli"; tale implementazione può essere
 persino resa ragionevolmente efficiente se le chiavi sono comparabili!
 :::
+
+## Concatenare stringhe
+
+Le stringhe in Java sono immutabili, questo comporta che se è necessario
+concatenarne un numero variabile occorre prestare attenzione ai risultati
+intermedi. Il codice
+```{code-cell}
+String[] parti = {"queste", "stringhe", "vengono", "concatenate", "in", "modo", "inefficiente"};
+String risultato = "";
+for (int i = 0; i < parti.length - 1; i++) risultato += parti[i] + " ";
+risultato += parti[parti.length - 1];
+risultato
+```
+produrrà, ad ogni iterazione, un prefisso del risultato finale che resterà nello
+heap finché il *garbage collector* non lo eliminerà (in quanto non riferito da
+alcuna variabile). Attenzione che questo non vale se il numero di stringhe è
+fisso e noto a priori; il codice 
+```{code-cell}
+String risultato = "queste" + " " + "stringhe" + " " + "vengono" + " " + "concatenate" + " " + "in" + " " + "modo" + " " + "corretto!";
+risultato
+```
+non presenta alcun problema di efficienza perché non produce alcun risultato
+intermedio (di cui doversi liberare).
+
+Le API mettono a disposizione tre modi (di complessità e versatilità crescente)
+per ottenere la concatenazione di un numero variabile di stringhe.
+
+### Usando un metodo di `String`
+
+Il primo è il metodo
+[`String.join`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#join(java.lang.CharSequence,java.lang.CharSequence...))
+,che funziona con un array, o con un numero variabile di argomenti, e la
+versione
+[`String.join`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#join(java.lang.CharSequence,java.lang.Iterable)),
+che funziona con un iterabile. L'esempio precedente si può riscrivere come
+```{code-cell}
+String risultato = String.join(" ", parti);
+risultato
+```
+
+### Usando la classe `StringJoiner`
+
+Se si vuole specificare non solo il *separatore* ma anche il *prefisso* e
+*suffisso* del risultato è possibile usare la classe
+[`StringJoiner`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/StringJoiner.html) come nel seguente esempio
+```{code-cell}
+StringJoiner sj = new StringJoiner(", ", "<", ">");
+for (String parte : parti) sj.add(parte);
+sj.toString()
+```
+
+### Usando la classe `StringBuilder`
+
+Per finire, volendo avere il controllo completo del processo, ad esempio usando
+separatori diversi, è possibile usare la classe
+[`StringBuilder`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html) come nel seguente esempio
+```{code-cell}
+String[] separatori = {":", ";", "."};
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < parti.length - 1; i++) {
+  sb.append(parti[i]).append(separatori[i % separatori.length]).append(" ");
+}
+sb.append(parti[parti.length - 1]);
+sb.toString()
+```
