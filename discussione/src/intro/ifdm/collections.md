@@ -21,7 +21,7 @@ questo argomento esula dagli scopi di questo documento, chi volesse approfondire
 è invitato a iniziare la sua esplorazione dalla [documentazione nel
 JDK](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/doc-files/coll-index.html)
 e il (pur datato) [tutorial
-ufficiale](https://docs.oracle.com/javase/tutorial/collections/).
+ufficiale](https://docs.oracle.com/javase/tutorial/collections/) e la sua [nuova versione](https://dev.java/learn/api/collections-framework/).
 
 Le *collezioni* che possono rivelarsi utili all'esame sono organizzate in due
 famiglie
