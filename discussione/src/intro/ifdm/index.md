@@ -1,12 +1,5 @@
 # I ferri del mestiere
 
-:::{warning}
-Il contenuto di questo documento è ancora in **versione preliminare**, non
-dovrebbe contenere errori grossolani e probabilmente non sarà radicalmente
-modificato, ma è possibile che in futuro vengano apportate correzioni e piccole
-revisioni.
-:::
-
 Questo documento contiene alcuni suggerimenti sull'uso delle [Java Development
 Kit API](https://docs.oracle.com/en/java/javase/17/docs/api/), sebbene *nessuna*
 delle informazioni contenute in questo documento sia *strettamente necessaria*
