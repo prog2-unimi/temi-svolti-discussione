@@ -534,7 +534,7 @@ d'istanza
 Per cercare una *sottolista*, è invece possibile usare il metodo statico
 [`indexOfSubList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#indexOfSubList(java.util.List,java.util.List))
 (o
-[lastIndexOfSubList](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#lastIndexOfSubList(java.util.List,java.util.List)
+[`lastIndexOfSubList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#lastIndexOfSubList(java.util.List,java.util.List)
 )) di `Collections`; ad esempio
 ```{code-cell}
 listaModificabile.sort(null);
