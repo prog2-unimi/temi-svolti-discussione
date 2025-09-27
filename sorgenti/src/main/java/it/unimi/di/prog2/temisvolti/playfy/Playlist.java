@@ -52,7 +52,9 @@ public class Playlist implements Iterable<Album.Brano> {
    * @throws IllegalArgumentException se il nome è vuoto.
    */
   public Playlist(final String nome) {
-    nome(nome);
+    if (Objects.requireNonNull(nome, "Il nome non può essere null.").isEmpty())
+      throw new IllegalArgumentException("Il nome non può essere null o vuoto.");
+    this.nome = nome;
   }
 
   // SOF: nome

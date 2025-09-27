@@ -125,7 +125,7 @@ public class Importo implements Comparable<Importo> {
   public Importo equivalente(Cambi.Tasso tasso) {
     if (Objects.requireNonNull(tasso, "Il tasso non può essere null.").da().valuta != valuta) throw new IllegalArgumentException("Il tasso non parte dalla valuta di questo importo.");
     return new Importo(
-      (int)((centesimi / tasso.da().centesimi) * tasso.a().centesimi), tasso.a().valuta
+      (centesimi / tasso.da().centesimi) * tasso.a().centesimi, tasso.a().valuta
     );
   }
   // EOF: conv

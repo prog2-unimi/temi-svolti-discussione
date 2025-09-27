@@ -55,7 +55,7 @@ public class Inventario implements Iterable<Giocattolo> {
   public Inventario() {}
 
   /**
-   * Costruisce un inventario a partire da una mappa che, per ciascun giocattoo, indica quanti ne
+   * Costruisce un inventario a partire da una mappa che, per ciascun giocattolo, indica quanti ne
    * debba contenere l'inventario.
    *
    * @param inventario una mappa tra giocattoli e le loro numerosità.
@@ -66,8 +66,11 @@ public class Inventario implements Iterable<Giocattolo> {
   public Inventario(final Map<Giocattolo, Integer> inventario) {
     Objects.requireNonNull(
         inventario, "La mappa che rappresenta l'inventario non può essere null.");
-    for (Map.Entry<Giocattolo, Integer> e : inventario.entrySet())
-      aggiungi(e.getValue(), e.getKey());
+    for (Map.Entry<Giocattolo, Integer> e : inventario.entrySet()) {
+      if (e.getKey() == null) throw new NullPointerException("Il giocattolo non può essere null");
+      if (e.getValue() == null || e.getValue() <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
+      inventario.put(e.getKey(), e.getValue());
+    }
   }
 
   // SOF: copyc
@@ -94,7 +97,7 @@ public class Inventario implements Iterable<Giocattolo> {
    * @throws IllegalArgumentException se il numero non è positivo.
    */
   public int aggiungi(final int num, final Giocattolo giocattolo) {
-    Objects.requireNonNull(giocattolo, "Il giocattolo non può essere null.");
+    Objects.requireNonNull(giocattolo, "Il giocattolo non può essere null");
     if (num <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
     int totale = num;
     if (inventario.containsKey(giocattolo)) totale += inventario.get(giocattolo);
