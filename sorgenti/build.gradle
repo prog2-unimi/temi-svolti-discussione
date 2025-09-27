@@ -1,37 +1,79 @@
 plugins {
   id 'java'
-  id 'eclipse'
-  id 'com.diffplug.spotless' version '5.16.0'
+  id 'jacoco'
+  id 'com.diffplug.spotless' version '8.0.0'
 }
 
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(25)
+  }
+}
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
 repositories {
+  mavenLocal()
   mavenCentral()
 }
 
-dependencies {
-  testImplementation('org.junit.jupiter:junit-jupiter:5.6.0')
-  testImplementation 'org.hamcrest:hamcrest:2.2'
+configurations {
+  umlDoclet
 }
 
-test {
-  useJUnitPlatform()
+dependencies {
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+  umlDoclet 'nl.talsmasoftware:umldoclet:2.2.0'
 }
+
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+  options.compilerArgs.add('-Xlint:all')
+  options.compilerArgs.add('-Werror') 
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+  testLogging {
+    events 'skipped', 'failed'
+    afterSuite { desc, result ->
+      if (!desc.parent) {
+        println "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+      }
+    }
+  }
+  defaultCharacterEncoding = 'UTF-8'
+  finalizedBy jacocoTestReport
+}
+
 
 javadoc {
-  options.docTitle = 'Prog2@UniMI — Temi Svolti'
-  options.overview = 'src/overview.html'
-  options.links = [ 'https://docs.oracle.com/en/java/javase/11/docs/api/' ]
-  options.showFromPrivate()
-  options.header = '<script type=\'text/javascript\' src=\'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\'></script>'
-  options.addBooleanOption('-allow-script-in-comments', true)
-  javadoc.options.addStringOption('Xdoclint:none', '-quiet')
+  options {
+    description = 'Generates Javadoc API documentation and UML diagrams for the main source code.'
+    encoding = 'UTF-8'
+    charSet = 'UTF-8'
+    links = [ 'https://docs.oracle.com/en/java/javase/25/docs/api/' ]
+    docTitle = 'Programmazione II @ UniMI - Temi Svolti'
+    overview = 'src/overview.html'
+    header = '<script type=\'text/javascript\' src=\'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\'></script>'
+    docletpath = configurations.umlDoclet.files.asType(List)
+    doclet = 'nl.talsmasoftware.umldoclet.UMLDoclet'
+    showFromPrivate()
+    addBooleanOption 'Xdoclint:all', true
+    addBooleanOption 'Werror', true
+    addBooleanOption '-allow-script-in-comments', true
+  }
 }
 
 spotless {
-  enforceCheck false
+  enforceCheck = false
   java {
-    googleJavaFormat('1.11.0')
+    googleJavaFormat('1.24.0')
     removeUnusedImports()
+    leadingTabsToSpaces(2)
+    endWithNewline()
     licenseHeaderFile 'src/licenseHeaderFile.txt'
   }
 }
