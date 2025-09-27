@@ -38,11 +38,11 @@ punta alla stringa corrispondente all'$i$-esimo argomento (l'argomento di posto
 Osservate che gli argomenti sono *stringhe*, qualora sia richiesto trattare
 alcuni di essi come numeri sarà necessario usare una funzione di conversione,
 come ad esempio `parseT` delle varie sottoclassi di
-[`Number`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html)
+[`Number`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Number.html)
 (dove `T` è uno dei tipi primitivi), come ad esempio con il metodo
-[`parseInt`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html#parseInt(java.lang.String))
+[`parseInt`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Integer.html#parseInt(java.lang.String))
 di
-[`Integer`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html).
+[`Integer`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Integer.html).
 
 Si riporta, a titolo di esempio, un programma che, dati per argomenti
 alcuni numeri interi, ne stampa la somma
@@ -79,7 +79,7 @@ di varianti a seconda
 2. che provenga
 
     1. dal flusso standard
-       ([`System.in`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#in)),
+       ([`System.in`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#in)),
     2. da un file (indicato tramite il suo *path*).
 
 Facendo uso dell'istruzione
@@ -104,24 +104,24 @@ consumato (1.) darà luogo a due diverse implementazioni della parte (β).
 ### Parte (α): istanziare l'oggetto usato per l'input
 
 Per leggere l'input una linea dopo l'altra (1.1.) è sufficiente usare un
-[`BufferedReader`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html).
+[`BufferedReader`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/BufferedReader.html).
 Il costruttore di tale classe ha per parametro un
-[`Reader`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html),
+[`Reader`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/Reader.html),
 che può essere istanziato (2.1.) come un
-[`InputStreamReader`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStreamReader.html)
+[`InputStreamReader`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/InputStreamReader.html)
 che a sua volta avvolga
-[`System.in`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#in),
+[`System.in`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#in),
 o (2.2.) come un
-[`FileReader`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileReader.html).
+[`FileReader`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/FileReader.html).
 
 D'altro canto, per *tokenizzare* l'input (1.2.) è sufficiente usare uno
-[`Scanner`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html).
+[`Scanner`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html).
 Il costruttore di tale classe ha per parametro un
-[`InputStream`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html),
+[`InputStream`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/InputStream.html),
 che può essere direttamente (2.1.) un
-[`System.in`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#in),
+[`System.in`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#in),
 o istanziato (2.2.) come
-[`FileInputStream`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileInputStream.html).
+[`FileInputStream`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/FileInputStream.html).
 
 Le quattro versioni della parte α del codice sono pertanto:
 ```{code-block}
@@ -138,13 +138,13 @@ dove si assume che `path` sia una variabile di tipo stinga che contiene il
 Per consumare (ed elaborare) l'input, sono sufficienti due solite
 implementazioni della parte (β), dal momento che il tipo dell'oggetto `in` può
 essere solo un
-[`BufferedReader`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html)
+[`BufferedReader`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/BufferedReader.html)
 o uno
-[`Scanner`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html),
+[`Scanner`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html),
 a seconda di (1.), ma indipendentemente da (2.).
 
 Per leggere una sequenza di linee (1.1.) si può utilizzare il metodo
-[`readLine`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html#readLine());
+[`readLine`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/BufferedReader.html#readLine());
 per di più, tale metodo è in grado di segnalare la fine dell'input restituendo
 il valore speciale `null`. Il ciclo che consuma l'input, in questo caso, è
 ```{code-block}
@@ -158,11 +158,11 @@ while ((linea = in.readLine()) != null)
 Per leggere una sequenza di tipi primitivi (1.2.) si possono utilizzare i metodi
 `nextT` (dove `T` è uno dei tipi primitivi), ad esempio, per gli interi, si può
 usare il metodo
-[`nextInt`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html#nextInt());
+[`nextInt`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html#nextInt());
 per sapere se l'input è finito (o se ci sono ancora a disposizione altri
 elementi), si può usare il metodo `hasNextT` (dove `T` è, come sopra, uno dei
 tipi primitivi), ad esempio, ancora nel caso degli interi
-[`hasNextInt`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html#hasNextInt()).
+[`hasNextInt`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html#hasNextInt()).
 Il ciclo che consuma l'input, sempre nel caso degli interi, è
 ```{code-block}
 while (in.hasNextInt()) {
@@ -176,9 +176,9 @@ while (in.hasNextInt()) {
 Qualora sia necessario leggere delle stringhe (1.2.), intese come delle sequenze
 massimali di caratteri diversi da *whitespace* (che sono spazio, segno di
 tabulazione orizzontale e verticale e a-capo), si possono usare i metodi
-[`next`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html#next())
+[`next`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html#next())
 e
-[`hasNext`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html#hasNext())
+[`hasNext`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html#hasNext())
 in modo del tutto analogo al caso precedente
 ```{code-block}
 while (in.hasNext()) {
@@ -201,7 +201,7 @@ tasti `ctrl` e `d` (minuscolo).
 
 Altro dettaglio importante è che *alcuni dei costruttori e metodi invocati
 possono sollevare eccezioni* di tipo
-[`IOException`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html)
+[`IOException`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/IOException.html)
 (o sue sottoclassi), che devono essere *opportunamente gestite* (sia che il
 codice sia avvolto dalla `try-with-resources` o meno). Nel contesto della prova
 d'esame, qualora tali metodi fossero invocati all'interno del metodo `main`, una
@@ -288,7 +288,7 @@ somma
 ```
 
 Per concludere osservate che la classe `Scanner` ha un
-[costruttore](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html#%3Cinit%3E(java.lang.String))
+[costruttore](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html#%3Cinit%3E(java.lang.String))
 che accetta una stringa come argomento (e quindi attingerà da tale stringa per
 rispondere alle varie chiamate di `nextT` e `hasNextT`); considerate ad esempio
 l'esecuzione di
@@ -336,20 +336,20 @@ linguaggio e alle sue librerie.
 
 Ad esempio, l'input di tipi primitivi potrebbe anche essere implementato
 leggendo l'input per linea, suddividendo poi la linea con uno
-[`StringTokenizer`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/StringTokenizer.html),
+[`StringTokenizer`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/StringTokenizer.html),
 o con il metodo
-[`split`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#split(java.lang.String))
+[`split`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html#split(java.lang.String))
 di
-[`String`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html),
+[`String`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html),
 traducendo in fine le singole parti nei tipi primitivi con i metodi `parseT`
 delle varie sottoclassi
-[`Number`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html)
+[`Number`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Number.html)
 (dove `T` è uno dei tipi primitivi), come ad esempio con il metodo
-[`parseInt`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html#parseInt(java.lang.String))
+[`parseInt`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Integer.html#parseInt(java.lang.String))
 di
-[`Integer`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html).
+[`Integer`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Integer.html).
 Evidentemente, l'uso della classe
-[`Scanner`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html)
+[`Scanner`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html)
 appare una soluzione molto più elementare a questo tipo di problema. In ogni
 modo, una soluzione alternativa, in questo senso, dell'esercizio due potrebbe
 essere la seguente:
@@ -361,8 +361,8 @@ public class SommaInputBis {
     try (BufferedReader in = new BufferedReader(new FileReader(path))) {
       String linea = null;
       while ((linea = in.readLine()) != null) {
-          float numero = Float.parseFloat(linea);
-          somma += numero;
+        float numero = Float.parseFloat(linea);
+        somma += numero;
       }
     }
     System.out.println(somma);
@@ -371,24 +371,48 @@ public class SommaInputBis {
 ```
 
 D'altro canto, a ben guardare, c'è un metodo
-[`nextLine`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html#nextLine())
+[`nextLine`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html#nextLine())
 tra quelli di
-[`Scanner`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html)
+[`Scanner`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html)
 che si comporta sostanzialmente come il metodo
-[`readLine`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html#readLine())
+[`readLine`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/BufferedReader.html#readLine())
 di
-[`BufferedReader`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html);
+[`BufferedReader`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/BufferedReader.html);
 in linea di principio, quindi, tutta la discussione si potrebbe di gran lunga
 semplificare limitandosi ad utilizzare la classe
-[`Scanner`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html)
+[`Scanner`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html)
 sia per leggere l'input linea per linea che in modo *tokenizzato*. Ma è altresì
 vero che l'uso di una classe complessa come
-[`Scanner`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Scanner.html)
+[`Scanner`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Scanner.html)
 per uno scopo così banale come quello di leggere l'input per linee sembra del
 tutto sproporzionato; inoltre, tale classe ha fatto la sua comparsa solo nelle
 versioni più recenti di Java, ragion per cui è bene conoscere anche alternative
 che siano praticabili nel caso in cui si abbia a disposizione sono una versione
 meno recente del linguaggio.
+
+#### Java 25
+
+Nelle versioni più recenti di java al pacchetto `java.lang` è stata aggiunta la
+classe
+[`IO`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IO.html)
+che provvede diversi metodi statici tra cui
+[`readln`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IO.html#readln())
+e
+[`println`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IO.html#println())
+che consentono rispettivamente di leggere e scrivere sullo standard input e
+output in modo molto semplice.
+
+Tramite tali metodi è possibile semplificare ulteriormente la lettura delle linee, come nell'esempio seguente
+```{code-cell}
+public class NumeraLineeSemplificato {
+  public static void main(String[] args) throws IOException {
+    int n = 0;
+    String linea;
+    while ((linea = IO.readln()) != null)
+      IO.println(String.format("%02d: %s", ++n, linea));
+  }
+}
+```
 
 ### Dati non testuali
 
@@ -396,18 +420,18 @@ Come ultima osservazione, si noti che in questa guida (per brevità e semplicit�
 si è trattato solo il caso di file in formato, per così dire, testuale. Le API
 di Java mettono a disposizione anche classi e metodi per il trattamento di dati
 in formato binario (ad esempio, tramite le interfacce
-[`DataInput`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html)
+[`DataInput`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/DataInput.html)
 e
-[`DataOutput`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataOutput.html)
+[`DataOutput`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/DataOutput.html)
 e relative implementazioni), che meritano una discussione a se stante.
 
 Una interessante aggiunta nelle API delle nuove versioni di Java è la classe
-[`Files`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Files.html)
+[`Files`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Files.html)
 che mette a disposizione una serie di metodi statici per leggere (e scrivere)
 con una sola chiamata l'intero contenuto di un file, come ad esempio il metodo
-[`readAllBytes`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Files.html#readAllBytes(java.nio.file.Path))
+[`readAllBytes`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Files.html#readAllBytes(java.nio.file.Path))
 che restituisce un array di `byte`, o il metodo
-[`readAllLines`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Files.html#readAllLines(java.nio.file.Path))
+[`readAllLines`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Files.html#readAllLines(java.nio.file.Path))
 che restituisce una
-[`List`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html)
+[`List`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html)
 di stringhe.

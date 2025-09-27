@@ -19,7 +19,7 @@ possono risultare utili per la prova pratica.
 Come per il caso delle interfacce di comparazione, una discussione esaustiva di
 questo argomento esula dagli scopi di questo documento, chi volesse approfondire
 è invitato a iniziare la sua esplorazione dalla [documentazione nel
-JDK](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/doc-files/coll-index.html)
+JDK](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/doc-files/coll-index.html)
 e il (pur datato) [tutorial
 ufficiale](https://docs.oracle.com/javase/tutorial/collections/) e la sua [nuova versione](https://dev.java/learn/api/collections-framework/).
 
@@ -27,16 +27,16 @@ Le *collezioni* che possono rivelarsi utili all'esame sono organizzate in due
 famiglie
 
 * i sottotipi dell'interfaccia
-  [`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html),
+  [`Collection`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html),
   limitatamente a quelli di
-  [`List`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html),
-  [`Set`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html)
+  [`List`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html),
+  [`Set`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Set.html)
   e
-  [`SortedSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html);
+  [`SortedSet`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/SortedSet.html);
 * i sottotipi delle interfacce
-  [`Map`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html)
+  [`Map`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Map.html)
   e
-  [`SortedMap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedMap.html).
+  [`SortedMap`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/SortedMap.html).
 
 Osservate che in ossequio alla consuetudine comune, come si evince da quanto
 sopra, in seguito chiameremo *collezioni* non solo i sottotipi di `Collection`,
@@ -53,23 +53,23 @@ tramite un *comparatore* alla costruzione della collezione.
 
 Per le *liste* le due implementazioni maggiormente utili sono
 
-* [`ArrayList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html)
+* [`ArrayList`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html)
   che è basata su un array e perciò consente un efficiente *accesso causale*, e
-* [`LinkedList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/LinkedList.html)
+* [`LinkedList`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/LinkedList.html)
   che è basata sulle [*liste doppiamente
   concatenate*](https://www.wikiwand.com/it/Lista_concatenata) e perciò consente
   efficienti operazioni di inserimento e cancellazione.
 
 Per *insiemi* e *mappe* le implementazioni maggiormente utili sono
 
-* [`HashSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashSet.html)
+* [`HashSet`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashSet.html)
   e
-  [`HashMap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html),
+  [`HashMap`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/HashMap.html),
   basate su [*hash table*](https://www.wikiwand.com/it/Hash_table);
 
-* [`TreeSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/TreeSet.html)
+* [`TreeSet`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeSet.html)
   e
-  [`TreeMap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/TreeMap.html),
+  [`TreeMap`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/TreeMap.html),
   basate su [*alberi rosso-nero*](https://www.wikiwand.com/it/RB-Albero);
 
 evidentemente le implementazioni basate su *hash table* non sono ordinate e
@@ -101,21 +101,21 @@ quando le collezioni entrano a far parte della rappresentazione di un oggetto).
 
 Riguardo al secondo punto, viceversa, esistono varie implementazioni delle
 collezioni che garantiscono la [*non
-modificabilità*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodifiable);
+modificabilità*](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html#unmodifiable);
 dato che evidentemente non è possibile che non implementino i metodi
 *mutazionali* presenti nelle interfacce, la soluzione adottata è che essi,
 qualora invocati, sollevino l'eccezione non controllata
 `UnsupportedOperationException`.
 
 Alcune implementazioni non modificabili sono ottenute tramite una [*vista non
-modificabile*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#unmodview),
+modificabile*](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html#unmodview),
 ragion per cui nella prossima sezione sarà illustrato il concetto generale di
 *vista di una collezione*.
 
 ### Viste
 
 La [*vista di una
-collezione*](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#view)
+collezione*](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html#view)
 è una implementazione di una collezione che invece di gestire direttamente la
 memorizzazione dei suoi elementi fa uso di una collezione (o array) di appoggio
 per immagazzinarli concretamente; le operazioni che non possono essere
@@ -132,7 +132,7 @@ cambiamenti delle collezioni d'appoggio si riflettono però sempre nella viste!
 
 Un caso tipico di vista sono le *sottocollezioni*, come ad esempio le
 *sottoliste* che possono essere ottenute tramite il metodo
-[`subList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#subList(int,int))
+[`subList`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#subList(int,int))
 ```{code-cell}
 List<Integer> lista = new ArrayList<>(List.of(1, 2, 3, 5, 6));
 List<Integer> sottolista = lista.subList(2, 4);
@@ -163,7 +163,7 @@ Map<String, Integer> mappa = Map.of("uno", 1, "due", 2, "tre", 3);
 lista + "; " + insieme + "; " + mappa
 ```
 nel caso delle mappe c'è anche il metodo statico
-[`ofEntries`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html#ofEntries(java.util.Map.Entry...))
+[`ofEntries`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Map.html#ofEntries(java.util.Map.Entry...))
 che può essere comodamente usato importando staticamente `java.util.Map.entry`
 ```{code-cell}
 import static java.util.Map.entry;
@@ -196,11 +196,11 @@ ciò basta per garantire l'immutabilità della copia!
 :::
 
 Per finire, la classe di metodi statici di utilità
-[`Collections`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html)
+[`Collections`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html)
 (che incontreremo di nuovo in seguito), contiene i metodi per fabbricare viste
 non modificabili delle varie collezioni, essi hanno nome `unmodifiableT` dove
 `T` è uno delle possibili interfacce per le collezioni; ad esempio
-[`unmodifiableSet`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#unmodifiableSet(java.util.Set)) consente di ottenere un insieme non modificabile
+[`unmodifiableSet`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#unmodifiableSet(java.util.Set)) consente di ottenere un insieme non modificabile
 ```{code-cell}
 Set<String> mutabile = new HashSet<>();
 mutabile.addAll(List.of("primo", "secondo", "terzo"));
@@ -253,10 +253,10 @@ ottenere una tale collezione:
 * costruire una collezione vuota ed aggiungergli tutti gli elementi di quella
   esistente,
 * invocare il metodo
-  [`clone`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html#clone()).
+  [`clone`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html#clone()).
 
 Ogni collezione ha un costruttore copia che prende una
-[`Collection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html)
+[`Collection`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html)
 per argomento e costruisce una nuova collezione che contiene un nuovo
 riferimento per ciascun elemento (ma non dell'elemento) della collezione da cui
 è copiata; ad esempio
@@ -291,7 +291,7 @@ Come è ovvio attendersi, c'è un notevole legame tra array e collezioni.
 ### Da array a liste
 
 In un verso, la classe `Arrays` ha il metodo variadico
-[`asList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#asList(T...))
+[`asList`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#asList(T...))
 che può essere usato per costruire una lista a partire da un array di
 riferimenti (ossia non di tipi primitivi); tale lista si comporta come una vista
 non modificabile. Ad esempio
@@ -309,9 +309,9 @@ comeLista.get(1)
 
 Si osservi per inciso che l'uso delle viste costruite a partire da un array
 offre la possibilità di effettuare in modo conveniente tramite il metodo
-[`indexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
+[`indexOf`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
 (o
-[lastIndexOf](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#lastIndexOf(java.lang.Object))
+[lastIndexOf](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#lastIndexOf(java.lang.Object))
 che inizia la ricerca dal fondo e quindi darà risultati diversi in caso di
 elementi ripetuti) una [*ricerca
 sequenziale*](https://www.wikiwand.com/it/Ricerca_sequenziale) tra i suoi
@@ -384,7 +384,7 @@ unicoArray[1]
 
 Nella direzione opposta, osserviamo che ciascun sottotipo di `Collection` ha un
 metodo (ereditato da)
-[`toArray`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#toArray(T[]))
+[`toArray`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html#toArray(T[]))
 che consente di ottenere un array di riferimenti agli elementi che contiene; la
 segnatura del metodo prevede che venga passato come argomento un array (anche
 vuoto) del tipo dell'array che si intende ottenere (questo è dovuto ad alcune
@@ -397,7 +397,7 @@ Arrays.toString(comeArray)
 ```
 Attenzione perché omettendo l'argomento sarà selezionato il metodo
 sovraccaricato
-[`toArray`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#toArray())
+[`toArray`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html#toArray())
 che restituisce un `Object[]` e non è possibile effettuare alcun cast diretto
 che lo renda un array di elementi di tipo diverso, come mostra l'esempio
 seguente
@@ -434,7 +434,7 @@ chiave + "; " + valore
 ## La classe `Collections`
 
 Per finire, analogamente al caso di `Objects` e `Arrays`, nella classe
-[`Collections`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html)
+[`Collections`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html)
 ci sono una messe di metodi statici di utilità che possono risultare molto
 comodi nella prova pratica.
 
@@ -464,9 +464,9 @@ convenzione, il controllo di nullità
 :::
 
 I metodi statici
-[`fill`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#fill(java.util.List,T))
+[`fill`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#fill(java.util.List,T))
 e
-[`replaceAll`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#replaceAll(java.util.List,T,T))
+[`replaceAll`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#replaceAll(java.util.List,T,T))
 consentono, rispettivamente, di riempire una lista con un dato elemento, o
 rimpiazzare tutte le occorrenze di un elemento con un altro; il secondo potrebbe
 essere usato, ad esempio, per rimpiazzare i valori `null` con un "default"
@@ -481,7 +481,7 @@ parole
 
 Le osservazioni della [omologa sezione](oec-array) per gli array si applicano in
 modo del tutto analogo per le liste; il metodo
-[`sort`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#sort(java.util.Comparator))
+[`sort`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#sort(java.util.Comparator))
 è però in questo caso di istanza e ha un'unica versione che ha un comparatore
 per argomento (che si intende quello dell'ordine naturale degli elementi della
 lista se `null`); inutile osservare che siccome l'ordinamento avviene anche in
@@ -520,21 +520,21 @@ in questo caso, le stringhe sono ordinate in base all'ordine alfabetico del loro
 
 Come nel caso degli array, la ricerca di un elemento in una lista ordinata può
 essere effettuata con il metodo
-[`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#binarySearch(java.util.List,T))
+[`binarySearch`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#binarySearch(java.util.List,T))
 se i suoi elementi sono comparabili, oppure specificando un comparatore con la
 versione del metodo che lo riceve come secondo argomento.
 
 Vale la pena di ricordare che se lista non è ordinata può essere comunque
 effettuata una ricerca di un elemento (in tempo lineare) tramite il suo metodo
 d'istanza
-[`indexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
+[`indexOf`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
 (o
-[`lastIndexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#lastIndexOf(java.lang.Object))).
+[`lastIndexOf`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#lastIndexOf(java.lang.Object))).
 
 Per cercare una *sottolista*, è invece possibile usare il metodo statico
-[`indexOfSubList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#indexOfSubList(java.util.List,java.util.List))
+[`indexOfSubList`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#indexOfSubList(java.util.List,java.util.List))
 (o
-[`lastIndexOfSubList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#lastIndexOfSubList(java.util.List,java.util.List)
+[`lastIndexOfSubList`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#lastIndexOfSubList(java.util.List,java.util.List)
 )) di `Collections`; ad esempio
 ```{code-cell}
 listaModificabile.sort(null);
@@ -546,15 +546,15 @@ Nel caso delle liste, se non si è interessati all'ordine di tutti gli elementi,
 ma solo ai [*valori
 estremi*](https://www.wikiwand.com/it/Estremo_superiore_e_estremo_inferiore), si
 possono utilizzare i metodi
-[`min`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#min(java.util.Collection))
+[`min`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#min(java.util.Collection))
 e
-[`max`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#max(java.util.Collection))
+[`max`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#max(java.util.Collection))
 che sono basati sull'ordine naturale, oppure le loro versioni che consentono di
 indicare un comparatore come secondo argomento.
 
 Per finire, se si vuole contare il numero di occorrenze di un certo valore, si
 può adoperare il metodo
-[`frequency`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#frequency(java.util.Collection,java.lang.Object)); ad esempio
+[`frequency`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#frequency(java.util.Collection,java.lang.Object)); ad esempio
 ```{code-cell}
 int num =  Collections.frequency(paroleENull, null);
 paroleENull + "; " + num
@@ -567,28 +567,28 @@ Ci sono diverse operazioni comuni che agiscono sulle *posizioni* degli elementi
 di una collezione senza però modificarne gli elementi stessi:
 
 * lo *scambio* di due elementi, ottenuto tramite il metodo
-  [`swap`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#swap(java.util.List,int,int));
-* il *rovesciamento* della lista, ottenuto tramite il metodo [`reverse`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#reverse(java.util.List));
+  [`swap`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#swap(java.util.List,int,int));
+* il *rovesciamento* della lista, ottenuto tramite il metodo [`reverse`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#reverse(java.util.List));
 * la *rotazione* della lista, ottenuta tramite il metodo
-  [`rotate`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#rotate(java.util.List,int)),
+  [`rotate`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#rotate(java.util.List,int)),
   che agisce come se la lista fosse circolare e la testa fosse spostata di una
   data `distanza` (altrimenti detto l'elemento di posto *i* nella lista ruotata
   corrisponde a quello di posto *i* - `distanza` nella lista originale);
 * il *mescolamento casuale* degli elementi, ottenuto tramite il metodo
-  [`shuffle`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#shuffle(java.util.List)).
+  [`shuffle`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#shuffle(java.util.List)).
 
 Riguardo all'ultimo metodo, è possibile specificare esplicitamente il generatore
 di [*numeri pseudocasuali*](https://www.wikiwand.com/it/Numeri_pseudo-casuali)
 usando la versione sovraccaricata
-[`shuffle`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#shuffle(java.util.List,java.util.Random))
+[`shuffle`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#shuffle(java.util.List,java.util.Random))
 che accetta una istanza della classe
-[`Random`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html)
+[`Random`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Random.html)
 come argomento; questo è particolarmente importante per rendere *riproducibile*
 il comportamento
 
 :::{hint}
 Quando utilizzate un oggetto di tipo
-[`Random`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html)
+[`Random`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Random.html)
 per introdurre della casualità nel comportamento del vostro codice può diventare
 molto arduo individuarne gli errori perché ogni esecuzione si comporta
 potenzialmente in modo diverso dalle precedenti.
@@ -596,7 +596,7 @@ potenzialmente in modo diverso dalle precedenti.
 Fortunatamente, la classe `Random` implementa un [*generatore lineare
 congruenziale*](https://www.wikiwand.com/it/Generatore_lineare_congruenziale)
 per cui specificando esplicitamente il *seme* usando il costruttore
-[`Random`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html#%3Cinit%3E(long))
+[`Random`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Random.html#%3Cinit%3E(long))
 si otterrà sempre la stessa sequenza di esecuzione.
 
 Può essere quindi una buona idea istanziare il generatore tramite una funzione
@@ -612,7 +612,7 @@ static void Random reproducibleRng(long seed) {
 ```
 in questo modo, se la funzione è invocata con un valore nullo del seme essa ne
 sceglierà uno (ogni volta diverso, grazie alla chiamata di
-[`currentTimeMillis`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#currentTimeMillis()))
+[`currentTimeMillis`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#currentTimeMillis()))
 e ne emetterà il valore sul flusso d'errore.
 
 Eseguendo ripetutamente il programma con un valore nullo del seme si otterranno

@@ -401,7 +401,7 @@ elementare data la rappresentazione scelta).
 
 :::{note}
 Si potrebbe pensare che la classe
-[BigDecimal](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/math/BigDecimal.html)
+[BigDecimal](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/math/BigDecimal.html)
 possa essere usata per rappresentare gli importi, ciò è vero a patto di
 occuparsi con estrema attenzione del fatto che il numero di cifre decimali sia
 sempre esattamente uguale a due; ciò è possibile, ma richiede una conoscenza
@@ -423,7 +423,7 @@ sol.show('Cassa', 'rep')
 l'*invariante di rappresentazione* richiede, oltre alle banali condizioni di non
 nullità, che l'importo associato ad una valuta sia in tale valuta. 
 
-Dal punto di vista dell'implementazione, è possibile usare una [EnumMap](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/EnumMap.html) che offre diversi vantaggi:
+Dal punto di vista dell'implementazione, è possibile usare una [EnumMap](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/EnumMap.html) che offre diversi vantaggi:
 
 * non consente di inserire chiavi `null` (che non avrebbero senso);
 * è iterabile nell'ordine in cui sono definiti gli elementi dell'enum (che torna

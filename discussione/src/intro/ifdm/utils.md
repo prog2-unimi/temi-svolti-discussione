@@ -26,7 +26,7 @@ Java.
 ## La classe `Objects`
 
 La classe
-[`java.util.Objects`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html)
+[`java.util.Objects`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Objects.html)
 contiene alcuni metodi statici di utilità generale che possono essere adoperati
 per tutti gli oggetti, indipendentemente dal loro tipo.
 
@@ -34,7 +34,7 @@ per tutti gli oggetti, indipendentemente dal loro tipo.
 
 Nel caso in cui si intendano sovrascrivere i metodi `equals` e `hashCode` di un
 oggetto, il metodo [`hash`](
-https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html#hash(java.lang.Object...)) (che è  [*variadico*](https://www.wikiwand.com/en/Variadic_function)) può risultare molto comodo.
+https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Objects.html#hash(java.lang.Object...)) (che è  [*variadico*](https://www.wikiwand.com/en/Variadic_function)) può risultare molto comodo.
 
 Se `equals` viene sovrascritto come congiunzione dell'uguaglianza di (un
 sottoinsieme degli) attributi dell'oggetto (diciamo `attr_1`, `attr_2`,
@@ -51,7 +51,7 @@ Capitolo 3 del libro di testo "Effective Java".
 ### Gestire i `null`
 
 Il metodo
-[`requireNonNull`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html#requireNonNull(T,java.lang.String))
+[`requireNonNull`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Objects.html#requireNonNull(T,java.lang.String))
 consente di verificare se una espressione è `null` e, nel caso, sollevare una
 `NullPointerException` col messaggio indicato; ad esempio
 ```{code-block} java
@@ -86,10 +86,10 @@ espressione.metodo();
 ```
 
 Possono risultare comodi anche i metodi statici
-[`equals`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html#equals(java.lang.Object,java.lang.Object)),
-[`toString`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html#toString(java.lang.Object))
+[`equals`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Objects.html#equals(java.lang.Object,java.lang.Object)),
+[`toString`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Objects.html#toString(java.lang.Object))
 e
-[`hashCode`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html#hashCode(java.lang.Object))
+[`hashCode`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Objects.html#hashCode(java.lang.Object))
 che possono essere usati anche su riferimenti `null`; ad esempio
 ```{code-block} java
 String stringa = Objects.toString(oggetto);
@@ -111,7 +111,7 @@ oppure l'estremo sinistro e la dimensione) è contenuto in un segmento iniziale
 dei numeri naturali (specificato tramite la sua dimensione).
 
 Il metodo
-[`checkIndex`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Objects.html#checkIndex(int,int))
+[`checkIndex`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Objects.html#checkIndex(int,int))
 e le sue varianti possono essere comodamente utilizzati a tale scopo: nel caso
 la condizione sia soddisfatta, essi restituiscono il valore dell'indice (o il
 limite inferiore dell'intervallo), viceversa sollevano una
@@ -126,11 +126,11 @@ una certo tipo sono possibili due strategie:
 * se gli oggetti sono dotati di un ordinamento *naturale*, generalmente si
   rendono *comparabili* facendo in modo che il loro tipo lo realizzi
   implementando l'interfaccia
-  [`Comparable`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html),
+  [`Comparable`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Comparable.html),
 * se viceversa si vogliono tenere in considerazione più ordinamenti, si ricorre
   di volta in volta ad un *comparatore* diverso, ottenuto implementando
   opportunamente l'interfaccia
-  [`Comparator`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html).
+  [`Comparator`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html).
 
 Le due interfacce descritte prescrivono rispettivamente l'implementazione di un
 metodo `compareTo` (che compara l'oggetto corrente con un altro oggetto del
@@ -146,18 +146,18 @@ Può essere però utile richiamare alcuni metodi (di default e statici) di
 `Comparator` che consentono di ottenere dei comparatori d'uso comune:
 
 * il metodo di default
-  [`reversed`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#reversed())
+  [`reversed`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html#reversed())
   che consente di ottenere il comparatore corrispondente all'ordine inverso;
 * i metodi statici
-  [`naturalOrder`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#naturalOrder())
+  [`naturalOrder`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html#naturalOrder())
   e
-  [`reverseOrder`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#reverseOrder())
+  [`reverseOrder`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html#reverseOrder())
   che restituiscono rispettivamente i comparatori dell'ordine naturale e del suo
   inverso;
 * i metodi statici
-  [`nullsFirst`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#nullsFirst(java.util.Comparator))
+  [`nullsFirst`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html#nullsFirst(java.util.Comparator))
   e
-  [`nullsLast`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html#nullsLast(java.util.Comparator))
+  [`nullsLast`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html#nullsLast(java.util.Comparator))
   che restituiscono i comparatori ottenuti dal comparatore specificato che, in
   aggiunta, considerano i riferimenti `null` rispettivamente minori o maggiori
   di ogni altro valore.
@@ -255,7 +255,7 @@ la "d" nell'ordine alfabetico).
 ## La classe `Arrays`
 
 La classe
-[`java.util.Arrays`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html)
+[`java.util.Arrays`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html)
 contiene alcuni metodi statici di utilità generale che riguardano gli array.
 
 Per i metodi illustrati di seguito sono state scelte le segnature con argomenti
@@ -271,7 +271,7 @@ Può capitare molte volte di dover emettere il contenuto di un array sotto forma
 di stringa, purtroppo l'implementazione del metodo `toString` di `Object`
 ereditata dagli array non è particolarmente leggibile; è però possibile usare il
 metodo
-[`toString`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#toString(java.lang.Object%5B%5D))
+[`toString`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#toString(java.lang.Object%5B%5D))
 di questa classe per ottenere una rappresentazione molto semplice; ad esempio
 ```{code-cell}
 int[] arr = new int[] {1, 2, 3, 4};
@@ -280,7 +280,7 @@ Arrays.toString(arr) + " è più leggibile di " + arr
 
 ### Riempire o copiare
 
-Usando il metodo [`fill`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#fill(java.lang.Object%5B%5D,int,int,java.lang.Object)) è possibile riempire (un segmento) di un array con un valore di *default*; ad esempio
+Usando il metodo [`fill`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#fill(java.lang.Object%5B%5D,int,int,java.lang.Object)) è possibile riempire (un segmento) di un array con un valore di *default*; ad esempio
 ```{code-cell}
 String[] slot = new String[6];
 Arrays.fill(slot, 0, 3, "primi tre");
@@ -299,7 +299,7 @@ gli elementi dell'array di origine (ovviamente a prescindere dal fatto che i
 riferimenti in cui sono memorizzati gli array siano dichiarati come `final`!).
 
 Il primo modo di ottenere una copia è data dal metodo
-[`copyOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#copyOf(T%5B%5D,int));
+[`copyOf`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#copyOf(T%5B%5D,int));
 osservate che tale metodo può produrre una copia con un numero di elementi
 maggiore di quello dell'originale (popolando con `null` le posizioni
 aggiuntive). Questo può essere molto utile nel caso in cui, memorizzando valori
@@ -307,7 +307,7 @@ in un array, si stia per eccederne la dimensione: sarà sufficiente copiarlo in
 uno di dimensione doppia e quindi procedere. Di ciascun metodo esistono anche
 delle versioni sovraccaricate senza i limiti del segmento (che vengono assunti
 coincidere con l'inizio e la fine dell'array). Con il metodo
-[`copyOfRange`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#copyOfRange(T%5B%5D,int,int))
+[`copyOfRange`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#copyOfRange(T%5B%5D,int,int))
 è invece possibile ottenere una copia di (un segmento) di un array; ad esempio
 ```{code-cell}
 String[] subslot = Arrays.copyOfRange(slot, 2, 5);
@@ -345,7 +345,7 @@ indipendenti dalla classe `Arrays`.
 
 Il più elementare è usare il metodo `clone` dell'array stesso. Il secondo è
 usare il metodo statico
-[`arraycopy`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#arraycopy(java.lang.Object,int,java.lang.Object,int,int))
+[`arraycopy`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#arraycopy(java.lang.Object,int,java.lang.Object,int,int))
 della classe `System`. Questo metodo invece di restituire la copia in nuovo
 array, copia i riferimenti da un array sorgente ad uno destinazione (che deve
 essere già allocato e della dimensione opportuna); ad esempio
@@ -386,28 +386,28 @@ individuate.
 ### Confrontare
 
 Il metodo
-[`equals`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#equals(java.lang.Object%5B%5D,java.lang.Object%5B%5D))
+[`equals`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#equals(java.lang.Object%5B%5D,java.lang.Object%5B%5D))
 può essere usato per decidere se due array contengono lo stesso numero di
 elementi e tutti gli elementi in posizione corrispondente risultano uguali
 (secondo il metodo `equals` del tipo degli element dell'array, o la comparazione
 con `==` nel caso di tipi primitivi).
 
 In modo analogo, per i tipi primitivi e quelli che sono *comparabili* il metodo
-[`compare`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#compare(T%5B%5D,T%5B%5D))
+[`compare`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#compare(T%5B%5D,T%5B%5D))
 permette di determinare l'[*ordine
 lessicografico*](https://www.wikiwand.com/it/Ordine_lessicografico) tra i due
 array, basandosi sull'ordine naturale degli elementi. Nel caso in cui gli
 elementi non siano *comparabili* (o si voglia utilizzare un ordine diverso da
 quello naturale), esiste una versione sovraccaricata del metodo
-[`compare`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#compare(T%5B%5D,T%5B%5D,java.util.Comparator))
+[`compare`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#compare(T%5B%5D,T%5B%5D,java.util.Comparator))
 che accetta un
-[`Comparator`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html)
+[`Comparator`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html)
 come argomento.
 
 (oec-array)=
 ### Ordinare e cercare
 
-Dato un vettore, è possibile ordinarlo [*in loco*](https://www.wikiwand.com/it/Algoritmo_in_loco) secondo l'*ordine naturale* dei suoi elementi tramite il metodo [`sort`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#sort(java.lang.Object[])), oppure specificando esplicitamente un *comparatore*  con la versoine sovraccaricata [`sort`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#sort(T[],java.util.Comparator)).
+Dato un vettore, è possibile ordinarlo [*in loco*](https://www.wikiwand.com/it/Algoritmo_in_loco) secondo l'*ordine naturale* dei suoi elementi tramite il metodo [`sort`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#sort(java.lang.Object[])), oppure specificando esplicitamente un *comparatore*  con la versoine sovraccaricata [`sort`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#sort(T[],java.util.Comparator)).
 
 Riutilizzando la classe `OrarioMattina` della sezione precedente, ad esempio
 ```{code-cell}
@@ -436,9 +436,9 @@ Arrays.toString(orari)
 Dato un vettore ordinato, è possibile cercare la posizione di un elemento nel
 vettore (o scoprire se non è contenuto nel vettore), usando la [*ricerca
 dicotomica*](https://www.wikiwand.com/it/Ricerca_dicotomica), tramite il metodo
-[`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#binarySearch(java.lang.Object[],java.lang.Object))
+[`binarySearch`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#binarySearch(java.lang.Object[],java.lang.Object))
 che si basa sull'ordine naturale, o la versione sovraccaricata di
-[`binarySearch`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#binarySearch(T[],T,java.util.Comparator))
+[`binarySearch`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#binarySearch(T[],T,java.util.Comparator))
 che consente di specificare un comparatore (che, evidentemente, deve essere il
 medesimo che era stat usato per ordinare l'array prima della ricerca).
 
@@ -548,10 +548,10 @@ per ottenere la concatenazione di un numero variabile di stringhe.
 ### Usando un metodo di `String`
 
 Il primo è il metodo
-[`String.join`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#join(java.lang.CharSequence,java.lang.CharSequence...))
+[`String.join`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html#join(java.lang.CharSequence,java.lang.CharSequence...))
 ,che funziona con un array, o con un numero variabile di argomenti, e la
 versione
-[`String.join`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#join(java.lang.CharSequence,java.lang.Iterable)),
+[`String.join`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html#join(java.lang.CharSequence,java.lang.Iterable)),
 che funziona con un iterabile. L'esempio precedente si può riscrivere come
 ```{code-cell}
 String risultato = String.join(" ", parti);
@@ -562,7 +562,7 @@ risultato
 
 Se si vuole specificare non solo il *separatore* ma anche il *prefisso* e
 *suffisso* del risultato è possibile usare la classe
-[`StringJoiner`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/StringJoiner.html) come nel seguente esempio
+[`StringJoiner`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/StringJoiner.html) come nel seguente esempio
 ```{code-cell}
 StringJoiner sj = new StringJoiner(", ", "<", ">");
 for (String parte : parti) sj.add(parte);
@@ -573,7 +573,7 @@ sj.toString()
 
 Per finire, volendo avere il controllo completo del processo, ad esempio usando
 separatori diversi, è possibile usare la classe
-[`StringBuilder`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html) come nel seguente esempio
+[`StringBuilder`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/StringBuilder.html) come nel seguente esempio
 ```{code-cell}
 String[] separatori = {":", ";", "."};
 StringBuilder sb = new StringBuilder();

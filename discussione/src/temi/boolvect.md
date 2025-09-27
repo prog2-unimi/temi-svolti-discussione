@@ -550,7 +550,7 @@ sol.show('LongBoolVect', 'trivial')
 ```
 
 la dimensione può essere per pigrizia calcolata col metodo statico
-[`Long.numberOfLeadingZeros`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html#numberOfLeadingZeros(long));
+[`Long.numberOfLeadingZeros`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Long.html#numberOfLeadingZeros(long));
 l'uso dell'operatore di *shift* rende molto facili anche i metodi parziali di
 lettura e scrittura
 

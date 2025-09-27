@@ -237,7 +237,7 @@ proteggerne ogni volta le istanze con delle copie).
 
 Volendo adoperare una delle feature più recenti di Java, il tipo può essere
 definito tramite un
-[`record`](https://docs.oracle.com/en/java/javase/17/language/records.html); chi
+[`record`](https://docs.oracle.com/en/java/javase/25/language/records.html); chi
 non li avesse studiati, può definire il tipo in modo sostanzialmente equivalente
 tramite una classe concreta con un solo attributo dichiarato come `public final
 int durata`.
@@ -258,7 +258,7 @@ rappresentazione).
 
 Il metodo di fabbricazione è tedioso, ma banale da implementare: basta dividere
 la stringa in parti col metodo
-[`split`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#split(java.lang.String))
+[`split`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html#split(java.lang.String))
 e sommare gli interi corrispondenti alle varie parti (dopo averli moltiplicati
 per l'opportuna potenza di 60)
 
@@ -585,9 +585,9 @@ sol.show('Album', 'pos')
 
 Il metodo che consente di determinare la posizione di un brano nell'album
 adopera il metodo
-[`indexOf`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
+[`indexOf`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#indexOf(java.lang.Object))
 della lista ottenuta avvolgendo l'array col metodo
-[`Arrays.asList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#asList(T...)),
+[`Arrays.asList`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#asList(T...)),
 ma potrebbe essere parimenti implementato con un ciclo `for`; l'uso di `indexOf`
 si basa sull'identità (non avendo ridefinito i metodi `equals` e `hashCode` in
 brano). Si osservi il dettaglio dato dal fatto che le posizioni sono corrette
@@ -636,9 +636,9 @@ sol.show('Album', 'iter')
 ```
 
 l'uso di
-[`Arrays.asList`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html#asList(T...))
+[`Arrays.asList`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#asList(T...))
 consente di adoperare il metodo
-[`iterator`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#iterator())
+[`iterator`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html#iterator())
 delle liste invece di scrivere l'iteartore "a mano" (cosa comunque banale);
 osservate che l'array non è strutturalmente modificabile, ragione per cui
 l'iteratore non espone la rappresentazione (al rischio di modifiche
@@ -762,7 +762,7 @@ sol.show('Playlist', 'fondi', 'dup')
 
 è banalmente ottenibile tramite l'iteratore della lista, a patto di avvolgendolo
 con
-[`Collections.unmodifiableCollection`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collections.html#unmodifiableCollection(java.util.Collection))
+[`Collections.unmodifiableCollection`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collections.html#unmodifiableCollection(java.util.Collection))
 (per proteggere la rappresentazione).
 
 Gli altri due richiedono uno sforzo in più e la loro implementazione sarà
