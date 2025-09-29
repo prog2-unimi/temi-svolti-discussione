@@ -395,7 +395,7 @@ meno recente del linguaggio.
 Nelle versioni più recenti di java al pacchetto `java.lang` è stata aggiunta la
 classe
 [`IO`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IO.html)
-che provvede diversi metodi statici tra cui
+che provvede diversi metodi *statici* tra cui
 [`readln`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IO.html#readln())
 e
 [`println`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IO.html#println())
@@ -413,6 +413,15 @@ public class NumeraLineeSemplificato {
   }
 }
 ```
+
+:::{warning} 
+Proprio a causa del fatto che tali metodi sono *statici* non è possibile
+utilizzarli per il testing se si è interessati a redirigere in modo
+programmatico lo standard input. Per questa ragione **se ne sconsiglia l'uso**
+qualora si adoperi [Jubbiot](https://github.com/prog2-unimi/jubbiot), come 
+avviene **sia per le esercitazioni che per la prova d'esame**.
+:::
+
 
 ### Dati non testuali
 
