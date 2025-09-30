@@ -66,7 +66,10 @@ SommaArgs.main(new String[] {"1", "2", "3"})
 
 Di seguito sono riportati alcuni scampoli di codice Java necessari a gestire
 l'input in formato testuale che tipicamente è richiesto dalla soluzione degli
-esercizi di laboratorio e d'esame.
+esercizi di laboratorio e d'esame, nonché un breve accenno a come formattare
+l'output.
+
+### Input
 
 La gestione di tale input può essere organizzata secondo due coppie indipendenti
 di varianti a seconda
@@ -101,7 +104,7 @@ consumato (1.) e l'origine dell'input (2.) daranno luogo a quattro diverse
 implementazioni della parte (α), mentre la modalità in cui l'input sarà
 consumato (1.) darà luogo a due diverse implementazioni della parte (β).
 
-### Parte (α): istanziare l'oggetto usato per l'input
+#### Parte (α): istanziare l'oggetto usato per l'input
 
 Per leggere l'input una linea dopo l'altra (1.1.) è sufficiente usare un
 [`BufferedReader`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/BufferedReader.html).
@@ -133,7 +136,7 @@ Le quattro versioni della parte α del codice sono pertanto:
 dove si assume che `path` sia una variabile di tipo stinga che contiene il
 *path* del file che contiene l'input.
 
-### Parte (β): consumare l'input
+#### Parte (β): consumare l'input
 
 Per consumare (ed elaborare) l'input, sono sufficienti due solite
 implementazioni della parte (β), dal momento che il tipo dell'oggetto `in` può
@@ -153,7 +156,7 @@ while ((linea = in.readLine()) != null)
   /* consuma l'input */
 ```
 
-#### Tipi primitivi
+##### Tipi primitivi
 
 Per leggere una sequenza di tipi primitivi (1.2.) si possono utilizzare i metodi
 `nextT` (dove `T` è uno dei tipi primitivi), ad esempio, per gli interi, si può
@@ -171,7 +174,7 @@ while (in.hasNextInt()) {
 }
 ```
 
-#### Stringhe
+##### Stringhe
 
 Qualora sia necessario leggere delle stringhe (1.2.), intese come delle sequenze
 massimali di caratteri diversi da *whitespace* (che sono spazio, segno di
@@ -187,7 +190,7 @@ while (in.hasNext()) {
 }
 ```
 
-### Osservazioni ed esempi
+#### Osservazioni ed esempi
 
 Mettendo assieme gli esempi di codice delle parti (α) e (β) è possibile
 elaborare l'input, come sequenza di linee o tipi primitivi, sia che provenga dal
@@ -327,7 +330,7 @@ corrispondono ai vari tipi primitivi (e stringhe) indicati dal "formato"
 specificato.
 :::
 
-### Altri approcci
+#### Altri approcci
 
 La ricchezza delle API di Java rende possibile risolvere il problema descritto
 in questa guida in molti altri modi. Questo è certamente una ricchezza, ma
@@ -390,7 +393,7 @@ versioni più recenti di Java, ragion per cui è bene conoscere anche alternativ
 che siano praticabili nel caso in cui si abbia a disposizione sono una versione
 meno recente del linguaggio.
 
-#### Java 25
+##### Java 25
 
 Nelle versioni più recenti di java al pacchetto `java.lang` è stata aggiunta la
 classe
@@ -423,7 +426,7 @@ avviene **sia per le esercitazioni che per la prova d'esame**.
 :::
 
 
-### Dati non testuali
+#### Dati non testuali
 
 Come ultima osservazione, si noti che in questa guida (per brevità e semplicità)
 si è trattato solo il caso di file in formato, per così dire, testuale. Le API
@@ -444,3 +447,25 @@ che restituisce un array di `byte`, o il metodo
 che restituisce una
 [`List`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html)
 di stringhe.
+
+### Output (formattato)
+
+Il modo più semplice di produrre output è attraverso il metodo
+[``println``](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/PrintStream.html#println())
+del flusso standard
+[`System.out`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#out)
+come mostrato negli esempi precedenti. 
+
+Talvolta può essere utile formattare l'output in modo più sofisticato, ad esempio stabilendo un numero minimo di caratteri per ciascun campo. In questi casi può essere utile il metodo
+[`String.format`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html#format(java.lang.String,java.lang.Object...))
+che consente di costruire una stringa formattata secondo un formato specificato secondo la classe [`Formatter`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Formatter.html).
+
+Ad esempio, se `cents` è una variabile intera che rappresenta una valuta in
+centesimi di euro, il comando
+```{code-block}
+System.out.println(String.format("Euro: %d.%02d", cents / 100, cents % 100));
+```
+stamperà il valore di `cents` in euro con due cifre decimali.
+
+Per conoscere le possibilità di formattazione si rimanda alla documentazione che offre in particolare un [breve sommario](https://download.java.net/java/early_access/loom/docs/api/java.base/java/util/Formatter.html#summary) della sintassi della *stringa di formato*.
+
