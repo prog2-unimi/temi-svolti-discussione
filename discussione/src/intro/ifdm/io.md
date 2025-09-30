@@ -81,7 +81,7 @@ di varianti a seconda
 
 2. che provenga
 
-    1. dal flusso standard
+    1. dal flusso di ingresso
        ([`System.in`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#in)),
     2. da un file (indicato tramite il suo *path*).
 
@@ -194,9 +194,9 @@ while (in.hasNext()) {
 
 Mettendo assieme gli esempi di codice delle parti (α) e (β) è possibile
 elaborare l'input, come sequenza di linee o tipi primitivi, sia che provenga dal
-flusso standard che da un file.
+flusso di ingresso che da un file.
 
-Un dettaglio utile da ricordare è che nella lettura del flusso standard da
+Un dettaglio utile da ricordare è che nella lettura del flusso di ingresso da
 console (senza redirezione, cioè), la **terminazione del flusso** va *segnalata
 esplicitamente* tramite l'immissione dell'apposito carattere di controllo `^D`
 denominato `EOF` (**end of file**), che si ottiene usualmente premendo assieme i
@@ -212,7 +212,7 @@ soluzione plausibile è quella di aggiungere `throws IOException` alla
 dichiarazione di tale metodo (come nel codice riportato di seguito).
 
 A titolo di esempio, riportiamo due piccoli programmi. Il primo legge l'input
-dal flusso standard ed emette ogni riga preceduta dal suo numero progressivo
+dal flusso di ingresso ed emette ogni riga preceduta dal suo numero progressivo
 ```{code-cell}
 public class NumeraLinee {
   public static void main(String[] args) throws IOException {
@@ -323,7 +323,7 @@ try (Scanner in = new Scanner(System.in)) {
     }
 }
 ```
-leggerà il flusso standard una linea alla volta dallo scanner `in` e per
+leggerà il flusso di ingresso una linea alla volta dallo scanner `in` e per
 ciascuna di esse costruirà lo scanner `linea` che potrà essere usato come
 nell'esempio precedente per "decodificare" le parti della linea che
 corrispondono ai vari tipi primitivi (e stringhe) indicati dal "formato"
@@ -402,8 +402,7 @@ che provvede diversi metodi *statici* tra cui
 [`readln`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IO.html#readln())
 e
 [`println`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IO.html#println())
-che consentono rispettivamente di leggere e scrivere sullo standard input e
-output in modo molto semplice.
+che consentono rispettivamente di leggere e scrivere sui flussi di ingresso e uscita in modo molto semplice.
 
 Tramite tali metodi è possibile semplificare ulteriormente la lettura delle linee, come nell'esempio seguente
 ```{code-cell}
@@ -420,7 +419,7 @@ public class NumeraLineeSemplificato {
 :::{warning} 
 Proprio a causa del fatto che tali metodi sono *statici* non è possibile
 utilizzarli per il testing se si è interessati a redirigere in modo
-programmatico lo standard input. Per questa ragione **se ne sconsiglia l'uso**
+programmatico il flusso d'ingresso. Per questa ragione **se ne sconsiglia l'uso**
 qualora si adoperi [Jubbiot](https://github.com/prog2-unimi/jubbiot), come 
 avviene **sia per le esercitazioni che per la prova d'esame**.
 :::
@@ -452,7 +451,7 @@ di stringhe.
 
 Il modo più semplice di produrre output è attraverso il metodo
 [`PrintStream.println`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/PrintStream.html#println())
-invocato sul flusso d'uscita standard
+invocato sul flusso d'uscita
 [`System.out`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#out)
 come mostrato negli esempi precedenti, come ad esempio in:
 

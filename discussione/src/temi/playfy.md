@@ -180,16 +180,14 @@ sono numerati a partire da 1.
 
 La classe di test deve:
 
-- emettere nel flusso d'uscita standard ogni album (non appena ne termina la
-  lettura),
-- emettere nel flusso d'uscita standard  ogni playlist (non appena ne termina la
-  lettura),
+- emettere nel flusso d'uscita ogni album (non appena ne termina la lettura),
+- emettere nel flusso d'uscita ogni playlist (non appena ne termina la lettura),
 - fondere tutte le playlist in una di nome `Fusa` e alla fine dell'input
-  emetterla nel flusso d'uscita standard;
+  emetterla nel flusso d'uscita;
 
-al termine dell'esecuzione deve inoltre emettere nel flusso d'uscita standard
-tutti gli album della playlist ottenuta per fusione e, per ciascun album, tutti
-i brani della playlist che provengono da esso.
+al termine dell'esecuzione deve inoltre emettere nel flusso d'uscita tutti gli
+album della playlist ottenuta per fusione e, per ciascun album, tutti i brani
+della playlist che provengono da esso.
 
 Un esempio di output da emettere al termine dell'esecuzione è dato da:
 

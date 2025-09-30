@@ -139,8 +139,8 @@ molto comodi in questo lavoro.
 #### La classe di test
 
 La classe di test deve istanziare un cambiavalute dopo aver letto una sequenza
-di importi (uno per linea) dal flusso di ingresso standard; quindi, proseguendo
-nella lettura del flusso di ingresso, deve interpretare i seguenti comandi:
+di importi (uno per linea) dal flusso di ingresso; quindi, proseguendo nella
+lettura del flusso di ingresso, deve interpretare i seguenti comandi:
 
 * `A` seguito da due importi, che comporta l'aggiornamento del tasso di cambio
   definito da tali importi;
