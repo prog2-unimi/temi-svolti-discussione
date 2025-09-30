@@ -451,21 +451,35 @@ di stringhe.
 ### Output (formattato)
 
 Il modo più semplice di produrre output è attraverso il metodo
-[``println``](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/PrintStream.html#println())
-del flusso standard
+[`PrintStream.println`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/PrintStream.html#println())
+invocato sul flusso d'uscita standard
 [`System.out`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/System.html#out)
-come mostrato negli esempi precedenti. 
+come mostrato negli esempi precedenti, come ad esempio in:
 
-Talvolta può essere utile formattare l'output in modo più sofisticato, ad esempio stabilendo un numero minimo di caratteri per ciascun campo. In questi casi può essere utile il metodo
+```{code-block}
+System.out.println("Ciao mondo!");
+```
+
+Talvolta può essere utile formattare l'output in modo più sofisticato, ad
+esempio stabilendo un numero minimo di caratteri per ciascun campo. In questi
+casi possono essere utili i metodi
+[`PrintStream.format`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/PrintStream.html#format(java.lang.String,java.lang.Object...))
+e
 [`String.format`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html#format(java.lang.String,java.lang.Object...))
-che consente di costruire una stringa formattata secondo un formato specificato secondo la classe [`Formatter`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Formatter.html).
+che consentono di specificare un formato come descritto nella documentazione
+della classe
+[`Formatter`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Formatter.html).
 
 Ad esempio, se `cents` è una variabile intera che rappresenta una valuta in
-centesimi di euro, il comando
+centesimi di euro
 ```{code-block}
-System.out.println(String.format("Euro: %d.%02d", cents / 100, cents % 100));
+System.out.format("€ %d.%02d", cents / 100, cents % 100);
 ```
-stamperà il valore di `cents` in euro con due cifre decimali.
+stamperà il valore di `cents` in euro con due cifre decimali, così come
+```{code-block}
+String s = String.format("€ %d.%02d", cents / 100, cents % 100);
+```
+assegnerà alla stringa `s` il valore formattato.
 
 Per conoscere le possibilità di formattazione si rimanda alla documentazione che offre in particolare un [breve sommario](https://download.java.net/java/early_access/loom/docs/api/java.base/java/util/Formatter.html#summary) della sintassi della *stringa di formato*.
 
