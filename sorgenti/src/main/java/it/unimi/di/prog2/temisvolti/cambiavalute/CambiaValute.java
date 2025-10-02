@@ -8,7 +8,7 @@ import java.util.Objects;
 public class CambiaValute {
   
   // SOF: rep
-  /** La cassa del cambiabalute. */
+  /** La cassa del cambiavalute. */
   private final Cassa cassa = new Cassa();
 
   /** L'elenco dei tassi di cambio noti al cambiavalute. */
@@ -20,7 +20,7 @@ public class CambiaValute {
    * Crea un cambiavalute versando in cassa gli importi dati.
    *
    * @param importi gli importi da versare.
-   * @throws NullpointerException se importi è, o contiene, <code>null</code>.
+   * @throws NullPointerException se importi è, o contiene, <code>null</code>.
    * @throws IllegalArgumentException se uno degli importi non è positivo.
    */
   public CambiaValute(List<Importo> importi) {
@@ -36,13 +36,13 @@ public class CambiaValute {
    * sarà prelevato l'importo equivalente nell'altra valuta. Se questo
    * non è possibile, perché la valuta d'arrivo è uguale a quella di partenza,
    * o per mancanza di fondi o perché non è noto il tasso di cambio necessario, 
-   * verrà sollvata una eccezione.
+   * verrà sollevata una eccezione.
    *
    * @param da l'importo da cambiare.
    * @param aValuta la valuta in cui cambiarlo.
    * @return l'importo equivalente nella valuta data.
-   * @throws NullpointerException se da o aValuta sono <code>null</code>.
-   * @trhows IllegalArgumentException se da e aValuta sono uguali, se non è noto
+   * @throws NullPointerException se da o aValuta sono <code>null</code>.
+   * @throws IllegalArgumentException se da e aValuta sono uguali, se non è noto
    *         il tasso di cambio o se i fondi in cassa non sono sufficienti.
    */
   public Importo cambia(Importo da, Valuta aValuta) {
@@ -64,7 +64,7 @@ public class CambiaValute {
    * @param tasso il tasso di cambio da aggiornare (o aggiungere).
    * @return <code>true</code> se il tasso sostituisce un tasso precedentemente noto,
    *         <code>false</code> viceversa.
-   * @throws NullpointerException se tasso è <code>null</code>.
+   * @throws NullPointerException se tasso è <code>null</code>.
    * 
    * 
    */

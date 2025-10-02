@@ -41,11 +41,11 @@ public class Parser {
   private Parser() {} // impedisce l'istanziazione di questa classe
 
   /**
-   * Divide una linea corridpondente ad una operazione binaria nelle sue parti.
+   * Divide una linea corrispondente ad una operazione binaria nelle sue parti.
    *
    * @param linea la linea da considerare.
    * @return un array di tre {@link String} la prima ed ultima delle quali sono i due operandi e
-   *     quella di posto 1 è l'opertore (ossia {@code '+''} o {@code '*'}).
+   *     quella di posto 1 è l'operatore (ossia {@code '+''} o {@code '*'}).
    * @throws IllegalArgumentException se la linea non ha la forma {@code operando (+|*) operando}.
    */
   public static String[] partiOperazione(final String linea) {
@@ -66,11 +66,11 @@ public class Parser {
   }
 
   /**
-   * Restituisce il tipo di matrice contenuta nell'opearndo.
+   * Restituisce il tipo di matrice contenuta nell'operando.
    *
    * @param operando la stringa contenente la matrice da analizzare.
    * @return un carattere che indica il tipo di matrice, {@code ' '} per matrici generiche, oppure
-   *     {@code 'Z'}, {@code 'D'} o {@code 'I'} rispettivamente per le matrici nulla, diagnoali o
+   *     {@code 'Z'}, {@code 'D'} o {@code 'I'} rispettivamente per le matrici nulla, diagonali o
    *     identità.
    * @throws IllegalArgumentException se l'operando non corrisponde ad una matrice.
    */

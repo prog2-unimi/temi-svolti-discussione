@@ -39,10 +39,10 @@ public class CompratoreCasuale extends AbstractCompratore {
 
   /**
    * Costruisce un compratore (permettendo di specificare il seme del generatore, per consentire la
-   * riproduciblità dell'esecuzione).
+   * riproducibilità dell'esecuzione).
    *
    * @param bancarelle le bancarelle.
-   * @param seed il seme del genratore casuale.
+   * @param seed il seme del generatore casuale.
    * @see AbstractCompratore
    */
   public CompratoreCasuale(Set<Bancarella> bancarelle, final long seed) {

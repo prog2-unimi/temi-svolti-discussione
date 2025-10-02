@@ -36,7 +36,7 @@ public class HashMapMultiSet<E> extends AbstractMultiSet<E> {
   // EOF: rapp
 
   /* L'invariante di rappresentazione è semplicemente dato dal fatto che la
-   * mappa non sia <code>null</code> (che è vero in cosruzione e non può mutare in
+   * mappa non sia <code>null</code> (che è vero in costruzione e non può mutare in
    * quanto finale) e che non contenga chiavi <code>null</code> o valori non positivi
    * il che è garantito dai due metodi che ne mutano il contenuto.
    */
@@ -70,7 +70,7 @@ public class HashMapMultiSet<E> extends AbstractMultiSet<E> {
   }
   // EOF: multiplicity
 
-  /* Le due implemementazioni seguenti hanno senso solo perché poco più
+  /* Le due implementazioni seguenti hanno senso solo perché poco più
    * efficienti di quella di default (di fatto evitano le chiamate di delega).
    */
 

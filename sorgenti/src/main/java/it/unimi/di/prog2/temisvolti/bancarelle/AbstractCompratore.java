@@ -28,7 +28,7 @@ import java.util.Set;
  * Classe astratta che rappresenta un compratore.
  *
  * <p>Un compratore, dato un insieme di bancarelle, può determinare per un data quantità di un certo
- * giocattola un {@link Acquisto} che la realizzi. Può farlo secondo diverse strategie che
+ * giocattolo un {@link Acquisto} che la realizzi. Può farlo secondo diverse strategie che
  * corrispondono a diverse implementazioni del metodo astratto {@link #compra(int, Giocattolo)}.
  */
 public abstract class AbstractCompratore {
@@ -43,11 +43,11 @@ public abstract class AbstractCompratore {
    * Costruisce un compratore a partire dall'elenco di bancarelle da cui acquistare.
    *
    * @param bancarelle le bancarelle.
-   * @throws NullPointerException se le bancarello sono, o contengono, {@code null}.
+   * @throws NullPointerException se le bancarelle sono, o contengono, {@code null}.
    * @throws IllegalArgumentException se l'insieme di bancarelle è vuoto.
    */
   public AbstractCompratore(final Set<Bancarella> bancarelle) {
-    Objects.requireNonNull(bancarelle, "L'insime di bancarelle non può essere null.");
+    Objects.requireNonNull(bancarelle, "L'insieme di bancarelle non può essere null.");
     if (bancarelle.isEmpty())
       throw new IllegalArgumentException("Il mercatino deve contenere almeno una bancarella");
     // SOF: ri
@@ -80,7 +80,7 @@ public abstract class AbstractCompratore {
    * @param giocattolo il giocattolo da comprare.
    * @return un acquisto del giocattolo e quantità assegnate.
    * @throws NullPointerException se il giocattolo è {@code null}.
-   * @throws IllegalArgumentException se il numero non è positivio, o eccede la disponibilità
+   * @throws IllegalArgumentException se il numero non è positivo, o eccede la disponibilità
    *     complessiva delle bancarelle.
    */
   public abstract Acquisto compra(final int num, final Giocattolo giocattolo);

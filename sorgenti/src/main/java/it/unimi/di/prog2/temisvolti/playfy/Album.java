@@ -135,7 +135,7 @@ public class Album implements Iterable<Album.Brano> {
    * @param titolo titolo dell'album.
    * @param titoli lista dei titoli.
    * @param durate lista delle durate.
-   * @throws NullPointerException se uno dei parametri è {@code null}, o una delle liste contine un
+   * @throws NullPointerException se uno dei parametri è {@code null}, o una delle liste contiene un
    *     {@code null}.
    * @throws IllegalArgumentException se il titolo dell'album è vuoto, il numero di titoli è diverso
    *     da quello delle durate, il numero di titoli e durate è 0, uno dei titoli è vuoto, una delle

@@ -36,7 +36,7 @@ package it.unimi.di.prog2.temisvolti.multiset;
  *   <li>{@link #multiplicity(Object)} che, pur non comune ad altre collezioni, è ragionevole ne
  *       segua le convenzioni per uniformità con i precedenti.
  *       <p>Dato che assumeremo che un multiset non possa contenere riferimenti <code>null</code>,
- *       l'unico metodo tra i precedenti che sollverà eccezioni {@link #add(E e)}, tale metodo
+ *       l'unico metodo tra i precedenti che solleverà eccezioni {@link #add(E e)}, tale metodo
  *       potrebbe sollevare anche l'eccezione {@link ClassCastException}. Gli altri metodi
  *       accetteranno senza sollevare eccezioni sia riferimenti <code>null</code> che elementi non
  *       presenti nell'insieme.
@@ -65,9 +65,9 @@ interface MultiSet<E> extends Iterable<E> {
   int remove(Object o);
 
   /**
-   * Resituisce <code>true</code> se il multiset contiene l'elemento specificato.
+   * restituisce <code>true</code> se il multiset contiene l'elemento specificato.
    *
-   * <p>Più formalmente, resituisce <code>true</code> se e solo se il multiset contiene un elemento
+   * <p>Più formalmente, restituisce <code>true</code> se e solo se il multiset contiene un elemento
    * <code>e</code> tale che <code>Objects.equals(o,
    * e)</code>.
    *
@@ -86,11 +86,11 @@ interface MultiSet<E> extends Iterable<E> {
   /**
    * Restituisce la molteplicità dell'elemento nel multiset.
    *
-   * <p>Se l'elemento non appartiene al multiset, resituisce convenzionalmente <code>0</code> (senza
+   * <p>Se l'elemento non appartiene al multiset, restituisce convenzionalmente <code>0</code> (senza
    * sollevare eccezioni).
    *
-   * @param o l'elemento di cui resituire la molteplicità.
-   * @return la molteplicità dell'elemento nell'inzieme, o <code>0</code> se l'eleemnto non
+   * @param o l'elemento di cui restituire la molteplicità.
+   * @return la molteplicità dell'elemento nell'insieme, o <code>0</code> se l'elemento non
    *     appartiene ad esso.
    */
   int multiplicity(Object o);
@@ -99,7 +99,7 @@ interface MultiSet<E> extends Iterable<E> {
    * Restituisce la cardinalità del multiset.
    *
    * <p>Questo metodo ammette una implementazione di <em>default</em> basata sul metodo {@link
-   * #multiplicity(Object)} e sul fatto che gli elementi del supporto sono itearbili.
+   * #multiplicity(Object)} e sul fatto che gli elementi del supporto sono iterabili.
    *
    * @return la cardinalità.
    */
@@ -112,7 +112,7 @@ interface MultiSet<E> extends Iterable<E> {
   // EOF: size
 
   /**
-   * Resistuisce un nuovo multiset corrispondente all'unione tra questo e l'argomento.
+   * Restituisce un nuovo multiset corrispondente all'unione tra questo e l'argomento.
    *
    * <p>Questo metodo non modifica questo multiset, o il suo argomento.
    *
@@ -123,7 +123,7 @@ interface MultiSet<E> extends Iterable<E> {
   MultiSet<E> union(MultiSet<? extends E> o);
 
   /**
-   * Resistuisce un nuovo multiset corrispondente all'intersezione tra questo e l'argomento.
+   * Restituisce un nuovo multiset corrispondente all'intersezione tra questo e l'argomento.
    *
    * <p>Questo metodo non modifica questo multiset, o il suo argomento.
    *

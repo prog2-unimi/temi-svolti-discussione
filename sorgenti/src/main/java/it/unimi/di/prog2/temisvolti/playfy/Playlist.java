@@ -188,7 +188,7 @@ public class Playlist implements Iterable<Album.Brano> {
    * dato.
    *
    * @param album l'album.
-   * @return l'iteartore.
+   * @return l'iteratore.
    * @throws NullPointerException se l'album è {@code null}.
    */
   public Iterator<Album.Brano> brani(final Album album) {
@@ -234,7 +234,7 @@ public class Playlist implements Iterable<Album.Brano> {
    * Restituisce un iteratore che enumera (senza ripetizioni) gli album di cui esiste un brano in
    * questa playlist.
    *
-   * @return l'itertore.
+   * @return l'iteratore.
    */
   public Iterator<Album> album() {
     return new Iterator<Album>() {

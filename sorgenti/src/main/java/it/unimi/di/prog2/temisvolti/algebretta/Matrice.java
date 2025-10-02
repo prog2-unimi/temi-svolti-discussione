@@ -86,7 +86,7 @@ public interface Matrice {
 
   // SOF: default
   /**
-   * Restituisce {@code true} se e solo se il vettore dato ha la stessa dimensione di quetsa
+   * Restituisce {@code true} se e solo se il vettore dato ha la stessa dimensione di questa
    * matrice.
    *
    * @param v il vettore.
@@ -98,7 +98,7 @@ public interface Matrice {
   }
 
   /**
-   * Restituisce {@code true} se e solo se la matrice data ha la stessa dimensione di quetsa.
+   * Restituisce {@code true} se e solo se la matrice data ha la stessa dimensione di questa.
    *
    * @param M la matrice.
    * @return {@code true} se e solo se la matrice è conforme a questa.

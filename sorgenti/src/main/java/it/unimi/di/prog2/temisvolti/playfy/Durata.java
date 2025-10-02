@@ -34,7 +34,7 @@ public record Durata(int secondi) {
   /**
    * Costruisce una durata.
    *
-   * @param secondi la durata espressa in secondin.
+   * @param secondi la durata espressa in secondi.
    * @throws IllegalArgumentException se la durata è negativa.
    */
   public Durata {
@@ -54,7 +54,7 @@ public record Durata(int secondi) {
    * @param bounded se il il valore numerico della componente dev'essere minore di 60.
    * @return il valore numerico della componente.
    * @throws NullPointerException se la componente è {@code null}.
-   * @throws IllegalArgumentException se la componente è vuota, se non può essere converita in un
+   * @throws IllegalArgumentException se la componente è vuota, se non può essere convertita in un
    *     intero, se il suo valore non è compreso tra 0 (compreso) e il bound specificato (escluso).
    */
   // SOF: util
@@ -102,7 +102,7 @@ public record Durata(int secondi) {
       return new Durata(3600 * ore + 60 * minuti + secondi);
       // EOF: conv
     } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("Formato della durata invalito. " + e.getMessage());
+      throw new IllegalArgumentException("Formato della durata invalido. " + e.getMessage());
     }
   }
   // EOF: fab

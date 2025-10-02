@@ -68,7 +68,7 @@ public class Directory extends Entry implements Iterable<Entry> {
    *
    * @param entry l'entry da aggiungere.
    * @throws NullPointerException se l'entry è {@code null}
-   * @thrwos {@link FileAlreadyExistsException} se la directory contiene una entry con lo stesso
+   * @throws {@link FileAlreadyExistsException} se la directory contiene una entry con lo stesso
    *     nome di quella da aggiungere.
    */
   void add(final Entry entry) throws FileAlreadyExistsException {

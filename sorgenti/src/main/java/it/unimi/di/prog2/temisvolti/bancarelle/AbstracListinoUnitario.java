@@ -41,9 +41,9 @@ public abstract class AbstracListinoUnitario implements Listino {
   /**
    * Costruisce un listino data una mappa da giocattoli al loro prezzo unitario.
    *
-   * @param prezzoUnitario mappa avente per chiav ii giocattoli e per valori i prezzi unitari.
+   * @param prezzoUnitario mappa avente per chiave ii giocattoli e per valori i prezzi unitari.
    * @throws NullPointerException se la mappa è, o contiene chiavi o valori {@code null}.
-   * @throws IllegalArgumentException se uno dei prezzi non è postivio.
+   * @throws IllegalArgumentException se uno dei prezzi non è positivo.
    */
   public AbstracListinoUnitario(final Map<Giocattolo, Integer> prezzoUnitario) {
     this.prezzoUnitario = new HashMap<>();
@@ -54,7 +54,7 @@ public abstract class AbstracListinoUnitario implements Listino {
       final Integer num =
           Objects.requireNonNull(e.getValue(), "La mappa non può contenere valori null.");
       if (num <= 0)
-        throw new IllegalArgumentException("Il prezzp di " + giocattolo + " deve essere positivo");
+        throw new IllegalArgumentException("Il prezzo di " + giocattolo + " deve essere positivo");
       this.prezzoUnitario.put(giocattolo, num);
     }
     // EOF: ri

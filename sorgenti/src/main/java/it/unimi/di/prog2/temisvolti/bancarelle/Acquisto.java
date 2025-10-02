@@ -68,7 +68,7 @@ public class Acquisto implements Iterable<Bancarella> {
 
   // SOF: mod
   /**
-   * Aggiunge alla descrizione dell'acuisto l'intenzione di comprare un certo numero di giocattoli
+   * Aggiunge alla descrizione dell'acquisto l'intenzione di comprare un certo numero di giocattoli
    * da una data bancarella.
    *
    * @param num il numero di giocattoli.

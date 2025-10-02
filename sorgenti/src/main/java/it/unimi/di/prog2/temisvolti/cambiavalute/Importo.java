@@ -84,7 +84,7 @@ public class Importo implements Comparable<Importo> {
   // SOF: addsub
   /**
    * Metodo di produzione che restituisce l'importo risultante dalla somma tra
-   * quesot importo ed un altro imnporto dato.
+   * questo importo ed un altro importo dato.
    *
    * @param altro l'altro importo.
    * @return la somma tra questo e l'altro importo.
@@ -98,7 +98,7 @@ public class Importo implements Comparable<Importo> {
 
   /**
    * Metodo di produzione che restituisce l'importo risultante dalla differenza
-   * tra quesot importo ed un altro imnporto dato.
+   * tra questo importo ed un altro importo dato.
    *
    * @param altro l'altro importo.
    * @return la differenza tra questo e l'altro importo.

@@ -30,7 +30,7 @@ public class MatriceDensa extends AbsMatrice {
   /** I valori della matrice. */
   private final int[][] mat;
 
-  // AF: gli elementi dell'array corrispondono a quelli dela matrice
+  // AF: gli elementi dell'array corrispondono a quelli della matrice
   // RI: mat è non nullo ed ogni riga ha la stessa dimensione del numero di righe che è
   //     positivo
 
@@ -50,7 +50,7 @@ public class MatriceDensa extends AbsMatrice {
    *
    * @param mat l'array.
    * @throws IllegalArgumentException se l'array è {@code null} o una delle sue righe ha un numero
-   *     di elementi divrso da quello delle altre righe, o il numero di righe è zero.
+   *     di elementi diverso da quello delle altre righe, o il numero di righe è zero.
    */
   public MatriceDensa(final int[][] mat) {
     Objects.requireNonNull(mat, "La matrice non può essere null.");

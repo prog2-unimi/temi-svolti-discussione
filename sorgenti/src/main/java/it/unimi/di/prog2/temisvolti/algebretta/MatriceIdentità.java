@@ -40,7 +40,7 @@ public class MatriceIdentità extends AbsMatrice {
    * @throws IllegalArgumentException se la dimensione non è positiva.
    */
   public MatriceIdentità(final int dim) {
-    if (dim <= 0) throw new IllegalArgumentException("La dimensoine dev'essere positiva.");
+    if (dim <= 0) throw new IllegalArgumentException("La dimensione dev'essere positiva.");
     this.dim = dim;
   }
   // EOF: rapcostr

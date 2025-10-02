@@ -25,7 +25,7 @@ public class Cambi implements Iterable<Cambi.Tasso>{
      */
     public Tasso(Importo da, Importo a) {
       if (!Objects.requireNonNull(da, "Il primo importo non può essere null.").isPositive()) throw new IllegalArgumentException("Il primo importo deve essere positivo.");
-      if (!Objects.requireNonNull(a, "Il secodo importo non può essere null.").isPositive()) throw new IllegalArgumentException("Il secondo importo deve essere positivo.");
+      if (!Objects.requireNonNull(a, "Il secondo importo non può essere null.").isPositive()) throw new IllegalArgumentException("Il secondo importo deve essere positivo.");
       if (a.valuta.equals(da.valuta)) throw new IllegalArgumentException("Impossibile definire un tasso di cambio tra valute identiche");
       this.da = da;
       this.a = a;
@@ -67,8 +67,8 @@ public class Cambi implements Iterable<Cambi.Tasso>{
    * Aggiorna, o aggiunge, il tasso di cambio tra due valute all'elenco dei
    * tassi noti.
    *
-   * <p>Nel caso fosse noto un tasso tra le due stesse valute del tasso da aggioranre, questo
-   * sostituirà il precedente tasso; viceversa il tasso da aggiornare è di fatto "nouovo" e verrà 
+   * <p>Nel caso fosse noto un tasso tra le due stesse valute del tasso da aggiornare, questo
+   * sostituirà il precedente tasso; viceversa il tasso da aggiornare è di fatto "nuovo" e verrà 
    * semplicemente aggiunto alla lista dei tassi noti.
    *
    *

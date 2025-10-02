@@ -24,7 +24,7 @@ package it.unimi.di.prog2.temisvolti.boolvect;
 import java.util.Objects;
 
 /**
- * Classe astratta che provvede l'implementazione di alcuni dei metodi dell'inferfaccia {@link
+ * Classe astratta che provvede l'implementazione di alcuni dei metodi dell'interfaccia {@link
  * BoolVect}.
  *
  * <p>Questa classe implementa i metodi totali {@link BoolVect#leggi(int)} e {@link
@@ -40,12 +40,12 @@ import java.util.Objects;
  *
  * <p>Infine, provvede una implementazione elementare di {@link #toString()} ed una molto
  * inefficiente per {@link #equals(Object)}, le sottoclassi concrete devono implementare se
- * possibile una versione ottimizzata di tale medoto, ma in ogni caso una versione coerente di
+ * possibile una versione ottimizzata di tale metodo, ma in ogni caso una versione coerente di
  * {@link Object#hashCode()}.
  */
 public abstract class AbstractBoolVect implements BoolVect {
 
-  /* Implementaizone dei metodi leggi e scrivi attraverso i corrispondenti non totali */
+  /* Implementazione dei metodi leggi e scrivi attraverso i corrispondenti non totali */
 
   // SOF: leggiscrivi
   /**
@@ -86,7 +86,7 @@ public abstract class AbstractBoolVect implements BoolVect {
    */
 
   // SOF: opint
-  /** Interfaccia che descrive l'applicazoine di un operatore logico binario questo BoolVect. */
+  /** Interfaccia che descrive l'applicazione di un operatore logico binario questo BoolVect. */
   public interface BooleanOperator {
     boolean apply(final boolean a, final boolean b);
   }

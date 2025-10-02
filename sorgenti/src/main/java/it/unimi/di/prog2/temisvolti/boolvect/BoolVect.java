@@ -85,7 +85,7 @@ public interface BoolVect {
    * BoolVect booleano.
    *
    * @param other l'altro BoolVect.
-   * @throws NullPointerException se l'agromento è {@code null}.
+   * @throws NullPointerException se l'argomento è {@code null}.
    */
   void and(final BoolVect other) throws NullPointerException;
 
@@ -101,7 +101,7 @@ public interface BoolVect {
    * @param other l'altro BoolVect.
    * @throws IllegalArgumentException se la taglia di questo BoolVect è minore della dimensione del
    *     risultato.
-   * @throws NullPointerException se l'agromento è {@code null}.
+   * @throws NullPointerException se l'argomento è {@code null}.
    */
   void or(final BoolVect other) throws NullPointerException, IllegalArgumentException;
 
@@ -117,7 +117,7 @@ public interface BoolVect {
    * @param other l'altro BoolVect.
    * @throws IllegalArgumentException se la taglia di questo BoolVect è minore della dimensione del
    *     risultato.
-   * @throws NullPointerException se l'agromento è {@code null}.
+   * @throws NullPointerException se l'argomento è {@code null}.
    */
   void xor(final BoolVect other) throws NullPointerException, IllegalArgumentException;
   // EOF: bop
@@ -135,7 +135,7 @@ public interface BoolVect {
    *
    * @param vals la stringa dei valori di verità.
    * @throws IllegalArgumentException se la stringa è più lunga della taglia del BoolVect.
-   * @throws NullPointerException se l'agromento è {@code null}.
+   * @throws NullPointerException se l'argomento è {@code null}.
    */
   default void daString(final String vals) throws NullPointerException, IllegalArgumentException {
     pulisci();

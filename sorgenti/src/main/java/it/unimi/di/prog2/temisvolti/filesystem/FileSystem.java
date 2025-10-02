@@ -96,7 +96,7 @@ public class FileSystem {
   }
 
   /**
-   * Resituisce la dimensione di una <em>entry</em> con dato <em>path</em>.
+   * restituisce la dimensione di una <em>entry</em> con dato <em>path</em>.
    *
    * @param path il path dell'entry.
    * @return la dimenzione.
@@ -115,7 +115,7 @@ public class FileSystem {
    *
    * @param path il path della directory da creare.
    * @throws FileNotFoundException se il {@link Path#parent()} non è una directory.
-   * @throws FileAlreadyExistsException se in {@link Path#parent()} esite già una entry con nome
+   * @throws FileAlreadyExistsException se in {@link Path#parent()} esiste già una entry con nome
    *     {@link Path#name()}.
    */
   public void mkdir(final Path path) throws FileNotFoundException, FileAlreadyExistsException {
@@ -133,7 +133,7 @@ public class FileSystem {
    * @param size la dimensione.
    * @throws IllegalArgumentException se la size non è positiva.
    * @throws FileNotFoundException se il {@link Path#parent()} non è una directory.
-   * @throws FileAlreadyExistsException se in {@link Path#parent()} esite già una entry con nome
+   * @throws FileAlreadyExistsException se in {@link Path#parent()} esiste già una entry con nome
    *     {@link Path#name()}.
    */
   public void mkfile(final Path path, final int size)

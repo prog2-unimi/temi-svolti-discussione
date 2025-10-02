@@ -32,7 +32,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
-/** Classe mutabile che rappreseta una <em>shell</em> */
+/** Classe mutabile che rappresenta una <em>shell</em> */
 public class Shell {
 
   /** Prefisso per l'output. */
@@ -47,7 +47,7 @@ public class Shell {
   /**
    * Costruisce una <em>shell</em> dato il filesystem.
    *
-   * <p>La <em>directory corrente</em> è inzialmente la radice del <em>filesystem</em>.
+   * <p>La <em>directory corrente</em> è inizialmente la radice del <em>filesystem</em>.
    *
    * @param fs il filesystem
    * @throws NullPointerException se il filesystem è {@code null}.
@@ -75,7 +75,7 @@ public class Shell {
 
   // SOF: tree
   /**
-   * Emette nel flusso d'scita la <em>direcotry</em> data sotto forma di albero.
+   * Emette nel flusso di uscita la <em>directory</em> data sotto forma di albero.
    *
    * <p>Questa funzione richiama ricorsivamente se stessa per emettere le sottodirectory in forma di
    * albero, usa il prefisso per gestire l'indentazione dei sottoalberi.

@@ -57,7 +57,7 @@ public class Path implements Iterable<String> {
    * <em>assoluto</em> o meno.
    *
    * @param isAbsolute indica se il path è assoluto.
-   * @param parts elenco di stringhe che costiuiscono le parti del percorso.
+   * @param parts elenco di stringhe che costituiscono le parti del percorso.
    * @throws NullPointerException se le {@code parts} è o contiene {@code null}.
    * @throws InvalidPathException se una della parti è vuota, o contiene il separatore.
    */
@@ -141,7 +141,7 @@ public class Path implements Iterable<String> {
    *
    * <p>Se il <em>path</em> dato come parametro è assoluto esso viene banalmente restituito, se è
    * vuoto, viene invece restituito questo <em>path</em>. In ogni altro caso, questo <em>path</em>
-   * viene considearato una directory alla quale sono aggiunte le parti de <em>path</em> passato
+   * viene considerato una directory alla quale sono aggiunte le parti de <em>path</em> passato
    * come argomento (che è relativo); il risultato è assoluto sse lo è questo <em>path</em>.
    *
    * <p>Per esempio, se questo <em>path</em> è <samp>:A:B</samp> e il parametro è <samp>C:D</samp>

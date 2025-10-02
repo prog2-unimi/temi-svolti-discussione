@@ -45,7 +45,7 @@ public class VettoreNullo implements Vettore {
   @Override
   public int val(int i) {
     if (i < 0 || i >= dim)
-      throw new IndexOutOfBoundsException("L'indice eccede la dimensoine del vettore.");
+      throw new IndexOutOfBoundsException("L'indice eccede la dimensione del vettore.");
     return 0;
   }
   // EOF: dimval

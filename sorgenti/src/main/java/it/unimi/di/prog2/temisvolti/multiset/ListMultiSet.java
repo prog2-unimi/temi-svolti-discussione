@@ -37,7 +37,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
   // EOF: rapp
 
   /* L'invariante di rappresentazione è semplicemente dato dal fatto che la
-   * lista non è <code>null</code> (che è vero in cosruzione e non può mutare in
+   * lista non è <code>null</code> (che è vero in costruzione e non può mutare in
    * quanto finale) e che non contenga elementi <code>null</code> (come
    * verificato nell'unico metodo che vi aggiunge elementi).
    */
@@ -65,9 +65,9 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
   }
   // EOF: multiplicity
 
-  /* Le due implemementazioni seguenti hanno senso solo perché più efficienti
+  /* Le due implementazioni seguenti hanno senso solo perché più efficienti
    * di quella di default (in particolare la seconda che ne cambia il costo
-   * da quadratico a cosante).
+   * da quadratico a costante).
    */
 
   // SOF: overrides
