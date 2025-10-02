@@ -10,9 +10,6 @@ java {
   }
 }
 
-compileJava.options.encoding = 'UTF-8'
-compileTestJava.options.encoding = 'UTF-8'
-
 repositories {
   mavenLocal()
   mavenCentral()
@@ -28,10 +25,21 @@ dependencies {
   umlDoclet 'nl.talsmasoftware:umldoclet:2.2.0'
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
   options.encoding = 'UTF-8'
-  options.compilerArgs.add('-Xlint:all')
-  options.compilerArgs.add('-Werror') 
+  options.compilerArgs += ['-Xlint:all', '-Werror']
+}
+
+tasks.withType(JavaExec).configureEach {
+  jvmArgs += ['-Duser.language=ROOT', '-Dfile.encoding=UTF-8']
+  defaultCharacterEncoding = 'UTF-8'
+  classpath += sourceSets.scratch.runtimeClasspath
+  enableAssertions = !providers.gradleProperty('disableAssertions').isPresent()
+}
+
+tasks.withType(Test).configureEach {
+  jvmArgs += ['-Duser.language=ROOT', '-Dfile.encoding=UTF-8']
+  defaultCharacterEncoding = 'UTF-8'
 }
 
 tasks.named('test') {
@@ -44,7 +52,6 @@ tasks.named('test') {
       }
     }
   }
-  defaultCharacterEncoding = 'UTF-8'
   finalizedBy jacocoTestReport
 }
 
@@ -61,19 +68,19 @@ javadoc {
     docletpath = configurations.umlDoclet.files.asType(List)
     doclet = 'nl.talsmasoftware.umldoclet.UMLDoclet'
     showFromPrivate()
-    addBooleanOption 'Xdoclint:all', true
-    addBooleanOption 'Werror', true
-    addBooleanOption '-allow-script-in-comments', true
+    addBooleanOption('Xdoclint:all', true)
+    addBooleanOption('Werror', true)
+    addBooleanOption('-allow-script-in-comments', true)
   }
 }
 
 spotless {
   enforceCheck = false
   java {
-    googleJavaFormat('1.24.0')
+    googleJavaFormat('1.28.0')
     removeUnusedImports()
     leadingTabsToSpaces(2)
     endWithNewline()
-    licenseHeaderFile 'src/licenseHeaderFile.txt'
+    licenseHeaderFile('src/licenseHeaderFile.txt')
   }
 }
