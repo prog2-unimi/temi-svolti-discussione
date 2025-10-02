@@ -8,7 +8,7 @@
 # -- Project information -----------------------------------------------------
 
 project = "Temi d'esame svolti"
-copyright = '2021'
+copyright = '2025'
 author = ''
 
 # -- General configuration ---------------------------------------------------
