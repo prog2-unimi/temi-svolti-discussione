@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -27,8 +27,17 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+/** Classe che fornisce il main che realizza la soluzione al tema svolto. */
 public class Soluzione {
 
+  /** Costruttore privato per impedire l'istanziazione. */
+  private Soluzione() {}
+
+  /**
+   * Metodo principale per l'esecuzione del programma.
+   *
+   * @param args i parametri della linea di comando.
+   */
   public static void main(final String[] args) {
 
     /* Lettura dei parametri dalla linea di comando */
@@ -40,7 +49,7 @@ public class Soluzione {
 
     final int numBancarelle = s.nextInt();
     final Set<Bancarella> bancarelle = new HashSet<>(numBancarelle);
-    
+
     for (int b = 0; b < numBancarelle; b++) {
       /* Lettura di una bancarella */
       final String proprietario = s.next();

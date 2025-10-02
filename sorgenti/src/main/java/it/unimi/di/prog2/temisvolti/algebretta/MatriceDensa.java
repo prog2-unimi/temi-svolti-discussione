@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -75,6 +75,7 @@ public class MatriceDensa extends AbsMatrice {
     mat = new int[dim][dim];
     for (int i = 0; i < A.dim(); i++) for (int j = 0; j < A.dim(); j++) mat[i][j] = A.val(i, j);
   }
+
   // EOF: copy
   // EOF: rapcostr
 
@@ -89,6 +90,7 @@ public class MatriceDensa extends AbsMatrice {
     requireValidIJ(i, j);
     return mat[i][j];
   }
+
   // EOF: dimval
 
   // SOF: peralpha
@@ -101,6 +103,7 @@ public class MatriceDensa extends AbsMatrice {
     for (int i = 0; i < dim(); i++) for (int j = 0; j < dim(); j++) N.mat[i][j] = alpha * mat[i][j];
     return N;
   }
+
   // EOF: peralpha
 
   // SOF: piumat
@@ -116,6 +119,7 @@ public class MatriceDensa extends AbsMatrice {
       for (int j = 0; j < dim(); j++) C.mat[i][j] = mat[i][j] + B.val(i, j);
     return C;
   }
+
   // EOF: piumat
 
   // SOF: permat
@@ -133,6 +137,7 @@ public class MatriceDensa extends AbsMatrice {
         for (int k = 0; k < dim(); k++) C.mat[i][j] += mat[i][k] * B.val(k, j);
     return C;
   }
+
   // EOF: permat
 
   // SOF: pervec

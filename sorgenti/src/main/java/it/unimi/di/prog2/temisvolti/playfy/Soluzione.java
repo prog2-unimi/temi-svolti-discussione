@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -26,7 +26,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+/** Classe che fornisce il main che realizza la soluzione al tema svolto. */
 public class Soluzione {
+
+  /** Costruttore privato per impedire l'istanziazione. */
+  private Soluzione() {}
+
+  /**
+   * Metodo principale per l'esecuzione del programma.
+   *
+   * @param args gli argomenti della riga di comando (non usati).
+   */
   public static void main(String[] args) {
 
     // SOF: rep

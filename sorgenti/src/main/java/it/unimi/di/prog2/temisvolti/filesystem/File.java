@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -21,7 +21,7 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package it.unimi.di.prog2.temisvolti.filesystem;
 
-/** Classe immutabile che rappresenta un <em>file</em>. */
+/** Classe immutabile che rappresenta un <i>file</i>. */
 public class File extends Entry {
 
   // SOF: rep
@@ -33,7 +33,7 @@ public class File extends Entry {
   // RI: size > 0
 
   /**
-   * Costruisce un <em>file</em> dato il suo <em>nome</em> e <em>dimensione</em>.
+   * Costruisce un <i>file</i> dato il suo <i>nome</i> e <i>dimensione</i>.
    *
    * @param name il nome.
    * @param size la dimensione.
@@ -45,6 +45,7 @@ public class File extends Entry {
     if (size <= 0) throw new IllegalArgumentException("La dimensione deve essere positiva.");
     this.size = size;
   }
+
   // EOF: rep
 
   // SOF: methods

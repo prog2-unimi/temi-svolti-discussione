@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -43,6 +43,7 @@ public class MatriceIdentità extends AbsMatrice {
     if (dim <= 0) throw new IllegalArgumentException("La dimensione dev'essere positiva.");
     this.dim = dim;
   }
+
   // EOF: rapcostr
 
   // SOF: dimval
@@ -56,6 +57,7 @@ public class MatriceIdentità extends AbsMatrice {
     requireValidIJ(i, j);
     return i == j ? 1 : 0;
   }
+
   // EOF: dimval
 
   // SOF: peralpha
@@ -68,6 +70,7 @@ public class MatriceIdentità extends AbsMatrice {
     for (int i = 0; i < dim; i++) tmp[i] = alpha;
     return new MatriceDiagonale(tmp);
   }
+
   // EOF: peralpha
 
   // SOF: piumat
@@ -80,6 +83,7 @@ public class MatriceIdentità extends AbsMatrice {
     // EOF: piuzero
     return new MatriceDensa(this).più(B);
   }
+
   // EOF: piumat
 
   // SOF: permat
@@ -89,6 +93,7 @@ public class MatriceIdentità extends AbsMatrice {
     if (!conforme(B)) throw new IllegalArgumentException("Le matrici non sono conformi.");
     return B;
   }
+
   // EOF: permat
 
   // SOF: pervec

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -26,25 +26,29 @@ import java.nio.file.FileAlreadyExistsException;
 import java.util.Objects;
 
 /**
- * Classe mutabile che rappresenta un <em>filesystem</em>.
+ * Classe mutabile che rappresenta un <i>filesystem</i>.
  *
- * <p>Tutti i metodi di questa classe che accettano un <em>path</em> sollevano l'eccezione {@link
+ * <p>Tutti i metodi di questa classe che accettano un <i>path</i> sollevano l'eccezione {@link
  * NullPointerException} se esso è nullo, e l'eccezione {@link IllegalArgumentException} se non è
  * assoluto; inoltre sollevano l'eccezione {@link FileNotFoundException} se il path non corrisponde
- * ad una <em>entry</em> adatta al contesto.
+ * ad una <i>entry</i> adatta al contesto.
  */
 public class FileSystem {
 
   // SOF: rep
   /** La radice del filesystem. */
   private final Directory root = new Directory("ROOT");
+
   // EOF: rep
 
   // RI: root non è null
 
+  /** Costruttore che crea un filesystem vuoto. */
+  public FileSystem() {}
+
   // SOF: find
   /**
-   * Individua una <em>entry</em> dato un <em>path</em>.
+   * Individua una <i>entry</i> dato un <i>path</i>.
    *
    * @param path il path dell'entry da trovare.
    * @return l'entry.
@@ -66,7 +70,7 @@ public class FileSystem {
   }
 
   /**
-   * Individua una <em>directory</em> dato un <em>path</em>.
+   * Individua una <i>directory</i> dato un <i>path</i>.
    *
    * @param path il path della directory da trovare.
    * @return la directory.
@@ -79,11 +83,12 @@ public class FileSystem {
     if (!e.isDir()) throw new FileNotFoundException("Non è una directory " + path);
     return (Directory) e;
   }
+
   // EOF: find
 
   // SOF: observe
   /**
-   * Restituisce un {@link Iterable} sulle <em>entry</em> della directory con dato <em>path</em>.
+   * Restituisce un {@link Iterable} sulle <i>entry</i> della directory con dato <i>path</i>.
    *
    * @param path il path della directory.
    * @return un iterabile sul contenuto della directory.
@@ -96,7 +101,7 @@ public class FileSystem {
   }
 
   /**
-   * restituisce la dimensione di una <em>entry</em> con dato <em>path</em>.
+   * restituisce la dimensione di una <i>entry</i> con dato <i>path</i>.
    *
    * @param path il path dell'entry.
    * @return la dimenzione.
@@ -107,11 +112,12 @@ public class FileSystem {
       throw new IllegalArgumentException("Il path deve essere assoluto.");
     return find(path).size();
   }
+
   // EOF: observe
 
   // SOF: make
   /**
-   * Crea una <em>directory</em> dato il <em>path</em>.
+   * Crea una <i>directory</i> dato il <i>path</i>.
    *
    * @param path il path della directory da creare.
    * @throws FileNotFoundException se il {@link Path#parent()} non è una directory.
@@ -127,7 +133,7 @@ public class FileSystem {
   }
 
   /**
-   * Crea una <em>file</em> dato il <em>path</em> e dimensione.
+   * Crea una <i>file</i> dato il <i>path</i> e dimensione.
    *
    * @param path il path dell file da creare.
    * @param size la dimensione.

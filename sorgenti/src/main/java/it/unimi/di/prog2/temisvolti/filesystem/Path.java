@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -29,7 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-/** Classe immutabile che rappresenta un <em>path</em>. */
+/** Classe immutabile che rappresenta un <i>path</i>. */
 public class Path implements Iterable<String> {
 
   // SOF: const
@@ -41,6 +41,7 @@ public class Path implements Iterable<String> {
 
   /** Costante corrispondente al path vuoto (path relativo, senza parti) */
   public static final Path EMPTY = new Path(false, Collections.emptyList());
+
   // EOF: const
 
   // SOF: rep
@@ -53,8 +54,8 @@ public class Path implements Iterable<String> {
   // RI: parts non è null, non contiene null o stringhe vuote, o che contengano il separatore
 
   /**
-   * Costruisce un <em>path</em> a partire da un elenco di stringhe e dall'informazione se sia
-   * <em>assoluto</em> o meno.
+   * Costruisce un <i>path</i> a partire da un elenco di stringhe e dall'informazione se sia
+   * <i>assoluto</i> o meno.
    *
    * @param isAbsolute indica se il path è assoluto.
    * @param parts elenco di stringhe che costituiscono le parti del percorso.
@@ -70,11 +71,12 @@ public class Path implements Iterable<String> {
         throw new InvalidPathException(p, "La componente contiene il separatore.");
     }
   }
+
   // EOF: rep
 
   // SOF: fab
   /**
-   * Metodo di fabbricazione che restituisce un <em>path</em> a partire da una stringa.
+   * Metodo di fabbricazione che restituisce un <i>path</i> a partire da una stringa.
    *
    * <p>Alcuni esempi di percorso sono:
    *
@@ -84,7 +86,7 @@ public class Path implements Iterable<String> {
    *   <li>"<samp>B:C</samp>", percorso relativo con parti <samp>A</samp>, <samp>B</samp> e
    *       <samp>C</samp>,
    *   <li>"<samp>:</samp>", percorso assoluto corrispondente alla radice del filesystem,
-   *   <li>"<samp></samp>", percorso vuoto (relativo).
+   *   <li>"", percorso vuoto (relativo).
    * </ul>
    *
    * @param path la stringa che corrisponde alla rappresentazione testuale del path.
@@ -101,11 +103,12 @@ public class Path implements Iterable<String> {
     if (parts[0].isEmpty()) return new Path(true, Arrays.asList(parts).subList(1, parts.length));
     return new Path(false, Arrays.asList(parts));
   }
+
   // EOF: fab
 
   // SOF: simple
   /**
-   * Consente di sapere se il <em>path</em> è <em>assoluto</em>.
+   * Consente di sapere se il <i>path</i> è <i>assoluto</i>.
    *
    * @return {@code true} sse il path è assoluto.
    */
@@ -114,8 +117,8 @@ public class Path implements Iterable<String> {
   }
 
   /**
-   * Restituisce il prefisso di questo <em>path</em> a meno dell'ultima componente (o quello vuoto,
-   * se questo è vuoto).
+   * Restituisce il prefisso di questo <i>path</i> a meno dell'ultima componente (o quello vuoto, se
+   * questo è vuoto).
    *
    * @return un path corrispondente a questo, ma privato dell'ultima componente (se presente).
    */
@@ -125,7 +128,7 @@ public class Path implements Iterable<String> {
   }
 
   /**
-   * Restituisce l'ultima componente di questo <em>path</em>.
+   * Restituisce l'ultima componente di questo <i>path</i>.
    *
    * @return l'ultima componente di questo path, o {@code null} se il path è vuoto.
    */
@@ -133,19 +136,20 @@ public class Path implements Iterable<String> {
     if (parts.isEmpty()) return null;
     return parts.get(parts.size() - 1);
   }
+
   // EOF: simple
 
   // SOF: rr
   /**
-   * Risolve il <em>path</em> dato rispetto a questo.
+   * Risolve il <i>path</i> dato rispetto a questo.
    *
-   * <p>Se il <em>path</em> dato come parametro è assoluto esso viene banalmente restituito, se è
-   * vuoto, viene invece restituito questo <em>path</em>. In ogni altro caso, questo <em>path</em>
-   * viene considerato una directory alla quale sono aggiunte le parti de <em>path</em> passato
-   * come argomento (che è relativo); il risultato è assoluto sse lo è questo <em>path</em>.
+   * <p>Se il <i>path</i> dato come parametro è assoluto esso viene banalmente restituito, se è
+   * vuoto, viene invece restituito questo <i>path</i>. In ogni altro caso, questo <i>path</i> viene
+   * considerato una directory alla quale sono aggiunte le parti de <i>path</i> passato come
+   * argomento (che è relativo); il risultato è assoluto sse lo è questo <i>path</i>.
    *
-   * <p>Per esempio, se questo <em>path</em> è <samp>:A:B</samp> e il parametro è <samp>C:D</samp>
-   * la risoluzione è <samp>:A:B:C:D</samp>.
+   * <p>Per esempio, se questo <i>path</i> è <samp>:A:B</samp> e il parametro è <samp>C:D</samp> la
+   * risoluzione è <samp>:A:B:C:D</samp>.
    *
    * @param other il percorso da risolvere.
    * @return il percorso risolto.
@@ -159,12 +163,12 @@ public class Path implements Iterable<String> {
   }
 
   /**
-   * Costruisce un <em>path</em> relativo tra questo e quello dato.
+   * Costruisce un <i>path</i> relativo tra questo e quello dato.
    *
-   * <p>La relativizzazione è l'inverso di {@link #resolve(Path)}, restituisce un <em>path</em> che
+   * <p>La relativizzazione è l'inverso di {@link #resolve(Path)}, restituisce un <i>path</i> che
    * identifica lo stesso file se risolto rispetto a questo.
    *
-   * <p>Per esempio, se questo <em>path</em> è <samp>:A:B</samp> e il parametro è
+   * <p>Per esempio, se questo <i>path</i> è <samp>:A:B</samp> e il parametro è
    * <samp>:A:B:C:D</samp> la relativizzazione è <samp>C:D</samp>.
    *
    * @param other l'altro path.
@@ -182,6 +186,7 @@ public class Path implements Iterable<String> {
       throw new IllegalArgumentException("Il percorso non ha un prefisso in comune con questo.");
     return new Path(false, other.parts.subList(parts.size(), other.parts.size()));
   }
+
   // EOF: rr
 
   // SOF: override

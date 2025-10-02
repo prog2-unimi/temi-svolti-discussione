@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -20,6 +20,8 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 package it.unimi.di.prog2.temisvolti.bancarelle;
+
+import java.util.NoSuchElementException;
 
 /**
  * Interfaccia che rappresenta un listino prezzi.

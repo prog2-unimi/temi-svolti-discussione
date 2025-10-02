@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -54,6 +54,7 @@ public abstract class AbstractCompratore {
     this.bancarelle = Set.copyOf(bancarelle);
     // EOF: ri
   }
+
   // EOF: rep
 
   // SOF: obs
@@ -70,6 +71,7 @@ public abstract class AbstractCompratore {
     for (final Bancarella b : bancarelle) quantità += b.quantità(giocattolo);
     return quantità;
   }
+
   // EOF: obs
 
   // SOF: abs
@@ -84,6 +86,7 @@ public abstract class AbstractCompratore {
    *     complessiva delle bancarelle.
    */
   public abstract Acquisto compra(final int num, final Giocattolo giocattolo);
+
   // EOF: abs
 
   @Override

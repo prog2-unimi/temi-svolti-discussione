@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -27,13 +27,24 @@ import java.util.Objects;
 /** Classe che implementa il vettore null (anche detto zero). */
 public class VettoreNullo implements Vettore {
 
+  /** La dimensione del vettore. */
   // SOF: rapcostr
   private final int dim;
 
+  // AF: vettore con dim elementi tutti nulli.
+  // RI: dim > 0.
+
+  /**
+   * Costruttore che crea un vettore nullo di data dimensione.
+   *
+   * @param dim la dimensione del vettore.
+   * @throws IllegalArgumentException se la dimensione non è positiva.
+   */
   public VettoreNullo(final int dim) {
     if (dim <= 0) throw new IllegalArgumentException("La dimensione dev'essere positiva.");
     this.dim = dim;
   }
+
   // EOF: rapcostr
 
   // SOF: dimval
@@ -48,6 +59,7 @@ public class VettoreNullo implements Vettore {
       throw new IndexOutOfBoundsException("L'indice eccede la dimensione del vettore.");
     return 0;
   }
+
   // EOF: dimval
 
   // SOF: ops
@@ -62,6 +74,7 @@ public class VettoreNullo implements Vettore {
     if (!conforme(v)) throw new IllegalArgumentException("Il vettore non è conforme a questo.");
     return v;
   }
+
   // EOF: ops
 
   @Override

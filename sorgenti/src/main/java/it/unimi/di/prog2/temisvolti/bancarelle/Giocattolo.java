@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -49,6 +49,7 @@ public class Giocattolo {
       throw new IllegalArgumentException("Nome e materiale non devono essere vuoti.");
     // EOF: inv
   }
+
   // EOF: rep
 
   // SOF: eqhash
@@ -65,6 +66,7 @@ public class Giocattolo {
     final Giocattolo tmp = (Giocattolo) obj;
     return tmp.nome.equals(nome) && tmp.materiale.equals(materiale);
   }
+
   // EOF: eqhash
 
   @Override

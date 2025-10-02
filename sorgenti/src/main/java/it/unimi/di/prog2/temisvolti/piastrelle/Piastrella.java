@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -22,8 +22,8 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package it.unimi.di.prog2.temisvolti.piastrelle;
 
 /**
- * Classe astratta e immutabile che rappresenta una <em>piastrella</em>; è una implementa
- * parzialmente l'interfaccia {@link Rivestimento}, il cui stato è dato dal <em>costo</em>.
+ * Classe astratta e immutabile che rappresenta una <i>piastrella</i>; è una implementa parzialmente
+ * l'interfaccia {@link Rivestimento}, il cui stato è dato dal <i>costo</i>.
  */
 public abstract class Piastrella implements Rivestimento {
 

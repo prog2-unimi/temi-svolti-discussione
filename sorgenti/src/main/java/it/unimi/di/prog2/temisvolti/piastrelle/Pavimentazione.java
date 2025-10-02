@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -27,17 +27,17 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Classe immutabile che rappresenta una <em>pavimentazione</em> data da una collezione di {@link
- * Componente} ciascuno dei quali rappresenta una certa <em>quantità</em> di un
- * <em>rivestimento</em> (sia esso una <em>piastrella</em> o un'altra <em>pavimentazione</em>); è
- * possibile accedere al suo contenuto tramite <em>iterazione</em>.
+ * Classe immutabile che rappresenta una <i>pavimentazione</i> data da una collezione di {@link
+ * Componente} ciascuno dei quali rappresenta una certa <i>quantità</i> di un <i>rivestimento</i>
+ * (sia esso una <i>piastrella</i> o un'altra <i>pavimentazione</i>); è possibile accedere al suo
+ * contenuto tramite <i>iterazione</i>.
  */
 public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Componente> {
 
   // SOF: componente
   /**
-   * Un <em>componente</em> di una <em>pavimentazione</em>, ossia una certa <em>quantità</em> di un
-   * dato <em>rivestimento</em>.
+   * Un <i>componente</i> di una <i>pavimentazione</i>, ossia una certa <i>quantità</i> di un dato
+   * <i>rivestimento</i>.
    */
   public static class Componente implements Rivestimento {
 
@@ -48,7 +48,7 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
     public final int quantità;
 
     /**
-     * Costruisce una pavimentazione, data una <em>quantità</em> del <em>rivestimento</em> che lo
+     * Costruisce una pavimentazione, data una <i>quantità</i> del <i>rivestimento</i> che lo
      * costituisce. Implementa {@link Rivestimento} nel modo ovvio: costo e superficie sono ottenuti
      * moltiplicando quelle del rivestimento per la quantità in cui è presente.
      *
@@ -77,6 +77,7 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
     // EOF: componente_rivestimento
 
   }
+
   // EOF: componente
 
   // SOF: rappr
@@ -100,6 +101,7 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
     if (componenti.isEmpty())
       throw new IllegalArgumentException("Ci deve essere sempre almeno una componente.");
   }
+
   // EOF: rappr
 
   // SOF: rivestimento
@@ -116,6 +118,7 @@ public class Pavimentazione implements Rivestimento, Iterable<Pavimentazione.Com
     for (final Rivestimento r : componenti) totale += r.superficie();
     return totale;
   }
+
   // EOF: rivestimento
 
   // SOF: iterable

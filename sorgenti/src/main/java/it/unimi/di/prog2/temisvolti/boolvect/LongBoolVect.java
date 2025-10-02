@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -29,10 +29,14 @@ public class LongBoolVect extends AbstractBoolVect {
   // SOF: rep
   /** I bit che rappresentano il BoolVector. */
   private long bits = 0;
+
   // EOF: rep
 
   // RI: (vuoto)
   // AF: l'i-esimo valore di verità del BoolVect è vero se e solo se l'i-esimo bit di bits è 1.
+
+  /** Costruttore che crea un BoolVect vuoto. */
+  public LongBoolVect() {}
 
   // SOF: trivial
   @Override
@@ -49,6 +53,7 @@ public class LongBoolVect extends AbstractBoolVect {
   public void pulisci() {
     bits = 0;
   }
+
   // EOF: trivial
 
   // SOF: partial
@@ -63,6 +68,7 @@ public class LongBoolVect extends AbstractBoolVect {
     if (val) bits |= mask;
     else bits &= ~mask;
   }
+
   // EOF: partial
 
   // SOF: op
@@ -86,6 +92,7 @@ public class LongBoolVect extends AbstractBoolVect {
     if (other instanceof LongBoolVect) bits ^= ((LongBoolVect) other).bits;
     else super.xor(other);
   }
+
   // EOF: op
 
   // SOF: obj

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -26,12 +26,23 @@ import java.util.Scanner;
 /** Classe che implementa la lettura dei file di test. */
 public final class Soluzione {
 
+  /** Costruttore privato per impedire l'istanziazione. */
   private Soluzione() {}
 
+  /**
+   * Metodo di utilità per stampare un MultiSet.
+   *
+   * @param s il MultiSet da stampare.
+   */
   private static void print(MultiSet<?> s) {
     System.out.println(s.size() + " " + s);
   }
 
+  /**
+   * Metodo principale per l'esecuzione del programma.
+   *
+   * @param args gli argomenti della linea di comando (non usati).
+   */
   public static void main(String[] args) {
     final MultiSet<String> a = new ListMultiSet<>(), b = new HashMapMultiSet<>();
     try (Scanner sc = new Scanner(System.in)) {

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -43,6 +43,7 @@ public class MatriceNulla extends AbsMatrice {
     if (dim <= 0) throw new IllegalArgumentException("La dimensione deve essere positiva.");
     this.dim = dim;
   }
+
   // EOF: rapcostr
 
   // SOF: dimval
@@ -56,6 +57,7 @@ public class MatriceNulla extends AbsMatrice {
     requireValidIJ(i, j);
     return 0;
   }
+
   // EOF: dimval
 
   // SOF: ops
@@ -77,6 +79,7 @@ public class MatriceNulla extends AbsMatrice {
     if (!conforme(B)) throw new IllegalArgumentException("Le matrici non sono conformi.");
     return B;
   }
+
   // EOF: ops
 
   // SOF: pervec

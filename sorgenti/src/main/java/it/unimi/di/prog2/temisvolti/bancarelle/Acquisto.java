@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -48,6 +48,7 @@ public class Acquisto implements Iterable<Bancarella> {
 
   /** Il prezzo totale e la quantità complessiva di giocattoli nell'acquisto. */
   private int prezzo = 0, quantità = 0;
+
   // EOF: rep
 
   // RI: giocatolo e descrizione non sono nulli, la mappa non contiene null e
@@ -88,6 +89,7 @@ public class Acquisto implements Iterable<Bancarella> {
     descrizione.put(bancarella, num);
     // EOF: ri
   }
+
   // EOF: mod
 
   // SOF: tivialobs
@@ -108,6 +110,7 @@ public class Acquisto implements Iterable<Bancarella> {
   public int quantità() {
     return quantità;
   }
+
   // EOF: tivialobs
 
   // SOF: obs
@@ -131,6 +134,7 @@ public class Acquisto implements Iterable<Bancarella> {
     Set<Bancarella> bancarelle = Collections.unmodifiableSet(descrizione.keySet());
     return bancarelle.iterator();
   }
+
   // EOF: obs
 
   @Override

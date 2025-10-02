@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -59,6 +59,7 @@ public interface Vettore {
    * @throws IllegalArgumentException se i vettori non sono conformi.
    */
   Vettore più(final Vettore v);
+
   // EOF: signatures
 
   // SOF: default

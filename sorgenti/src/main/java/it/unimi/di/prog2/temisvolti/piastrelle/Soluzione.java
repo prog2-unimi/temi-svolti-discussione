@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -25,9 +25,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/** La classe di <em>test</em>. */
+/** Classe che fornisce il main che realizza la soluzione al tema svolto. */
 public class Soluzione {
+  /** Costruttore privato per impedire l'istanziazione. */
+  private Soluzione() {}
 
+  /**
+   * Metodo principale per l'esecuzione del programma.
+   *
+   * @param args gli argomenti della linea di comando (non usati).
+   */
   public static void main(String[] args) {
     try (final Scanner s = new Scanner(System.in)) {
       // SOF: rappr

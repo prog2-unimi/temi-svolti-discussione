@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -22,8 +22,8 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package it.unimi.di.prog2.temisvolti.piastrelle;
 
 /**
- * Interfaccia che descrive un <em>rivestimento</em>, cioè una qualunque entità dotata di
- * <em>costo</em> e <em>superficie</em>.
+ * Interfaccia che descrive un <i>rivestimento</i>, cioè una qualunque entità dotata di <i>costo</i>
+ * e <i>superficie</i>.
  */
 public interface Rivestimento {
   /**

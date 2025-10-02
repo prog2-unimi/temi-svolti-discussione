@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -47,6 +47,9 @@ public abstract class AbstractBoolVect implements BoolVect {
 
   /* Implementazione dei metodi leggi e scrivi attraverso i corrispondenti non totali */
 
+  /** Costruttore protetto, usabile solo dalle sottoclassi. */
+  protected AbstractBoolVect() {}
+
   // SOF: leggiscrivi
   /**
    * Funzione parziale che restituisce il valore di verità di posizione specificata.
@@ -78,6 +81,7 @@ public abstract class AbstractBoolVect implements BoolVect {
           "Non è possibile scrivere un valore di verità vero in posizione maggiore o uguale alla taglia.");
     scriviParziale(pos, val);
   }
+
   // EOF: leggiscrivi
 
   /* Implementazione delle operazioni booleane, tramite l'introduzione di una
@@ -88,8 +92,16 @@ public abstract class AbstractBoolVect implements BoolVect {
   // SOF: opint
   /** Interfaccia che descrive l'applicazione di un operatore logico binario questo BoolVect. */
   public interface BooleanOperator {
+    /**
+     * Applica l'operatore ai due valori di verità dati.
+     *
+     * @param a il primo valore di verità.
+     * @param b il secondo valore di verità.
+     * @return il risultato dell'applicazione dell'operatore.
+     */
     boolean apply(final boolean a, final boolean b);
   }
+
   // EOF: opint
 
   // SOF: bitwise
@@ -109,6 +121,7 @@ public abstract class AbstractBoolVect implements BoolVect {
     for (int pos = 0; pos <= dimensioneMax; pos++)
       scrivi(pos, op.apply(leggi(pos), other.leggi(pos)));
   }
+
   // EOF: bitwise
 
   // SOF: defop
@@ -157,6 +170,7 @@ public abstract class AbstractBoolVect implements BoolVect {
           "La taglia di questo vettore è minore della dimensione del risultato.");
     }
   }
+
   // EOF: defop
 
   /* Implementazione non specializzata dei metodi ereditati da {@code Object}. */
@@ -168,9 +182,9 @@ public abstract class AbstractBoolVect implements BoolVect {
    * <p>Se la dimensione del BoolVect è 0 restituisce "F", altrimenti restituisce una stringa che
    * comprende un numero di caratteri pari alla dimensione del BoolVect, detto altrimenti i valori
    * di verità {@code false} che hanno posizione maggiore della dimensione non sono parte della
-   * stringa; l'<em>i</em>-esimo carattere della stringa (contando da destra) è `V` se
-   * l'<em>i</em>-esima posizione del BoolVect ha valore di verità {@code true}, o `F` se vale
-   * {@code false}.
+   * stringa; l'<i>i</i>-esimo carattere della stringa (contando da destra) è `V` se
+   * l'<i>i</i>-esima posizione del BoolVect ha valore di verità {@code true}, o `F` se vale {@code
+   * false}.
    *
    * @return la stringa corrispondente a questo BoolVect.
    */

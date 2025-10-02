@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -59,6 +59,7 @@ public abstract class AbstracListinoUnitario implements Listino {
     }
     // EOF: ri
   }
+
   // EOF: rep
 
   // SOF: obs
@@ -76,6 +77,7 @@ public abstract class AbstracListinoUnitario implements Listino {
     if (prezzo == null) throw new NoSuchElementException("Giocattolo non trovato: " + giocattolo);
     return prezzo;
   }
+
   // EOF: obs
 
   // SOF: override
@@ -83,6 +85,7 @@ public abstract class AbstracListinoUnitario implements Listino {
   public boolean conosce(final Giocattolo giocattolo) {
     return prezzoUnitario.containsKey(Objects.requireNonNull(giocattolo));
   }
+
   // EOF: override
 
   @Override

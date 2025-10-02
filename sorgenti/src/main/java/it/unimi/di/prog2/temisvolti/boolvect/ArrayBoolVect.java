@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -49,6 +49,7 @@ public class ArrayBoolVect extends AbstractBoolVect {
     if (taglia <= 0) throw new IllegalArgumentException("La taglia deve essere positiva.");
     valore = new boolean[taglia];
   }
+
   // EOF: rep
 
   /** Costruisce un BoolVect di taglia 1024. */
@@ -71,6 +72,7 @@ public class ArrayBoolVect extends AbstractBoolVect {
   public void pulisci() {
     Arrays.fill(valore, false);
   }
+
   // EOF: trivial
 
   // SOF: partial
@@ -86,6 +88,7 @@ public class ArrayBoolVect extends AbstractBoolVect {
     else if (!val && pos == dimensione - 1)
       while (dimensione > 0 && !valore[dimensione - 1]) dimensione--;
   }
+
   // EOF: partial
 
   // SOF: obj

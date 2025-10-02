@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -66,6 +66,7 @@ public class Album implements Iterable<Album.Brano> {
       this.titolo = titolo;
       this.durata = durata;
     }
+
     // EOF: rep
 
     /**
@@ -77,6 +78,7 @@ public class Album implements Iterable<Album.Brano> {
     public Album album() {
       return Album.this;
     }
+
     // EOF: outer
 
     /**
@@ -90,6 +92,7 @@ public class Album implements Iterable<Album.Brano> {
     public boolean appartiene(final Album album) {
       return Album.this.equals(Objects.requireNonNull(album, "L'album non può essere null."));
     }
+
     // EOF: appartiene
 
     /**
@@ -103,6 +106,7 @@ public class Album implements Iterable<Album.Brano> {
       return String.format(
           "\"%s\" (%s)%s", titolo, durata, conAlbum ? ", (da \"" + album().titolo + "\")" : "");
     }
+
     // EOF: stringa
 
     @Override
@@ -164,6 +168,7 @@ public class Album implements Iterable<Album.Brano> {
     }
     this.durata = durata;
   }
+
   // EOF: repa
 
   // SOF: num
@@ -175,6 +180,7 @@ public class Album implements Iterable<Album.Brano> {
   public int numeroBrani() {
     return brani.length;
   }
+
   // EOF: num
 
   // SOF: pos
@@ -206,6 +212,7 @@ public class Album implements Iterable<Album.Brano> {
     Objects.requireNonNull(brano, "Il brano non può essere null.");
     return 1 + Arrays.asList(brani).indexOf(brano);
   }
+
   // EOF: pos
 
   /**
@@ -234,6 +241,7 @@ public class Album implements Iterable<Album.Brano> {
     for (final Brano b : brani) if (b.titolo.equals(titolo)) return b;
     return null;
   }
+
   // EOF: titolo
 
   @Override

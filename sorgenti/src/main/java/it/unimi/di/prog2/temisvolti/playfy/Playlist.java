@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -42,6 +42,7 @@ public class Playlist implements Iterable<Album.Brano> {
 
   /** L'elenco di brani contenuti nella playlist. */
   private final List<Album.Brano> brani = new ArrayList<>();
+
   // EOF: rep
 
   /**
@@ -79,6 +80,7 @@ public class Playlist implements Iterable<Album.Brano> {
       throw new IllegalArgumentException("Il nome non può essere null o vuoto.");
     this.nome = nome;
   }
+
   // EOF: nome
 
   // SOF: durata
@@ -90,6 +92,7 @@ public class Playlist implements Iterable<Album.Brano> {
   public Durata durata() {
     return durata;
   }
+
   // EOF: durata
 
   // SOF: pos
@@ -129,6 +132,7 @@ public class Playlist implements Iterable<Album.Brano> {
   public int posizione(final Album.Brano brano) {
     return 1 + brani.indexOf(Objects.requireNonNull(brano, "Il brano non può essere null."));
   }
+
   // EOF: pos
 
   // SOF: addrm
@@ -153,6 +157,7 @@ public class Playlist implements Iterable<Album.Brano> {
     if (brani.remove(Objects.requireNonNull(brano, "Il brano non può essere null.")))
       durata = durata.sottrai(brano.durata);
   }
+
   // EOF: addrm
 
   // SOF: fondi
@@ -180,6 +185,7 @@ public class Playlist implements Iterable<Album.Brano> {
     // EOF: dup
     return fusa;
   }
+
   // EOF: fondi
 
   // SOF: filteriter
@@ -201,6 +207,7 @@ public class Playlist implements Iterable<Album.Brano> {
 
       /** Il prossimo brano da restituire. */
       private Album.Brano next = null;
+
       // EOF: firep
 
       // SOF: fihas
@@ -214,6 +221,7 @@ public class Playlist implements Iterable<Album.Brano> {
         next = null;
         return false;
       }
+
       // EOF: fihas
 
       // SOF: finxt
@@ -227,6 +235,7 @@ public class Playlist implements Iterable<Album.Brano> {
       // EOF: finxt
     };
   }
+
   // EOF: filteriter
 
   // SOF: albumiter
@@ -248,6 +257,7 @@ public class Playlist implements Iterable<Album.Brano> {
 
       /** L'insieme degli album restituiti da {@link #next()}. */
       private final Set<Album> restituiti = new HashSet<>();
+
       // EOF: airep
 
       // SOF: aihas
@@ -264,6 +274,7 @@ public class Playlist implements Iterable<Album.Brano> {
         next = null;
         return false;
       }
+
       // EOF: aihas
 
       // SOF: ainxt
@@ -277,6 +288,7 @@ public class Playlist implements Iterable<Album.Brano> {
       // EOF: ainxt
     };
   }
+
   // EOF: albumiter
 
   @Override

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -22,8 +22,8 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package it.unimi.di.prog2.temisvolti.piastrelle;
 
 /**
- * Classe immutabile che rappresenta una <em>piastrella triangolare</em>, lo stato è costituito
- * dalla lunghezza (sempre positiva) della sua <em>base</em> ed <em>altezza</em>.
+ * Classe immutabile che rappresenta una <i>piastrella triangolare</i>, lo stato è costituito dalla
+ * lunghezza (sempre positiva) della sua <i>base</i> ed <i>altezza</i>.
  */
 public class PiastrellaTriangolare extends Piastrella {
 
@@ -34,8 +34,8 @@ public class PiastrellaTriangolare extends Piastrella {
   public final int altezza;
 
   /**
-   * Costruisce una piastrella dato il suo <em>costo</em> e la lunghezza della sua <em>base</em> e
-   * <em>altezza</em>.
+   * Costruisce una piastrella dato il suo <i>costo</i> e la lunghezza della sua <i>base</i> e
+   * <i>altezza</i>.
    *
    * @param base la base.
    * @param altezza l'altezza.

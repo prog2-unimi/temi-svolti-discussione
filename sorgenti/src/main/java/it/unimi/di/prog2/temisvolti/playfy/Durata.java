@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -28,6 +28,8 @@ import java.util.Objects;
  *
  * <p>Le istanze possono essere costruite a partire dalla durata espressa in secondi, oppure tramite
  * un metodo di fabbricazione che accetta stringhe del formato <samp>HH:MM:SS</samp>.
+ *
+ * @param secondi la durata espressa in secondi.
  */
 public record Durata(int secondi) {
 
@@ -75,6 +77,7 @@ public record Durata(int secondi) {
           "Il valore della componente \"" + componente + "\" deve essere minore di 60.");
     return hms;
   }
+
   // EOF: util
 
   /**
@@ -105,6 +108,7 @@ public record Durata(int secondi) {
       throw new IllegalArgumentException("Formato della durata invalido. " + e.getMessage());
     }
   }
+
   // EOF: fab
 
   /**
@@ -119,6 +123,7 @@ public record Durata(int secondi) {
     return new Durata(
         this.secondi + Objects.requireNonNull(altra, "La durata non può essere null.").secondi);
   }
+
   // EOF: sum
 
   /**
@@ -134,6 +139,7 @@ public record Durata(int secondi) {
     return new Durata(
         this.secondi - Objects.requireNonNull(altra, "La durata non può essere null.").secondi);
   }
+
   // EOF: diff
 
   @Override

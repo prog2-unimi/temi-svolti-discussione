@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -27,12 +27,17 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
-/** Implementazione di {@link MultiSet} basata su una mappa tra elementi e molteplicità. */
+/**
+ * Implementazione di {@link MultiSet} basata su una mappa tra elementi e molteplicità.
+ *
+ * @param <E> il tipo degli elementi del multiset.
+ */
 public class HashMapMultiSet<E> extends AbstractMultiSet<E> {
 
   /** La mappa che, per ciascun elemento del multiset, ne indica la molteplicità. */
   // SOF: rapp
   private final Map<E, Integer> elem2mult = new HashMap<>();
+
   // EOF: rapp
 
   /* L'invariante di rappresentazione è semplicemente dato dal fatto che la
@@ -40,6 +45,9 @@ public class HashMapMultiSet<E> extends AbstractMultiSet<E> {
    * quanto finale) e che non contenga chiavi <code>null</code> o valori non positivi
    * il che è garantito dai due metodi che ne mutano il contenuto.
    */
+
+  /** Costruttore che crea un multiset vuoto. */
+  public HashMapMultiSet() {}
 
   // SOF: mutazionali
   @Override
@@ -61,6 +69,7 @@ public class HashMapMultiSet<E> extends AbstractMultiSet<E> {
     }
     return m;
   }
+
   // EOF: mutazionali
 
   // SOF: multiplicity
@@ -68,6 +77,7 @@ public class HashMapMultiSet<E> extends AbstractMultiSet<E> {
   public int multiplicity(Object o) {
     return elem2mult.containsKey(o) ? elem2mult.get(o) : 0;
   }
+
   // EOF: multiplicity
 
   /* Le due implementazioni seguenti hanno senso solo perché poco più
@@ -86,6 +96,7 @@ public class HashMapMultiSet<E> extends AbstractMultiSet<E> {
     for (final int m : elem2mult.values()) size += m;
     return size;
   }
+
   // EOF: overrides
 
   // SOF: union
@@ -101,6 +112,7 @@ public class HashMapMultiSet<E> extends AbstractMultiSet<E> {
       if (!elem2mult.containsKey(elem)) result.elem2mult.put(elem, o.multiplicity(elem));
     return result;
   }
+
   // EOF: union
 
   // SOF: intersection
@@ -115,6 +127,7 @@ public class HashMapMultiSet<E> extends AbstractMultiSet<E> {
     }
     return result;
   }
+
   // EOF: intersection
 
   // SOF: iterator

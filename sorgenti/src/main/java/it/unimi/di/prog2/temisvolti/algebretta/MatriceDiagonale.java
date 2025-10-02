@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -46,6 +46,7 @@ public class MatriceDiagonale extends AbsMatrice {
       throw new IllegalArgumentException("La diagonale deve contenere almeno un valore.");
     this.diagonale = diagonale.clone();
   }
+
   // EOF: rapcostr
 
   // SOF: dimval
@@ -59,6 +60,7 @@ public class MatriceDiagonale extends AbsMatrice {
     requireValidIJ(i, j);
     return i == j ? diagonale[i] : 0;
   }
+
   // EOF: dimval
 
   // SOF: peralpha
@@ -71,6 +73,7 @@ public class MatriceDiagonale extends AbsMatrice {
     for (int i = 0; i < diagonale.length; i++) tmp[i] = alpha * diagonale[i];
     return new MatriceDiagonale(tmp);
   }
+
   // EOF: peralpha
 
   // SOF: piumat
@@ -83,6 +86,7 @@ public class MatriceDiagonale extends AbsMatrice {
     // EOF: piuzero
     return new MatriceDensa(this).più(B);
   }
+
   // EOF: piumat
 
   // SOF: permat
@@ -96,6 +100,7 @@ public class MatriceDiagonale extends AbsMatrice {
     // EOF: perspeciale
     return new MatriceDensa(this).per(B);
   }
+
   // EOF: permat
 
   // SOF: pervec

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -23,7 +23,7 @@ package it.unimi.di.prog2.temisvolti.filesystem;
 
 import java.util.Objects;
 
-/** Classe astratta che rappresenta una <em>entry<em> del filesystem con assegnato <em>nome</em>. */
+/** Classe astratta che rappresenta una <i>entry</i> del filesystem con assegnato <i>nome</i>. */
 public abstract class Entry {
 
   /** Il nome dell'entry */
@@ -34,7 +34,7 @@ public abstract class Entry {
   // RI: name != null e non è vuoto (ossia contiene almeno un carattere)
 
   /**
-   * Costruisce una <em>entry</em> dato il <em>nome</em>.
+   * Costruisce una <i>entry</i> dato il <i>nome</i>.
    *
    * @param name il nome dell'entry.
    * @throws IllegalArgumentException se il nome è {@code null} o vuoto.
@@ -45,18 +45,19 @@ public abstract class Entry {
       throw new IllegalArgumentException("Il nome non può essere vuoto.");
     this.name = name;
   }
+
   // EOF: rep
 
   // SOF: methods
   /**
-   * Consente di sapere se una <em>entry</em> è una <em>directory</em>.
+   * Consente di sapere se una <i>entry</i> è una <i>directory</i>.
    *
    * @return {@code true} sse l'entry è una directory.
    */
   public abstract boolean isDir();
 
   /**
-   * Restituisce la dimensione dell'<em>entry</em>.
+   * Restituisce la dimensione dell'<i>entry</i>.
    *
    * @return la dimensione.
    */

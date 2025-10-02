@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -25,8 +25,14 @@ import java.util.Iterator;
 
 /**
  * Classe astratta che implementa il metodo {@link #toString() toString} illustrato nella traccia.
+ *
+ * @param <E> il tipo degli elementi del multiset.
  */
 public abstract class AbstractMultiSet<E> implements MultiSet<E> {
+
+  /** Costruttore protetto, usabile solo dalle sottoclassi. */
+  protected AbstractMultiSet() {}
+
   // SOF: toString
   @Override
   public String toString() {

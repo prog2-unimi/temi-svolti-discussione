@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -23,8 +23,19 @@ package it.unimi.di.prog2.temisvolti.algebretta;
 
 import java.util.Scanner;
 
+/** Classe che fornisce il main che realizza la soluzione al tema svolto. */
 public class Soluzione {
 
+  /** Costruttore privato per impedire l'istanziazione. */
+  private Soluzione() {}
+
+  /**
+   * Metodo di utilità per creare una matrice del tipo richiesto.
+   *
+   * @param tipo il tipo di matrice da creare.
+   * @param arr i valori della matrice.
+   * @return la matrice del tipo richiesto.
+   */
   // SOF: fabmat
   public static Matrice valueOf(final char tipo, final int[][] arr) {
     switch (tipo) {
@@ -39,8 +50,14 @@ public class Soluzione {
     }
     throw new IllegalArgumentException("Tipo non riconosciuto.");
   }
+
   // EOF: fabmat
 
+  /**
+   * Metodo principale per l'esecuzione del programma.
+   *
+   * @param args gli argomenti della riga di comando (non usati).
+   */
   public static void main(String[] args) {
     try (final Scanner s = new Scanner(System.in)) {
       while (s.hasNextLine()) {

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -26,6 +26,10 @@ package it.unimi.di.prog2.temisvolti.algebretta;
  * {@link Object#toString()};
  */
 public abstract class AbsMatrice implements Matrice {
+
+  /** Costruttore protetto, usabile solo dalle sottoclassi. */
+  protected AbsMatrice() {}
+
   // SOF: tostring
   @Override
   public String toString() {

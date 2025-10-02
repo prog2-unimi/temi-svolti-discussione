@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -32,10 +32,14 @@ public class SetBoolVect extends AbstractBoolVect {
   // SOF: rep
   /** L'insieme delle posizioni dei valori di verità veri del BoolVect. */
   private final SortedSet<Integer> positions = new TreeSet<>();
+
   // EOF: rep
 
   // RI: positions != null e non contiene null
   // AF: l'i-esimo valore di verità del BoolVect è verso se e solo se i appartiene a positions.
+
+  /** Costruttore che crea un BoolVect vuoto. */
+  public SetBoolVect() {}
 
   // SOF: trivial
   @Override
@@ -52,6 +56,7 @@ public class SetBoolVect extends AbstractBoolVect {
   public void pulisci() {
     positions.clear();
   }
+
   // EOF: trivial
 
   // SOF: partial
@@ -65,6 +70,7 @@ public class SetBoolVect extends AbstractBoolVect {
     if (val) positions.add(pos);
     else positions.remove(pos);
   }
+
   // EOF: partial
 
   // SOF: op
@@ -92,6 +98,7 @@ public class SetBoolVect extends AbstractBoolVect {
       positions.removeAll(intersection);
     } else super.xor(other);
   }
+
   // EOF: op
 
   // SOF: obj

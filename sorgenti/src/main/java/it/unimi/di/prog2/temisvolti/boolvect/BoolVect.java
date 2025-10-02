@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -26,24 +26,24 @@ public interface BoolVect {
 
   // SOF: obs
   /**
-   * Restituisce la <em>dimensione</em> del BoolVect.
+   * Restituisce la <i>dimensione</i> del BoolVect.
    *
-   * <p>La <em>dimensione</em> del BoolVect è il più grande intero <em>d</em> tale che il valore di
-   * verità in posizione <em>d - 1</em> del BoolVect è è {@code true}. La <em>dimensione</em> ha un
-   * valore compreso tra 0 e la <em>taglia</em> (estremi inclusi).
+   * <p>La <i>dimensione</i> del BoolVect è il più grande intero <i>d</i> tale che il valore di
+   * verità in posizione <i>d - 1</i> del BoolVect è è {@code true}. La <i>dimensione</i> ha un
+   * valore compreso tra 0 e la <i>taglia</i> (estremi inclusi).
    *
    * @return la dimensione.
    */
   int dimensione();
 
   /**
-   * Restituisce la <em>taglia</em> del BoolVect.
+   * Restituisce la <i>taglia</i> del BoolVect.
    *
-   * <p>La <em>taglia</em> del BoolVect è il massimo valore possibile per la sua
-   * <em>dimensione</em>; detto altrimenti, è il più grande intero <em>d</em> per cui il valore di
-   * verità di posizione <em>d - 1</em> può essere {@code true}. La <em>taglia</em> è un numero
-   * positivo sempre maggiore o uguale alla <em>dimensione</em> e vale convenzionalmente {@link
-   * Integer#MAX_VALUE} se la <em>dimensione</em> non è limitata.
+   * <p>La <i>taglia</i> del BoolVect è il massimo valore possibile per la sua <i>dimensione</i>;
+   * detto altrimenti, è il più grande intero <i>d</i> per cui il valore di verità di posizione <i>d
+   * - 1</i> può essere {@code true}. La <i>taglia</i> è un numero positivo sempre maggiore o uguale
+   * alla <i>dimensione</i> e vale convenzionalmente {@link Integer#MAX_VALUE} se la
+   * <i>dimensione</i> non è limitata.
    *
    * @return la taglia.
    */
@@ -60,6 +60,7 @@ public interface BoolVect {
    * @throws IndexOutOfBoundsException se la posizione è negativa.
    */
   boolean leggi(final int pos) throws IndexOutOfBoundsException;
+
   // EOF: obs
 
   // SOF: write
@@ -72,15 +73,16 @@ public interface BoolVect {
    *     posizione è maggiore o uguale alla taglia.
    */
   void scrivi(final int pos, final boolean val) throws IndexOutOfBoundsException;
+
   // EOF: write
 
   // SOF: bop
   /**
-   * Rende questo BoolVect uguale all'<em>and componente a componente</em> di questo BoolVect e
-   * quello specificato.
+   * Rende questo BoolVect uguale all'<i>and componente a componente</i> di questo BoolVect e quello
+   * specificato.
    *
    * <p>Si osservi che, sebbene la dimensione degli operandi può essere diversa, in nessun caso la
-   * dimensione del risultato può eccedere la minore tra le due; l'<em>and</em> infatti è senz'altro
+   * dimensione del risultato può eccedere la minore tra le due; l'<i>and</i> infatti è senz'altro
    * {@code false} per tutte le posizioni che sono maggiori della dimensione di uno, o dell'altro,
    * BoolVect booleano.
    *
@@ -90,8 +92,8 @@ public interface BoolVect {
   void and(final BoolVect other) throws NullPointerException;
 
   /**
-   * Rende questo BoolVect uguale all'<em>or componente a componente</em> di questo BoolVect e
-   * quello specificato.
+   * Rende questo BoolVect uguale all'<i>or componente a componente</i> di questo BoolVect e quello
+   * specificato.
    *
    * <p>Si osservi che se la dimensione dell'altro BoolVect è maggiore della taglia (e quindi
    * dimensione) di questo, allora il valore di verità in posizione pari alla dimensione dell'altro
@@ -106,7 +108,7 @@ public interface BoolVect {
   void or(final BoolVect other) throws NullPointerException, IllegalArgumentException;
 
   /**
-   * Rende questo BoolVect uguale allo <em>xor componente a componente</em> di questo BoolVect e
+   * Rende questo BoolVect uguale allo <i>xor componente a componente</i> di questo BoolVect e
    * quello specificato.
    *
    * <p>Si osservi che se la dimensione dell'altro BoolVect è maggiore della taglia (e quindi
@@ -120,6 +122,7 @@ public interface BoolVect {
    * @throws NullPointerException se l'argomento è {@code null}.
    */
   void xor(final BoolVect other) throws NullPointerException, IllegalArgumentException;
+
   // EOF: bop
 
   // SOF: init
@@ -129,9 +132,9 @@ public interface BoolVect {
   /**
    * Rende il BoolVect uguale ai valori di verità specificati nella stringa data.
    *
-   * <p>La stringa può contenere qualunque carattere, l'<em>i</em>-esimo valore di verità del
-   * BoolVect sarà {@code true} se e solo se l'<em>i</em>-esimo carattere della stringa (contando da
-   * destra) è `V`.
+   * <p>La stringa può contenere qualunque carattere, l'<i>i</i>-esimo valore di verità del BoolVect
+   * sarà {@code true} se e solo se l'<i>i</i>-esimo carattere della stringa (contando da destra) è
+   * `V`.
    *
    * @param vals la stringa dei valori di verità.
    * @throws IllegalArgumentException se la stringa è più lunga della taglia del BoolVect.

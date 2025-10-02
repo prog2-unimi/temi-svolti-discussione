@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -74,6 +74,7 @@ public class Bancarella implements Iterable<Giocattolo> {
         throw new IllegalArgumentException("Il listino manca del prezzo per: " + g);
     // EOF: ri
   }
+
   // EOF: rep
 
   // SOF: mod
@@ -91,6 +92,7 @@ public class Bancarella implements Iterable<Giocattolo> {
   public int vende(final int num, final Giocattolo giocattolo) {
     return inventario.rimuovi(num, giocattolo);
   }
+
   // EOF: mod
 
   // SOF: obs
@@ -123,6 +125,7 @@ public class Bancarella implements Iterable<Giocattolo> {
   public Iterator<Giocattolo> iterator() {
     return inventario.iterator();
   }
+
   // EOF: obs
 
   // SOF: eqhash
@@ -136,6 +139,7 @@ public class Bancarella implements Iterable<Giocattolo> {
   public int hashCode() {
     return proprietario.hashCode();
   }
+
   // EOF: eqhash
 
   @Override

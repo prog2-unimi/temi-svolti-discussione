@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -20,9 +20,10 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 package it.unimi.di.prog2.temisvolti.piastrelle;
+
 /**
- * Classe immutabile che rappresenta una <em>piastrella romboidale</em>, lo stato è costituito dalla
- * lunghezza (sempre positiva) delle sue diagonali <em>minore</em> e <em>maggiore</em>.
+ * Classe immutabile che rappresenta una <i>piastrella romboidale</i>, lo stato è costituito dalla
+ * lunghezza (sempre positiva) delle sue diagonali <i>minore</i> e <i>maggiore</i>.
  */
 public class PiastrellaRomboidale extends Piastrella {
 
@@ -33,8 +34,8 @@ public class PiastrellaRomboidale extends Piastrella {
   public final int maggiore;
 
   /**
-   * Costruisce una piastrella dato il suo <em>costo</em> e la lunghezza delle due
-   * <em>diagonali</em>; non è necessario specificare le diagonali in ordine di grandezza.
+   * Costruisce una piastrella dato il suo <i>costo</i> e la lunghezza delle due <i>diagonali</i>;
+   * non è necessario specificare le diagonali in ordine di grandezza.
    *
    * @param prima una delle diagonali.
    * @param seconda l'altra diagonale.

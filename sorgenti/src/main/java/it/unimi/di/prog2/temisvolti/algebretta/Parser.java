@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -30,15 +30,25 @@ public class Parser {
   // le costanti seguenti sono legare ad una serie di espressioni regolari utili al parsing e non
   // vanno modificate
 
+  /** Pattern per il riconoscimento di un'operazione binaria. */
   private static final Pattern OPERAZIONE =
       Pattern.compile("\\s*(?<sinistra>.*\\S)\\s*(?<operatore>\\+|\\*)\\s*(?<destra>.*\\S)\\s*");
+
+  /** Pattern per il riconoscimento di una matrice. */
   private static final Pattern MATRICE =
       Pattern.compile("\\s*(?<tipo>[ZID]?)\\s*\\[(?<array>[-+0-9,;\n ]+)\\]\\s*");
+
+  /** Pattern per il riconoscimento di una riga di matrice. */
   private static final Pattern RIGA = Pattern.compile("([-+0-9,\n ]+);?");
+
+  /** Pattern per il riconoscimento di un vettore. */
   private static final Pattern VETTORE = Pattern.compile("\\s*\\((?<array>[-+0-9,\n ]+)\\)\\s*");
+
+  /** Pattern per il riconoscimento di uno scalare. */
   private static final Pattern SCALARE = Pattern.compile("\\s*(?<alpha>[-+0-9]+)\\s*");
 
-  private Parser() {} // impedisce l'istanziazione di questa classe
+  /** Costruttore privato per impedire l'istanziazione di questa classe. */
+  private Parser() {}
 
   /**
    * Divide una linea corrispondente ad una operazione binaria nelle sue parti.

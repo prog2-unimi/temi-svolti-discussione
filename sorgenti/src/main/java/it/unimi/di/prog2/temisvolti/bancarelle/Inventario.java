@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -46,6 +46,7 @@ public class Inventario implements Iterable<Giocattolo> {
   // SOF: rep
   /** Mappa che tiene traccia della numerosità di ciascun giocattolo presente nell'inventario */
   private final Map<Giocattolo, Integer> inventario = new HashMap<>();
+
   // EOF: rep
 
   // RI: le chiavi sono diverse da null, i valori sono positivi; detto
@@ -68,7 +69,8 @@ public class Inventario implements Iterable<Giocattolo> {
         inventario, "La mappa che rappresenta l'inventario non può essere null.");
     for (Map.Entry<Giocattolo, Integer> e : inventario.entrySet()) {
       if (e.getKey() == null) throw new NullPointerException("Il giocattolo non può essere null");
-      if (e.getValue() == null || e.getValue() <= 0) throw new IllegalArgumentException("Il numero deve essere positivo");
+      if (e.getValue() == null || e.getValue() <= 0)
+        throw new IllegalArgumentException("Il numero deve essere positivo");
       inventario.put(e.getKey(), e.getValue());
     }
   }
@@ -83,6 +85,7 @@ public class Inventario implements Iterable<Giocattolo> {
   public Inventario(final Inventario originale) {
     this(originale.inventario);
   }
+
   // EOF: copyc
 
   // SOF: add
@@ -116,6 +119,7 @@ public class Inventario implements Iterable<Giocattolo> {
   public int aggiungi(final Giocattolo giocattolo) {
     return aggiungi(1, giocattolo);
   }
+
   // EOF: add
 
   // SOF: rem
@@ -144,6 +148,7 @@ public class Inventario implements Iterable<Giocattolo> {
     // EOF: zero
     return totale;
   }
+
   // EOF: rem
 
   // SOF: quanti
@@ -160,6 +165,7 @@ public class Inventario implements Iterable<Giocattolo> {
     if (!inventario.containsKey(giocattolo)) return 0;
     return inventario.get(giocattolo);
   }
+
   // EOF: quanti
 
   // SOF: iter
@@ -176,6 +182,7 @@ public class Inventario implements Iterable<Giocattolo> {
         });
     return giocattoli.iterator();
   }
+
   // EOF: iter
 
   @Override

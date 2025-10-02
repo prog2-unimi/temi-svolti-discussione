@@ -1,3 +1,24 @@
+/*
+
+Copyright 2025 Massimo Santini
+
+This file is part of "Programmazione 2 @ UniMI" teaching material.
+
+This is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This material is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 package it.unimi.di.prog2.temisvolti.cambiavalute;
 
 import java.util.Collections;
@@ -7,12 +28,16 @@ import java.util.List;
 import java.util.Objects;
 
 /** Classe che rappresenta l'elenco dei tassi noti al cambiavalute. */
-public class Cambi implements Iterable<Cambi.Tasso>{
+public class Cambi implements Iterable<Cambi.Tasso> {
 
-    /** Record che rappresenta una coppia di importi che descrivono un tasso di
-     * cambio. */
-    public record Tasso(Importo da, Importo a) {
-  
+  /**
+   * Record che rappresenta una coppia di importi che descrivono un tasso di cambio.
+   *
+   * @param da l'importo di partenza.
+   * @param a l'importo di arrivo.
+   */
+  public record Tasso(Importo da, Importo a) {
+
     // SOF: tasso
     /**
      * Crea un nuovo tasso di cambio.
@@ -20,61 +45,69 @@ public class Cambi implements Iterable<Cambi.Tasso>{
      * @param da l'importo di partenza.
      * @param a l'importo di arrivo
      * @throws NullPointerException se uno dei due importi è <code>null</code>.
-     * @throws IllegalArgumentException se uno dei due importi non è positivo o
-     *         se i due importi sono nella stessa valuta.
+     * @throws IllegalArgumentException se uno dei due importi non è positivo o se i due importi
+     *     sono nella stessa valuta.
      */
     public Tasso(Importo da, Importo a) {
-      if (!Objects.requireNonNull(da, "Il primo importo non può essere null.").isPositive()) throw new IllegalArgumentException("Il primo importo deve essere positivo.");
-      if (!Objects.requireNonNull(a, "Il secondo importo non può essere null.").isPositive()) throw new IllegalArgumentException("Il secondo importo deve essere positivo.");
-      if (a.valuta.equals(da.valuta)) throw new IllegalArgumentException("Impossibile definire un tasso di cambio tra valute identiche");
+      if (!Objects.requireNonNull(da, "Il primo importo non può essere null.").isPositive())
+        throw new IllegalArgumentException("Il primo importo deve essere positivo.");
+      if (!Objects.requireNonNull(a, "Il secondo importo non può essere null.").isPositive())
+        throw new IllegalArgumentException("Il secondo importo deve essere positivo.");
+      if (a.valuta.equals(da.valuta))
+        throw new IllegalArgumentException(
+            "Impossibile definire un tasso di cambio tra valute identiche");
       this.da = da;
       this.a = a;
     }
+
     // EOF: tasso
 
     @Override
     public String toString() {
       return da + " = " + a;
-     }
-  
+    }
   }
 
   // SOF: rep
-  /** L'elenco di cambi. Non deve essere o contenere <code>null</code> e non
-   * deve contenere più di un tasso tra due importi con una data coppia di
-   * valute. I tassi sono mantenuti in ordine di aggiunta/aggiornamento. */
+  /**
+   * L'elenco di cambi. Non deve essere o contenere <code>null</code> e non deve contenere più di un
+   * tasso tra due importi con una data coppia di valute. I tassi sono mantenuti in ordine di
+   * aggiunta/aggiornamento.
+   */
   private final List<Tasso> tassi = new LinkedList<>();
-  // EOF: rep 
+
+  // EOF: rep
+
+  /** Costruttore che crea un elenco di tassi vuoto. */
+  public Cambi() {}
 
   // SOF: cerca
-  /** Cerca tra i tassi noti un tasso tra le valute date.
+  /**
+   * Cerca tra i tassi noti un tasso tra le valute date.
    *
    * @param da la valuta del primo importo.
    * @param a la valuta del secondo importo.
-   * @return il tasso, oppure <code>null</code> se non è noto alcun tasso tra
-   * importi nelle valute date.
+   * @return il tasso, oppure <code>null</code> se non è noto alcun tasso tra importi nelle valute
+   *     date.
    */
   public Tasso cerca(Valuta da, Valuta a) {
-    for (Tasso t : tassi) 
-      if (t.da().valuta == da && t.a().valuta == a) 
-      return t;
+    for (Tasso t : tassi) if (t.da().valuta == da && t.a().valuta == a) return t;
     return null;
   }
+
   // EOF: cerca
 
   // SOF: aggiorna
   /**
-   * Aggiorna, o aggiunge, il tasso di cambio tra due valute all'elenco dei
-   * tassi noti.
+   * Aggiorna, o aggiunge, il tasso di cambio tra due valute all'elenco dei tassi noti.
    *
    * <p>Nel caso fosse noto un tasso tra le due stesse valute del tasso da aggiornare, questo
-   * sostituirà il precedente tasso; viceversa il tasso da aggiornare è di fatto "nuovo" e verrà 
+   * sostituirà il precedente tasso; viceversa il tasso da aggiornare è di fatto "nuovo" e verrà
    * semplicemente aggiunto alla lista dei tassi noti.
    *
-   *
    * @param tasso il tasso da aggiornare.
-   * @return <code>true</code> se il tasso sostituisce un tasso precedentemente noto,
-   *         <code>false</code> viceversa.
+   * @return <code>true</code> se il tasso sostituisce un tasso precedentemente noto, <code>false
+   *     </code> viceversa.
    */
   public boolean aggiorna(Tasso tasso) {
     Tasso precedente = cerca(tasso.da().valuta, tasso.a().valuta);
@@ -82,6 +115,7 @@ public class Cambi implements Iterable<Cambi.Tasso>{
     tassi.add(tasso);
     return precedente != null;
   }
+
   // EOF: aggiorna
 
   // SOF: iter
@@ -89,15 +123,14 @@ public class Cambi implements Iterable<Cambi.Tasso>{
   public Iterator<Tasso> iterator() {
     return Collections.unmodifiableList(tassi).iterator();
   }
+
   // EOF: iter
 
   @Override
   public String toString() {
     StringBuffer sb = new StringBuffer("Tassi:\n");
     Iterator<Tasso> it = tassi.iterator();
-    while (it.hasNext())
-      sb.append(it.next() + (it.hasNext() ? "\n" : ""));
+    while (it.hasNext()) sb.append(it.next() + (it.hasNext() ? "\n" : ""));
     return sb.toString();
   }
 }
-

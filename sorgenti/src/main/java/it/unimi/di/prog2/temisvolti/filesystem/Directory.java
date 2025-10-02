@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-/** Classe mutabile che rappresenta una <em>directory</em>. */
+/** Classe mutabile che rappresenta una <i>directory</i>. */
 public class Directory extends Entry implements Iterable<Entry> {
 
   // SOF: rep
@@ -38,7 +38,7 @@ public class Directory extends Entry implements Iterable<Entry> {
   // RI: entries non è null e non contiene null, non contiene due entry con lo stesso nome
 
   /**
-   * Costruisce una <em>directory</em> vuota dato il suo <em>nome</em>
+   * Costruisce una <i>directory</i> vuota dato il suo <i>nome</i>
    *
    * @param name il nome.
    * @throws IllegalArgumentException se il nome è {@code null} o vuoto.
@@ -46,12 +46,13 @@ public class Directory extends Entry implements Iterable<Entry> {
   public Directory(final String name) {
     super(name);
   }
+
   // EOF: rep
 
   // SOF: methods
   /**
-   * Restituisce l'<em>entry</em> dato il suo <em>nome</em> se presente (altrimenti restituisce
-   * {@code null}).
+   * Restituisce l'<i>entry</i> dato il suo <i>nome</i> se presente (altrimenti restituisce {@code
+   * null}).
    *
    * @param name il nome dell'entry.
    * @return l'entry di dato nome (o {@code null} se nessuna entry ha il nome dato).
@@ -64,12 +65,11 @@ public class Directory extends Entry implements Iterable<Entry> {
   }
 
   /**
-   * Aggiunge una <em>entry</em>.
+   * Aggiunge una <i>entry</i>.
    *
    * @param entry l'entry da aggiungere.
-   * @throws NullPointerException se l'entry è {@code null}
-   * @throws {@link FileAlreadyExistsException} se la directory contiene una entry con lo stesso
-   *     nome di quella da aggiungere.
+   * @throws NullPointerException se l'entry è {@code null}.
+   * @throws FileAlreadyExistsException se la directory contiene una entry omonima.
    */
   void add(final Entry entry) throws FileAlreadyExistsException {
     Objects.requireNonNull(entry, "L'entry non può essere null.");
@@ -78,6 +78,7 @@ public class Directory extends Entry implements Iterable<Entry> {
           "La directory contiene già una entry con lo stesso nome.");
     entries.add(entry);
   }
+
   // EOF: methods
 
   // SOF: override

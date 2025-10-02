@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -28,12 +28,17 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-/** Implementazione di {@link MultiSet} basata su una lista con ripetizioni. */
+/**
+ * Implementazione di {@link MultiSet} basata su una lista con ripetizioni.
+ *
+ * @param <E> il tipo degli elementi del multiset.
+ */
 public class ListMultiSet<E> extends AbstractMultiSet<E> {
 
   /** La lista degli elementi del multiset. */
   // SOF: rapp
   private final List<E> elems = new LinkedList<>();
+
   // EOF: rapp
 
   /* L'invariante di rappresentazione è semplicemente dato dal fatto che la
@@ -41,6 +46,9 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
    * quanto finale) e che non contenga elementi <code>null</code> (come
    * verificato nell'unico metodo che vi aggiunge elementi).
    */
+
+  /** Costruttore che crea un multiset vuoto. */
+  public ListMultiSet() {}
 
   // SOF: mutazionali
   @Override
@@ -56,6 +64,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
     elems.remove(o);
     return m;
   }
+
   // EOF: mutazionali
 
   // SOF: multiplicity
@@ -63,6 +72,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
   public int multiplicity(Object o) {
     return Collections.frequency(elems, o);
   }
+
   // EOF: multiplicity
 
   /* Le due implementazioni seguenti hanno senso solo perché più efficienti
@@ -80,6 +90,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
   public int size() {
     return elems.size();
   }
+
   // EOF: overrides
 
   // SOF: union
@@ -94,6 +105,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
     }
     return result;
   }
+
   // EOF: union
 
   // SOF: intersection
@@ -107,6 +119,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
     }
     return result;
   }
+
   // EOF: intersection
 
   // SOF: iterator
@@ -132,6 +145,7 @@ public class ListMultiSet<E> extends AbstractMultiSet<E> {
         }
         return false;
       }
+
       // EOF: hasNext
 
       @Override

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -22,12 +22,12 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package it.unimi.di.prog2.temisvolti.multiset;
 
 /**
- * Interfaccia che descrive il contratto di un <em>multiset</em>.
+ * Interfaccia che descrive il contratto di un <i>multiset</i>.
  *
- * <p>Una breve definizione e discussione sulle proprietà dei <em>multiset</em> si trova ad esempio
- * su <a href="https://en.wikipedia.org/wiki/Multiset">Wikipedia</a>.
+ * <p>Una breve definizione e discussione sulle proprietà dei <i>multiset</i> si trova ad esempio su
+ * <a href="https://en.wikipedia.org/wiki/Multiset">Wikipedia</a>.
  *
- * <p>I metodi che hanno per argomento un <em>elemento</em> sono:
+ * <p>I metodi che hanno per argomento un <i>elemento</i> sono:
  *
  * <ul>
  *   <li>{@link #add(E e)}, {@link #remove(Object)} e {@link #contains(Object)}, questi sono tipici
@@ -40,9 +40,12 @@ package it.unimi.di.prog2.temisvolti.multiset;
  *       potrebbe sollevare anche l'eccezione {@link ClassCastException}. Gli altri metodi
  *       accetteranno senza sollevare eccezioni sia riferimenti <code>null</code> che elementi non
  *       presenti nell'insieme.
- *       <p>Le implementazioni di questa classe sono <em>iterabili</em>, l'iteratore {@link
+ *       <p>Le implementazioni di questa classe sono <i>iterabili</i>, l'iteratore {@link
  *       #iterator()} deve restituire gli elementi del supporto del multiset (ossia gli elementi del
- *       multiset <em>senza</em> ripetizioni).
+ *       multiset <i>senza</i> ripetizioni).
+ * </ul>
+ *
+ * @param <E> il tipo degli elementi del multiset.
  */
 interface MultiSet<E> extends Iterable<E> {
 
@@ -71,7 +74,7 @@ interface MultiSet<E> extends Iterable<E> {
    * <code>e</code> tale che <code>Objects.equals(o,
    * e)</code>.
    *
-   * <p>Questo metodo ammette una implementazione di <em>default</em> basata sul metodo {@link
+   * <p>Questo metodo ammette una implementazione di <i>default</i> basata sul metodo {@link
    * #multiplicity(Object)}.
    *
    * @param o l'elemento la cui presenza è da verificare.
@@ -81,13 +84,14 @@ interface MultiSet<E> extends Iterable<E> {
   default boolean contains(Object o) {
     return multiplicity(o) > 0;
   }
+
   // EOF: contains
 
   /**
    * Restituisce la molteplicità dell'elemento nel multiset.
    *
-   * <p>Se l'elemento non appartiene al multiset, restituisce convenzionalmente <code>0</code> (senza
-   * sollevare eccezioni).
+   * <p>Se l'elemento non appartiene al multiset, restituisce convenzionalmente <code>0</code>
+   * (senza sollevare eccezioni).
    *
    * @param o l'elemento di cui restituire la molteplicità.
    * @return la molteplicità dell'elemento nell'insieme, o <code>0</code> se l'elemento non
@@ -98,7 +102,7 @@ interface MultiSet<E> extends Iterable<E> {
   /**
    * Restituisce la cardinalità del multiset.
    *
-   * <p>Questo metodo ammette una implementazione di <em>default</em> basata sul metodo {@link
+   * <p>Questo metodo ammette una implementazione di <i>default</i> basata sul metodo {@link
    * #multiplicity(Object)} e sul fatto che gli elementi del supporto sono iterabili.
    *
    * @return la cardinalità.
@@ -109,6 +113,7 @@ interface MultiSet<E> extends Iterable<E> {
     for (E e : this) size += multiplicity(e);
     return size;
   }
+
   // EOF: size
 
   /**

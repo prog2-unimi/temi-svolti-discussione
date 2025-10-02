@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -70,6 +70,7 @@ public interface Matrice {
    * @throws IllegalArgumentException se le matrici non sono conformi.
    */
   Matrice per(final Matrice B) throws NullPointerException, IllegalArgumentException;
+
   // EOF: signatures
 
   // SOF: pervec
@@ -82,6 +83,7 @@ public interface Matrice {
    * @throws IllegalArgumentException se le matrice e il vettore non sono confrmi.
    */
   Vettore per(final Vettore v) throws NullPointerException, IllegalArgumentException;
+
   // EOF: pervec
 
   // SOF: default

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2022 Massimo Santini
+Copyright 2025 Massimo Santini
 
 This file is part of "Programmazione 2 @ UniMI" teaching material.
 
@@ -32,7 +32,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
-/** Classe mutabile che rappresenta una <em>shell</em> */
+/** Classe mutabile che rappresenta una <i>shell</i> */
 public class Shell {
 
   /** Prefisso per l'output. */
@@ -41,13 +41,14 @@ public class Shell {
   // SOF: rep
   /** Il filesystem su cui opera la shell. */
   private final FileSystem fs;
+
   /** Il path assoluto della directory corrente */
   private Path cwd;
 
   /**
-   * Costruisce una <em>shell</em> dato il filesystem.
+   * Costruisce una <i>shell</i> dato il filesystem.
    *
-   * <p>La <em>directory corrente</em> è inizialmente la radice del <em>filesystem</em>.
+   * <p>La <i>directory corrente</i> è inizialmente la radice del <i>filesystem</i>.
    *
    * @param fs il filesystem
    * @throws NullPointerException se il filesystem è {@code null}.
@@ -56,6 +57,7 @@ public class Shell {
     this.fs = Objects.requireNonNull(fs, "Il filesystem non può essere null.");
     cwd = Path.ROOT;
   }
+
   // EOF: rep
 
   // RI: fs non è null, cwd non è null ed è un path assoluto che indica una
@@ -63,7 +65,7 @@ public class Shell {
 
   // SOF: resolve
   /**
-   * Risolve il <em>path</em> rispetto alla directory corrente.
+   * Risolve il <i>path</i> rispetto alla directory corrente.
    *
    * @param path il path.
    * @return il path assoluto ottenuto ri
@@ -71,11 +73,12 @@ public class Shell {
   private Path resolve(final String path) {
     return cwd.resolve(Path.fromString(path));
   }
+
   // EOF: resolve
 
   // SOF: tree
   /**
-   * Emette nel flusso di uscita la <em>directory</em> data sotto forma di albero.
+   * Emette nel flusso di uscita la <i>directory</i> data sotto forma di albero.
    *
    * <p>Questa funzione richiama ricorsivamente se stessa per emettere le sottodirectory in forma di
    * albero, usa il prefisso per gestire l'indentazione dei sottoalberi.
@@ -93,7 +96,7 @@ public class Shell {
   }
 
   /**
-   * Emette nel flusso d'uscita la <em>directory</em> corrispondente al <em>path</em> dato.
+   * Emette nel flusso d'uscita la <i>directory</i> corrispondente al <i>path</i> dato.
    *
    * @param path il percorso di una directory del filesystem.
    * @throws FileNotFoundException se il percorso non individua una directory.
@@ -101,6 +104,7 @@ public class Shell {
   private void tree(final Path path) throws FileNotFoundException {
     recursiveTree("", fs.findDir(path));
   }
+
   // EOF: tree
 
   // SOF: interpreter
@@ -165,6 +169,7 @@ public class Shell {
     }
     return history;
   }
+
   // EOF: interpreter
 
   /**
