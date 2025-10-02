@@ -71,7 +71,8 @@ public class MatriceDensa extends AbsMatrice {
    * @throws IllegalArgumentException se la matrice è {@code null}.
    */
   public MatriceDensa(final Matrice A) {
-    this(Objects.requireNonNull(A, "La matrice non può essere null.").dim());
+    int dim = Objects.requireNonNull(A, "La matrice non può essere null.").dim();
+    mat = new int[dim][dim];
     for (int i = 0; i < A.dim(); i++) for (int j = 0; j < A.dim(); j++) mat[i][j] = A.val(i, j);
   }
   // EOF: copy
