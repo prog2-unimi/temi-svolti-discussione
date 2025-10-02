@@ -6,11 +6,11 @@ SDK_INIT="/opt/buildhome/.sdkman/bin/sdkman-init.sh"
 if [ -r "$SDK_INIT" ]; then
   source "$SDK_INIT"
 else
-  echo "### Installing sdkman and java 17-open"
+  echo "### Installing sdkman and java 25-open"
   curl -s "https://get.sdkman.io" | bash
   echo "## Sourcing '$SDK_INIT'."
   source "$SDK_INIT"
-  sdk install java 17-open
+  sdk install java 25-open
 fi
 
 if ! jupyter kernelspec list | grep -q java; then
