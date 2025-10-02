@@ -60,12 +60,12 @@ Due to network restrictions in the automated testing environment, the following 
 
 #### University Sites (3 URLs)
 - `https://prog2.di.unimi.it/`
-- `http://www.unimi.it/` ⚠️ (uses HTTP)
+- `https://www.unimi.it/` ✅ (upgraded from HTTP)
 - `https://informatica.cdl.unimi.it/it`
 
 #### License Sites (2 URLs)
-- `http://www.gnu.org/licenses/gpl-3.0` ⚠️ (uses HTTP)
-- `http://creativecommons.org/licenses/by-sa/4.0/` ⚠️ (uses HTTP)
+- `https://www.gnu.org/licenses/gpl-3.0` ✅ (upgraded from HTTP)
+- `https://creativecommons.org/licenses/by-sa/4.0/` ✅ (upgraded from HTTP)
 
 #### Analytics (2 URLs)
 - `https://mapio.containers.piwik.pro/`
@@ -79,14 +79,14 @@ Due to network restrictions in the automated testing environment, the following 
 
 ## Recommendations
 
-### 1. HTTP to HTTPS Migration
-The following URLs use HTTP and should be upgraded to HTTPS if supported:
+### 1. HTTP to HTTPS Migration ✅ COMPLETED
+All HTTP URLs have been upgraded to HTTPS:
 
-- `http://www.unimi.it/` → Consider testing `https://www.unimi.it/`
-- `http://www.gnu.org/licenses/gpl-3.0` → Consider testing `https://www.gnu.org/licenses/gpl-3.0`
-- `http://creativecommons.org/licenses/by-sa/4.0/` → Consider testing `https://creativecommons.org/licenses/by-sa/4.0/`
+- `http://www.unimi.it/` → ✅ Updated to `https://www.unimi.it/`
+- `http://www.gnu.org/licenses/gpl-3.0` → ✅ Updated to `https://www.gnu.org/licenses/gpl-3.0`
+- `http://creativecommons.org/licenses/by-sa/4.0/` → ✅ Updated to `https://creativecommons.org/licenses/by-sa/4.0/`
 
-**Files affected:**
+**Files updated:**
 - `discussione/src/index.md` (www.unimi.it)
 - `discussione/src/_templates/footer.html` (gnu.org, creativecommons.org)
 

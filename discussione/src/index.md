@@ -4,7 +4,7 @@ Questo documento raccoglie lo svolgimento di alcuni temi d'esame della prova
 pratica d'esame relativa all'insegnamento di [Programmazione
 II](https://prog2.di.unimi.it/) del corso di laurea in
 [Informatica](https://informatica.cdl.unimi.it/it) dell'[Università degli Studi
-di Milano](http://www.unimi.it/).
+di Milano](https://www.unimi.it/).
 
 Il suo contenuto **non è assolutamente inteso come sostituivo dei libri di testo
 e della documentazione suggerita** e in nessun caso è da ritenersi *esaustivo* e
