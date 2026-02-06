@@ -3,13 +3,14 @@
 Ogni tema d'esame, dopo una breve descrizione dell'obiettivo del lavoro,
 prosegue con la seguente raccomandazione generale:
 
-> Per portare a termine il lavoro dovrà decidere se e quali interfacce e classi
-> (concrete o astratte) implementare. Per ciascuna di esse **dovrà descrivere**
-> (preferibilmente in formato Javadoc, ma comunque solo attraverso commenti
-> presenti nel codice) le scelte relative alla **rappresentazione** dello stato
-> (con particolare riferimento all'*invariante di rappresentazione* e alla
-> *funzione di astrazione*) e ai **metodi** (con particolare riferimento a
-> *pre/post-condizioni* ed *effetti collaterali*, soffermandosi a illustrare le
+> Per portare a termine il lavoro dovrà decidere se e quali classi (concrete o
+> astratte) e quali interfacce implementare. Per ciascuna di esse **dovrà
+> descrivere** (in formato Javadoc attraverso commenti presenti nel codice) le
+> scelte relative alla **rappresentazione** dello stato (con particolare
+> riferimento all'**invariante di rappresentazione** e alla **funzione di
+> astrazione** così come definiti nel libro di testo dell'insegnamento e
+> illustrati a lezione) e ai **metodi** (con particolare riferimento a
+> *pre/post-condizioni* ed *effetti collaterali*, soffermandosi ad illustrare le
 > ragioni della *correttezza* solo per le implementazioni che riterrà più
 > critiche).
 
@@ -51,20 +52,6 @@ Il tema procede con questa raccomandazione:
 la classe di test produca un output verosimile: tale risultato può essere
 ottenuto anche prescindendo completamente dalla conoscenza ed applicazione delle
 metodiche impartite nell'insegnamento! Il punto cruciale è testimoniare, sia
-attraverso il codice (se sufficientemente esplicito) e la documentazione, la
+attraverso la documentazione e il codice (se sufficientemente esplicito), la
 propria competenza nell'utilizzo del paradigma di programmazione orientata agli
 oggetti.
-
-A ribadire ulteriormente la scarsa rilevanza degli aspetti sintattici, la parte
-generale del tema si conclude con questa osservazione:
-
-> Presti particolare attenzione agli *errori di compilazione*: il contenuto dei
-> file che il compilatore si rifiuta di compilare *non sarà affatto esaminato*. Se
-> riscontrasse errori di compilazione che non è in grado di correggere, valuti la
-> possibilità di racchiudere le porzioni di codice che li causano all'interno di
-> commenti; resta inteso che tale codice commentato non sarà valutato.
-
-che significa che se da un lato non è tollerabile per uno studente del secondo
-anno consegnare codice che non compila, è viceversa del tutto ammissibile avere
-una implementazione parziale (purché ben specificata e costruita) in cui alcune
-porzioni di codice siano assenti, o commentate.

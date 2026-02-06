@@ -1,24 +1,24 @@
-# Prog2@UniMI - <span style="font-size: smaller; font-variant: small-caps;">Temi d'esame svolti</span>
+# Prog2@UniMI - <span style="font-size: smaller; font-variant: small-caps;">Supporto per l'esame</span>
 
-Questo documento raccoglie lo svolgimento di alcuni temi d'esame della prova
-pratica d'esame relativa all'insegnamento di [Programmazione
-II](https://prog2.di.unimi.it/) del corso di laurea in
+Questo documento raccoglie materiale di supporto per gli studenti che si
+apprestano a sostenere la prova d'esame relativa all'insegnamento di
+[Programmazione II](https://prog2.di.unimi.it/) del corso di laurea in
 [Informatica](https://informatica.cdl.unimi.it/it) dell'[Università degli Studi
 di Milano](http://www.unimi.it/).
 
 Il suo contenuto **non è assolutamente inteso come sostituivo dei libri di testo
 e della documentazione suggerita** e in nessun caso è da ritenersi *esaustivo* e
 *privo di errori*, ma **è provvisto al solo scopo di consentire agli studenti di
-meglio comprendere la valutazione delle loro prova d'esame**.
+meglio comprendere il processo di valutazione della prova d'esame**.
 
 Il materiale è organizzato in due parti:
-
-% e alcune indicazioni di massima sull'uso delle [collections](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/doc-files/coll-index.html).
 
 * la prima di carattere generale, contiene:
 
     * la [parte iniziale comune a tutte le tracce d'esame](intro/consegne)
       (ulteriormente commentata),
+    * un [vademecum per l'orale](intro/vademecum) che contiene alcuni consigli
+      per affrontare al meglio la prova orale,
     * un elenco di alcuni [ferri del mestiere](intro/ifdm/index) che possono risultare
       utili nello sviluppo delle soluzioni;
 
@@ -33,6 +33,10 @@ Il materiale è organizzato in due parti:
     * [Multiset](temi/multiset), assegnato il 29/9/2022;
     * [Cambiavalute](temi/cambiavalute), assegnato il 27/6/2023.
 
+Si osservi che i temi risultano mediamente di **complessità e dimensione minore
+rispetto a quelli attualmente in vigore** perché fino all'anno accademico
+2022/23 la prova d'esame si svolgeva in laboratorio ed aveva una durata di tre
+ore.
 
 :::{toctree}
 :caption: Introduzione
