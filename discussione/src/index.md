@@ -43,6 +43,7 @@ ore.
 :hidden:
 
 Le consegne del tema <intro/consegne>
+Il vademecum per l'orale <intro/vademecum>
 intro/ifdm/index
 :::
 
